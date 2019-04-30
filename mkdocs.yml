@@ -1,0 +1,30 @@
+site_name: CIMPL Project
+nav:
+       - Home: index.md
+       - About: 
+              - about.md
+              - cimplReleaseNotes.md
+       - Tutorials:
+              - cimpl6Tutorial_helloWorld.md
+              - cimpl6Tutorial_detail.md
+       - User Guide:
+              - cimplInstall.md
+              - cimpl6UserGuide.md
+       - Reference Manual: 
+              - cimpl6Reference.md
+       - FHIR-based Classes:
+              - SHROverview.md
+       - Archive:
+              - cimpl5Reference.md
+              - cimpl5Tutorial.md
+theme: 
+       name: readthedocs
+       custom_dir: custom_theme/
+markdown_extensions:
+       - smarty
+       - toc:
+              permalink: "#"
+              baselevel: 1
+              toc_depth: 1
+       - sane_lists
+       - admonition

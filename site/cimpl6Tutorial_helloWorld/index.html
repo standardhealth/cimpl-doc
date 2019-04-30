@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>CIMPL 6.0 'Hello World' Tutorial - CIMPL Project</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "CIMPL 6.0 'Hello World' Tutorial";
+    var mkdocs_page_input_path = "cimpl6Tutorial_helloWorld.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> CIMPL Project</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">About</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../about/">About CIMPL</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../cimplReleaseNotes/">CIMPL Release Notes</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Tutorials</span>
+    <ul class="subnav">
+                <li class=" current">
+                    
+    <a class="current" href="./">CIMPL 6.0 'Hello World' Tutorial</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#cimpl-60-hello-world-tutorial">CIMPL 6.0 'Hello World' Tutorial</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../cimpl6Tutorial_detail/">CIMPL 6.0 In-depth Tutorial</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">User Guide</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../cimplInstall/">CIMPL Setup and Installation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../cimpl6UserGuide/">CIMPL User's Guide</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Reference Manual</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../cimpl6Reference/">CIMPL 6.0 Reference Documentation</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">FHIR-based Classes</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../SHROverview.md">None</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Archive</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../cimpl5Reference/">CIMPL 5.0 Reference Documentation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../cimpl5Tutorial/">CIMPL 5.0 Tutorial</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">CIMPL Project</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Tutorials &raquo;</li>
+        
+      
+    
+    <li>CIMPL 6.0 'Hello World' Tutorial</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="cimpl-60-hello-world-tutorial">CIMPL 6.0 &lsquo;Hello World&rsquo; Tutorial<a class="headerlink" href="#cimpl-60-hello-world-tutorial" title="Permanent link">#</a></h1>
+<p><br />
+Let’s do a “Hello, World” using CIMPL v6!</p>
+<p><em>Note: Make sure you have completed the <a href="../cimplInstall/">CIMPL Installation instructions</a> before proceeding, and that <code>shr-cli</code> is installed in <code>~/cimpl/shr-cli</code>.</em></p>
+<p>Start by creating a folder structure for our new project.  Open up your favorite (Unix-based) command-line tool and enter the following:</p>
+<pre><code>cd ~/cimpl
+mkdir hello_world
+</code></pre>
+
+<p>Now, create a file called <code>HelloWorld.txt</code> in the <code>~/cimpl/hello_world</code> folder and add the following data definitions:</p>
+<pre><code>Grammar:         DataElement 6.0
+Namespace:       hello
+Description:     &quot;A simple example of CIMPL.&quot;
+
+EntryElement:    HelloWorld
+Description:     &quot;A silly profile.&quot;
+Property:        SayHello 0..1
+
+Element:         SayHello
+Description:     &quot;An extension indicating whether to say hello&quot;
+Value:           boolean
+</code></pre>
+
+<p>Next, create a file called <code>HelloWorld_map.txt</code> that defines the mapping to FHIR. Since this doesn’t align with any particular resource, it will map to <a href="https://www.hl7.org/fhir/basic.html"><code>Basic</code></a>. This file is even simpler:</p>
+<pre><code>Grammar:     Map 6.0
+Namespace:   hello
+Target:      FHIR_STU_3
+
+HelloWorld maps to Basic:
+</code></pre>
+
+<p>We didn’t map the <code>SayHello</code> data element to an existing element inside this resource, so it will automatically appear as an extension.</p>
+<p>Next, we need some simple HTML for the Implementation Guide pages, so create an <code>exampleIndexContent.html</code> file with the following content:</p>
+<pre><code>HELLO HELLO HELLO
+</code></pre>
+
+<p>Finally, we need a configuration file. Create an <code>ig-hello_world-config.json</code> file with these contents:</p>
+<pre><code class="json">{
+    &quot;projectName&quot;: &quot;Example Project&quot;,
+    &quot;projectShorthand&quot;: &quot;EXAMPLE&quot;,
+    &quot;projectURL&quot;: &quot;http://example.com&quot;,
+    &quot;fhirURL&quot;: &quot;http://example.com/fhir&quot;,
+    &quot;implementationGuide&quot;: {
+      &quot;npmName&quot;: &quot;hello_world&quot;,
+      &quot;indexContent&quot;: &quot;exampleIndexContent.html&quot;
+    },
+    &quot;publisher&quot;: &quot;Example Publisher&quot;,
+    &quot;contact&quot;: [
+        {
+            &quot;telecom&quot;: [
+                {
+                    &quot;system&quot;: &quot;url&quot;,
+                    &quot;value&quot;: &quot;http://example.com&quot;
+                }
+            ]
+        }
+    ],
+    &quot;provenanceInfo&quot;: {
+        &quot;leadAuthor&quot;: {
+            &quot;name&quot;:&quot;Example Author&quot;,
+            &quot;organization&quot;: &quot;Example Publisher&quot;,
+            &quot;email&quot;: &quot;example@example.org&quot;
+        },
+        &quot;license&quot;: &quot;Creative Commons CC-BY &lt;https://creativecommons.org/licenses/by/3.0/&gt;&quot;,
+        &quot;copyright&quot;: &quot;Copyright (c) The Example Organization &lt;http://example.org&gt;&quot;
+    }
+}
+</code></pre>
+
+<p>Now, go back to your <code>shr-cli</code> installation and run the hello world:</p>
+<pre><code>cd ~/cimpl/shr-cli
+node . -c ig-hello_world-config.json ../hello_world
+</code></pre>
+
+<p>When the program runs, it will output a warning message alerting you that mapping to Basic usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (a FHIR <code>StructureDefinition</code>) will be found in <code>~/cimpl/shr-cli/out/fhir/profiles/</code>.  <code>StructureDefinition</code>s are verbose, and this one clocks in at several hundred lines.</p>
+<p>A friendlier view is created when we create an implementation guide (IG). To do this, we use the <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">existing FHIR implementation guide (IG) publisher</a>.</p>
+<p><br /></p>
+<h2>IG Generation with a Proxy Server</h2>
+<p><em>Note: If your organization uses a proxy server, you&rsquo;ll need to explicitly declare a few options.  If your organization <strong>does not</strong> use a proxy server, you can skip ahead to <a href="#ig-generation">IG Generation</a>.</em></p>
+<p><strong>On Windows:</strong></p>
+<pre><code>java %JAVA_OPTS% -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
+</code></pre>
+
+<p><em>Note: users have reported issues with running the IG publisher on windows behind a proxy.  Please try to run the IG publisher without connecting to a proxy</em></p>
+<p><strong>On Linux/MacOS:</strong></p>
+<pre><code>java $JAVA_OPTS -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
+</code></pre>
+
+<p><br /></p>
+<h2>IG Generation (without a Proxy Server)</h2>
+<p>To generate the IG, run:</p>
+<pre><code>cd ~/cimpl/shr-cli
+yarn run ig:publish
+</code></pre>
+
+<p><em>Note: If you&rsquo;re running the IG Generation tool behind a proxy, you may need to <a href="https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy">explicitly declare the proxy at runtime</a>, since the process tries to access external terminology servers.</em></p>
+<p>The generated profile page will be located at <code>~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html</code>.  Open this page in your favorite web browser.</p>
+<blockquote>
+<p><strong>Note</strong>: the IG is automatically branded as part of the Standard Health Record (SHR). We are working on “de-branding” the IG, so please ignore the SHR references for now.</p>
+</blockquote>
+<p>You should see a FHIR profile that looks like a traditional <a href="https://www.hl7.org/fhir/implementationguide.html">FHIR Implementation Guide</a>.  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the <a href="https://github.com/standardhealth/shr-cli/wiki/Tutorial">Tutorial</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../cimpl6Tutorial_detail/" class="btn btn-neutral float-right" title="CIMPL 6.0 In-depth Tutorial">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cimplReleaseNotes/" class="btn btn-neutral" title="CIMPL Release Notes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+Built with <a href="http://www.mkdocs.org">MkDocs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../cimplReleaseNotes/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../cimpl6Tutorial_detail/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

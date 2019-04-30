@@ -1,0 +1,54 @@
+div.col-md-9 h1:first-of-type {
+    text-align: left;
+    font-size: 100px;
+    font-weight: 800;
+}
+
+div.col-md-9>p:first-of-type {
+    text-align: left;
+}
+
+div.col-md-9 p.admonition-title:first-of-type {
+    text-align: left;
+    font-size: 20px;
+}
+
+div.col-md-9 h1:first-of-type .headerlink {
+    display: none;
+}
+
+code.no-highlight {
+    color: black;
+}
+
+h1 {
+    color: black;
+    font-weight: 400;
+    font-size: 42px;
+    text-align: left;
+}
+
+h2 {
+    color: black;
+    font-weight: 600;
+    font-size: 24px;
+    text-align: left;
+}
+
+h3 {
+    color: black;
+    font-weight: 600;
+    font-size: 24px;
+    text-align: left;
+}
+
+ul.nav .main {
+    font-weight: bold;
+    color: #235082;
+}
+
+/* Definition List styles */
+
+dd {
+    padding-left: 20px;
+}
