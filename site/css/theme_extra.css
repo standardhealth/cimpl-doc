@@ -63,7 +63,7 @@
  */
 code {
     white-space: pre-wrap;
-    word-wrap: break-word;
+    word-wrap: normal;
     padding: 2px 5px;
 }
 
@@ -172,7 +172,7 @@ form .search-query {
   color: #404040;
   border: 1px solid #c7c9cb;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  background: #f8fbfd;
+  background: #b0c3cf;
   background: rgba(255, 255, 255, 0.7);
 }
 

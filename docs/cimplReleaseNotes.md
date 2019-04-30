@@ -1,6 +1,6 @@
 # CIMPL Release Notes
 
-!!! note "This documentation is in the process of being further expanded and is an actively updating document."
+>**Note:** "This documentation is in the process of being further expanded and is an actively updating document."
 
 [TOC]
 

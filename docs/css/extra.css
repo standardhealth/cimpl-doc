@@ -1,6 +1,6 @@
 div.col-md-9 h1:first-of-type {
     text-align: left;
-    font-size: 100px;
+    font-size: 80px;
     font-weight: 800;
 }
 
@@ -10,7 +10,8 @@ div.col-md-9>p:first-of-type {
 
 div.col-md-9 p.admonition-title:first-of-type {
     text-align: left;
-    font-size: 20px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 div.col-md-9 h1:first-of-type .headerlink {
@@ -24,7 +25,7 @@ code.no-highlight {
 h1 {
     color: black;
     font-weight: 400;
-    font-size: 42px;
+    font-size: 36px;
     text-align: left;
 }
 
@@ -32,6 +33,7 @@ h2 {
     color: black;
     font-weight: 600;
     font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
     text-align: left;
 }
 
@@ -39,6 +41,8 @@ h3 {
     color: black;
     font-weight: 600;
     font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
     text-align: left;
 }
 

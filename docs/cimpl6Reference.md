@@ -1,6 +1,6 @@
 # CIMPL 6.0 Reference Documentation
 
-!!! note "This documentation is in the process of being further expanded and is an actively updating document."
+>**Note:** This documentation is in the process of being further expanded and is an actively updating document.
 
 _This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md). If you're looking for a more in-depth introduction, try the [Tutorial](cimpl6Tutorial_detail.md)._
 
@@ -32,28 +32,28 @@ Grammar:        DataElement 6.0
 * Value Set files: `namespace_vs.txt`
 * Mapping files: `namespace_map.txt`
 
-!!! note "Any periods in the `namespace` should be replaced by underscores"
+>**Note:** "Any periods in the `namespace` should be replaced by underscores"
 
 #### Namespaces
 A namespace conventionally is denominated by the authoring organization and the broad category of elements the namespace defines, delineated by a period. For example:
 ```
 Namespace: shr.oncology
 ```
-!!! note "The organization name is recommended but not required (e.g., `Namespace: oncology` is also allowed)."
+>**Note:** "The organization name is recommended but not required (e.g., `Namespace: oncology` is also allowed)."
 
 #### Elements
 Elements are conventionally defined in [PascalCase](http://wiki.c2.com/?PascalCase). For example:
 ```
 Element: GeologicalLocation
 ```
-!!! note "Letters, numbers, and hyphens are allowed. However, it is required that an element name begins with an uppercase letter."
+>**Note:** "Letters, numbers, and hyphens are allowed. However, it is required that an element name begins with an uppercase letter."
 
 #### Value Sets
 Value Sets are conventionally defined in [PascalCase](http://wiki.c2.com/?PascalCase), with an additional "VS" suffix. For example:
 ```
 ValueSet: HomeEnvironmentRiskVS
 ```
-!!! note "It is required that an Value Set name begins with an uppercase letter."
+>**Note:** "It is required that an Value Set name begins with an uppercase letter."
 
 #### Code Sets
 Within a custom value set, the individual codes are conventionally written in lowercase [snake_case](https://en.wikipedia.org/wiki/Snake_case). For example:
@@ -144,7 +144,7 @@ Best practice is to follow the naming convention pattern of `organization`.`doma
 
 The tooling will not allow for duplicate namespaces.
 
-!!! note "While it is best practice to use only lower case letters, the strict requirements only require the word to begin with a lowercase letter. The rest of the namespace allows for mixed casing and hyphens"
+>**Note:** "While it is best practice to use only lower case letters, the strict requirements only require the word to begin with a lowercase letter. The rest of the namespace allows for mixed casing and hyphens"
 
 ### File Description
 The `Description` keyword provides the user the ability to define the purpose of the file, within the confines of a project.
@@ -159,7 +159,7 @@ Best practice is to write human readable text using the [ASCII](https://en.wikip
 
 There is no strict requirement for unique descriptions, and as such you will not run into description collisions.
 
-!!! warning "While the CIMPL tooling will allow for any pattern of [Unicode](http://unicode.org/standard/WhatIsUnicode.html) characters within enclosed double quotation marks (`"`), certain exporters such as the FHIR exporter will object to non-[ASCII](https://en.wikipedia.org/wiki/ASCII) text.)"
+>**Note:** "While the CIMPL tooling will allow for any pattern of [Unicode](http://unicode.org/standard/WhatIsUnicode.html) characters within enclosed double quotation marks (`"`), certain exporters such as the FHIR exporter will object to non-[ASCII](https://en.wikipedia.org/wiki/ASCII) text.)"
 
 ## Uses
 The `Uses` keyword provides a list of the namespaces used within the current namespace. Namespace inclusion allows you to use `DataElement`s and `ValueSet`s defined in other namespaces.
@@ -264,7 +264,7 @@ The FQN is a combination of the element's namespace and its declared name (throu
 shr.finding.Observation
 ```
 
-!!! note "While rare and considered bad practice, naming collisions between elements across multiple namespaces is possible. In the case of a naming collision (such as when a namespace `Uses` multiple namespaces that define an element with the same declared name), you would have to refer to the specific unique FQN instead of the declared name in element, field, and value definitions."
+>**Note:** "While rare and considered bad practice, naming collisions between elements across multiple namespaces is possible. In the case of a naming collision (such as when a namespace `Uses` multiple namespaces that define an element with the same declared name), you would have to refer to the specific unique FQN instead of the declared name in element, field, and value definitions."
 
 ## Concept Code
 The `Concept` keyword is used to define the concept code for the element.  These are numerical codes that identify clinical terms, primitive or defined, organized in hierarchies.
@@ -304,7 +304,7 @@ There is no strict requirement for unique descriptions, and as such you will not
 
 To see how it relates to FHIR output, see [StructureDefinition.description](http://hl7.org/fhir/structuredefinition-definitions.html#StructureDefinition.description).
 
-!!! warning "While the CIMPL tooling will allow for any pattern of [Unicode](http://unicode.org/standard/WhatIsUnicode.html) characters within enclosed double quotation marks (`"`), certain exporters such as the FHIR exporter will object to non-[ASCII](https://en.wikipedia.org/wiki/ASCII) text.)"
+>**Note:** "While the CIMPL tooling will allow for any pattern of [Unicode](http://unicode.org/standard/WhatIsUnicode.html) characters within enclosed double quotation marks (`"`), certain exporters such as the FHIR exporter will object to non-[ASCII](https://en.wikipedia.org/wiki/ASCII) text.)"
 
 ## Fields
 
@@ -386,7 +386,7 @@ In order to refer to an element as a class (i.e. a pointer as opposed to an inst
 
 The `[]` syntax should only encapsulate the element name. All other fields should be applied normally to the group.
 
-!!! note "CIMPL 5.0 Grammar use of the keyword `ref()` is now obsolete and replaced with `[]`."
+>**Note:** "CIMPL 5.0 Grammar use of the keyword `ref()` is now obsolete and replaced with `[]`."
 
 | CIMPL 5.0 Grammar | CIMPL 6.0 Grammar | Remarks |
 | ----------------- | ----------------- | -------- |
@@ -454,7 +454,7 @@ The `is` keyword limits the field to a specifc value (e.g., a `code`, a specific
 |----------|---------|
 |  | `ObservationCode = LNC#82810-3` |
 
-!!! note "The `=` operator locks the code for all instances of the data element.  If you only need to lock the code for one particular mapping, do so using the [`fix`](#fix) keyword in the mapping file."
+>**Note:** "The `=` operator locks the code for all instances of the data element.  If you only need to lock the code for one particular mapping, do so using the [`fix`](#fix) keyword in the mapping file."
 
 ### Substitute
 The `substitute` keywords constrains to a subclass of an element or the choices in a given value set.
@@ -473,7 +473,7 @@ The keyword `only` binds only one logical choice to a property or value.
 |----------|---------|
 | `only` | `PlannedProtocol only Protocol` |
 
-_*!!! note "`only` shall never be preceded by bracketed term, because intrinsically, it applies to all value choices."
+_*>**Note:** "`only` shall never be preceded by bracketed term, because intrinsically, it applies to all value choices."
 
 ### Value Set
 The `from` keyword limits the value of a field to be from a specific value set, with different levels of requirement.
@@ -549,7 +549,7 @@ This is useful in further specifying fields that are analagous to lists.
 
 In the above example, the field `Foo` is _required_ to include `1` `PhysicalActivityLevel`.
 
-!!! note "As of CIMPL 6.0, the use of the `Includes` keyword for specifying inclusions subclasses or properties is now obsolete and discouraged for use."
+>**Note:** "As of CIMPL 6.0, the use of the `Includes` keyword for specifying inclusions subclasses or properties is now obsolete and discouraged for use."
 
 For example, the following statement block is no longer supported.
 
@@ -569,7 +569,7 @@ Element: VitalSign
     DiastolicPressure 1..1
 ```
 
-!!! note "The collective cardinality of all inclusions must fit within the field, i.e. if you are including 3 distinct elements, then the field must have a maximum cardinality greater than `3` (like `*`)."
+>**Note:** "The collective cardinality of all inclusions must fit within the field, i.e. if you are including 3 distinct elements, then the field must have a maximum cardinality greater than `3` (like `*`)."
 
 ## Array Population
 
@@ -608,7 +608,7 @@ Defines the name of the value set.
 |----------|---------|
 | `ValueSet` | `ValueSet: ProposedStatusVS` |
 
-!!! note "By convention, all value sets should be Pascal case and end with `VS`."
+>**Note:** "By convention, all value sets should be Pascal case and end with `VS`."
 
 ### Value Set Description
 Defines the name of the value set.
@@ -854,7 +854,7 @@ The table below summarizes these changes:
 
 <br />
 
-!!! note "As of CIMPL 6.0, `must be`, `should be`, `could be`, and `if covered` value set constraints are obsolete and replaced by `(required)`, `(preferred)`, `(extensible)`, and `(example)`"
+>**Note:** "As of CIMPL 6.0, `must be`, `should be`, `could be`, and `if covered` value set constraints are obsolete and replaced by `(required)`, `(preferred)`, `(extensible)`, and `(example)`"
 
 | CIMPL 5.0 Example | CIMPL 6.0 Example | Binding Strength |
 |----------|---------|---------|
