@@ -1,8 +1,12 @@
 # CIMPL Setup and Installation
-<br />
+
+***
+
 **Table of Contents**
 
 [TOC]
+
+***
 
 # Background
 CIMPL (and, by extension, the `shr-cli` tool) is a text-based tool that requires its users to understand and use your operating system's [command line](https://en.wikipedia.org/wiki/Command-line_interface).  If you are uncomfortable with using the command line, try [this short introduction](https://tutorial.djangogirls.org/en/intro_to_command_line/).

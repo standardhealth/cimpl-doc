@@ -4,6 +4,10 @@
 
 _This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md). If you're looking for a more in-depth introduction, try the [Tutorial](cimpl6Tutorial_detail.md)._
 
+***
+
+**Table of Contents**
+
 [TOC]
 
 ***
@@ -17,14 +21,14 @@ CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is 
 ### Whitespace
 Repeated whitespace is generally not meaningful within CIMPL files. So this:
 ```
-Grammar: DataElement 6.0
-Namespace: oncocore
+Grammar:    DataElement 6.0
+Namespace:  myExampleNamespace
 ```
 ...is equivalent to this:
 ```
 Grammar:        DataElement 6.0
 
-  Namespace:    oncocore
+  Namespace:    myExampleNamespace
 ```
 ### Naming Conventions
 #### File names
@@ -33,6 +37,9 @@ Grammar:        DataElement 6.0
 * Mapping files: `namespace_map.txt`
 
 >**Note:** "Any periods in the `namespace` should be replaced by underscores"
+
+For example:
+If there is a namespace called `odh.occupation`, the value set file name could be called `odh_occupation_vs.txt`.
 
 #### Namespaces
 A namespace conventionally is denominated by the authoring organization and the broad category of elements the namespace defines, delineated by a period. For example:
@@ -104,12 +111,10 @@ These comments can take up multiple lines.
 Each CIMPL file contains header information that describes the file type, its scope and inheritance, and its purpose.  It also allows developers to create aliases for urls and code systems.
 
 An example file type header for a CIMPL Data Element File is shown below:
-
 ```
 Grammar:        DataElement 6.0
 Namespace:      shr.environment
-Description:    "The SHR Environment domain contains definitions related to
-                surroundings experienced by the person of record."
+Description:    "The SHR Environment domain contains definitions related to surroundings experienced by the person of record."
 Uses:           shr.core, shr.base, shr.allergy, shr.observation, shr.medication
 Codesystem:     LNC = http://loinc.org
 ```
@@ -207,16 +212,14 @@ The abbreviation by convention should be be an all UPPER CASE word. _(Although, 
 ```
 Grammar:        DataElement 6.0
 Namespace:      shr.environment
-Description:    "The SHR Environment domain contains definitions related to
-                surroundings experienced by the person of record."
+Description:    "The SHR Environment domain contains definitions related to surroundings experienced by the person of record."
 Uses:           shr.core, shr.base, shr.allergy, shr.observation, shr.medication
 Codesystem:     LNC = http://loinc.org
 
 Entry:          FinancialSituation
 Concept:        MTH#C0516918
 Parent:         Panel
-Description:    "Measures of the ability of the subject to obtain and pay for the
-                necessities of life."
+Description:    "Measures of the ability of the subject to obtain and pay for the necessities of life."
 Value:          concept is MTH#C0516918
 Property:       AnnualIncome    0..1
 Property:       IncomeSource    0..*
@@ -242,13 +245,11 @@ These keywords are used to define data elements with three different levels of e
 ### Property Declaration
 
 The keyword `Property` is required to define properties for an Entry or Element.
-
 ```
 Entry:          FinancialSituation
 Concept:        MTH#C0516918
 Parent:         Panel
-Description:    "Measures of the ability of the subject to obtain and pay for the
-                necessities of life."
+Description:    "Measures of the ability of the subject to obtain and pay for the necessities of life."
 Value:          concept is MTH#C0516918
 Property:       AnnualIncome    0..1
 Property:       IncomeSource    0..*
