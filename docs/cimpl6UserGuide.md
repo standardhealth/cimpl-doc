@@ -41,9 +41,9 @@ Using _Go to Definition_:
 ![Using Go to Definition](img_cimpl/VSCode_GotoDef.png)
 
 # Support
-Questions on using CIMPL and its toolchain can be addressed email at _cimpl-support@mitre.org_.
+Questions on using CIMPL and its toolchain can be addressed on the HL7 Zulip chat channel [#cimpl](https://chat.fhir.org/#streams/197290/cimpl)
 
-Bugs can be reported by entering an issue to one of the following GitHub repositories:
+Report any issues on one of the following GitHub repositories:
 
-* Related to modeling of CIMPL constructs or its FHIR-based classes: https://github.com/standardhealth/shr_spec 
-* Related to running the CIMPL `shr-cli` compiler, CIMPL export configuration files, or generating the FHIR Implementation Guide (IG): https://github.com/standardhealth/shr-cli/releases
+* Related to modeling of CIMPL constructs or its FHIR-based classes: https://github.com/standardhealth/shr_spec/issues 
+* Related to running the CIMPL `shr-cli` compiler, CIMPL export configuration files, or generating the FHIR Implementation Guide (IG): https://github.com/standardhealth/shr-cli/issues

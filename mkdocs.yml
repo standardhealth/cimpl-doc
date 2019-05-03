@@ -1,6 +1,5 @@
 site_name: CIMPL Project
 nav:
-       - Home: index.md
        - About: 
               - about.md
               - cimplReleaseNotes.md
