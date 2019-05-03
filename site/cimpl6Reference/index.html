@@ -84,7 +84,7 @@
 </li>
                                     
 <li >
-    <a href="../cimpl6UserGuide/">CIMPL User's Guide</a>
+    <a href="../cimpl6UserGuide/">CIMPL Authoring</a>
 </li>
                                     
 <li >
@@ -196,6 +196,8 @@
 <p><strong>Note:</strong> This documentation is in the process of being further expanded and is an actively updating document.</p>
 </blockquote>
 <p><em>This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a quick introduction to CIMPL and <code>shr-cli</code> environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>. If you're looking for a more in-depth introduction, try the <a href="../cimpl6Tutorial_detail/">Tutorial</a>.</em></p>
+<hr />
+<p><strong>Table of Contents</strong></p>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-60-reference-documentation">CIMPL 6.0 Reference Documentation</a></li>
@@ -306,14 +308,14 @@
 <h1 id="cimpl-file-types">CIMPL File Types</h1>
 <h3 id="whitespace">Whitespace</h3>
 <p>Repeated whitespace is generally not meaningful within CIMPL files. So this:</p>
-<pre><code>Grammar: DataElement 6.0
-Namespace: oncocore
+<pre><code>Grammar:    DataElement 6.0
+Namespace:  myExampleNamespace
 </code></pre>
 
 <p>...is equivalent to this:</p>
 <pre><code>Grammar:        DataElement 6.0
 
-  Namespace:    oncocore
+  Namespace:    myExampleNamespace
 </code></pre>
 
 <h3 id="naming-conventions">Naming Conventions</h3>
@@ -326,6 +328,8 @@ Namespace: oncocore
 <blockquote>
 <p><strong>Note:</strong> "Any periods in the <code>namespace</code> should be replaced by underscores"</p>
 </blockquote>
+<p>For example:
+If there is a namespace called <code>odh.occupation</code>, the value set file name could be called <code>odh_occupation_vs.txt</code>.</p>
 <h4 id="namespaces">Namespaces</h4>
 <p>A namespace conventionally is denominated by the authoring organization and the broad category of elements the namespace defines, delineated by a period. For example:</p>
 <pre><code>Namespace: shr.oncology
@@ -391,8 +395,7 @@ These comments can take up multiple lines.
 <p>An example file type header for a CIMPL Data Element File is shown below:</p>
 <pre><code>Grammar:        DataElement 6.0
 Namespace:      shr.environment
-Description:    &quot;The SHR Environment domain contains definitions related to
-                surroundings experienced by the person of record.&quot;
+Description:    &quot;The SHR Environment domain contains definitions related to surroundings experienced by the person of record.&quot;
 Uses:           shr.core, shr.base, shr.allergy, shr.observation, shr.medication
 Codesystem:     LNC = http://loinc.org
 </code></pre>
@@ -535,16 +538,14 @@ Codesystem: SCT = http://sct.org
 <h2 id="sample-data-element-file">Sample Data Element File</h2>
 <pre><code>Grammar:        DataElement 6.0
 Namespace:      shr.environment
-Description:    &quot;The SHR Environment domain contains definitions related to
-                surroundings experienced by the person of record.&quot;
+Description:    &quot;The SHR Environment domain contains definitions related to surroundings experienced by the person of record.&quot;
 Uses:           shr.core, shr.base, shr.allergy, shr.observation, shr.medication
 Codesystem:     LNC = http://loinc.org
 
 Entry:          FinancialSituation
 Concept:        MTH#C0516918
 Parent:         Panel
-Description:    &quot;Measures of the ability of the subject to obtain and pay for the
-                necessities of life.&quot;
+Description:    &quot;Measures of the ability of the subject to obtain and pay for the necessities of life.&quot;
 Value:          concept is MTH#C0516918
 Property:       AnnualIncome    0..1
 Property:       IncomeSource    0..*
@@ -570,23 +571,22 @@ Property:       IncomeSource    0..*
 <td><code>Entry: FinancialSituation</code></td>
 </tr>
 <tr>
-<td><code>Abstract Element</code></td>
-<td><code>Abstract Element: Any</code></td>
+<td><code>Abstract</code></td>
+<td><code>Abstract: Any</code></td>
 </tr>
 </tbody>
 </table>
-<p><em>Note the spacing discrepancy between <code>Entry</code> and <code>Abstract Element</code>.  This has no semantic meaning but is inherent to the syntax.</em></p>
+<p><em>Note the spacing discrepancy between <code>Entry</code> and <code>Abstract</code>.  This has no semantic meaning but is inherent to the syntax.</em></p>
 <p>These keywords are used to define data elements with three different levels of expression in the target output:
 * <code>Entry</code> is used to define elements that will be used directly by the target output, i.e., data will be <em>entered</em> directly into this item by and end user once it has been mapped.  For FHIR exports, these items will be created as 'Primary Profiles'
 * <code>Element</code> is used to define supporting data elements for <code>Entry</code>s.  These data elements will be present in the target output as, but they are not the top-level items that are exported. For FHIR exports, these items will be created as 'Supporting Profiles'.
-* <code>Abstract Element</code> is used to define elements that are used only within the CIMPL mapping to create basic objects that will be leveraged by other data elements.  They will not be present in the target mapping.</p>
+* <code>Abstract</code> is used to define elements that are used only within the CIMPL mapping to create basic objects that will be leveraged by other data elements.  They will not be present in the target mapping.</p>
 <h3 id="property-declaration">Property Declaration</h3>
 <p>The keyword <code>Property</code> is required to define properties for an Entry or Element.</p>
 <pre><code>Entry:          FinancialSituation
 Concept:        MTH#C0516918
 Parent:         Panel
-Description:    &quot;Measures of the ability of the subject to obtain and pay for the
-                necessities of life.&quot;
+Description:    &quot;Measures of the ability of the subject to obtain and pay for the necessities of life.&quot;
 Value:          concept is MTH#C0516918
 Property:       AnnualIncome    0..1
 Property:       IncomeSource    0..*

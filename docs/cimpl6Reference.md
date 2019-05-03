@@ -233,14 +233,14 @@ The `Element` keyword allows users to define the name of the element and the lin
 |----------|---------|
 | `Element` | `Element: Observation` |
 | `Entry`  | `Entry: FinancialSituation` |
-| `Abstract Element` | `Abstract Element: Any` |
+| `Abstract` | `Abstract: Any` |
 
-_Note the spacing discrepancy between `Entry` and `Abstract Element`.  This has no semantic meaning but is inherent to the syntax._
+_Note the spacing discrepancy between `Entry` and `Abstract`.  This has no semantic meaning but is inherent to the syntax._
 
 These keywords are used to define data elements with three different levels of expression in the target output:
 * `Entry` is used to define elements that will be used directly by the target output, i.e., data will be _entered_ directly into this item by and end user once it has been mapped.  For FHIR exports, these items will be created as 'Primary Profiles'
 * `Element` is used to define supporting data elements for `Entry`s.  These data elements will be present in the target output as, but they are not the top-level items that are exported. For FHIR exports, these items will be created as 'Supporting Profiles'.
-* `Abstract Element` is used to define elements that are used only within the CIMPL mapping to create basic objects that will be leveraged by other data elements.  They will not be present in the target mapping.
+* `Abstract` is used to define elements that are used only within the CIMPL mapping to create basic objects that will be leveraged by other data elements.  They will not be present in the target mapping.
 
 ### Property Declaration
 

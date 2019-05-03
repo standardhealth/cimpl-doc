@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>CIMPL User's Guide - CIMPL Project</title>
+        <title>CIMPL Authoring - CIMPL Project</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -84,7 +84,7 @@
 </li>
                                     
 <li class="active">
-    <a href="./">CIMPL User's Guide</a>
+    <a href="./">CIMPL Authoring</a>
 </li>
                                     
 <li >
@@ -140,38 +140,63 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#cimpl-users-guide">CIMPL User's Guide</a></li>
+        <li class="main active"><a href="#cimpl-authoring">CIMPL Authoring</a></li>
         <li class="main "><a href="#authoring-environment">Authoring Environment</a></li>
             <li><a href="#setting-up-the-vscode-authoring">Setting up the VSCode Authoring</a></li>
+        <li class="main "><a href="#support">Support</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="cimpl-users-guide">CIMPL User's Guide</h1>
+<h1 id="cimpl-authoring">CIMPL Authoring</h1>
 <p><em>The purpose of this guide is to educate people about many different aspects of creating CIMPL models and its supporting utilities.  If you're looking for a quick introduction to CIMPL and <code>shr-cli</code> environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>.  If you're looking for detailed guidance on CIMPL syntax, try the <a href="../cimpl6Reference/">CIMPL6 Reference documentation</a>.</em></p>
+<hr />
+<p><strong>Table Of Contents</strong></p>
 <div class="toc">
 <ul>
-<li><a href="#cimpl-users-guide">CIMPL User's Guide</a></li>
+<li><a href="#cimpl-authoring">CIMPL Authoring</a></li>
 <li><a href="#authoring-environment">Authoring Environment</a><ul>
 <li><a href="#setting-up-the-vscode-authoring">Setting up the VSCode Authoring</a><ul>
-<li><a href="#cimpl-vscode-extension">CIMPL VSCode Extension</a></li>
+<li><a href="#navigating-a-cimpl-model-within-vscode">Navigating a CIMPL Model within VSCode</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#support">Support</a></li>
 </ul>
 </div>
+<hr />
 <h1 id="authoring-environment">Authoring Environment</h1>
 <p>Any text editor can be used to write CIMPL grammar. However, <a href="https://code.visualstudio.com/">VSCode editor</a> is recommended to take advantage of custom-developed to better navigate CIMPL constructs.  </p>
 <h2 id="setting-up-the-vscode-authoring">Setting up the VSCode Authoring</h2>
+<blockquote>
+<p><strong>Note:</strong> VSCode UI screenshots in this section were taken from a MacOS enironment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.</p>
+</blockquote>
 <ul>
 <li>Download the <a href="https://code.visualstudio.com/">VSCode editor</a>. </li>
+<li>Open VSCode and search for the extension <strong>vscode-lang-cimpl</strong>.  The figure below shows where to find VSCode extensions. </li>
 </ul>
-<h3 id="cimpl-vscode-extension">CIMPL VSCode Extension</h3>
+<p><img alt="CIMPL VSCode Extenstion" src="../img_cimpl/VSCodeLangCimplExtension_small.png" /></p>
+<h3 id="navigating-a-cimpl-model-within-vscode">Navigating a CIMPL Model within VSCode</h3>
 <p>Elements properties can be previewed in the following ways:</p>
-<ul>
+<ol>
 <li>hovering over the element.</li>
-<li>right-clicking the element and selecting <em>Peek Definition</em></li>
+<li>placing the cursor on the element text and right-clicking option <em>Peek Definition</em></li>
+<li>placing the cursor on the element text and right-clicking option <em>Go to Definition</em></li>
+</ol>
+<p><br /></p>
+<p>Hovering over the element:
+<img alt="Hovering over the element" src="../img_cimpl/VSCode_Peek01.png" /></p>
+<p>Using <em>Peek Definition</em>:
+<img alt="Using Peek" src="../img_cimpl/VSCode_Peek02.png" /></p>
+<p>Using <em>Go to Definition</em>:
+<img alt="Using Go to Definition" src="../img_cimpl/VSCode_GotoDef.png" /></p>
+<h1 id="support">Support</h1>
+<p>Questions on using CIMPL and its toolchain can be addressed email at <em>cimpl-support@mitre.org</em>.</p>
+<p>Bugs can be reported by entering an issue to one of the following GitHub repositories:</p>
+<ul>
+<li>Related to modeling of CIMPL constructs or its FHIR-based classes: https://github.com/standardhealth/shr_spec </li>
+<li>Related to running the CIMPL <code>shr-cli</code> compiler, CIMPL export configuration files, or generating the FHIR Implementation Guide (IG): https://github.com/standardhealth/shr-cli/releases</li>
 </ul></div>
         </div>
 
