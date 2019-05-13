@@ -338,4 +338,4 @@ sudo -E gem install bundler jekyl
 
 If you're running the IG Generation tool behind a proxy, you may need to [explicitly declare the proxy at runtime](https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy), since the process tries to access external terminology servers.
 
-That's it!  To test whether your CIMPL environment has been properly set up, try the [Hello World](https://github.com/standardhealth/shr-cli/wiki/Hello-World) example.
+That's it!  To test whether your CIMPL environment has been properly set up, try the [Hello World](cimpl6Tutorial_helloWorld.md) example.
