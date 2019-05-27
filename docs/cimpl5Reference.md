@@ -1,7 +1,7 @@
 # CIMPL 5.0 Reference Documentation
-_Note: this documentation is in the process of being further expanded and is an actively updating document._
 
-_This is a comprehensive guide to CIMPL syntax.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](https://github.com/standardhealth/shr-cli/wiki/Hello-World). If you're looking for a more in-depth introduction, try the [Tutorial](https://github.com/standardhealth/shr-cli/wiki/Tutorial)._
+
+_This is a comprehensive guide to CIMPL 5.0 syntax. The latest release is CIMPL 6.0. This documentation is provided for historical purposes. If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](https://github.com/standardhealth/shr-cli/wiki/Hello-World). If you're looking for a more in-depth introduction, try the [Tutorial](https://github.com/standardhealth/shr-cli/wiki/Tutorial)._
 
 ## Table of Reference
 
@@ -20,7 +20,7 @@ _This is a comprehensive guide to CIMPL syntax.  If you're looking for a quick i
 * [2.4 File Description](#file-description)
 * [2.5 Uses](#uses)
 * [2.6 Url Shorthands](#url-shorthands)
-* [2.7 Codesystems](#codesystems)
+* [2.7 CodeSystems](#codesystems)
 
 **[3. Data Element File](#data-element-file)**
 * [3.1 Sample Data Element File](#sample-data-element-file)
@@ -69,7 +69,7 @@ _This is a comprehensive guide to CIMPL syntax.  If you're looking for a quick i
 
 ## General Overview
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a domain specific language for defining clinical information models. It was designed to be simple and compact, while coming with tools to produce CIMCORE (the SHR computable representation) and FHIR profiles.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a domain specific language for defining clinical information models. It was designed to be simple and declarative, with tools to produce FHIR Profiles, FHIR Implementation Guides, data dictionaries, and other assets.
 
 ### Whitespace
 Repeated whitespace is generally not meaningful within CIMPL files. So this:
@@ -165,13 +165,13 @@ Grammar:        DataElement 5.0
 Namespace:      shr.environment
 Description:    "The SHR Environment domain contains definitions related to surroundings experienced by the person of record."
 Uses:           shr.core, shr.base, shr.allergy, shr.observation, shr.medication
-Codesystem:     LNC = http://loinc.org
+CodeSystem:     LNC = http://loinc.org
 ```
 
 ### Grammar
 The `Grammar` keyword is used to define the file type and the version of CIMPL used in development/parsing.  This is required for all CIMPL files.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Grammar` | `Grammar: DataElement 5.0` |
 | `Grammar` | `Grammar: ValueSet 5.0` |
@@ -187,7 +187,7 @@ The version details the MAJOR and MINOR version the file was written for. The la
 ### Namespace Declaration
 The `Namespace` keyword defines the scope of the file and serves as a broad grouping of `DataElement`, `ValueSet` and `Map` files within a domain.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Namespace` | `Namespace: shr.environment` |
 
@@ -202,7 +202,7 @@ _(Note: While it is best practice to use only lower case letters, the strict req
 #### File Description
 The `Description` keyword provides the user the ability to define the purpose of the file, within the confines of a project.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Description` | `Description: "The SHR Environment domain contains definitions related to surroundings experienced by the person of record."` |
 
@@ -217,7 +217,7 @@ _(NOTE: While the CIMPL tooling will allow for any pattern of [Unicode](http://u
 ### Uses
 The `Uses` keyword provides a list of the namespaces used within the current namespace. Namespace inclusion allows you to use `DataElement`s and `ValueSet`s defined in other namespaces.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Uses` | `Uses: shr.core, shr.base, shr.allergy, shr.observation, shr.medication` |
 
@@ -230,7 +230,7 @@ The order of inclusion has no effect.
 ### Url Shorthands
 The `Path` keyword allows for abbreviations of long urls.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Path` | `Path: FHIR = http://hl7.org/fhir/ValueSet` |
 
@@ -238,18 +238,18 @@ This functionality is completely optional, but it is provided to make authoring 
 
 The abbreviation by convention should be be an all UPPER CASE word. _(Although, the tooling does allow for numbers and hyphens after the first letter)._
 
-### Codesystems
-The `Codesystem` keyword allows for abbrevations of codesystems. In order to use code systems in a DataElement definition or constraint, it is necessary to first define them in the file header (this is largely due to the complexity of codesystems' direct code references).
+### CodeSystems
+The `CodeSystem` keyword allows for abbrevations of codesystems. In order to use code systems in a DataElement definition or constraint, it is necessary to first define them in the file header (this is largely due to the complexity of codesystems' direct code references).
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
-| `Codesystem` | `Codesystem: LNC = http://loinc.org` |
+| `CodeSystem` | `CodeSystem: LNC = http://loinc.org` |
 
 You must define each codesystem you use in separate definitions across multiple lines, e.g.
 
 ```
-Codesystem: LNC = http://loinc.org
-Codesystem: SCT = http://sct.org
+CodeSystem: LNC = http://loinc.org
+CodeSystem: SCT = http://sct.org
 ```
 
 The abbreviation by convention should be be an all UPPER CASE word. _(Although, the tooling does allow for numbers and hyphens after the first letter)_.
@@ -263,7 +263,7 @@ Namespace:      shr.environment
 Description:    "The SHR Environment domain contains definitions related to
                 surroundings experienced by the person of record."
 Uses:           shr.core, shr.base, shr.allergy, shr.observation, shr.medication
-Codesystem:     LNC = http://loinc.org
+CodeSystem:     LNC = http://loinc.org
 
 EntryElement:   FinancialSituation
 Concept:        MTH#C0516918
@@ -279,7 +279,7 @@ Value:          CodeableConcept is MTH#C0516918
 ### Element Name Declaration
 The `Element` keyword allows users to define the name of the element and the lines following the `Element` keyword comprise the definition of that element.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Element` | `Element: Observation` |
 | `EntryElement` | `EntryElement: FinancialSituation` |
@@ -306,7 +306,7 @@ _Note: While rare and considered bad practice, naming collisions between element
 ### Concept Code
 The `Concept` keyword is used to define the concept code for the element.  These are numerical codes that identify clinical terms, primitive or defined, organized in hierarchies.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Concept` | `Concept: MTH#C0516918` |
 
@@ -317,7 +317,7 @@ To see how it relates to FHIR output, see [StructureDefinition.keyword](http://h
 ### Inheritance
 Provides the parent element from which the properties are inherited. This works similar to class inheritance in object orientated programming. Additionally, mappings are inherited alongside properties.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Based on` | `Based on: Panel` |
 
@@ -328,7 +328,7 @@ Selective inheritance is achievable through 'zeroing out' inherited properties. 
 ### Description
 The textual description of the element.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
  `Description` | `Description: "Measures of the ability of the..."` |
 
@@ -347,7 +347,7 @@ _(NOTE: While the CIMPL tooling will allow for any pattern of [Unicode](http://u
 #### Value
 Defines what the element is. You are allowed to declare a value to be either a [primitive](#primitives) or a DataElement.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Value` | `Value: CodeableConcept` |
 |         | `Value: string` |
@@ -386,7 +386,7 @@ CIMPL allows users to define fields as the following primitive data types:
 #### Field
 Object properties on the element.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 || `0..1  AnnualIncome` |
 
@@ -395,14 +395,14 @@ In most cases, you refer to an element by its name. In the rare case of a naming
 #### Inherited Field
 Object properties on the element inherited from the parent or other elements.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 || `PanelCode is LNC#83335-0` |
 
 #### Inherited Value
 Object value on the element inherited from the parent or other elements.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Value` | `Value is MTH#C0516918` |
 
@@ -411,7 +411,7 @@ The `Value` keyword can be used identically to an [Inherited Field](#inherited-f
 #### References
 In order to refer to an element as a class (i.e. a pointer as opposed to an instance), you can encapsulate the element name using `ref()`.  This is helpful for defining complex objects with child elements that are already defined as parts of existing data elements.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `ref()` | `1..1  ref(Role)` |
 | `ref()` | `0..1  PartOf value is type ref(Organization)` |
@@ -433,7 +433,7 @@ Fields can be constrained to further specify their acceptable values using [card
 #### No Constraint
 Fields can exist without any constraints.  They can also be constrained to a data type (or set of data types) without further constraining the possible values within that data type.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 || `0..1 GeopoliticalLocation` |
 || `Value: CodeableConcept` |
@@ -450,7 +450,7 @@ When constraining an inherited field, you can only retain the previous cardinali
 
 _Note: By constraining it to 0..0, you can remove an inherited field from an element._
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 || `0..* LanguageUsed` |
 || `1..2 GovernmentIssuedID` |
@@ -458,7 +458,7 @@ _Note: By constraining it to 0..0, you can remove an inherited field from an ele
 #### Fixed Value
 The `is` keyword limits the field to a specifc value (e.g., a `code`, a specific `string`, or a `boolean` value).
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `is` | `ObservationCode is LNC#82810-3` |
 
@@ -467,7 +467,7 @@ _Note: The `is` keyword locks the code for all instances of the data element.  I
 #### Type
 The `is type` keywords limits the data type of a field to a previously defined element.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `is type` | `Quantity is type DollarAmount` |
 
@@ -476,7 +476,7 @@ Use case: If we have an abstract element, and we are making a more specific vers
 #### Value Set
 The `from` keyword limits the value of a field to be from a specific value set, with different levels of requirement.
 
-| Keywords | Example | Binding Strength |
+| Keyword | Example | Binding Strength |
 |----------|---------|---------|
 | `from`   | `Substance from SubstanceOfAbuseVS` | Required |
 | `must be` | `Priority must be from http://hl7.org/fhir/ValueSet/request-priority` | Required
@@ -493,7 +493,7 @@ The binding strengths correspond to [FHIR binding strengths](https://www.hl7.org
 #### Includes Code
 For fields that are already defined with a data type of `code`, the `includes` keyword expands the allowable entries for that field.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `includes` | `Category includes LNC#54511-1 "Behavior"` |
 | `includes` | `ProblemCategory includes #adverse_reaction` |
@@ -508,7 +508,7 @@ The second example above expands the allowable codes in `ProblemCategory` to inc
 
 Specifies the quantity of particular types of objects within the value.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `includes` | `Foo includes 1..1	PhysicalActivityLevel` |
 
@@ -558,7 +558,7 @@ Condition maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-condit
 ### Element Mapping
 Maps a CIMPL element to a target element.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `maps to` | `FinancialSituation maps to DiagnosticResult:` |
 || `FinancialSituation:` |
@@ -570,7 +570,7 @@ If no FHIR mapping is defined for an element and it inherits no mappings from it
 ### Field Mapping
 Maps a CIMPL element field to a target field.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `maps to` | `MaritalStatus maps to maritalStatus` |
 | `maps to` | `Ethnicity maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity` |
@@ -591,7 +591,7 @@ With FHIR as the target output, the right-hand side of the map statement can poi
 ### Fix
 Similar to the [`is`](#fixed-value) keyword, the `fix` keyword allows for FHIR fields to be locked to a certain value.  It is helpful for locking field values in specific mappings (instead of in the `DataElement` definition, which would be locked for all potential mappings).
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `fix` | `fix status to #completed` |
 
@@ -600,7 +600,7 @@ _Note about syntax: The element being fixed on left hand side of this syntax is 
 ### Constrain
 The `constrain` keyword allows users to constrain the cardinality of elements in output files.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `constrain` | `constrain explanation to 0..1` |
 
@@ -616,7 +616,7 @@ See the FHIR documentation for more detail about [slicing](https://www.hl7.org/f
 #### Declaring a Discriminator
 To perform any slicing, a discriminator needs to be declared, using `slice on` followed by the discriminator.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `slice on` | `Laterality maps to qualifier (slice on = coding.code)` |
 | `slice on type` | TODO |
@@ -633,7 +633,7 @@ CIMPL supports the FHIR processing types for discriminators:
 #### Moving the Slice Location
 If the discriminator used for slicing is not the actual field that is being mapped to, `slice at` can allow you to explicitly define the location of the slice.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `slice at` | `Members.Observation maps to related.target (slice at = related; slice on type)` |
 
@@ -643,7 +643,7 @@ In the above example, though the mapping is declared such that `Members.Observat
 #### Slicing Strategies
 * TODO: What does this do and when should it be used?
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `slice strategy` | `Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)` |
 * TODO: What is the syntax?  What are the allowable options?
@@ -673,7 +673,7 @@ Includes codes from DAR
 #### Value Set Declaration
 Defines the name of the value set.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `ValueSet` | `ValueSet: ProposedStatusVS` |
 
@@ -682,14 +682,14 @@ By convention, all value sets should be Pascal case and end with `VS`.
 #### Value Set Description
 Defines the name of the value set.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Description` | `Description: "The status of a proposal."` |
 
 #### Code-Value Declaration
 Define the code or value.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 || `#proposed "The proposal has been proposed, but not accepted or rejected."` |
 || `CAP#29915		"None/Negative"`|
@@ -702,7 +702,7 @@ This can either be a new user defined `code`, or it can be individual codes from
 
 Extends a custom defined `ValueSet` to include codes from other codesystems.
 
-| Keywords | Example |
+| Keyword | Example |
 |----------|---------|
 | `Includes` | `Includes codes from MDR` |
 | `Includes` and `descending from` | `Includes codes descending from SCT#105590001` |
