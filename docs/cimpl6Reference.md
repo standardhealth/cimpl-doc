@@ -387,9 +387,9 @@ A property that refers to an Entry (such as ResearchStudy, above) is implicitly 
 
 >**Note:** CIMPL 5.0 Grammar use of the keyword `ref()` is now obsolete.
 
-### Value Keyword (Element only)
+### Value Keyword
 
-The Value represents the data type(s) the Element can accept. Values can be [primitives](#primitives), Elements, Groups, or Entries. Everything eventually "bottoms out" to Elements whose values are primitive types.
+The Value represents the data type(s) an Element can accept. The Value keyword can only be used in Elements. Values can be [primitives](#primitives), Elements, Groups, or Entries. Everything eventually "bottoms out" to Elements whose values are primitive types.
 
 Values can be simple, such as:
 ```
@@ -425,24 +425,31 @@ Value:             concept from YesNoUnknownVS (required)
 CIMPL supports four binding strengths, `required`, `extensible`, `preferred`, and `example`, the same as FHIR.
 
 # Constraints
-Constraints can be applied properties or values. The grammars are different, and are described separately, below. Constraints can be placed on top-level properties or nested properties (see [Constraining Nested Properties](#constraining-nested-properties)). Unlike class definitions, _constraints do not begin the line with a keyword followed by a colon_.
+Constraints can be applied properties, values, or value choices. Constraints can be placed on top-level properties or nested properties (see [Constraining Nested Properties](#constraining-nested-properties)). Unlike class definitions, _constraint statements do not begin the line with a keyword followed by a colon_.
 
-## Constraints on Properties
-Constraints can be applied to locally-defined properties or properties inherited from the parent. This table lists the possible constraints on properties:
+Constraints can be applied to locally-defined properties or properties inherited from the parent.
 
-| To do this.. | Use this Keyword or Symbol |
-|----------|---------|
-| [Narrow cardinality](#cardinality-constraint) | `{min}..{max}` |
-| [Assign a fixed value](#fixed-value-constraint) | `=`|
-| [Narrow data type](#substitute-constraint) | `substitute` |
-| [Bind a value set](#value-set-binding-constraint) | `from` |
-| [Slice an array](#includes-constraint) | `includes` |
-| [Populate an array](#array-population-constraint) | `+=` |
+| To do this.. | Use this Keyword or Symbol | Applies to |
+|----------|---------|---------|
+| [Narrow cardinality](#cardinality-constraint) | `{min}..{max}` | Property |
+| [Assign a fixed value](#fixed-value-constraint) | `=`| Property or Value[Choice] |
+| [Narrow data type](#substitute-constraint) | `substitute` | Property or Value[Choice] |
+| [Bind a value set](#value-set-binding-constraint) | `from` | Property or Value[Choice] |
+| [Slice an array](#includes-constraint) | `includes` | Array Property |
+| [Populate an array](#array-population-constraint) | `+=` | Array Property |
+| [Narrow choices for a value](#only-constraint) | `only` | Value |
 
-### Cardinality Constraint
-Cardinality defines the number of repeats that can exist for a property. Cardinality is specified using FHIR syntax, {min}..{max}where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound. To express no upper bound, a `*` is used.
+### Using Bracket Notation to Denote a Value Choice
+As explained in [Value Keyword](#value-keyword), a Value can offer a choice of data types. When applying constraints, you must indicate _which_ choice the constraint applies to. This is expressed in _bracket notation_.
 
-When constraining cardinality, you can only narrow the previously declared cardinality.
+For example, if an element defines `Value: boolean or concept`, then `Value[boolean]` refers to the boolean choice, and `Value[concept]` refers to the `concept` choice. Any constraint that can apply to a boolean type can apply to `Value[boolean]` (such as fixing the value to `true`), and any constraint that can apply to a concept can be applied to `Value[concept]` (such as binding a value set).
+
+>**NOTE:** Bracket notation must always be used when applying a constraint to a value choice, even if the value has only one choice. This is a change from CIMPL 5.
+
+## Cardinality Constraint
+Cardinality defines the number of repeats that can exist for a property. Cardinality is specified using FHIR syntax, {min}..{max}where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound. To express no upper bound, a `*` is used. When constraining cardinality, you can only narrow the previously declared cardinality.
+
+Cardinality constraints apply only to properties.
 
 | Previous Cardinality | Example Constraint |
 |----------|----------|
@@ -452,28 +459,33 @@ When constraining cardinality, you can only narrow the previously declared cardi
 
 >**Note:** By constraining a property to 0..0, you effectively remove an inherited field from an element. Use 0..0 with caution, because if an instance _does_ include that property, the instance will fail validation and may be rejected.
 
-### Fixed Value Constraint
+## Fixed Value Constraint
 
 Fixed values are designated with an `=` operator. Using `=` limits the field to a specific value (e.g., a certain code to a `concept`, a specific `string`, or a `boolean` value). The assigned data type must be consistent with the definition of the property. Fixed value constraints can only be applied to primitives.
 
 CIMPL _does_ allow a fixed concept to be overridden in child classes. This feature is necessary when inheritance narrows the meaning of a class characterized by a concept code (for example, when Fungal Pneumonia (fixed code SCT#233613009) inherits from Pneumonia (fixed code SCT#233604007)). By allowing the child class to assign a different fixed code, CIMPL _assumes_ without checking that the overriding code in the child class has more constrained semantics than the code it replaces.
 
+Fixed value constraints apply to properties and value choices.
 Currently, CIMPL does not yet support fixing all value types. Fixing numerical types and strings (including URLs) is not yet supported.
 
 | Example | Syntax |
 |----------|---------|
-| Fixed concept | `ObservationCode = LNC#82810-3` |
-| Fixed boolean | `IsPrimaryTumor = true` |
+| Fix a code to a concept property | `ObservationCode = LNC#82810-3` |
+| Fix a boolean value to a boolean property | `IsPrimaryTumor = true` |
+| Fix a code to a concept value choice | `Value[concept] = SCT#233613009 "Pneumonia"` |
+| Fix a code to a value  | <del>`Value = SCT#233613009 "Pneumonia"`</del> invalid|
 
 >**Note:** If you only need to fix a value code for one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the mapping file.
 
-### Substitute Constraint
+## Substitute Constraint
 The `substitute` keyword constrains the data type of a property. The new data type that is substituted for the original must be a subclass of the original data type. 
 
 | Example | Syntax |
 |----------|---------|
-| Constrain the property `Specimen` to be a specimen taken from a tumor | `Specimen substitute TumorSpecimen` <br/> _note: TumorSpecimen must be a subclass of Specimen_ |
-| Constrain the property `Requester` to be a prescriber (class MedicationRequester) | `Requester substitute MedicationRequester` <br/> _note: MedicationRequester must be a subclass of Requester_ |
+| Constrain the property `Specimen` to be a tumor specimen | `Specimen substitute TumorSpecimen` <br/> _note: TumorSpecimen must be a subclass of Specimen_ |
+| Constrain a value choice of type `Quantity` to `SimpleQuantity` | `Value[Quantity] substitute SimpleQuantity` <br/> _note: SimpleQuantity is a subclass of Quantity_ |
+| Constrain a value of type `Quantity` to `SimpleQuantity` | <del>`Value substitute SimpleQuantity`</del> invalid |
+
 
 ## Value Set Binding Constraint
 
@@ -490,10 +502,12 @@ If no binding strength is specified, the binding is assumed to be `required`.
 
 | Example | Syntax |
 |----------|---------|
-| Required binding | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
-| Required binding (by default) | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical` |
-| Extensible binding | `ReasonCode from ReasonCodeVS (extensible)` |
-| Preferred binding | `BodyLocation from BodyLocationVS (preferred)` |
+| Required binding of a Property | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
+| Required binding of a Property (by default) | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical` |
+| Extensible binding of a Property | `ReasonCode from ReasonCodeVS (extensible)` |
+| Preferred binding of a Property | `BodyLocation from BodyLocationVS (preferred)` |
+| Required binding of a Value Choice that is a concept | `Value[concept] from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
+| Required binding of a Value Choice that is an Element with whose value is a `ClinicalStatus` | `Value[ClinicalStatus] from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
 
 ### Includes Constraint
 
@@ -502,8 +516,9 @@ The `includes` constraint is used to specify that a repeating property (array) s
 * The elements included in the array must conform to the data type of the array. For example, if the array property is `Identifier 0..*`, the items included in the array must be Identifiers or be inherit from Identifier.
 * Cardinality of the inclusion must be specified, and can be any cardinality that fits the cardinality of the array. For example, if the array has a finite maximum, it cannot include an element with cardinality 0..*.
 * The keyword `includes` is repeated for each item the array should contain.
+* Includes constraint does not apply to Values.
 
-Here is an example;
+Here is an example:
 ```
 Measurement 0..*
 ...
@@ -529,51 +544,28 @@ In this case, either NationalProviderIdentier or TaxIdentificationNumber must be
 >**Note:** When using `includes`, special mapping syntax is required. See [Slicing](#slicing).
 
 ### Array Population Constraint
-Array population is similar to a fixed value constraint, but applied to repeating properties (arrays). The `+=` operator put a fixed value into value array. For example, you would use `+=` to insert a particular Social Security Number into an array, as opposed to `includes`, which would require the array contain one or more Social Security Numbers. The `+=` operation as many times as allowed by the cardinality of the array.
+Use the `+=` operator insert fixed values into value arrays. The `+=` is similar to the fixed value `=` constraint, but it applies to repeating properties (arrays). You can use the `+=` operation repeatedly on the same array, limited only be the cardinality of the array. The `+=` operator cannot be applied to value choices.
 
-| Keyword | Example |
+For example, you would use `+=` to insert a particular Social Security Number (SSN) or Driver's License number into an array of identifiers. Note that `includes` would be used to require the array contain one or more SSNs, without specifying a particular SSN.
+
+| Example | Syntax |
 |----------|---------|
-| `+=` | `Category += LNC#54511-1 "Behavior"` |
-| `+=` | `ProblemCategory += #adverse_reaction` |
+| Insert "Behavior" into Category array |  `Category += LNC#54511-1 "Behavior"` |
+| Add "Social History" to same Category array | `Category += OBSCAT#social-history "Social History"` |
 
-<!-- * TODO: confirm the functionality of this constraint. Chris? -->
+### Only Constraint
+Values can have multiple data types. Use the `only` constraint to narrow the choice of data types. The `only` constraint can only be applied to Value that have multiple choices. It cannot be applied to properties or value choices. 
 
-The first example above expands `Category` to include `54511-1` from the LOINC codesystem. Additionally, it is given a brief textual description of `"Behavior"`.
-
-The second example above expands the allowable codes in `ProblemCategory` to include `#adverse_reaction`. Unlike the first example, the value set does not precede the code, because it has defined on `ProblemCategory`'s parent using a [`from`](#value-set) statement. Additionally, there is no textual description, as that is optional.
-```
-Category += OBSCAT#laboratory
-```
-
-Indicates that _Category_, an element of multiple cardinality, must contain the specified code.  The `+=` operator works with any fixed value type.
-
-
-
-
-
-
-### Only
-
-The keyword `only` binds only one logical choice to a property or value.
-
-| Keyword | Example |
+| Example | Syntax |
 |----------|---------|
-| `only` | `PlannedProtocol only Protocol` |
+| Only allow a `string` for a Value defined as:<br/>`Value: string or boolean or dateTime` |  `Value only string` |
+| Only allow a `string`  for a Value defined as:<br/>`Value: string or boolean or dateTime`  | <del>`Value[string] only string`</del> invalid|
+
+>**Note:** CIMPL currently does not support narrowing a choice to a more limited choice, for example, narrowing a choice of three types to two types.
 
 >**Note:** `only` shall never be preceded by bracketed term, because intrinsically, it applies to all value choices.
 
 
-### Inherited Value
-Object value on the element inherited from the parent or other elements.
-
-`Value` shall only be used when referring to the value element inside an Element or Entry where that value is defined, or in mapping the value to a target. 
-
-| Keyword | Example |
-|----------|---------|
-| `Value only` | `Value only concept` |
-| `Value from` | `Value from RadiationProtocolVS` |
-
- [`only`](#only)
 
 
 
