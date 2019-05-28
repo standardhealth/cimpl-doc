@@ -201,7 +201,7 @@ The file target is the version of FHIR that the CIMPL model is mapped to, either
 Keyword that can appear in Headers include, in order: Grammar, Namespace, Description, Uses, Path, CodeSystem, and (only in Map files) Target. The Grammar keyword must be first.
 
 #### Grammar Keyword
-The `Grammar` keyword is used in a header to define how the file is to be parsed. The grammar declaration must be the first line in each CIMPL model files. 
+The `Grammar` keyword is used in a header to define how the file is to be parsed. The grammar declaration must be the first line in each CIMPL model files.
 
 | Keyword | File Type | Example |
 |----------|---------|---------|
@@ -425,7 +425,7 @@ Value:             concept from YesNoUnknownVS (required)
 CIMPL supports four binding strengths, `required`, `extensible`, `preferred`, and `example`, the same as FHIR.
 
 # Constraints
-Constraints can be applied properties or values. The grammars are different, and are described separately, below. Constraints can be placed on top-level properties or nested properties (see [Constraining Nested Properties](#constraining-nested-properties)). Unlike class definitions, _constraints are not preceded by any keyword_.
+Constraints can be applied properties or values. The grammars are different, and are described separately, below. Constraints can be placed on top-level properties or nested properties (see [Constraining Nested Properties](#constraining-nested-properties)). Unlike class definitions, _constraints do not begin the line with a keyword followed by a colon_.
 
 ## Constraints on Properties
 Constraints can be applied to locally-defined properties or properties inherited from the parent. This table lists the possible constraints on properties:
@@ -435,14 +435,14 @@ Constraints can be applied to locally-defined properties or properties inherited
 | [Narrow cardinality](#cardinality-constraint) | `{min}..{max}` |
 | [Assign a fixed value](#fixed-value-constraint) | `=`|
 | [Narrow data type](#substitute-constraint) | `substitute` |
-| [Bind a value set](#value-set-constraint) | `from` |
-| [Slice an array](#includes-code-constraint) | `includes` |
+| [Bind a value set](#value-set-binding-constraint) | `from` |
+| [Slice an array](#includes-constraint) | `includes` |
 | [Populate an array](#array-population-constraint) | `+=` |
 
 ### Cardinality Constraint
-Cardinality defines the number of instances should exist for a property. The first digit indicates the minimum quantity, and additionally by setting it to `0` or to `1`, has the effect of making a field optional or required. The second digit expresses the upper bound on the number of repeats of that property. To express no upper bound, a `*` is used.
+Cardinality defines the number of repeats that can exist for a property. Cardinality is specified using FHIR syntax, {min}..{max}where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound. To express no upper bound, a `*` is used.
 
-When constraining cardinality, you can only narrow (not broaden) the previously declared cardinality.
+When constraining cardinality, you can only narrow the previously declared cardinality.
 
 | Previous Cardinality | Example Constraint |
 |----------|----------|
@@ -468,21 +468,79 @@ Currently, CIMPL does not yet support fixing all value types. Fixing numerical t
 >**Note:** If you only need to fix a value code for one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the mapping file.
 
 ### Substitute Constraint
-The `substitute` keyword constrains the data type of a property. The new data type must be a subclass of the original data type.
+The `substitute` keyword constrains the data type of a property. The new data type that is substituted for the original must be a subclass of the original data type. 
+
+| Example | Syntax |
+|----------|---------|
+| Constrain the property `Specimen` to be a specimen taken from a tumor | `Specimen substitute TumorSpecimen` <br/> _note: TumorSpecimen must be a subclass of Specimen_ |
+| Constrain the property `Requester` to be a prescriber (class MedicationRequester) | `Requester substitute MedicationRequester` <br/> _note: MedicationRequester must be a subclass of Requester_ |
+
+## Value Set Binding Constraint
+
+Binding is the process of associating a concept with a set of possible values. Binding uses the keyword `from`. The object of a binding must be an property that is an Element whose value is a concept. The value set that is being bound can be a named value set, defined in CIMPL, or a canonical URL external to CIMPL.
+
+CIMPL uses the same [binding strengths as FHIR](https://www.hl7.org/fhir/valueset-binding-strength.html), namely:
+
+* `required` indicates that the code must come from the specified value set.
+* `extensible` indicates that the code must come from the specified set _if the value set contains a relevant code_; otherwise a code outside the value set may be chosen.
+* `preferred` indicates that the code should ideally come from the specified value set, but codes outside the value set may also be chosen.
+* `example` indicates that the code may come from anywhere; the specified value set is for example purposes only.
+
+If no binding strength is specified, the binding is assumed to be `required`.
+
+| Example | Syntax |
+|----------|---------|
+| Required binding | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
+| Required binding (by default) | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical` |
+| Extensible binding | `ReasonCode from ReasonCodeVS (extensible)` |
+| Preferred binding | `BodyLocation from BodyLocationVS (preferred)` |
+
+### Includes Constraint
+
+The `includes` constraint is used to specify that a repeating property (array) should contain item(s) or a certain class or classes. FHIR refers to this as [slicing](https://www.hl7.org/fhir/profiling.html#slicing). To avoid confusion that usually surrounds slicing, CIMPL just says the array "includes" certain types of elements. The `includes` statement has several requirements:
+
+* The elements included in the array must conform to the data type of the array. For example, if the array property is `Identifier 0..*`, the items included in the array must be Identifiers or be inherit from Identifier.
+* Cardinality of the inclusion must be specified, and can be any cardinality that fits the cardinality of the array. For example, if the array has a finite maximum, it cannot include an element with cardinality 0..*.
+* The keyword `includes` is repeated for each item the array should contain.
+
+Here is an example;
+```
+Measurement 0..*
+...
+Measurement includes TumorLength 1..1 includes TumorWidth 0..1 includes TumorDepth 0..1
+```
+For clarity, the second statement can be written on separate lines (since CIMPL is whitespace insensitive), as follows:
+```
+Measurement
+includes TumorLength 1..1
+includes TumorWidth 0..1
+includes TumorDepth 0..1
+```
+In this example, TumorLength, TumorWidth, and TumorDepth all must inherit from Measurement, because Measurement is the array property being sliced. Here is another example:
+```
+Identifier 1..*
+...
+Identifier
+includes NationalProviderIdentifier 0..1
+includes TaxIdentificationNumber 0..1
+```
+In this case, either NationalProviderIdentier or TaxIdentificationNumber must be present, even though both are individually optional, because of the 1..* cardinality on Identifier.
+
+>**Note:** When using `includes`, special mapping syntax is required. See [Slicing](#slicing).
+
+### Array Population Constraint
+Array population is similar to a fixed value constraint, but applied to repeating properties (arrays). The `+=` operator put a fixed value into value array. For example, you would use `+=` to insert a particular Social Security Number into an array, as opposed to `includes`, which would require the array contain one or more Social Security Numbers. The `+=` operation as many times as allowed by the cardinality of the array.
 
 | Keyword | Example |
 |----------|---------|
-| `substitute` | `Specimen substitute TumorSpecimen` |
+| `+=` | `Category += LNC#54511-1 "Behavior"` |
+| `+=` | `ProblemCategory += #adverse_reaction` |
 
-**Use case:** If we have an abstract element, and we are making a more specific version of that element, we also want to make its fields more specific. For instance, if we have a DataElement `Person` which has a field `Pet`, and we making a more specific person `DogOwner` and we want to further specify its pet. In this case, we could constrain by using the `substitute` keyword. For example, `Pet substitute Dog`.
+<!-- * TODO: confirm the functionality of this constraint. Chris? -->
 
+The first example above expands `Category` to include `54511-1` from the LOINC codesystem. Additionally, it is given a brief textual description of `"Behavior"`.
 
-
-
-
-
-## Array Population
-
+The second example above expands the allowable codes in `ProblemCategory` to include `#adverse_reaction`. Unlike the first example, the value set does not precede the code, because it has defined on `ProblemCategory`'s parent using a [`from`](#value-set) statement. Additionally, there is no textual description, as that is optional.
 ```
 Category += OBSCAT#laboratory
 ```
@@ -504,112 +562,6 @@ The keyword `only` binds only one logical choice to a property or value.
 
 >**Note:** `only` shall never be preceded by bracketed term, because intrinsically, it applies to all value choices.
 
-### Value Set
-The `from` keyword limits the value of a field to be from a specific value set, with different levels of requirement.
-
-## Value Set Binding
-
-### Required
-
-```
-ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (required)
-```
-
-Indicates that the code _must_ come from the specified value set.  No other codes are allowed.
-
-### Extensible
-
-```
-ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (extensible)
-```
-
-Indicates that the code must come from the specified value set _if the value set contains a relevant code_ to represent the concept; otherwise a code outside the value set may be chosen.
-
-### Preferred
-
-```
-ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (preferred)
-```
-
-Indicates that the code should ideally come from the specified value set, but codes outside the value set may also be chosen.
-
-### Example
-
-```
-ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (example)
-```
-
-Indicates that the code may come from anywhere; the specified value set is for example purposes only.
-
-
-The binding strengths correspond to [FHIR binding strengths](https://www.hl7.org/fhir/valueset-binding-strength.html) and have the same meaning:
-
-* **Required**: To be conformant, the concept in this element SHALL be from the specified value set
-* **Preferred**: Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant.
-* **Example**: Instances are not expected or even encouraged to draw from the specified value set. The value set merely provides examples of the types of concepts intended to be included.
-* **Extensible**: To be conformant, the concept in this element SHALL be from the specified value set if any of the codes within the value set can apply to the concept being communicated. If the value set does not cover the concept (based on human review), alternate codings (or, data type allowing, text) may be included instead.
-
-### Includes concept allowable entries
-
-For fields that are already defined with a data type of `concept`, the `includes` keyword expands the allowable entries for that field.
-
-_**TODO:** Modify the examples below for CIMPL 6.0_
-
-| Keyword | Example |
-|: ----------|: ---------|
-| `includes` | `Category includes LNC#54511-1 "Behavior"` |
-| `includes` | `ProblemCategory includes #adverse_reaction` |
-
-<!-- * TODO: confirm the functionality of this constraint. Chris? -->
-
-The first example above expands `Category` to include `54511-1` from the LOINC codesystem. Additionally, it is given a brief textual description of `"Behavior"`.
-
-The second example above expands the allowable codes in `ProblemCategory` to include `#adverse_reaction`. Unlike the first example, the value set does not precede the code, because it has defined on `ProblemCategory`'s parent using a [`from`](#value-set) statement. Additionally, there is no textual description, as that is optional.
-
-### Includes Type
-
-Specifies the quantity of particular types of objects within the value.
-
-| Keyword | Example |
-|----------|---------|
-| `includes` | `Foo includes 	PhysicalActivityLevel 1..1` |
-
-This is useful in further specifying fields that are analagous to lists.
-
-In the above example, the field `Foo` is _required_ to include `1` `PhysicalActivityLevel`.
-
->**Note:** As of CIMPL 6.0, the use of the `Includes` keyword for specifying inclusions subclasses or properties is now obsolete and discouraged for use.
-
-
-
-
-
-
-
-
-For example, the following statement block is no longer supported.
-
-**CIMPL 5.0: (no longer supported)**
-```
-Element: VitalSign
-1..* BloodPressurePanel
-    includes 1..1 SystolicPressure
-    includes 1..1 DiastolicPressure
-```
-
-**CIMPL 6.0:**
-```
-Element: VitalSign
- BloodPressurePanel  1..*
-    SystolicPressure  1..1
-    DiastolicPressure 1..1
-```
-
->**Note:** The collective cardinality of all inclusions must fit within the field, i.e. if you are including 3 distinct elements, then the field must have a maximum cardinality greater than `3` (like `*`).
-
-
-
-***
 
 ### Inherited Value
 Object value on the element inherited from the parent or other elements.
@@ -622,6 +574,10 @@ Object value on the element inherited from the parent or other elements.
 | `Value from` | `Value from RadiationProtocolVS` |
 
  [`only`](#only)
+
+
+
+***
 
 # Value Set File
 The value set files are used to define custom value sets and codes when existing sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient.
@@ -872,7 +828,7 @@ Indicates the named property must be given as the specified code.
 
 You are allowed to include from either a `codesystem` or a specific `code` from a codesystem.
 
-<br />
+<br/>
 
 # Appendix B: Summary of Changes in CIMPL 6.0
 
