@@ -3,7 +3,7 @@
 
 _This is a comprehensive guide to CIMPL 5.0 syntax. The latest release is CIMPL 6.0. This documentation is provided for historical purposes. If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](https://github.com/standardhealth/shr-cli/wiki/Hello-World). If you're looking for a more in-depth introduction, try the [Tutorial](https://github.com/standardhealth/shr-cli/wiki/Tutorial)._
 
-## Table of Reference
+## Table of Contents
 
 **[1. General Overview](#general-overview)**
 * [1.1 Whitespace](#whitespace)

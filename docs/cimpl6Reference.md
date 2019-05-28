@@ -130,7 +130,7 @@ These comments can take up multiple lines.
 */
 ```
 ### Primitives
-Primitives are distinguished by starting with lower case letter. CIMPL defines the following primitive data types, which (with one exception) align with FHIR:
+Primitives are distinguished by starting with lower case letter. CIMPL defines the following primitive data types, which align with FHIR (with one exception, `concept`):
 
 * [boolean](https://www.hl7.org/fhir/datatypes.html#boolean)
 * [integer](https://www.hl7.org/fhir/datatypes.html#integer)
@@ -344,7 +344,7 @@ The Parent keyword controls inheritance. A class that declares a parent gets all
 Only one parent class can be specified. Multiple inheritance is not supported.
 
 #### Inheritance Rules
-There are restrictions on inheritance that can be summarized by "Like inherits from Like": 
+There are restrictions on inheritance that can be summarized as "like inherits from like": 
 
 | Building Block| Can Only Inherit From |
 |----------|---------|
@@ -425,86 +425,74 @@ Value:             concept from YesNoUnknownVS (required)
 CIMPL supports four binding strengths, `required`, `extensible`, `preferred`, and `example`, the same as FHIR.
 
 # Constraints
+Constraints can be applied properties or values. The grammars are different, and are described separately, below. Constraints can be placed on top-level properties or nested properties (see [Constraining Nested Properties](#constraining-nested-properties)). Unlike class definitions, _constraints are not preceded by any keyword_.
 
+## Constraints on Properties
+Constraints can be applied to locally-defined properties or properties inherited from the parent. This table lists the possible constraints on properties:
 
+| To do this.. | Use this Keyword or Symbol |
+|----------|---------|
+| [Narrow cardinality](#cardinality-constraint) | `{min}..{max}` |
+| [Assign a fixed value](#fixed-value-constraint) | `=`|
+| [Narrow data type](#substitute-constraint) | `substitute` |
+| [Bind a value set](#value-set-constraint) | `from` |
+| [Slice an array](#includes-code-constraint) | `includes` |
+| [Populate an array](#array-population-constraint) | `+=` |
 
-### Inherited Field
-Object properties on the element inherited from the parent or other elements.
+### Cardinality Constraint
+Cardinality defines the number of instances should exist for a property. The first digit indicates the minimum quantity, and additionally by setting it to `0` or to `1`, has the effect of making a field optional or required. The second digit expresses the upper bound on the number of repeats of that property. To express no upper bound, a `*` is used.
+
+When constraining cardinality, you can only narrow (not broaden) the previously declared cardinality.
+
+| Previous Cardinality | Example Constraint |
+|----------|----------|
+| `Property: LanguageUsed 0..*` | `LanguageUsed  0..0` |
+| `Property: GovernmentIssuedID  0..*` <br> `GovernmentIssuedID 1..*` | `GovermentIssuedID 1..2` |
+| `Property: Code 1..1` |<del>`Code 0..0`</del> invalid|
+
+>**Note:** By constraining a property to 0..0, you effectively remove an inherited field from an element. Use 0..0 with caution, because if an instance _does_ include that property, the instance will fail validation and may be rejected.
+
+### Fixed Value Constraint
+
+Fixed values are designated with an `=` operator. Using `=` limits the field to a specific value (e.g., a certain code to a `concept`, a specific `string`, or a `boolean` value). The assigned data type must be consistent with the definition of the property. Fixed value constraints can only be applied to primitives.
+
+CIMPL _does_ allow a fixed concept to be overridden in child classes. This feature is necessary when inheritance narrows the meaning of a class characterized by a concept code (for example, when Fungal Pneumonia (fixed code SCT#233613009) inherits from Pneumonia (fixed code SCT#233604007)). By allowing the child class to assign a different fixed code, CIMPL _assumes_ without checking that the overriding code in the child class has more constrained semantics than the code it replaces.
+
+Currently, CIMPL does not yet support fixing all value types. Fixing numerical types and strings (including URLs) is not yet supported.
+
+| Example | Syntax |
+|----------|---------|
+| Fixed concept | `ObservationCode = LNC#82810-3` |
+| Fixed boolean | `IsPrimaryTumor = true` |
+
+>**Note:** If you only need to fix a value code for one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the mapping file.
+
+### Substitute Constraint
+The `substitute` keyword constrains the data type of a property. The new data type must be a subclass of the original data type.
 
 | Keyword | Example |
 |----------|---------|
-|| `PanelCode = LNC#83335-0` |
-
-### Inherited Value
-Object value on the element inherited from the parent or other elements.
-
-In CIMPL 6.0, `Value` shall only be used when referring to the value element inside an Element or Entry where that value is defined, or in mapping the value to a target. 
-
-| Keyword | Example |
-|----------|---------|
-| `Value` | `Value only concept` |
-|  | `Value from RadiationProtocolVS` |
-
-
-
-
-## Field Constraints
-
-Fields can be constrained to further specify their acceptable values using [cardinalities](#cardinality) and keywords, e.g.:
-* [`=`](#fixed-value)
-* [`substitute`](#substitute)
-* [`from`](#value-set)
-* [`includes`](#includes-code)
-* [`only`](#only)
-
-
-### No Constraint
-Fields can exist without any constraints.  They can also be constrained to a data type (or set of data types) without further constraining the possible values within that data type.
-
-| Keyword | Example |
-|----------|---------|
-|| `postalCode 0..1` |
-|| `Value: concept` |
-|| `Value: unsignedInt or positiveInt` |
-
-<br />
-
-### Cardinality
-Cardinality defines the number of instances should exist for a value.
-
-The first digit indicates the minimum quantity, and additionally by setting it to `0` or to `1`, has the effect of making a field optional or required.
-
-The second digit expresses the upper bound. To express no upper bound, a `*` can be used in place of a number.
-
-When constraining an inherited field, you can only retain the previous cardinality, or constrain it to be narrower.
-
-_**Note:** By constraining it to 0..0, you can remove an inherited field from an element._
-
-| Keyword | Example |
-|----------|---------|
-|| `LanguageUsed  0..*` |
-|| `GovernmentIssuedID  1..2` |
-
-### Fixed Value
-
-Fixed values are designated with an `=` operator.
-
-The `is` keyword limits the field to a specifc value (e.g., a `code`, a specific `string`, or a `boolean` value).
-
-| Keyword | Example |
-|----------|---------|
-|  | `ObservationCode = LNC#82810-3` |
-
->**Note:** The `=` operator locks the code for all instances of the data element.  If you only need to lock the code for one particular mapping, do so using the [`fix`](#fix) keyword in the mapping file.
-
-### Substitute
-The `substitute` keywords constrains to a subclass of an element or the choices in a given value set.
-
-| Keyword | Example |
-|----------|---------|
-| `substitute` | `SourceSpecimen[Specimen] substitute BreastSpecimen` |
+| `substitute` | `Specimen substitute TumorSpecimen` |
 
 **Use case:** If we have an abstract element, and we are making a more specific version of that element, we also want to make its fields more specific. For instance, if we have a DataElement `Person` which has a field `Pet`, and we making a more specific person `DogOwner` and we want to further specify its pet. In this case, we could constrain by using the `substitute` keyword. For example, `Pet substitute Dog`.
+
+
+
+
+
+
+## Array Population
+
+```
+Category += OBSCAT#laboratory
+```
+
+Indicates that _Category_, an element of multiple cardinality, must contain the specified code.  The `+=` operator works with any fixed value type.
+
+
+
+
+
 
 ### Only
 
@@ -514,7 +502,7 @@ The keyword `only` binds only one logical choice to a property or value.
 |----------|---------|
 | `only` | `PlannedProtocol only Protocol` |
 
-_*>**Note:** `only` shall never be preceded by bracketed term, because intrinsically, it applies to all value choices.
+>**Note:** `only` shall never be preceded by bracketed term, because intrinsically, it applies to all value choices.
 
 ### Value Set
 The `from` keyword limits the value of a field to be from a specific value set, with different levels of requirement.
@@ -592,6 +580,13 @@ In the above example, the field `Foo` is _required_ to include `1` `PhysicalActi
 
 >**Note:** As of CIMPL 6.0, the use of the `Includes` keyword for specifying inclusions subclasses or properties is now obsolete and discouraged for use.
 
+
+
+
+
+
+
+
 For example, the following statement block is no longer supported.
 
 **CIMPL 5.0: (no longer supported)**
@@ -612,15 +607,21 @@ Element: VitalSign
 
 >**Note:** The collective cardinality of all inclusions must fit within the field, i.e. if you are including 3 distinct elements, then the field must have a maximum cardinality greater than `3` (like `*`).
 
-## Array Population
 
-```
-Category += OBSCAT#laboratory
-```
-
-Indicates that _Category_, an element of multiple cardinality, must contain the specified code.  The `+=` operator works with any fixed value type.
 
 ***
+
+### Inherited Value
+Object value on the element inherited from the parent or other elements.
+
+`Value` shall only be used when referring to the value element inside an Element or Entry where that value is defined, or in mapping the value to a target. 
+
+| Keyword | Example |
+|----------|---------|
+| `Value only` | `Value only concept` |
+| `Value from` | `Value from RadiationProtocolVS` |
+
+ [`only`](#only)
 
 # Value Set File
 The value set files are used to define custom value sets and codes when existing sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient.

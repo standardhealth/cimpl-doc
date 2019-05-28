@@ -325,7 +325,7 @@ Huh - it looks like we have an error.  That's okay!  This is pretty common in de
 [15:21:24.435Z] ERROR shr: Mismatched types. Cannot map zoo.animal.Name[Value: string] to [HumanName]. ERROR_CODE:13022 (module=shr-fhir-export, shrId=zoo.animal.Animal, target=Patient, mappingRule="Name maps to name")
 ```
 We defined our `Name` element as a `string`, but the `name` attribute on the FHIR `Patient` record has the type of `HumanName`.  We have two options:
-1. We can redefine the `Name` element as a `HumanName`, define the `HumanName` datatype, and redo the mapping so the `Name` element is properly mapped to FHIR fields
+1. We can redefine the `Name` element as a `HumanName`, define the `HumanName` data type, and redo the mapping so the `Name` element is properly mapped to FHIR fields
 2. We can remove the mapping from `Name` to the `name` attribute on the FHIR patient and allow the `Name` to be created as an extension
 
 _Note: for more information about possible errors, see the [Error Message Documentation](https://github.com/standardhealth/shr-cli/wiki/Error-Message-Documentation)_

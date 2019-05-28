@@ -106,7 +106,7 @@ cd ~/cimpl/shr-cli
 yarn run ig:publish
 ```
 
-_Note: If you're running the IG Generation tool behind a proxy, you may need to [explicitly declare the proxy at runtime](https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy), since the process tries to access external terminology servers._
+>**Note**: If you're running the IG Generation tool behind a proxy, you may need to [explicitly declare the proxy at runtime](https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy), since the process tries to access external terminology servers.
 
 The generated profile page will be located at `~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html`.  Open this page in your favorite web browser.
 
