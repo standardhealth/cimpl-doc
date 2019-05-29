@@ -114,7 +114,7 @@ Grammar:        DataElement 6.0
 CIMPL does not enforce or require elements to appear in any particular order, i.e. an element defined at the bottom of the file can be used as field on an element defined at the top.
 
 However, header information must be at the top of the file, before any definitions.
-See: [File Headers](#file-headers) for more information
+See: [Headers](#headers) for more information
 
 ### Naming Collisions
 CIMPL does not support duplicate element names within a namespace. However, you are allowed to reuse an element name across different namespaces. In the case that you come across a collision due to an included namespace in `Uses`, you have to refer to the element by its [Fully Qualified Name](#fqn).
@@ -425,7 +425,7 @@ Value:             concept from YesNoUnknownVS (required)
 CIMPL supports four binding strengths, `required`, `extensible`, `preferred`, and `example`, the same as FHIR.
 
 # Constraints
-Constraints can be applied properties, values, or value choices. Constraints can be placed on top-level properties or nested properties (see [Constraining Nested Properties](#constraining-nested-properties)). Unlike class definitions, _constraint statements do not begin the line with a keyword followed by a colon_.
+Constraints can be applied properties, values, or [value choices](#bracket-notation). Constraints can be placed on top-level properties or nested properties (see [Constraining Nested Properties](#constraining-nested-properties)). Unlike class definitions, _constraint statements do not begin the line with a keyword followed by a colon_.
 
 Constraints can be applied to locally-defined properties or properties inherited from the parent.
 
@@ -433,76 +433,92 @@ Constraints can be applied to locally-defined properties or properties inherited
 |----------|---------|---------|
 | [Narrow cardinality](#cardinality-constraint) | `{min}..{max}` | Property |
 | [Assign a fixed value](#fixed-value-constraint) | `=`| Property or Value[Choice] |
+| [Append a fixed value to an array](#append-constraint) | `+=` | Array Property |
 | [Narrow data type](#substitute-constraint) | `substitute` | Property or Value[Choice] |
 | [Bind a value set](#value-set-binding-constraint) | `from` | Property or Value[Choice] |
 | [Slice an array](#includes-constraint) | `includes` | Array Property |
-| [Populate an array](#array-population-constraint) | `+=` | Array Property |
 | [Narrow choices for a value](#only-constraint) | `only` | Value |
 
-### Using Bracket Notation to Denote a Value Choice
-As explained in [Value Keyword](#value-keyword), a Value can offer a choice of data types. When applying constraints, you must indicate _which_ choice the constraint applies to. This is expressed in _bracket notation_.
+### Bracket Notation
+A Value can offer a [choice of data types](#value-keyword). When applying a constraint to a Value, you must indicate _which_ choice the constraint applies to, using _bracket notation_.
 
-For example, if an element defines `Value: boolean or concept`, then `Value[boolean]` refers to the boolean choice, and `Value[concept]` refers to the `concept` choice. Any constraint that can apply to a boolean type can apply to `Value[boolean]` (such as fixing the value to `true`), and any constraint that can apply to a concept can be applied to `Value[concept]` (such as binding a value set).
+| Value Definition | Value Choices | Constraint Example |
+|----------|---------|---------|
+| Value: boolean or concept  | Value[boolean] <br/>Value[concept] | Value[boolean] = true <br/> Value[concept] from BodyLocationVS (preferred)
 
->**NOTE:** Bracket notation must always be used when applying a constraint to a value choice, even if the value has only one choice. This is a change from CIMPL 5.
+
+>**NOTE:** Bracket notation must always be used when applying a constraint to a value choice, _even if the value has only one choice_. This is a change from CIMPL 5.
 
 ## Cardinality Constraint
-Cardinality defines the number of repeats that can exist for a property. Cardinality is specified using FHIR syntax, {min}..{max}where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound. To express no upper bound, a `*` is used. When constraining cardinality, you can only narrow the previously declared cardinality.
+Cardinality defines the number of repeats that can exist for a property. Cardinality is specified using FHIR syntax, {min}..{max}, where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound on the number of repeats. To express no upper bound, a `*` is used. When constraining cardinality, you can only narrow the previously declared cardinality.
 
-Cardinality constraints apply only to properties.
+The cardinality constraint only applies to properties.
 
-| Previous Cardinality | Example Constraint |
-|----------|----------|
-| `Property: LanguageUsed 0..*` | `LanguageUsed  0..0` |
-| `Property: GovernmentIssuedID  0..*` <br> `GovernmentIssuedID 1..*` | `GovermentIssuedID 1..2` |
-| `Property: Code 1..1` |<del>`Code 0..0`</del> invalid|
+| Original Cardinality | Constraint | Subsequent Constraint |
+|----------|----------|----------|
+| `Property: LanguageUsed 0..*` | `LanguageUsed  0..1` | `LanguageUsed  0..0` |
+| `Property: GovernmentIssuedID  0..*` | `GovernmentIssuedID 1..*` | `GovermentIssuedID 1..1` |
+| `Property: Status 1..1` |<del>`Status 0..1`</del> invalid|
 
->**Note:** By constraining a property to 0..0, you effectively remove an inherited field from an element. Use 0..0 with caution, because if an instance _does_ include that property, the instance will fail validation and may be rejected.
+>**Note:** By constraining a property to 0..0, you effectively remove the property. Use 0..0 with caution, because if an instance _does_ include that property, the instance will fail validation and may be rejected.
 
 ## Fixed Value Constraint
 
-Fixed values are designated with an `=` operator. Using `=` limits the field to a specific value (e.g., a certain code to a `concept`, a specific `string`, or a `boolean` value). The assigned data type must be consistent with the definition of the property. Fixed value constraints can only be applied to primitives.
+The `=` operator fixes a property to a specific value (e.g., a specific code, boolean value, etc.). The assigned value must be consistent with the defined data type. Fixed value constraints can only be applied to primitives. Fixed value constraints apply to properties and value choices.
 
-CIMPL _does_ allow a fixed concept to be overridden in child classes. This feature is necessary when inheritance narrows the meaning of a class characterized by a concept code (for example, when Fungal Pneumonia (fixed code SCT#233613009) inherits from Pneumonia (fixed code SCT#233604007)). By allowing the child class to assign a different fixed code, CIMPL _assumes_ without checking that the overriding code in the child class has more constrained semantics than the code it replaces.
+>**NOTE:** Fixing numerical types and strings (including URLs) is not yet supported, although this feature is planned.
 
-Fixed value constraints apply to properties and value choices.
-Currently, CIMPL does not yet support fixing all value types. Fixing numerical types and strings (including URLs) is not yet supported.
+CIMPL allows fixed concept values to be overridden in child classes. Although this seems to violate the notion that constraints should only get progressive tighter in subclasses, it is necessary when narrowing the meaning of a class characterized by a concept code. For example, the class `Pneumonia`, with fixed code, `SCT#233604007`, may have a child `Fungal Pneumonia`, with fixed code `SCT#233613009`, the latter code overriding the former. CIMPL will assume, without checking, that the code describing the child class has more constrained semantics than the code it replaces.
 
 | Example | Syntax |
 |----------|---------|
-| Fix a code to a concept property | `ObservationCode = LNC#82810-3` |
-| Fix a boolean value to a boolean property | `IsPrimaryTumor = true` |
-| Fix a code to a concept value choice | `Value[concept] = SCT#233613009 "Pneumonia"` |
+| Fix a code to a property | `ObservationCode = LNC#82810-3` |
+| Fix a boolean value to a property | `IsPrimaryTumor = true` |
+| Fix a code to a value choice | `Value[concept] = SCT#233613009 "Pneumonia"` |
 | Fix a code to a value  | <del>`Value = SCT#233613009 "Pneumonia"`</del> invalid|
 
 >**Note:** If you only need to fix a value code for one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the mapping file.
+
+## Append Constraint
+The append (`+=`) operator appends a fixed primitive value (boolean, concept, etc.) to an array property. You can use the `+=` operation repeatedly on the same array, limited only be the cardinality of the array. The append operator can only be applied to repeating properties.
+
+For example, you would use `+=` to insert a particular Social Security Number (SSN) or Driver's License number into an array of identifiers (in constrast, [`includes`](#includes-constraint) would be used to require the array contain one or more SSNs, without specifying a particular SSN.)
+
+| Example | Syntax |
+|----------|---------|
+| Insert "Behavior" into Category array |  `Category += LNC#54511-1 "Behavior"` |
+| Add "Social History" to same Category array | `Category += OBSCAT#social-history "Social History"` |
 
 ## Substitute Constraint
 The `substitute` keyword constrains the data type of a property. The new data type that is substituted for the original must be a subclass of the original data type. 
 
 | Example | Syntax |
 |----------|---------|
-| Constrain the property `Specimen` to be a tumor specimen | `Specimen substitute TumorSpecimen` <br/> _note: TumorSpecimen must be a subclass of Specimen_ |
+| Constrain the property `Specimen` to be a `TumorSpecimen` | `Specimen substitute TumorSpecimen` <br/> _note: TumorSpecimen must be a subclass of Specimen_ |
 | Constrain a value choice of type `Quantity` to `SimpleQuantity` | `Value[Quantity] substitute SimpleQuantity` <br/> _note: SimpleQuantity is a subclass of Quantity_ |
-| Constrain a value of type `Quantity` to `SimpleQuantity` | <del>`Value substitute SimpleQuantity`</del> invalid |
-
 
 ## Value Set Binding Constraint
 
-Binding is the process of associating a concept with a set of possible values. Binding uses the keyword `from`. The object of a binding must be an property that is an Element whose value is a concept. The value set that is being bound can be a named value set, defined in CIMPL, or a canonical URL external to CIMPL.
+Binding is the process of associating a concept with a set of possible values. Binding uses the keyword `from`. The object of a binding must be an Element whose value is a concept. The value set that is being bound can be a value set defined in CIMPL or a canonical URL external to CIMPL.
 
 CIMPL uses the same [binding strengths as FHIR](https://www.hl7.org/fhir/valueset-binding-strength.html), namely:
 
-* `required` indicates that the code must come from the specified value set.
+* `required` (strongest) indicates that the code must come from the specified value set.
 * `extensible` indicates that the code must come from the specified set _if the value set contains a relevant code_; otherwise a code outside the value set may be chosen.
 * `preferred` indicates that the code should ideally come from the specified value set, but codes outside the value set may also be chosen.
-* `example` indicates that the code may come from anywhere; the specified value set is for example purposes only.
+* `example` (weakest) indicates that the code may come from anywhere; the specified value set is for example purposes only.
 
-If no binding strength is specified, the binding is assumed to be `required`.
+The following rules apply to binding in CIMPL 6:
+
+* If no binding strength is specified, the binding is assumed to be `required`. 
+* When further constraining an existing binding, the binding strength can stay the same or be made tighter (e.g., replacing an `preferred` binding with an `extensible` or `required` binding), but never loosened.
+* Constraining may leave the binding strength the same and change the value set instead. However, certain changes may violate [FHIR principles](http://hl7.org/fhir/R4/profiling.html#binding-strength) (see following NOTE).
+
+>**NOTE:** When mapping to FHIR, FHIR will permit a required value set to be replaced by another required value set only if the codes in the new value set are a subset of the codes in the original value set. For extensible bindings, the new value set can contain codes not in the existing value set, but additional codes SHOULD NOT have the same meaning as existing codes in the base value set.
 
 | Example | Syntax |
 |----------|---------|
-| Required binding of a Property | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
+| Required binding of a Property (property is an Element with `concept` data type) | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
 | Required binding of a Property (by default) | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical` |
 | Extensible binding of a Property | `ReasonCode from ReasonCodeVS (extensible)` |
 | Preferred binding of a Property | `BodyLocation from BodyLocationVS (preferred)` |
@@ -511,29 +527,32 @@ If no binding strength is specified, the binding is assumed to be `required`.
 
 ### Includes Constraint
 
-The `includes` constraint is used to specify that a repeating property (array) should contain item(s) or a certain class or classes. FHIR refers to this as [slicing](https://www.hl7.org/fhir/profiling.html#slicing). To avoid confusion that usually surrounds slicing, CIMPL just says the array "includes" certain types of elements. The `includes` statement has several requirements:
+The `includes` constraint is used to specify that a repeating property (array) should contain a certain class or classes. FHIR refers to this as [slicing](https://www.hl7.org/fhir/profiling.html#slicing). In CIMPL, it is a simple matter of saying an array `includes` certain types of elements. 
 
-* The elements included in the array must conform to the data type of the array. For example, if the array property is `Identifier 0..*`, the items included in the array must be Identifiers or be inherit from Identifier.
-* Cardinality of the inclusion must be specified, and can be any cardinality that fits the cardinality of the array. For example, if the array has a finite maximum, it cannot include an element with cardinality 0..*.
+The `includes` statement has several requirements:
+
+* The elements included in the array must conform to the data type of the array. For example, if the array is `Identifier 0..*`, the items included in the array must be Identifiers or be inherit from Identifier.
+* Cardinality of each inclusion must be specified, and must fit the cardinality of the array. For example, if the array property has a finite maximum cardinality, you cannot include an element with cardinality 0..*.
 * The keyword `includes` is repeated for each item the array should contain.
-* Includes constraint does not apply to Values.
+* The `includes` constraint does not apply to Values.
 
 Here is an example:
 ```
-Measurement 0..*
+Measurement 0..*  // the array property
 ...
 Measurement includes TumorLength 1..1 includes TumorWidth 0..1 includes TumorDepth 0..1
 ```
-For clarity, the second statement can be written on separate lines (since CIMPL is whitespace insensitive), as follows:
+TumorLength, TumorWidth, and TumorDepth all must inherit from Measurement, because Measurement is the array property being sliced. Optionally, the second statement can be written on separate lines (since CIMPL is whitespace insensitive):
 ```
 Measurement
 includes TumorLength 1..1
 includes TumorWidth 0..1
 includes TumorDepth 0..1
 ```
-In this example, TumorLength, TumorWidth, and TumorDepth all must inherit from Measurement, because Measurement is the array property being sliced. Here is another example:
+
+Here is another example:
 ```
-Identifier 1..*
+Identifier 1..*  // the array property
 ...
 Identifier
 includes NationalProviderIdentifier 0..1
@@ -543,30 +562,15 @@ In this case, either NationalProviderIdentier or TaxIdentificationNumber must be
 
 >**Note:** When using `includes`, special mapping syntax is required. See [Slicing](#slicing).
 
-### Array Population Constraint
-Use the `+=` operator insert fixed values into value arrays. The `+=` is similar to the fixed value `=` constraint, but it applies to repeating properties (arrays). You can use the `+=` operation repeatedly on the same array, limited only be the cardinality of the array. The `+=` operator cannot be applied to value choices.
-
-For example, you would use `+=` to insert a particular Social Security Number (SSN) or Driver's License number into an array of identifiers. Note that `includes` would be used to require the array contain one or more SSNs, without specifying a particular SSN.
-
-| Example | Syntax |
-|----------|---------|
-| Insert "Behavior" into Category array |  `Category += LNC#54511-1 "Behavior"` |
-| Add "Social History" to same Category array | `Category += OBSCAT#social-history "Social History"` |
-
 ### Only Constraint
-Values can have multiple data types. Use the `only` constraint to narrow the choice of data types. The `only` constraint can only be applied to Value that have multiple choices. It cannot be applied to properties or value choices. 
+Values can have multiple data types. Use the `only` constraint to narrow the choice of data types. The `only` constraint can only be applied to a Value that has multiple choices. It cannot be applied to properties or value choices.
 
 | Example | Syntax |
 |----------|---------|
 | Only allow a `string` for a Value defined as:<br/>`Value: string or boolean or dateTime` |  `Value only string` |
-| Only allow a `string`  for a Value defined as:<br/>`Value: string or boolean or dateTime`  | <del>`Value[string] only string`</del> invalid|
+| Only allow a `concept` for Medication, where Value defined as:<br/>`Value: Medication or Substance`  | <del>`Value[Medication] only concept`</del> invalid (`only` should never be applied to a value choice, because intrinsically, it applies to all value choices) |
 
->**Note:** CIMPL currently does not support narrowing a choice to a more limited choice, for example, narrowing a choice of three types to two types.
-
->**Note:** `only` shall never be preceded by bracketed term, because intrinsically, it applies to all value choices.
-
-
-
+>**Note:** CIMPL currently does not support narrowing a choice to a more limited choice, for example, narrowing a choice of three types to two types. This feature is planned.
 
 
 ***
@@ -574,22 +578,34 @@ Values can have multiple data types. Use the `only` constraint to narrow the cho
 # Value Set File
 The value set files are used to define custom value sets and codes when existing sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient.
 
-An example value set file is shown below:
+A (truncated) example value set file is shown below:
 
 ```
-Grammar:        ValueSet 6.0
-Namespace:      shr.base
+Grammar:	ValueSet 5.0
+Namespace:	onco.core
 
-ValueSet:               ValueAbsentReasonVS
-Description:            "Reasons that a value associated with a test or other finding is missing."
-Includes codes from DAR
-#missing_refused        "Human source was asked but declined to respond to the question, or an applicable question was left unanswered."
-#missing_noexplanation  "The reason the information is not present is not known."
-#missing_nonesuch       "The answer is missing because nothing of a type of thing is known to exists, e.g., the siblings of an only child. Also use this code to represent a 'none of the above' answer"
-#missing_collection     "Missing due to a problem collecting, identifying, or locating the specimen, including patient refusal or unable to provide specimen"
-#missing_specimen       "Missing due to a problem with the specimen, e.g. contamination, clotting, improper tube type, improper storage, too small, etc."
-#missing_malfunction    "Missing due to instrument malfunction."
+CodeSystem:     SCT = http://snomed.info/sct
+CodeSystem:     ICD10CM = http://hl7.org/fhir/sid/icd-10-cm
+
+ValueSet:     CancerDiseaseStatusEvidenceTypeVS
+Description:  "The type of evidence backing up the clinical determination of cancer progression."
+SCT#363679005 "Imaging (procedure)"
+SCT#252416005 "Histopathology test (procedure)"
+SCT#711015009 "Assessment of symptom control (procedure)"
+SCT#5880005   "Physical examination procedure (procedure)"
+SCT#250724005 "Tumor marker measurement (procedure)"
+SCT#386344002 "Laboratory data interpretation (procedure)"
+
+ValueSet:      SecondaryCancerDisorderVS
+Description:  "Types of secondary malignant neoplastic disease"
+Includes codes descending from SCT#128462008  "Secondary malignant neoplastic disease (disorder)"
+ICD10CM#C7B00  "Secondary carcinoid tumors, unspecified site"
+ICD10CM#C7B01  "Secondary carcinoid tumors of distant lymph nodes"
+ICD10CM#C7B02  "Secondary carcinoid tumors of liver"
+ICD10CM#C7B03  "Secondary carcinoid tumors of bone"
+ICD10CM#C7B04  "Secondary carcinoid tumors of peritoneum"
 ```
+For a description of the header (lines above `ValueSet:`), see [Headers](#headers)
 
 ### Value Set Declaration
 Defines the name of the value set.
@@ -601,33 +617,28 @@ Defines the name of the value set.
 >**Note:** By convention, all value sets should be Pascal case and end with `VS`.
 
 ### Value Set Description
-Defines the name of the value set.
+The description is a free text containing any information about the value set.
 
 | Keyword | Example |
 |----------|---------|
-| `Description` | `Description: "The status of a proposal."` |
+| `Description` | `Description: "The type of evidence backing up the clinical determination of cancer progression."` |
 
-### Code-Value Declaration
-Define the code or value.
+### Code-Definition Declaration
+Defines each code and its meaning (one code per line). For the syntax of concept codes, see [Concept Codes](#concept-codes). Codes can either be locally-defined, or selected from external code systems, such as the `CAP#29915` example, in which `29915` is an existing code within the `CAP` codesystem. If the code is defined locally, the namespace serves as the code system.
 
-| Keyword | Example |
-|----------|---------|
-|| `#proposed "The proposal has been proposed, but not accepted or rejected."` |
-|| `CAP#29915		"None/Negative"`|
-
-Each value is prefaced by a hash symbol (`#`) and followed by a description enclosed in quotation marks. By convention, each value should use lowercase [snake_case formatting](https://en.wikipedia.org/wiki/Snake_case).
-
-This can either be a new user defined `code`, or it can be individual codes from separate codesystems, such as the `CAP#29915` example, in which `29915` is an existing code within the `CAP` codesystem.
+| Type | Example |
+|---------|---------|
+| Locally-defined code | `#proposed "The proposal has been proposed, but not accepted or rejected."` |
+| Externally-defined code | `CAP#29915 "None/Negative"`|
 
 ### Includes
+The `Includes` keyword phrases can be used to control entire vocabularies and sets of values from hierarchically-defined code systems. At present, the only hierarchical system supported is SNOMED-CT.
 
-Extends a custom defined `ValueSet` to include codes from other codesystems.
-
-| Keyword | Example |
-|----------|---------|
-| `Includes` | `Includes codes from MDR` |
-| `Includes` and `descending from` | `Includes codes descending from SCT#105590001` |
-| `Includes` and `descending from` and `and not descending from` | `Includes codes descending from SCT#105590001 "Substance" and not descending from SCT#410942007 "Drug or medicament"` |
+| Keyword | Example | Result|
+|----------|---------|---------|
+| `Includes codes from` | `Includes codes from MDR`| Value set contains all codes from MDR code system |
+| `Includes codes descending from` | `Includes codes descending from SCT#105590001` | Value set contains SCT#1055900001 and all codes below it in the SNOMED-CT hierarchy |  
+|  `and not descending from` | `Includes codes descending from SCT#363346000 "Malignant neoplastic disease" and not descending from SCT#128462008  "Secondary malignant neoplastic disease"` | Value set contains SCT#363346000 and all codes below it in the SNOMED-CT hierarchy, _except_ code SCT#128462008 and all codes below it  |
 
 # Map File
 By default, new elements will appear as FHIR extensions unless the element is mapped to an existing FHIR element. These mapping allow for simpler slicing and fixed values.
