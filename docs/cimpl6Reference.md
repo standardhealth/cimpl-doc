@@ -352,7 +352,7 @@ Defines the name of a value set defined inside CIMPL (references to external val
 Example:
 
 `ValueSet: ProposedStatusVS`
-+
+***
 
 # CIMPL Paths
 CIMPL provides grammar that allows you to refer to any element in a CIMPL model, regardless of nesting. This section outlines CIMPL Path Grammar, which is used in [constraints](#constraints) and [mapping](#map-file).
@@ -371,6 +371,9 @@ How value choices appear in paths depends on whether the path appears inside the
 | `Element: Priority` <br/>  `Value: integer or concept`| Value[integer] <br/>Value[concept]| Priority[integer] <br/>Priority[concept] |
 
 >**Note:** The requirement to use bracket notation _even when the value has only one choice_ is a change from CIMPL 5.
+
+## Path Termination
+A path cannot be extended beyond the point where it reaches a value choice that is a primitive, or when a path reaches a property or value choice that is an Entry. The latter case represents a "dotted line" to an independent object (i.e., a Reference in FHIR terms). Constraints and mapping rules cannot be applied across referential boundaries.
 
 ## Extended Path Example
 
@@ -424,6 +427,7 @@ A reliable method to create a CIMPL path is to first view it as a dot path, then
 1) Bracket each Value: `Landmark.Distance.[Quantity].Units`
 1) Remove dot before left (open) bracket: `Landmark.Distance[Quantity].Units`
 
+***
 # Constraints
 Constraints are a way to shape a general model for a particular purpose. Properties, values, and value choices can be constrained. Constraint targets can be be top-level or deeply nested (the latter referred to using [CIMPL paths](#cimpl-paths)), inherited or locally-defined.
 
@@ -576,7 +580,7 @@ Values can have multiple data types. Use the `only` constraint in an Element to 
 
 ***
 # Class File
-The Class file contains definitions of the information model, including class definitions and constraints. Here is an abbreviated example of a class file:
+Class files contain definitions of the information model. Here is an abbreviated example of a class file:
 ```
 Grammar:           DataElement 6.0
 Namespace:         shr.core
@@ -606,9 +610,9 @@ Value:             positiveInt
 
 ```
 ### Class File Header
-`Grammar` and `Namespace` are required keywords in a class file header. `Description` is highly recommended, and `Uses` and `CodeSystem` will frequently occur. For a further description of the header keywords, see [Keywords](#keywords). 
+`Grammar` and `Namespace` are required keywords in a class file header. Having a namespace `Description` is highly recommended, and `Uses` and `CodeSystem` will occur frequently. For a further description of the header keywords, see [Keywords](#keywords). 
 
-The `Uses` keyword brings in classes defined in other namespaces. In most cases, you can use classes in imported namespaces as if they were locally defined, as parent classes or properties. However, if a class in an imported namespace collides with a local class name, you must refer to that element by its [fully qualified name](#fully-qualified-names).
+The `Uses` keyword brings in classes defined in other namespaces. In most cases, you can use classes in imported namespaces as parent classes or properties, as if they were locally defined. However, if a class name in an imported namespace collides with a local class name, you must refer to that element by its [fully qualified name](#fully-qualified-names).
 
 ### Class Definitions
 Following the header, the class file contains a number of class definitions. The order of definitions does not matter. A class definition follows a set sequence of declarations, although after the first declaration, a strict order is not prescribed. Follow the links for further explanation of each item:
@@ -624,23 +628,16 @@ Following the header, the class file contains a number of class definitions. The
 
 The first line of all class definitions is a keyword representing the type of building block, followed by a descriptive name you choose. Class names must be unique within a given namespace. CIMPL provides four types of building blocks:
 
-* `Element` is the lowest-level building block, representing a name-value pair. An Element is present in the FHIR output as a property or extension, but never as a top-level profile.
-* `Group` is a building block comprised of other building blocks, specifically, other Groups, Elements, and Entries. A Group is present in the FHIR output as a backbone element or complex extension, but never as a top-level profile.
-* `Entry` is a building block representing a stand-alone piece of information, analogous to a FHIR resource or profile. 
-* `Abstract` is a special type of Entry that cannot be instantiated, and will not be present in the target mapping.
-
-All classes defined in CIMPL are based on one of these four building blocks. 
-
-| Building Block | Has... | Analogous FHIR Type |
+| Building Block | Description | Has... | Analogous FHIR Type |
 |----------|---------|---------|---------|
-| `Element` | Value | Property or simple extension |
-| `Group` |  Properties | Backbone element or complex extension |
-| `Entry`  | Properties | Resource or profile |
-| `Abstract` | Properties | none |
+| `Element` | The lowest-level building block, representing a name-value pair. | Value | Property or simple extension |
+| `Group` | A building block comprised of other building blocks, specifically, other Groups, Elements, and Entries. | Properties | Backbone element or complex extension |
+| `Entry`  | A building block representing a group of related information, complete enough to support stand-alone interpretation. | Properties | Resource or Profile |
+| `Abstract` | A special type of Entry that cannot be instantiated, and will not be present in the target mapping. | Properties | none |
 
 ### Properties and Values
 
-When defining classes, bear in mind that an `Element` has exactly one `Value` field, and no `Property` fields, whereas, a `Group`, `Entry`, or `Abstract` can have multiple `Property` fields but cannot have a `Value` field. Furthermore, a `Property` cannot have choices, but a `Value` can.
+When defining classes, bear in mind that an `Element` has exactly one `Value` field and no `Property` fields, whereas, a `Group`, `Entry`, or `Abstract` can have multiple `Property` fields but cannot have a `Value` field. Furthermore, a `Property` cannot have choices, but a `Value` can.
 
 These differences are illustrated in this example:
 ```
@@ -665,7 +662,7 @@ Summary:
 
 ### Naming Recommendations
 
-Since all classes in CIMPL are reusable outside of their original context, try to choose names that are self-explanatory and context-independent. For example, a property named `Text` is too vague, whereas `DisplayText` and `InstructionText` are more self-explanatory and may be completely understandable when placed into a specific context. However, a name like `AddressDisplayText` could inhibit reuse because it affixes the _context_ of an address to the _concept_ of a display text.
+Since all classes in CIMPL, from Elements to Entries, are reusable outside of their original context, try to choose names that are self-explanatory and context-independent. For example, a property named `Text` is too vague, whereas `DisplayText` and `InstructionText` are more self-explanatory and may be completely understandable when placed into a specific context. However, a name like `AddressDisplayText` could inhibit reuse because it affixes the _context_ of an address to the _concept_ of a display text.
 
 ***
 # Value Set File
@@ -698,30 +695,39 @@ ICD10CM#C7B03  "Secondary carcinoid tumors of bone"
 ICD10CM#C7B04  "Secondary carcinoid tumors of peritoneum"
 ```
 
-#### Code-Definition Declaration
-Defines each code and its meaning (one code per line). For the syntax of concept codes, see [Concept Codes](#concept-codes). Codes can either be locally-defined, or selected from external code systems, such as the `CAP#29915` example, in which `29915` is an existing code within the `CAP` codesystem. If the code is defined locally, the namespace serves as the code system.
+## Value Set File Header
+
+`Grammar` and `Namespace` are required keywords in a Value Set file header. One or more `CodeSystem` will be needed. For a further description of the header keywords, see [Keywords](#keywords). 
+
+## Value Set Definition
+
+Following the header, the Value Set file contains a number of value set definitions. The order of definitions does not matter. Each definition follows a set sequence of declarations. Follow the links for further explanation of each item:
+
+1) [Value Set Declaration](#ValueSet) (required)
+1) [Description](#description) (optional but highly recommended)
+1) [Code Declarations](#code-declaration) (optional)
+1) [Includes Codes statements](#includes-codes) (optional)
+
+## Code Declaration
+
+A code declaration is used to add a specific code to a value set. Codes can either be locally-defined, or selected from external code systems, such as the `CAP#29915` example, in which `29915` is an existing code within the `CAP` codesystem. If the code is defined locally, the namespace serves as the code system. For the syntax of concept codes, see [Concept Codes](#concept-codes).
 
 | Type | Example |
 |---------|---------|
 | Locally-defined code | `#proposed "The proposal has been proposed, but not accepted or rejected."` |
 | Externally-defined code | `CAP#29915 "None/Negative"`|
 
-#### Includes
-The `Includes` keyword phrases can be used to control entire vocabularies and sets of values from hierarchically-defined code systems. At present, the only hierarchical system supported is SNOMED-CT.
+## Includes Codes
+`Includes codes` phrases can be used to control entire vocabularies and sets of values from hierarchically-defined code systems. At present, the only hierarchical system supported is SNOMED-CT.
 
-| Keyword | Example | Result|
+| Phrase | Example | Result|
 |----------|---------|---------|
 | `Includes codes from` | `Includes codes from MDR`| Value set contains all codes from MDR code system |
 | `Includes codes descending from` | `Includes codes descending from SCT#105590001` | Value set contains SCT#1055900001 and all codes below it in the SNOMED-CT hierarchy |  
 |  `and not descending from` | `Includes codes descending from SCT#363346000 "Malignant neoplastic disease" and not descending from SCT#128462008  "Secondary malignant neoplastic disease"` | Value set contains SCT#363346000 and all codes below it in the SNOMED-CT hierarchy, _except_ code SCT#128462008 and all codes below it  |
 
 # Map File
-Map files control how classes defined in CIMPL are expressed as FHIR profiles.  Map files are FHIR-version dependent. The target FHIR version is given in the [map file header](#map-file-header)
-
-## Inheritance of Maps
-Maps are inherited. If there is no mapping for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a mapping. For this reason, when you create a new class inheriting from a parent class that already has a mapping, you may not need to create a mapping for your class, unless you want specific mapping for new properties, or override the inherited map (for example, mapping to a different target).
-
-If no mapping is found for an Entry, that Entry will be mapped to the [Basic resource](https://www.hl7.org/fhir/basic.html). In general, mapping to Basic is not recommended because it has no inherent semantic meaning for implementers. Any unmapped properties will appear as FHIR extensions.
+Map files control how classes defined in CIMPL are expressed as FHIR profiles.  Map files are FHIR-version dependent. The target FHIR version is given in the [map file header](#map-file-header). A series of mapping rules follows.
 
 ## Sample Map File
 ```
@@ -767,15 +773,15 @@ MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-c
 	Annotation maps to note
 	Dosage maps to dosage
 ```
-## Map File Header
-```
-Grammar:	Map 6.0
-Namespace:	shr.core
-Target:		FHIR_STU_3
-```
-The Target keyword gives the version of FHIR that the CIMPL model is mapped to, either `FHIR_DSTU_2`, `FHIR_STU_3`, or `FHIR_R4`.
+## Inheritance of Mapping Rules
+Maps are inherited following the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a mapping. For this reason, when you create a new class inheriting from a parent class that already has a mapping, you may not need to create a mapping for your class, unless you want specific mapping for new properties, or override the inherited map (for example, mapping to a different target).
 
-For a further description of the header keywords, see [Keywords](#keywords)
+If no mapping is found for an Entry, that Entry will be mapped to the [Basic resource](https://www.hl7.org/fhir/basic.html). In general, mapping to Basic is not recommended because it has no inherent semantic meaning for implementers. Any unmapped properties will appear as FHIR extensions.
+
+## Map File Header
+The header of a map file must include a `Grammar`, `Namespace`, and `Target` keywords. The Target keyword gives the version of FHIR that the CIMPL model is mapped to, either `FHIR_DSTU_2`, `FHIR_STU_3`, or `FHIR_R4`.
+
+For a further description of the header keywords, see [Keywords](#keywords).
 
 ## FHIR Map Target
 Each block in a mapping file begins with statement that establishes a resource, profile, or complex data type that is the target for the mapping. In CIMPL map files, the item to the left of `maps to` comes from your CIMPL data model and the item to the right is an element in your target output. The initial statement in each mapping block must end with a colon (:).
