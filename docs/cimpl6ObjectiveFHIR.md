@@ -2,7 +2,7 @@
 
 >**Note:** This documentation is in draft form.
 
-_This is an introductory guide to Objective FHIR Version 1.0. Objective FHIR is implemented in, the Clinical Information Modeling and Profiling Language (CIMPL). The Guide assumes some knowledge of CIMPL, at least for examples. If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md). If you're looking for a more in-depth introduction, try the [Tutorial](cimpl6Tutorial_detail.md). Or, see the [CIMPL 6 Reference Manual](cimpl6Reference.md)._
+_This is an introductory guide to Objective FHIR Version 1.0. Objective FHIR is implemented in the Clinical Information Modeling and Profiling Language (CIMPL). The Guide assumes some knowledge of CIMPL. If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md). If you're looking for a more in-depth introduction, try the [Tutorial](cimpl6Tutorial_detail.md). Or, see the [CIMPL 6 Reference Manual](cimpl6Reference.md)._
 
 ***
 
@@ -18,17 +18,17 @@ Objective FHIR ("OBF") is an [**object-oriented**](https://en.wikipedia.org/wiki
 
 ### Philosophy
 
-OBF classes resemble FHIR R4, but differ in carefully considered ways that increase consistency and reusability of the resulting models and profiles. Objective FHIR is implemented in CIMPL (Clinical Information Modeling and Profiling Language), a language that allows data structures of all sorts to be reused. This means a frequently-occurring group of elements like BodySite can be defined once and used anywhere.
+OBF classes resemble FHIR R4, but differ in carefully considered ways that increase consistency and reusability of the resulting models and profiles. Objective FHIR is implemented in CIMPL (Clinical Information Modeling and Profiling Language), a language that allows data structures of all sorts to be reused. This means a frequently-occurring structures like BodySite can be defined once and used repeatedly.
 
-Objective FHIR addresses one of the frequent criticisms of FHIR, specifically its [lack of consistency](https://wolandscat.net/2019/05/05/a-fhir-experience-consistently-inconsistent/). FHIR not only uses different _names_ for equivalent things, but often, altogether different modeling approaches. This is almost certainly a result of having resources managed by separate groups, coupled with loose oversight. OBF creates a layer that smooths over many of these differences, not for aesthetic reasons, but to make the whole framework easier to learn, and enable greater code reuse.
+Objective FHIR addresses one of the frequent criticisms of FHIR, specifically its [lack of horizontal consistency](https://wolandscat.net/2019/05/05/a-fhir-experience-consistently-inconsistent/). FHIR not only uses different _names_ for equivalent things in different resources, but often, uses altogether different modeling approaches. This is almost certainly a result of having resources managed by separate groups. OBF creates a layer that smooths over many of these differences, not for aesthetic or theoretical reasons, but to make the whole framework easier to learn, to enable greater code reuse, and most importantly, to make the resulting clinical models **more interoperable**.
 
-OBF also insulates modelers from differences between FHIR versions. The OBF classes are based on FHIR R4, but the same content is mapped to previous versions, specifically, DSTU 2 and STU 3. This means you can model once and publish the same semantic content across multiple FHIR versions.
+OBF also insulates modelers from differences between FHIR versions. The OBF classes are based on FHIR R4, but the same content is mapped to previous versions, specifically, DSTU 2 and STU 3. This means you can model once and publish the same content across multiple FHIR versions.
 
 ### Meta-Model
 
 Objective FHIR has been developed using the Clinical Information Modeling and Profiling Language (CIMPL). CIMPL is a very powerful, FHIR-aware, high-level language for creating clinical models. Expressing the model in CIMPL means that your models can automatically be turned into FHIR Profiles, Implementation Guides, data dictionaries, and other useful artifacts, in multiple FHIR versions.
 
-Conceptually, there is nothing that prevents the same model from be expressed in other formalisms, some of which are mentioned in the [Appendix](#Appendix:-Relationship-to-Other-Initiatives), but no alternative formalism comes close to the mature, powerful, FHIR-specific tooling of CIMPL.
+Conceptually, there is nothing that prevents the same model from be expressed in other formalisms, some of which are mentioned in the [Appendix](#Appendix:-Relationship-to-Other-Initiatives), but Objective FHIR in CIMPL is a complete, ready-to-use solution.
 
 ### Mapping to FHIR
 
@@ -40,27 +40,59 @@ Not all FHIR R4 resources are covered by Objective FHIR. We are working to expan
 
 ### Naming
 
-Attribute names in OBF sometimes differ from FHIR names, but if they do so, it is usually to make the meaning of the attribute more explicit. OBF names are chosen to be meaningful outside of the context of a single class. For example, the attribute `period` in `Encounter` is very vague, especially when removed from the encounter event context. To be more reusable, OBF redefines it as `OccurrencePeriod`, so when coupled with an event, perhaps the performance of a procedure, the meaning "occurrence period of the procedure" is fairly specific and self-explanatory. Although renaming does not answer all definition-related questions (for example, how is the start time of the procedure defined?), it does increase the specificity.
+Attribute names in OBF sometimes differ from FHIR names, but if they do so, it is usually to make the meaning of the attribute more explicit. OBF names are meant to be meaningful outside of the context of a single class. For example, the attribute `period` in `Encounter` needs additional description, but far more so if removed from the encounter context. To be more reusable, OBF redefines it as `OccurrencePeriod`, so when coupled with a different event, perhaps the performance of a procedure, the meaning (occurrence period of the procedure) is fairly specific and self-explanatory. Although a name by itself can never precisely define an attribute or class, OBF moves the needle in that direction.
 
 ### Subclassing
 
-To continue the example above, if procedure occurrence period needs a tighter definition, subclassing can be used. Specifically, you can take OccurrencePeriod and turn it into SurgicalProcedureOccurrencePeriod, something like this: 
+To continue the scenario above, if `OccurrencePeriod` needs a tighter definition in the context of a surgical procedure, you can do it through subclassing. Specifically, you can define `SurgicalProcedureOccurrencePeriod` like this:
+
 ```
 Element:  SurgicalProcedureOccurrencePeriod
 Parent:  OccurrencePeriod
-Description: The period of a surgery, from the first incision time to the incision close time, as defined by https://manual.jointcommission.org/releases/archive/TJC2010B/DataElem0127.html.
+Description: The period of time for a surgery, from the first incision time to the last incision close time, as defined by https://manual.jointcommission.org/releases/archive/TJC2010B/DataElem0127.html.
 ```
-The datatype and other constraints are inherited (cardinalities, low time < high time, etc.), so that's all there is to it.
+The datatype and other constraints of `OccurrenceTime` are inherited (e.g., cardinalities, start time must be before the end time, etc.), so that's all there is to it.
 
-## Primitives and Complex Data Types
+That's a trivial example, but almost everything you do in OBF will involve creating new classes from existing ones. Here's a less trivial example:
 
-The primitive types used in OBF are defined by CIMPL to be the same as FHIR, with one exception, which involves coded types.
+```
+Entry:             GenomicsReport
+Parent:            DiagnosticReport
+Description:       "Genetic analysis summary report. The report may include one or more tests, with two distinct test types... (truncated)"
+Property:          SpecimenType 0..1
+Property:          RegionStudied 0..*
+                   Code from https://www.ncbi.nlm.nih.gov/gtr (preferred)
+                   Category 1..1
+                   Category = DS#GE "Genetics"
+                   Observation
+                      includes GeneticVariantFound 0..* 
+                      includes GeneticVariantTested 0..*
+                   SpecimenType from GeneticSpecimenTypeVS (extensible)
+```
+Although the purpose of this guide is not to introduce CIMPL, it's worth pulling this apart:
 
-The complex data types in OBF are the same as the complex types in FHIR R4. They are found in the `obf.datatype` namespace. Since complex types like Quantity are ubiquitous, you will almost certainly need to import `obf.datatype` into your namespace.
+* The two lines define the class. `Entry` is a CIMPL building block that roughly corresponds to a FHIR resource, and `Parent` identifies the parent class. Clearly, we're creating a new class, `GenomicsReport`, based on `DiagnosticReport`.
+* Following the `Description`, we add two new properties that don't exist in the parent: `SpecimenType` and `RegionStudied`. Don't worry about extensions -- that will happen automatically.
+* After the two `Property` statements, there are several constraint statements. Without delving into too much detail, these statements say:
+    * The Code for the report should perferrably come from the [Genetic Test Registry](https://www.ncbi.nlm.nih.gov/gtr).
+    * The Category will occur exactly once, and will be fixed to the code `GE` (Genetics) drawn from a code system aliased to `DS` (mapped elsewhere to <http://terminology.hl7.org/CodeSystem/v2-0074>).
+    * The `Observation` attribute should include zero or more GeneticVariantFound observations and zero or more GeneticVariantTested observations. *Did you guess that we've just sliced an array?*
+    * Finally, the SpecimentType, which we've just defined as a property, is extensibly bound to the value set `GeneticSpecimenTypeVS`.
 
+Now that we've defined a general-purpose genomics report, we can use this class as-is, or as a parent for more specific genomics reports, perhaps `ConsumerAncestryGenomicsReport` or `NextGenerationSequencingGenomicsReport`.
 
+### Comparison Between Profiling Tools
+In FHIR terms, subclassing is akin to profiling profiles, which can be achieved in a number of tools, notably Forge and Trifolia. Both these tools are extremely well-done, and generously supported by commercial entities. Essentially, they are both visual editors for the "assembly language" of FHIR, namely, StructureDefinitions.
 
+In contrast, CIMPL is like a high-level programming language. The source code for your project is the actual CIMPL itself. The difference is that revising, refactoring, renaming, reverting is **much, much** easier when you use a language, compared to a visual editor. That's why programming languages are always text, and comparatively, visual programming has had little uptake.
 
+You will find that when projects grow to a certain size, global search and replace is an indispensible weapon, as is source code control, such as Github. The ability to branch, distribute work, compare changes, and merge automatically allows scalability that is far beyond any other approach. This is open to you when you use CIMPL.
+
+### Primitives and Complex Data Types
+
+The primitive types used in OBF are those defined in CIMPL, which correspond exactly to FHIR primitives, except for the way CIMPL handles coded types.
+
+The complex data types in OBF are the same as the complex types in FHIR R4. They are found in the `obf.datatype` namespace. Since complex types like Quantity are ubiquitous, you will almost certainly need to import `obf.datatype` into your namespace. This is done using the `Uses` keyword.
 
 ## Class Hierarchy Overview
 
