@@ -83,14 +83,14 @@ MustSupport is contextual and could vary with depending on the reference impleme
 
 Content profile files are text files which use the following convention:
 
-    <Content Profile Name>-cp.txt
+    ig-<Content Profile Name>-cp.txt
 
-Where `<Content Profile Name>` is by convention the same name as the IG Configuration JSON file.  The content profile filename must end in "**-cp.txt**".
+Where `<Content Profile Name>` is by convention the same name as the IG Configuration JSON file.
 
 For example, the two file name exmamples of a CIMPL configuration and its respective content profile are show below:
 
-* Configuration filename: `myCIMPLConfiguration-ig.json`
-* Content Profile filename: `myCIMPLConfiguration-cp.txt`
+* Configuration filename: `ig-myCIMPLConfiguration-config.json`
+* Content Profile filename: `ig-myCIMPLConfiguration-cp.txt`
 
 ## Embedding FHIR Examples in the IG
 
