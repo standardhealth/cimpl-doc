@@ -9,7 +9,7 @@ nav:
        - User Guide:
               - cimplInstall.md
               - cimpl6UserGuide.md
-              - cimplFHIRBasedClassOverview.md
+              - cimpl6ObjectiveFHIR.md
        - Reference Manual: 
               - cimpl6Reference.md
        - Archive:
