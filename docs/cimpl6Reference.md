@@ -98,7 +98,7 @@ Elements, Groups and Entries are conventionally defined in [PascalCase](http://w
 
 #### Fully Qualified Names
 
-CIMPL does not support duplicate class names within a single namespace. However, the same name may occur in different namespaces. In the case of naming collisions due to an included namespace in `Uses`, you have to refer to the class by its fully qualified name (FQN). The FQN is a combination of the element's namespace and its declared name (through concatention delimited by a period). For example, the element `CancerCondition` in the namespace `onco.core` has the following FQN:
+CIMPL does not support duplicate class names within a single namespace. However, the same name may occur in different namespaces. In the case of naming collisions due to an included namespace in `Uses`, you have to refer to the class by its fully qualified name (FQN). The FQN is a combination of the element's namespace and its declared name (through concatenation delimited by a period). For example, the element `CancerCondition` in the namespace `onco.core` has the following FQN:
 
 ```
 onco.core.CancerCondition
@@ -283,7 +283,7 @@ Example:
 
 The `Grammar` keyword defines how the file is to be parsed. The grammar declaration must be the first line in each CIMPL file.
 
-| File Type | Requried First Line | Current Version # | 
+| File Type | Required First Line | Current Version # |
 |----------|---------|---------|
 | Class | `Grammar: DataElement #.#` | 6.0 |
 | Value Set | `Grammar: ValueSet #.#` | 5.1 |
@@ -294,6 +294,7 @@ The `Grammar` keyword defines how the file is to be parsed. The grammar declarat
 The version details the MAJOR and MINOR version of the grammar the file was written for. The grammar version is typically **note** the same as the CIMPL release. Generally, the major version of the Grammar matches the major version number of CIMPL, however, **at the time of the CIMPL 6.0 release, the ValueSet and Map grammar remain at 5.1.**
 
 ### Group
+
 The `Group` keyword is used to declare a building block comprised of one or more properties, similar to a complex data type in FHIR. For details, see [Class File](#class-file).
 
 Example:
@@ -542,7 +543,7 @@ Cardinality defines the number of repeats that can exist for a property. Cardina
 | Declaration | Constraint | Subsequent Constraint |
 |----------|----------|----------|
 | `Property: LanguageUsed 0..*` | `LanguageUsed  0..1` | `LanguageUsed  0..0` |
-| `Property: GovernmentIssuedID  0..*` | `GovernmentIssuedID 1..*` | `GovermentIssuedID 1..1` |
+| `Property: GovernmentIssuedID  0..*` | `GovernmentIssuedID 1..*` | `GovernmentIssuedID 1..1` |
 | `Property: Status 1..1` |<del>`Status 0..1`</del> invalid|
 
 >**Note:** By constraining a property to 0..0, you effectively remove the property. Use 0..0 with caution, because if an instance _does_ include that property, the instance will fail validation and may be rejected.
@@ -570,7 +571,7 @@ The `=` operator fixes a property to a specific value (e.g., a specific code, bo
 
 The append (`+=`) operator appends a fixed primitive value (boolean, concept, etc.) to an array property. You can use the `+=` operation repeatedly on the same array, limited only be the cardinality of the array. The append operator can only be applied to repeating properties.
 
-For example, you would use `+=` to insert a particular Social Security Number (SSN) or Driver's License number into an array of identifiers (in constrast, [`includes`](#includes-constraint) would be used to require the array contain one or more SSNs, without specifying a particular SSN.)
+For example, you would use `+=` to insert a particular Social Security Number (SSN) or Driver's License number into an array of identifiers (in contrast, [`includes`](#includes-constraint) would be used to require the array contain one or more SSNs, without specifying a particular SSN.)
 
 | Example | Syntax |
 |----------|---------|
@@ -650,7 +651,7 @@ includes NationalProviderIdentifier 0..1
 includes TaxIdentificationNumber 0..1
 ```
 
-In this case, either NationalProviderIdentier or TaxIdentificationNumber must be present, even though both are individually optional, because of the 1..* cardinality on Identifier.
+In this case, either NationalProviderIdentifier or TaxIdentificationNumber must be present, even though both are individually optional, because of the 1..* cardinality on Identifier.
 
 >**Note:** When using `includes`, special mapping syntax is required. See [Slicing](#slicing).
 
@@ -691,7 +692,7 @@ CodeSystem:        UCUM = http://unitsofmeasure.org
 
 Abstract:          SimpleQuantLabWithRequiredUnits
 Parent:            SimpleQuantitativeLaboratoryObservation
-Description:       "Laboratory tests that must be reported with units, following the LOINC UNITSREQUIRED field, a Y/N field that indicates that units are required when this LOINC is included as an OBX segment in a HIPAA attachment"
+Description:       "Laboratory tests that must be reported with units."
                    DataValue 1..1
                    DataValue only QuantityWithRequiredUnits
                    DataAbsentReason 0..0
@@ -705,7 +706,6 @@ Entry:             GlobulinMCncPtSerQnCalculatedLabObs
 Parent:            SimpleQuantLabWithRequiredUnits
 Description:       "Globulin [Mass/​volume] in Serum by calculation"
                    Code = LNC#10834-0 "Globulin [Mass/​volume] in Serum by calculation"
-                   // is UCUM#g/L
                    DataValue[Quantity].Units from EquivalentUnitsVS-g-per-L (required)
 
 
@@ -828,7 +828,7 @@ Following the header, the Value Set file contains a number of value set definiti
 
 ### Explicit Codes
 
-Explicit code declarations are used to add specific codes to a value set. Codes can either be locally-defined, or selected from external code systems, such as the `CAP#29915` example, in which `29915` is an existing code within the `CAP` codesystem. If the code is defined locally, the namespace serves as the code system. For the syntax of concept codes, see [Concept Codes](#concept-codes).
+Explicit code declarations are used to add specific codes to a value set. Codes can either be locally-defined, or selected from external code systems, such as the `CAP#29915` example, in which `29915` is an existing code within the `CAP` code system. If the code is defined locally, the namespace serves as the code system. For the syntax of concept codes, see [Concept Codes](#concept-codes).
 
 | Type | Example |
 |---------|---------|
@@ -943,7 +943,7 @@ Each block in a mapping file begins with statement that establishes a resource, 
 
 ### Mapping Properties
 
-After the first line, the remainder of the block consists of statements that map CIMPL properties to FHIR elements. Each statment begins with a [CIMPL path](#cimpl-paths), followed by the phrase `maps to`, and ending with the target FHIR path.
+After the first line, the remainder of the block consists of statements that map CIMPL properties to FHIR elements. Each statement begins with a [CIMPL path](#cimpl-paths), followed by the phrase `maps to`, and ending with the target FHIR path.
 
 With FHIR as the target output, the right-hand side of the map statement can point to any field on a FHIR resource, including:
 
@@ -1035,10 +1035,10 @@ CIMPL supports the FHIR processing types for discriminators:
 | Discriminator | Definition |
 | ------------- | ---------- |
 | value	| The slices have different values in the nominated element|
-| exists |	The slices are differentiated by the presence or absence of the nominated element|
+| exists | The slices are differentiated by the presence or absence of the nominated element|
 | pattern |	The slices have different values in the nominated element, as determined by testing them against the applicable ElementDefinition.pattern[x]|
-| type |The slices are differentiated by type of the nominated element to a specifed profile|
-| profile |	The slices are differentiated by conformance of the nominated element to a specifed profile (not recommended)|
+| type |The slices are differentiated by type of the nominated element to a specified profile|
+| profile |	The slices are differentiated by conformance of the nominated element to a specified profile (not recommended)|
 
 #### Moving the Slice Location
 
@@ -1048,7 +1048,7 @@ If the discriminator used for slicing is not the actual field that is being mapp
 |----------|---------|
 | `slice at` | `Members.Observation maps to related.target (slice at = related; slice on type)` |
 
-In the above example, though the mapping is declared such that `Members.Observation maps to related.target`, the slicing is not occuring at `related.target`.  Instead, the `slice at = related` ensures that the slicing is occuring at the `related` element.
+In the above example, though the mapping is declared such that `Members.Observation maps to related.target`, the slicing is not occurring at `related.target`.  Instead, the `slice at = related` ensures that the slicing is occurring at the `related` element.
 
 ***
 
