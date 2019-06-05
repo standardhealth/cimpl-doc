@@ -106,10 +106,10 @@ cd ~/cimpl/shr-cli
 yarn run ig:publish
 ```
 
-_Note: If you're running the IG Generation tool behind a proxy, you may need to [explicitly declare the proxy at runtime](https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy), since the process tries to access external terminology servers._
+>**Note**: If you're running the IG Generation tool behind a proxy, you may need to [explicitly declare the proxy at runtime](https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy), since the process tries to access external terminology servers.
 
 The generated profile page will be located at `~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html`.  Open this page in your favorite web browser.
 
-> **Note**: the IG is automatically branded as part of the Standard Health Record (SHR). We are working on “de-branding” the IG, so please ignore the SHR references for now.
+> **Note:** the IG is automatically branded as part of the Standard Health Record (SHR). We are working on “de-branding” the IG, so please ignore the SHR references for now.
 
 You should see a FHIR profile that looks like a traditional [FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html).  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the [Tutorial](https://github.com/standardhealth/shr-cli/wiki/Tutorial).

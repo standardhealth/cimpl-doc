@@ -14,12 +14,12 @@ Any text editor can be used to write CIMPL grammar. However, [VSCode editor](htt
 
 ## Setting up the VSCode Authoring
 
->**Note:** VSCode UI screenshots in this section were taken from a MacOS enironment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.
+>**Note:** VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.
 
 * Download the [VSCode editor](https://code.visualstudio.com/). 
-* Open VSCode and search for the extension **vscode-lang-cimpl**.  The figure below shows where to find VSCode extensions. 
+* Open VSCode and search for the extension **vscode-lang-cimpl**.  The figure below shows where to find VSCode extensions.
 
-![CIMPL VSCode Extenstion](img_cimpl/VSCodeLangCimplExtension_small.png)
+![CIMPL VSCode Extension](img_cimpl/VSCodeLangCimplExtension_small.png)
 
 ### Navigating a CIMPL Model within VSCode
 
@@ -61,6 +61,7 @@ Keeping in mind that CIMPL is primarily a way to create logical models with the 
 * create FHIR examples for each of the key profiles which define your IG and configure them within the CIMPL authoring environment so that they are validated by the FHIR IG Publisher.
 
 ## Mapping to FHIR
+
 Logical model elements are mapped to FHIR by creating and editing map files.
 As a best practice, CIMPL map files must have the *_map.txt* naming convention.
 
@@ -87,7 +88,7 @@ Content profile files are text files which use the following convention:
 
 Where `<Content Profile Name>` is by convention the same name as the IG Configuration JSON file.
 
-For example, the two file name exmamples of a CIMPL configuration and its respective content profile are show below:
+For example, the two file name examples of a CIMPL configuration and its respective content profile are show below:
 
 * Configuration filename: `ig-myCIMPLConfiguration-config.json`
 * Content Profile filename: `ig-myCIMPLConfiguration-cp.txt`
@@ -107,7 +108,7 @@ The folder location is specified using the `"examples:"` parameter in the CIMPL 
 
 ## IG Publisher Output
 
-By default, the FHIR IG Publisher will perform validation checks on the  StuctureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, *qa.html*.
+By default, the FHIR IG Publisher will perform validation checks on the  StructureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, *qa.html*.
 
 An example QA output is shown in the figure below:
 ![qa.html example output](img_cimpl/igpublisher_output.png)
@@ -118,5 +119,5 @@ Questions on using CIMPL and its toolchain can be addressed on the HL7 Zulip cha
 
 Report any issues on one of the following GitHub repositories:
 
-* Related to modeling of CIMPL constructs or its FHIR-based classes: https://github.com/standardhealth/shr_spec/issues 
+* Related to modeling of CIMPL constructs or its FHIR-based classes: https://github.com/standardhealth/shr_spec/issues
 * Related to running the CIMPL `shr-cli` compiler, CIMPL export configuration files, or generating the FHIR Implementation Guide (IG): https://github.com/standardhealth/shr-cli/issues

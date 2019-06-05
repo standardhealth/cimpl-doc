@@ -1,0 +1,21 @@
+{
+    "cSpell.words": [
+        "cimpl",
+        "codeable",
+        "concept",
+        "dstu",
+        "extensibly",
+        "fhir",
+        "intermountain",
+        "snomed",
+        "subclassing",
+        "toolchain",
+        "trifolia",
+        "ucum",
+        "zulip"
+    ],
+    "cSpell.ignoreWords": [
+        "cems",
+        "fhim"
+    ]
+}
