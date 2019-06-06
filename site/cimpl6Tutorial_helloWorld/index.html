@@ -59,6 +59,15 @@
 </li>
                                 </ul>
                             </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Installation <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li >
+    <a href="../cimplInstall/">CIMPL Setup and Installation</a>
+</li>
+                                </ul>
+                            </li>
                             <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
@@ -73,19 +82,15 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guides <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../cimplInstall/">CIMPL Setup and Installation</a>
-</li>
                                     
 <li >
     <a href="../cimpl6UserGuide/">CIMPL Authoring</a>
 </li>
                                     
 <li >
-    <a href="../cimplFHIRBasedClassOverview/">CIMPL 6.0 FHIR-based Class Overview</a>
+    <a href="../cimpl6ObjectiveFHIR/">CIMPL Class Library (aka Objective FHIR)</a>
 </li>
                                 </ul>
                             </li>
@@ -120,7 +125,7 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../cimplReleaseNotes/">
+                                <a rel="next" href="../cimplInstall/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
@@ -239,10 +244,12 @@ node . -c ig-hello_world-config.json ../hello_world
 yarn run ig:publish
 </code></pre>
 
-<p><em>Note: If you're running the IG Generation tool behind a proxy, you may need to <a href="https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy">explicitly declare the proxy at runtime</a>, since the process tries to access external terminology servers.</em></p>
+<blockquote>
+<p><strong>Note</strong>: If you're running the IG Generation tool behind a proxy, you may need to <a href="https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy">explicitly declare the proxy at runtime</a>, since the process tries to access external terminology servers.</p>
+</blockquote>
 <p>The generated profile page will be located at <code>~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html</code>.  Open this page in your favorite web browser.</p>
 <blockquote>
-<p><strong>Note</strong>: the IG is automatically branded as part of the Standard Health Record (SHR). We are working on “de-branding” the IG, so please ignore the SHR references for now.</p>
+<p><strong>Note:</strong> the IG is automatically branded as part of the Standard Health Record (SHR). We are working on “de-branding” the IG, so please ignore the SHR references for now.</p>
 </blockquote>
 <p>You should see a FHIR profile that looks like a traditional <a href="https://www.hl7.org/fhir/implementationguide.html">FHIR Implementation Guide</a>.  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the <a href="https://github.com/standardhealth/shr-cli/wiki/Tutorial">Tutorial</a>.</p></div>
         </div>
