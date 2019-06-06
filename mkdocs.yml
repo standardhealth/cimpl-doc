@@ -3,7 +3,7 @@ nav:
        - About: 
               - about.md
               - cimplReleaseNotes.md
-       - Installation and Setup:
+       - Installation:
               - cimplInstall.md              
        - Tutorials:
               - cimpl6Tutorial_helloWorld.md
