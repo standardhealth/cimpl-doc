@@ -3,11 +3,12 @@ nav:
        - About: 
               - about.md
               - cimplReleaseNotes.md
+       - Installation:
+              - cimplInstall.md              
        - Tutorials:
               - cimpl6Tutorial_helloWorld.md
               - cimpl6Tutorial_detail.md
-       - User Guide:
-              - cimplInstall.md
+       - User Guides:
               - cimpl6UserGuide.md
               - cimpl6ObjectiveFHIR.md
        - Reference Manual: 
