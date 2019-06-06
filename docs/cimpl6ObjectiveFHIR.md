@@ -1,8 +1,8 @@
-# Objective FHIR User Guide
+# CIMPL Class Library (aka Objective FHIR)
 
 >**Note:** This documentation is in draft form.
 
-_This is an introductory guide to Objective FHIR Version 1.0, implemented in the Clinical Information Modeling and Profiling Language (CIMPL). The Guide assumes some knowledge of CIMPL. If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md). If you're looking for a more in-depth introduction, try the [Tutorial](cimpl6Tutorial_detail.md). Or, see the [CIMPL 6 Reference Manual](cimpl6Reference.md)._
+_This is an introductory guide to CIMPL's class library: **Objective FHIR Version 1.0**. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the [CIMPL 6 Tutorial](cimpl6Tutorial_detail.md), the [CIMPL 6 User Guide](cimpl6UserGuide.md), or the [CIMPL 6 Reference Manual](cimpl6Reference.md)._
 
 ***
 
@@ -16,33 +16,29 @@ _This is an introductory guide to Objective FHIR Version 1.0, implemented in the
 
 Objective FHIR ("OBF") is an [**object-oriented**](https://en.wikipedia.org/wiki/Object-oriented_programming) abstraction of FHIR. It provides modelers a way to define a detailed clinical information model by subclassing, extending, and constraining a pre-existing class library. These classes can then be translated automatically into FHIR profiles, FHIR Implementation Guides, data dictionaries, schemas, and other assets, using a choice of the three major FHIR versions: DSTU 2, STU 3, and R4.
 
+OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. _Tabula rasa_ (blank slate) use of CIMPL is also possible and appropriate for some projects. For more information on the choice between using OBF and the _tabula rasa_ approach, see [CIMPL 6 User Guide](cimpl6UserGuide.md).
+
 ### Philosophy
 
 OBF classes resemble FHIR R4, but differ in carefully considered ways that increase consistency and reusability of the resulting models and profiles. Objective FHIR allows data structures of all sorts to be reused. This means that individual data elements and frequently-occurring structures can be defined once and used repeatedly.
 
-Objective FHIR addresses one of the frequent criticisms of FHIR, specifically its [lack of horizontal consistency](https://wolandscat.net/2019/05/05/a-fhir-experience-consistently-inconsistent/). FHIR not only uses different _names_ for equivalent things in different resources, but often, altogether different modeling approaches. This is a result of having resources managed by separate groups. OBF creates a layer that smooths over many of these differences, not for aesthetic or theoretical reasons, but to make the whole framework easier to learn, enable greater code reuse, and most importantly, to make the resulting clinical models **more interoperable**.
+Objective FHIR addresses one of the most frequent criticisms of FHIR, namely, its [lack of consistency](https://wolandscat.net/2019/05/05/a-fhir-experience-consistently-inconsistent/). FHIR not only uses different _names_ for equivalent things in different resources, but sometimes, entirely different modeling approaches. This is almost certainly the result of having resources managed by separate HL7 work groups. OBF creates a layer that smooths over many of these differences, not for aesthetic or theoretical reasons, but to make the whole framework easier to learn, enable greater code reuse, and most importantly, to make the resulting clinical models _more interoperable_.
 
-OBF also insulates modelers from differences between FHIR versions. The OBF classes are based on FHIR R4, but the same content is mapped to previous versions, specifically, DSTU 2 and STU 3. This means you can model once and publish the same content across multiple FHIR versions.
+OBF also insulates modelers from differences between FHIR versions. The OBF classes are based on FHIR R4, but the same content is mapped to DSTU 2 and STU 3. This means you can model once and publish the same content across multiple FHIR versions.
 
 ### Meta-Model
 
-Objective FHIR has been developed using the Clinical Information Modeling and Profiling Language (CIMPL). CIMPL is a powerful, FHIR-aware, high-level language for creating clinical models. Expressing the model in CIMPL means that Objective FHIR models can automatically be turned into FHIR Profiles, Implementation Guides, data dictionaries, and other useful artifacts, in multiple FHIR versions.
+Objective FHIR has been developed using the Clinical Information Modeling and Profiling Language (CIMPL). CIMPL is a powerful, FHIR-aware, high-level language for creating clinical models. Expressing the model in CIMPL means that Objective FHIR models can automatically be turned into FHIR Profiles, Implementation Guides, data dictionaries, and other useful artifacts, across multiple FHIR versions.
 
-Conceptually, there is nothing that prevents the same model from be expressed in other formalisms, some of which are mentioned in the [Appendix](#Appendix:-Relationship-to-Other-Initiatives). However, OBF in CIMPL is a complete, ready-made solution.
+Conceptually, there is nothing that prevents the same model from be expressed in other formalisms, some of which are mentioned in the [Appendix](#Appendix:-Relationship-to-Other-Initiatives). However, OBF with CIMPL is a complete, proven, ready-made solution that has created rich FHIR content, such as the [mCODE Implementation Guide](http://build.fhir.org/ig/HL7/fhir-mCODE-ig/branches/master/index.html).
 
 ### Mapping to FHIR
 
-One of the significant benefits of the OBF framework, compared to using CIMPL alone, is that mapping to FHIR has already been done for you. In most cases, you don't have to worry about mapping, and you can focus entirely on modeling. The only exceptions are when you create a new class that doesn't inherit from a pre-mapped OBF class, override a previous mapping (rare), or add an extension to a pre-mapped class that requires mapping to a nested extension.
+One of the significant benefits of the OBF framework, compared to using CIMPL _tabula rasa_, is that mapping to FHIR has already been done for you. In most cases, any model you create will be mapped to FHIR without additional effort. The only exceptions are when you create a new class that doesn't inherit from a pre-mapped OBF class (rare), override a previous mapping (very rare), or add an extension to a pre-mapped class that requires mapping to a nested extension (even more rare).
 
 ### Coverage
 
-Not all FHIR R4 resources are covered by Objective FHIR. We are working to expand the coverage. The model documentation is the best source to determine if OBF covers your needs.
-
-### Naming
-
-Attribute names in OBF may differ from FHIR names. When they do so, it is usually to make the meaning of the attribute more explicit. OBF names are meant to be meaningful outside of the context of a single class.
-
-For example, the FHIR attribute `Encounter.period` is not entirely self-explanatory, especially when `period` is considered alone, outside of the context provided by `Encounter`. To be more reusable, OBF uses the name `OccurrencePeriod`. Coupled with a different event, such as a procedure, the renamed attribute's meaning is more clear. Although an attribute name is rarely a sufficient definition, OBF moves the needle in that direction.
+Not all FHIR R4 resources are covered by Objective FHIR. We are working to expand the coverage. The model documentation is the best source to determine if OBF covers your needs. If you need additional class coverage for your project, please [contact the project team](about.md).
 
 ### Subclassing
 
@@ -88,11 +84,11 @@ After the keyword section, there is a series of constraint statements. Without d
 We now have a general-purpose genomics report. We can use this class in the form of a FHIR profile, or use it as a parent for defining more specific genomics reports, perhaps `AncestryDotComGenomicsReport`.
 
 ### Comparison Between Profiling Tools
-In FHIR terms, subclassing is akin to profiling profiles, which can be achieved with a number of tools, notably [Forge](https://fire.ly/products/forge/) and [Trifolia](https://trifolia-fhir.lantanagroup.com/home). Both these tools are extremely well-done, and generously supported by commercial entities.
+In FHIR terms, subclassing is akin to profiling profiles, which can be achieved in a number of tools, notably [Forge](https://fire.ly/products/forge/) and [Trifolia](https://trifolia-fhir.lantanagroup.com/home). Both these tools are extremely well-done, and supported by commercial entities.
 
-However, Forge and Trifolia are graphical user interfaces on top of StructureDefinitions, the low-level "assembly language" of FHIR. By contrast, CIMPL is like a high-level programming language. Experience has shown that creating and maintaining a complex project is **much** easier when you use a language, compared to a visual editor. That's why programming languages are almost always text-based, while visual programming has had comparatively little uptake. Even [Unified Modeling Language (UML)](https://www.uml.org/) - a model-diagramming standard that has been around for decades - is fraught with [portability problems](https://www.researchgate.net/publication/322557945_Solving_the_interoperability_problem_between_UML_modeling_tools_Modelio_and_ArgoUML), despite having its own exchange format, [XMI](https://en.wikipedia.org/wiki/XML_Metadata_Interchange). As [stated by Thomas Beale](https://wolandscat.net/2019/03/07/the-long-slow-death-of-uml/), "Architects these days tend to limit their use of UML to package diagrams and a few illustrative class diagrams, while _developers tend to go straight to code_ or use tools that pretty-print extracted textual forms of software such as swagger and apiary." (emphasis added). CIMPL takes the latter approach, producing a variety of explanatory and implementable assets generated from CIMPL code, rather than vice versa.
+Forge and Trifolia are essentially graphical user interfaces on top of StructureDefinitions, the low-level "assembly language" of FHIR. By contrast, CIMPL is like a high-level programming language. Experience has shown that creating and maintaining a complex project is **much** easier when you use a language, compared to a visual editor. That's why programming languages are almost always text-based, while visual programming has had comparatively little uptake. Even [Unified Modeling Language (UML)](https://www.uml.org/) - a model-diagramming standard that has been around for decades - is fraught with [portability problems](https://www.researchgate.net/publication/322557945_Solving_the_interoperability_problem_between_UML_modeling_tools_Modelio_and_ArgoUML), despite having its own exchange format, [XMI](https://en.wikipedia.org/wiki/XML_Metadata_Interchange). As [stated by Thomas Beale](https://wolandscat.net/2019/03/07/the-long-slow-death-of-uml/), "Architects these days tend to limit their use of UML to package diagrams and a few illustrative class diagrams, while _developers tend to go straight to code_ or use tools that pretty-print extracted textual forms of software such as swagger and apiary." (emphasis added). CIMPL takes the latter approach, producing a variety of explanatory and implementable assets generated from CIMPL code, rather than vice versa.
 
-When clinical modeling projects grow to a certain size, many of your activities will involve repeatedly re-visiting, revising, refactoring, renaming, and redoing. You will find that global search and search-and-replace across multiple text files will be an indispensible tool. Maintaining your project as CIMPL text not only opens the door to these operations, but also enables meaningful source code control. Objective FHIR is hosted in Github, which gives developers the ability distribute work across multiple branches, compare changes, and merge contributions, allowing your projects to scale in ways that visual editors can't support.
+When clinical modeling projects grow to a certain size, activities increasingly revolve around repeatedly revisiting, revising, refactoring, and renaming. As a text language, CIMPL allows you to do global search and replace, which will become your new [BFF](https://en.wikipedia.org/wiki/Best_friends_forever). Using text also enables meaningful source code control. CIMPL files can be hosted in Github, which gives model developers the ability distribute work across multiple branches, compare changes (with meaningful diffs), and automatically merge contributions, allowing projects to scale in ways that visual editors can't support.
 
 ## Key Concepts
 
@@ -102,29 +98,35 @@ The primitive types used in OBF are those defined in CIMPL, which correspond one
 
 Complex data types in OBF are also the same as FHIR R4. They are found in the `obf.datatype` namespace. Since complex types like Quantity are ubiquitous, you will almost certainly need to import the `obf.datatype` into your namespace. This is done using the `Uses` keyword.
 
-### Actors
+### Naming
+
+Attribute names in OBF may differ from FHIR names. When they do so, it is usually to make the meaning of the attribute more explicit. OBF names are meant to be meaningful outside of the context of a single class.
+
+For example, the FHIR attribute `Encounter.period` is not entirely self-explanatory, especially when `period` is considered alone, outside of the context provided by `Encounter`. To be more reusable, OBF uses the name `OccurrencePeriod`. Coupled with a different event, such as a procedure, the renamed attribute's meaning is more clear. Although an attribute name is rarely a sufficient definition, OBF moves the needle in that direction.
+
+### OBF Actors
 
 | Name | Description |
 |------|---------|
-| SubjectOfRecord | The subject of a clinical statement, often called the Patient or the Subject. The SubjectOfRecord typically identifies the clinical record in which this statement is contained. |
-| InformationSource | The originator or source of the information or request: a practitioner, patient, related person, organization, an algorithm, device, etc. |
-| Author | The actor who created the item and it responsible for the content (regardless of the information source or who recorded it). If only the author is given, it is assumed the author is the information source and the recorder. |
-| FocalSubject | The person or entity that the information in this resource relates to, if different than the person of record. |
-| Participant | An actor (usually a Practitioner, Patient, or Organization but potentially a device or other entity) that participates in a healthcare task or activity. The participant is not necessarily the performer of the action. |
-| Performer | The actor that carried out the observation or action. |
+| `SubjectOfRecord` | Identifies the person whose clinical record contains the information. The SubjectOfRecord is often the same as the Patient or Subject, but in some cases, the subject of information (called the `FocalSubject`) may be different than the SubjectOfRecord. |
+| `InformationSource` | The originator or source of the information or request: a practitioner, patient, related person, organization, an algorithm, device, etc. |
+| `Author` | The actor who created the item and it responsible for the content (regardless of the information source or who recorded it). If only the author is given, it is assumed the author is the information source and the recorder. |
+| `FocalSubject` | The person or entity that the information in this resource relates to, if different than the person of record. |
+| `Participant` | An actor (usually a Practitioner, Patient, or Organization but potentially a device or other entity) that participates in a healthcare task or activity. The participant is not necessarily the performer of the action. |
+| `Performer` | The actor that carried out the observation or action. |
 
 >**Note:** Currently, OBF doesn't include the information recorder among the key actors. The recorder is the actor who physically enters the information, as opposed to creating or being responsible for the information. Author is occasionally mapped to a FHIR attribute named `recorder` when it is apparent that the resource designers assumed the author and recorder are the same.
 
-### Event Times
+### OBF Event Times
 
 | Name | Description |
 |-------|---------|
-| CreationDateTime | The point in time when an ancillary item (such as a report or image) was created. |
-| OccurrenceTimeOrPeriod | The time or period when an event occurred. |
-| StatementTimeOrPeriod | The time a record of an action or situation was created. |
-| RelevantTime | The time or time period that the statement addresses, not necessarily when the information is gathered. |
-| LastUpdated | The last time a record was updated. |
-| NonOccurrenceTimeOrPeriod | The time or period an event was asserted not to have occurred (currently not used) |
+| `CreationDateTime` | The point in time when an ancillary item (such as a report or image) was created. |
+| `OccurrenceTimeOrPeriod` | The time or period when the event occurred. |
+| `StatementDateTime` | The time when the documentation of an event, action, or situation was created. |
+| `RelevantTime` | The time or time period that the statement addresses, not necessarily when the information is gathered. |
+| `LastUpdated` | The last time a record was updated. |
+
 
 ### Building Blocks
 
