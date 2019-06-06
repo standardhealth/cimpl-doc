@@ -85,7 +85,7 @@
 </li>
                                     
 <li >
-    <a href="../cimplFHIRBasedClassOverview/">CIMPL 6.0 FHIR-based Class Overview</a>
+    <a href="../cimpl6ObjectiveFHIR/">Objective FHIR User Guide</a>
 </li>
                                 </ul>
                             </li>
@@ -499,7 +499,7 @@ Elapsed time: 3.829s
 </code></pre>
 
 <p>We defined our <code>Name</code> element as a <code>string</code>, but the <code>name</code> attribute on the FHIR <code>Patient</code> record has the type of <code>HumanName</code>.  We have two options:
-1. We can redefine the <code>Name</code> element as a <code>HumanName</code>, define the <code>HumanName</code> datatype, and redo the mapping so the <code>Name</code> element is properly mapped to FHIR fields
+1. We can redefine the <code>Name</code> element as a <code>HumanName</code>, define the <code>HumanName</code> data type, and redo the mapping so the <code>Name</code> element is properly mapped to FHIR fields
 2. We can remove the mapping from <code>Name</code> to the <code>name</code> attribute on the FHIR patient and allow the <code>Name</code> to be created as an extension</p>
 <p><em>Note: for more information about possible errors, see the <a href="https://github.com/standardhealth/shr-cli/wiki/Error-Message-Documentation">Error Message Documentation</a></em></p>
 <p>Let's take the easier path of removing the mapping for <code>Name</code>.  Change your <code>zoo_animal_map.txt</code> file to:</p>

@@ -63,10 +63,9 @@ ul.nav .main {
 }
 
 h1 {
-    color: black;
+    color: #444;
     font-weight: 400;
     font-size: 42px;
-    text-align: left;
 }
 
 h2, h3, h4, h5, h6 {

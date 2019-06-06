@@ -85,7 +85,7 @@
 </li>
                                     
 <li >
-    <a href="../cimplFHIRBasedClassOverview/">CIMPL 6.0 FHIR-based Class Overview</a>
+    <a href="../cimpl6ObjectiveFHIR/">Objective FHIR User Guide</a>
 </li>
                                 </ul>
                             </li>
@@ -125,7 +125,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../cimplFHIRBasedClassOverview/">
+                                <a rel="prev" href="../cimpl6ObjectiveFHIR/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -181,13 +181,13 @@
 <p>Any text editor can be used to write CIMPL grammar. However, <a href="https://code.visualstudio.com/">VSCode editor</a> is recommended to take advantage of custom-developed to better navigate CIMPL constructs.  </p>
 <h2 id="setting-up-the-vscode-authoring">Setting up the VSCode Authoring</h2>
 <blockquote>
-<p><strong>Note:</strong> VSCode UI screenshots in this section were taken from a MacOS enironment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.</p>
+<p><strong>Note:</strong> VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.</p>
 </blockquote>
 <ul>
 <li>Download the <a href="https://code.visualstudio.com/">VSCode editor</a>. </li>
-<li>Open VSCode and search for the extension <strong>vscode-lang-cimpl</strong>.  The figure below shows where to find VSCode extensions. </li>
+<li>Open VSCode and search for the extension <strong>vscode-lang-cimpl</strong>.  The figure below shows where to find VSCode extensions.</li>
 </ul>
-<p><img alt="CIMPL VSCode Extenstion" src="../img_cimpl/VSCodeLangCimplExtension_small.png" /></p>
+<p><img alt="CIMPL VSCode Extension" src="../img_cimpl/VSCodeLangCimplExtension_small.png" /></p>
 <h3 id="navigating-a-cimpl-model-within-vscode">Navigating a CIMPL Model within VSCode</h3>
 <p>Elements properties can be previewed in the following ways:</p>
 <ol>
@@ -236,7 +236,7 @@ Target:     <em>fhir target version</em></p>
 <pre><code>&lt;Content Profile Name&gt;-cp.txt
 </code></pre>
 <p>Where <code>&lt;Content Profile Name&gt;</code> is by convention the same name as the IG Configuration JSON file.  The content profile filename must end in "<strong>-cp.txt</strong>".</p>
-<p>For example, the two file name exmamples of a CIMPL configuration and its respective content profile are show below:</p>
+<p>For example, the two file name examples of a CIMPL configuration and its respective content profile are show below:</p>
 <ul>
 <li>Configuration filename: <code>myCIMPLConfiguration-ig.json</code></li>
 <li>Content Profile filename: <code>myCIMPLConfiguration-cp.txt</code></li>
@@ -252,14 +252,14 @@ Configuring FHIR examples to appear in the generated IG involves the following s
 <p>The folder location is specified using the <code>"examples:"</code> parameter in the CIMPL configuration file.  This is illustrated in the figure below:
 <img alt="CIMPL Examples Configuration" src="../img_cimpl/fhirexampleconfig01.png" /></p>
 <h2 id="ig-publisher-output">IG Publisher Output</h2>
-<p>By default, the FHIR IG Publisher will perform validation checks on the  StuctureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, <em>qa.html</em>.</p>
+<p>By default, the FHIR IG Publisher will perform validation checks on the  StructureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, <em>qa.html</em>.</p>
 <p>An example QA output is shown in the figure below:
 <img alt="qa.html example output" src="../img_cimpl/igpublisher_output.png" /></p>
 <h1 id="support">Support</h1>
 <p>Questions on using CIMPL and its toolchain can be addressed on the HL7 Zulip chat channel <a href="https://chat.fhir.org/#streams/197290/cimpl">#cimpl</a></p>
 <p>Report any issues on one of the following GitHub repositories:</p>
 <ul>
-<li>Related to modeling of CIMPL constructs or its FHIR-based classes: https://github.com/standardhealth/shr_spec/issues </li>
+<li>Related to modeling of CIMPL constructs or its FHIR-based classes: https://github.com/standardhealth/shr_spec/issues</li>
 <li>Related to running the CIMPL <code>shr-cli</code> compiler, CIMPL export configuration files, or generating the FHIR Implementation Guide (IG): https://github.com/standardhealth/shr-cli/issues</li>
 </ul></div>
         </div>
