@@ -1,0 +1,18 @@
+Grammar:        ContentProfile 1.0
+/*---------------
+Levels of Data Element Support
+1) 1..1 = required 
+2) 0..1  MS = required if known
+3) 0..1 MS I = conditionally required  0..1 MS I  --- defer
+4) 0..1 MS I = conditionally required if known  0..1 MS I  --- defer
+See
+http://wiki.hl7.org/index.php?title=Conformance_Implementation_Manual
+------------------*/
+
+Namespace: myExample
+
+    MyPatient:
+        MyGender MS
+
+    ObstructiveSleepApneaDisorder:
+        OSADisorderCode MS
