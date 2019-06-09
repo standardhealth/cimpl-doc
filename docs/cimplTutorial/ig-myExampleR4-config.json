@@ -18,7 +18,7 @@
         "version": "0.1.1",
 		"includeLogicalModels": false,
 		"includeModelDoc": false,
-        "indexContent": "exampleIndexContent.html",
+        "indexContent": "index.html",
         "examples": "examples_myFhirExamplesFolder",
 		"primarySelectionStrategy":
 		{
