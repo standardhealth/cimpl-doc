@@ -302,6 +302,10 @@ Namespace: myExample
 
 ```
 
+For our example, we have designated the `MyGender` and `OSADisorderCode` elements as _mustsupport_.  
+
+Further documentation about the CIMPL Content Profile configuration can be found **[here](https://github.com/standardhealth/shr-cli#content-profile)**.
+
 ### Create a Homepage for the IG
 
 Create a new file called **`index.html`** under the `myExampleC6` directory.
@@ -321,7 +325,7 @@ But let's review some highlights of this file.  Click **[here](./cimplTutorial/i
 
 The table below shows some of the notable fields and values in this file. We add in the file line numbers so you can follow along with the example configuration. 
 
-Not every field will be covered.  More advanced configuration options are outside of this tutorial.
+Not every field will be covered.  More advanced configuration options are outside of this tutorial with documentation available **[here](https://github.com/standardhealth/shr-cli#implementation-guide-configuration)**.
 
 | File Line Number | Configuration Field | Value | Additional Comments |
 |-------|-------|-------|-------|
