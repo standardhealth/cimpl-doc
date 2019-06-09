@@ -1,0 +1,21 @@
+Grammar:	Map 5.1
+Namespace:	shr.core
+Target:		FHIR_R4
+
+
+Address maps to Address:
+	Purpose maps to use
+	Type maps to type
+	DisplayText maps to text
+	AddressLine maps to line
+	City maps to city
+	District maps to district
+	State maps to state
+	PostalCode maps to postalCode
+	Country maps to country
+	EffectiveTimePeriod maps to period
+
+TimePeriod maps to Period:
+	BeginDateTime maps to start
+	EndDateTime maps to end
+

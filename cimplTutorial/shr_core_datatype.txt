@@ -1,0 +1,82 @@
+Grammar:          DataElement 6.0
+Namespace:         shr.core
+Description:       "The SHR Core domain contains definitions for a variety of general-purpose elements that are used widely in SHR. These include definitions for coding, expressions of time, quantities, addresses, names, and more."
+CodeSystem:        MTH = http://ncimeta.nci.nih.gov
+CodeSystem:        UCUM = http://unitsofmeasure.org
+CodeSystem:        LNC = http://loinc.org
+CodeSystem:        SCT = http://snomed.info/sct
+
+Element:           Code
+Description:       "The main type identifier for a lab, procedure, condition, etc., usually drawn from a controlled vocabulary."
+Value:             concept
+
+Group:             Address
+Description:       "An address expressed using postal conventions (as opposed to GPS or other location definition formats). This data type may be used to convey addresses for use in delivering mail as well as for visiting locations and which might not be valid for mail delivery. There are a variety of postal address formats defined around the world. (Source: HL7 FHIR)."
+Property:          Purpose 0..1
+Property:          Type 0..1
+Property:          DisplayText 0..1
+Property:          AddressLine 0..*
+Property:          City 0..1
+Property:          District 0..1
+Property:          State 0..1
+Property:          PostalCode 0..1
+Property:          Country 0..1
+Property:          EffectiveTimePeriod 0..1
+                   Purpose from http://hl7.org/fhir/ValueSet/address-use (required)
+                   Type from http://hl7.org/fhir/ValueSet/address-type (required)
+
+Element:           Purpose
+Description:       "Description of the intent or use of the item."
+Value:             concept
+
+Element:           Type
+Concept:           MTH#C0332307
+Description:       "A code describing the item at a greater level of detail."
+Value:             concept
+
+Element:           DisplayText
+Description:       "A string meant for reading by a person, for example, accompanying a code."
+Value:             string
+
+Element:           AddressLine
+Description:       "Part of an address that contains the house number, apartment number, street name, street direction, P.O. Box number, delivery hints, and similar address information. (Source: HL7 FHIR)."
+Value:             string
+
+Element:           City
+Description:       "The name of a municipality, city, town, village or other community or delivery center. (Source: HL7 FHIR)."
+Value:             string
+
+Element:           District
+Description:       "The name of the administrative area at a level below that of a state but above that of a city or town. In the US, a county. Outside the US, a district or the equivalent. (Source: HL7 FHIR)."
+Value:             string
+
+Element:           State
+Description:       "Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes). (Source: HL7 FHIR)."
+Value:             string
+
+Element:           PostalCode
+Description:       "A sequence of letters and digits used as part of a postal address, often designating a geographic region"
+Value:             string
+
+Element:           Country
+Description:       "Country - a nation as commonly understood or generally accepted, expressed in ISO 3166 Alpha-2 (2-letter) codes."
+Value:             string
+
+Group:             EffectiveTimePeriod
+Parent:            TimePeriod
+Concept:           MTH#C2985763
+Description:       "The date and time span for which something is active, valid, or in force."
+
+Group:             TimePeriod
+Description:       "A period of time defined by a start and end time, date, or year.
+If the start date/time is missing, the start of the period is not known. If the end date/time is missing, it means that the period is ongoing."
+Property:          BeginDateTime 0..1
+Property:          EndDateTime 0..1
+
+Element:           BeginDateTime
+Description:       "The time at which something is to take effect, start, or did start. Boundary is considered inclusive."
+Value:             dateTime
+
+Element:           EndDateTime
+Description:       "The time at which something is to end or did end. Boundary is considered inclusive."
+Value:             dateTime

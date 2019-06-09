@@ -1,0 +1,40 @@
+{
+    "resourceType": "Patient",
+    "id": "pat1",
+    "meta": {
+        "profile": [
+          "http://example.com/fhir/StructureDefinition/myExample-MyPatient"
+        ]
+    },
+    "text": {
+      "status": "generated",
+      "div": "\u003cdiv xmlns\u003d\"http://www.w3.org/1999/xhtml\"\u003e\n      \n      \u003cp\u003ePatient Donald DUCK @ Acme Healthcare, Inc. MR \u003d 654321\u003c/p\u003e\n    \n    \u003c/div\u003e"
+    },
+    "identifier": [
+      {
+        "use": "usual",
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+              "code": "MR"
+            }
+          ]
+        },
+        "system": "urn:oid:0.1.2.3.4.5.6.7",
+        "value": "654321"
+      }
+    ],
+    "active": true,
+    "name": [
+      {
+        "use": "official",
+        "family": "Donald",
+        "given": [
+          "Duck"
+        ]
+      }
+    ],
+    "gender": "male",
+    "birthDate": "1951-01-20"
+  }

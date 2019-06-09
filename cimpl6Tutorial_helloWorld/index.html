@@ -82,7 +82,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Guides <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guides <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
@@ -90,11 +90,16 @@
 </li>
                                     
 <li >
-    <a href="../cimpl6Reference/">CIMPL 6.0 Reference Documentation</a>
+    <a href="../cimpl6ObjectiveFHIR/">CIMPL Class Library (aka Objective FHIR)</a>
 </li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manual <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6ObjectiveFHIR/">CIMPL Class Library (aka Objective FHIR)</a>
+    <a href="../cimpl6Reference/">CIMPL 6.0 Reference Documentation</a>
 </li>
                                 </ul>
                             </li>
@@ -168,7 +173,7 @@ Value:           boolean
 </code></pre>
 
 <p>Next, create a file called <code>HelloWorld_map.txt</code> that defines the mapping to FHIR. Since this doesn’t align with any particular resource, it will map to <a href="https://www.hl7.org/fhir/basic.html"><code>Basic</code></a>. This file is even simpler:</p>
-<pre><code>Grammar:     Map 6.0
+<pre><code>Grammar:     Map 5.1
 Namespace:   hello
 Target:      FHIR_STU_3
 
