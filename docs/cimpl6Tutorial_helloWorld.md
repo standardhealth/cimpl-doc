@@ -26,7 +26,7 @@ Value:           boolean
 ```
 Next, create a file called `HelloWorld_map.txt` that defines the mapping to FHIR. Since this doesn’t align with any particular resource, it will map to [`Basic`](https://www.hl7.org/fhir/basic.html). This file is even simpler:
 ```
-Grammar:     Map 6.0
+Grammar:     Map 5.1
 Namespace:   hello
 Target:      FHIR_STU_3
 
