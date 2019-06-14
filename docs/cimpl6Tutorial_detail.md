@@ -46,7 +46,7 @@ Copy the following files to the `myExampleC6` sub-directory.  These file names a
 * [shr_core_datatype.txt](./cimplTutorial/shr_core_datatype.txt)
 * [shr_core_datatype_vs.txt](./cimplTutorial/shr_core_datatype_vs.txt)
 * [shr_core_datatype_map_r4.txt](./cimplTutorial/shr_core_datatype_map_r4.txt)
-* [ig-myExampleR4-config.json](./cimplTutorial/ig-myExampleR4-config.json.txt)
+* [ig-myExampleR4-config.json](./cimplTutorial/ig-myExampleR4-config.json)
 
 # Introduction
 
