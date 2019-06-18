@@ -2,7 +2,7 @@
 <br />
 Let’s do a “Hello, World” using CIMPL v6!
 
-_Note: Make sure you have completed the [CIMPL Installation instructions](cimplInstall.md) before proceeding, and that `shr-cli` is installed in `~/cimpl/shr-cli`._
+_Note: Make sure you have completed the [CIMPL Installation instructions](cimplInstall.md) before proceeding, and that `shr-cli` (minimum version 6.2.0) is installed in `~/cimpl/shr-cli`._
 
 Start by creating a folder structure for our new project.  Open up your favorite (Unix-based) command-line tool and enter the following:
 ```
@@ -16,7 +16,7 @@ Grammar:         DataElement 6.0
 Namespace:       hello
 Description:     "A simple example of CIMPL."
 
-EntryElement:    HelloWorld
+Entry:           HelloWorld
 Description:     "A silly profile."
 Property:        SayHello 0..1
 
@@ -89,13 +89,13 @@ _Note: If your organization uses a proxy server, you'll need to explicitly decla
 
 **On Windows:**
 ```
-java %JAVA_OPTS% -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
+java %JAVA_OPTS% -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.publisher.jar -ig out/fhir/guide/ig.json
 ```
 _Note: users have reported issues with running the IG publisher on windows behind a proxy.  Please try to run the IG publisher without connecting to a proxy_
 
 **On Linux/MacOS:**
 ```
-java $JAVA_OPTS -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
+java $JAVA_OPTS -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.publisher.jar -ig out/fhir/guide/ig.json
 ```
 <br />
 
