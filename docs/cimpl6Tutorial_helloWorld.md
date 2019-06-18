@@ -89,7 +89,7 @@ _Note: If your organization uses a proxy server, you'll need to explicitly decla
 
 **On Windows:**
 ```
-java %JAVA_OPTS% -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
+java %JAVA_OPTS% -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.publisher.jar -ig out/fhir/guide/ig.json
 ```
 _Note: users have reported issues with running the IG publisher on windows behind a proxy.  Please try to run the IG publisher without connecting to a proxy_
 
