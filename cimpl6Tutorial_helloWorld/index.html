@@ -152,7 +152,7 @@
 <h1 id="cimpl-60-hello-world-tutorial">CIMPL 6.0 'Hello World' Tutorial</h1>
 <p><br />
 Let’s do a “Hello, World” using CIMPL v6!</p>
-<p><em>Note: Make sure you have completed the <a href="../cimplInstall/">CIMPL Installation instructions</a> before proceeding, and that <code>shr-cli</code> is installed in <code>~/cimpl/shr-cli</code>.</em></p>
+<p><em>Note: Make sure you have completed the <a href="../cimplInstall/">CIMPL Installation instructions</a> before proceeding, and that <code>shr-cli</code> (minimum version 6.2.0) is installed in <code>~/cimpl/shr-cli</code>.</em></p>
 <p>Start by creating a folder structure for our new project.  Open up your favorite (Unix-based) command-line tool and enter the following:</p>
 <pre><code>cd ~/cimpl
 mkdir hello_world
@@ -163,7 +163,7 @@ mkdir hello_world
 Namespace:       hello
 Description:     &quot;A simple example of CIMPL.&quot;
 
-EntryElement:    HelloWorld
+Entry:           HelloWorld
 Description:     &quot;A silly profile.&quot;
 Property:        SayHello 0..1
 
@@ -229,12 +229,12 @@ node . -c ig-hello_world-config.json ../hello_world
 <h2 id="ig-generation-with-a-proxy-server">IG Generation with a Proxy Server</h2>
 <p><em>Note: If your organization uses a proxy server, you'll need to explicitly declare a few options.  If your organization <strong>does not</strong> use a proxy server, you can skip ahead to <a href="#ig-generation">IG Generation</a>.</em></p>
 <p><strong>On Windows:</strong></p>
-<pre><code>java %JAVA_OPTS% -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
+<pre><code>java %JAVA_OPTS% -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.publisher.jar -ig out/fhir/guide/ig.json
 </code></pre>
 
 <p><em>Note: users have reported issues with running the IG publisher on windows behind a proxy.  Please try to run the IG publisher without connecting to a proxy</em></p>
 <p><strong>On Linux/MacOS:</strong></p>
-<pre><code>java $JAVA_OPTS -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
+<pre><code>java $JAVA_OPTS -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.publisher.jar -ig out/fhir/guide/ig.json
 </code></pre>
 
 <p><br /></p>
