@@ -41,7 +41,7 @@ Directory:  cimpl
             |_ myExampleC6
 ```
 
-Copy the following files to the `myExampleC6` sub-directory.  These file names are hyperlinked for retrieval:
+Copy the following files to the `myExampleC6` sub-directory.  The files contain global definitions for Code Systems, Value Sets, maps to FHIR R4 elements and examples. These file names are hyperlinked for retrieval:
 
 * [shr_core_datatype.txt](./cimplTutorial/shr_core_datatype.txt)
 * [shr_core_datatype_vs.txt](./cimplTutorial/shr_core_datatype_vs.txt)
@@ -93,13 +93,13 @@ Now we can start authoring models in the CIMPL development environment.
 
 In this example, we are using the "clean slate" method of defining our logical model elements without using the pre-existing "Objective FHIR" class library.
 
-CIMPL has three main files involved in the creation of a logical model. We list them here for brevity, but reference the CIMPL 6 Reference Guide for further details on each:
+CIMPL has three main files involved in the creation of a logical model - one of each for every CIMPL project. We list them here for brevity, but reference the CIMPL 6 Reference Guide for further details on each:
 
 * Class file
 * Value Set file
 * Map file
 
-The class file is the place to start. Create a new file under the `myExample6` subdirectory called **`myExample.txt`**.
+The class file is the place to start. Create a new file under the `myExampleC6` subdirectory called **`myExample.txt`**.
 
 Type in the CIMPL header information designating the namespace and version of the DataElement parser:
 
@@ -157,7 +157,7 @@ Description:  "The diagnosis or problem list code assigned to the OSA disorder."
 Value:        concept from OSADisorderVS
 
 Element:      OSACurrentStatus
-Description:  "The diagnosis or problem list code assigned to the OSA disorder."
+Description:  "State of the diagnosis or problem list item."
 Value:        concept from OSACurrentStatusVS
 ```
 
@@ -202,8 +202,8 @@ Here we have defined the terminology coding system reference by the value set, s
 The format for specifying each term in the value set is as follows:
 `<CodeSystem Abbreviation>#<Term Code>`
 
-For example: `HL7CONDSTAT#active      "Active"`
-Where:
+For example: `HL7CONDSTAT#active      "Active"` Where:
+
 * HL7CONDSTAT is the value assigned to `CodeSystem:` which contains the canonical URL or urn: of the coding system.
 * `#` is a delimiter separating the coding system and the code
 * _`active`_ is the term code for the concept
@@ -297,8 +297,8 @@ For purpose of the tutorial's focus on modeling, we have already created a confi
 
 But let's review some highlights of this file.  Click **[here](./cimplTutorial/ig-myExampleR4-config.json.txt)** to view the contents of `ig-myExampleR4-config.json`. The table below shows a partial listing of fields in the config file. More advanced configuration options are available **[here](https://github.com/standardhealth/shr-cli#implementation-guide-configuration)**.
 
-| Paramter | Value | Meaning |
-|-------|-------|-------|-------|
+| Parameter | Value | Meaning |
+|-------|-------|-------|
 | `ProjectName` | "My Example Project" | This will appear on the home page title of your generated IG. |
 | `fhirURL` | "http://example.com/fhir" | The URL  pre-pended to your StructureDefinition canonical URLs. |
 | `contentProfile` | "ig-myExample-cp.txt" | The name of the file which sets FHIR _must-support_ flags. |
@@ -310,7 +310,12 @@ But let's review some highlights of this file.  Click **[here](./cimplTutorial/i
 
 ### Running scripts to compile CIMPL and IG Generation
 
+
 Generating the FHIR IG is a 2-step process:
+
+Before executing Step 1 to compile your CIMPL code, an `examples` directory must exist. It can be empty.  
+
+Create a subdirectory called **`examples_myFhirExamplesFolder`** under the `myExampleC6` folder.
 
 **Step 1:**  Run the Command Line Interface (shr-cli) compiler.
 
@@ -344,9 +349,9 @@ Navigate to the `~/cimpl/shr-cli/myExampleC6r4/fhir/guide/output` directory and 
 
 ## Create FHIR examples
 
-We're now going to add a FHIR example that conforms to our profile.  Since the details creating FHIR examples are out of scope for this tutorial, we're going to supply one for you.
+We're now going to add a FHIR example that conforms to our profile. This step adds an example file to the directory you created in the first step. Since the details creating FHIR examples are out of scope for this tutorial, we're going to supply one for you.
 
-Create a subdirectory called **`examples_myFhirExamplesFolder`** under the `myExampleC6` folder.
+
 
 ```
 Directory:  cimpl

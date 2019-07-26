@@ -40,7 +40,7 @@ Using _Peek Definition_:
 Using _Go to Definition_:
 ![Using Go to Definition](img_cimpl/VSCode_GotoDef.png)
 
-# Using CIMPL to create FHIR-based Models
+# Using CIMPL to Create FHIR-based Models
 
 CIMPL is designed to be modular and extensible, allowing for the reuse of other logical models, and inheriting its properties. The figure below illustrates this notion.
 
@@ -69,35 +69,35 @@ As a best practice, CIMPL map files must have the *_map.txt* naming convention.
 
 Each map file should start with the following 3 lines:
 
-Grammar:	Map 6.0
-Namespace:  _data element group name_
-Target:		_fhir target version_
+* Grammar:	Map 6.0
+* Namespace:  _data element group name_
+* Target:		_fhir target version_
 
 Where:
 
-* _namespace name_ is the name of the grouping of elements that you have identified.
+* _data element group name_ is the name of the grouping of elements that you have identified.
 * _fhir target version_ is a choice of FHIR_DSTU_2, FHIR_STU_3, or FHIR_R4
 
 The snippet below shows an example:
 ```
-Grammar:	Map 5.1
+Grammar:	Map 6.0
 Namespace:	shr.core
 Target:		FHIR_R4
 ```
 
 ## Specifying FHIR "MustSupport" Elements
 
-FHIR specifies a ["MustSupport"](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) boolean flag which allows a profile to indicates that a reference implementation must be able to process the existence of particular element in a FHIR instance and display it if contents are available.
+FHIR specifies a ["MustSupport"](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) boolean flag which allows a profile to indicate that a reference implementation must be able to process the existence of particular element in a FHIR instance and display it if contents are available.
 
-MustSupport is contextual and could vary with depending on the reference implementation. CIMPL subsequently created a separate file so that MustSupport of elements are at the IG configuration level through a *Content Profile* file.
+MustSupport is contextual and could vary depending on the reference implementation. CIMPL uses a separate file so that MustSupport elements are at the IG configuration level through a *Content Profile* file.
 
-Content profile files are text files which use the following convention:
+Content Profile files are text files which use the following convention:
 
     ig-<Content Profile Name>-cp.txt
 
 Where `<Content Profile Name>` is by convention the same name as the IG Configuration JSON file.
 
-For example, the two file name examples of a CIMPL configuration and its respective content profile are show below:
+For example, the two file name examples of a CIMPL Configuration File and its respective Content Profile are show below:
 
 * Configuration filename: `ig-myCIMPLConfiguration-config.json`
 * Content Profile filename: `ig-myCIMPLConfiguration-cp.txt`
@@ -116,6 +116,13 @@ The folder created can be any name, as long as it is specified within the CIMPL 
 The folder location is specified using the `"examples:"` parameter in the CIMPL configuration file.  This is illustrated in the figure below:
 ![CIMPL Examples Configuration](img_cimpl/fhirexampleconfig01.png)
 
+## Compile the Model
+Now that you have created a model using CIMPL it must be compiled using `shr-cli` (Shared Health Record Command Line Interface). 
+
+At a command prompt, navigate to the directory where you installed shr-cli and enter the following (changing mcodeR4 to the model name to compile, and ig-mcode-r4-config.json to the corresponding config file): 
+
+* b.	node . ../dev6/spec -l error -o mcodeR4 -c ig-mcode-r4-config.json  
+
 # QA and Support
 
 ## Troubleshooting
@@ -133,7 +140,15 @@ CIMPL Compilation Errors are structured in the following format:
 
 A detailed list of CIMPL compilation errors and troubleshooting suggestions are available **[here](https://github.com/standardhealth/shr-cli/wiki/Error-Message-Documentation)**.
 
-## IG Publisher Output
+## FHIR IG Publisher Output
+
+The final step in the IG creation process is to run the **[FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7 FHIR. 
+
+At a command prompt, enter (changing mcodeR4 to your CIMPL model name, and the -ig name to an appropriate value):  (Mark & May)
+
+* yarn run ig: publish   QUESTION: readme has this - this needs work 
+* java -Xms4g -Xmx8g -jar mcodeR4/fhir/guide/org.hl7.fhir.publisher.jar -ig mcodeR4/fhir/guide/ig.json     (QUESTION: but is this the right command?)
+
 
 By default, the FHIR IG Publisher will perform validation checks on the  StructureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, *qa.html*.
 
