@@ -80,7 +80,7 @@ Where:
 
 The snippet below shows an example:
 ```
-Grammar:	Map 6.0
+Grammar:	Map 5.1 // Mapping grammar is still version 5.1
 Namespace:	shr.core
 Target:		FHIR_R4
 ```
