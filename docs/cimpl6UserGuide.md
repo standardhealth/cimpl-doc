@@ -69,18 +69,19 @@ As a best practice, CIMPL map files must have the *_map.txt* naming convention.
 
 Each map file should start with the following 3 lines:
 
-* Grammar:	Map 6.0
+* Grammar:	Map _mapping_grammar_version_
 * Namespace:  _data element group name_
 * Target:		_fhir target version_
 
 Where:
 
+* _mapping_grammar_version_ is the version number for parsing the contents of the map file. The current version is 5.1.
 * _data element group name_ is the name of the grouping of elements that you have identified.
 * _fhir target version_ is a choice of FHIR_DSTU_2, FHIR_STU_3, or FHIR_R4
 
 The snippet below shows an example:
 ```
-Grammar:	Map 5.1 // Mapping grammar is still version 5.1
+Grammar:	Map 5.1
 Namespace:	shr.core
 Target:		FHIR_R4
 ```
