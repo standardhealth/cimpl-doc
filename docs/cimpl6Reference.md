@@ -14,7 +14,7 @@ _This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a qui
 
 ## Overview
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 ### CIMPL Versioning
 
@@ -121,7 +121,7 @@ Within a custom value set, the individual codes (denoted by # symbol) are conven
 ```
 ValueSet:          HomeEnvironmentRiskVS
 #smoke_detectors   "No Smoke Detectors"
-#radiation         "Radon or other radiation source"
+#radiation         "Radon or Other Radiation Source"
 #swimming_pool     "Swimming Pool"
 ```
 
@@ -159,9 +159,9 @@ These comments can take up multiple lines.
 */
 ```
 
-### Primitives
+### Primitives 
 
-Primitives are distinguished by starting with lower case letter. CIMPL defines the following primitive data types. With the exception of `concept` (a simplified representation of code, Coding, and CodeableConcept), the primitive types in CIMPL align with FHIR:
+Primitives are data types, distinguished by starting with lower case letter. CIMPL defines the following primitive data types. With the exception of `concept` (a simplified representation of code, Coding, and CodeableConcept), the primitive types in CIMPL align with FHIR:
 
 * [concept](#concept-codes)
 * [boolean](https://www.hl7.org/fhir/datatypes.html#boolean)
@@ -185,7 +185,7 @@ Primitives are distinguished by starting with lower case letter. CIMPL defines t
 
 ### Concept Codes
 
-CIMPL uses a single primitive type, `concept` to represent coded terms from controlled vocabularies. A concept combines three elements: code system, code, and optional display test. The grammar for specifying concepts is:
+CIMPL uses a single primitive type, `concept` to represent coded terms from controlled vocabularies. A concept combines three elements: code system, code, and optional display text. The grammar for specifying concepts is:
 
 > `SYSTEM#code "Display text"`
 
@@ -344,7 +344,7 @@ Example:
 
 Classes based on Group, Entry, and Abstract are composed of one or more properties (called _fields_ or _attributes_ in object-oriented programming). A property can be any Element, Group, or Entry, but never a primitive. Each property must have a specified cardinality range, represented as `min..max`, indicating the number of repeats of the property. **The Property keyword cannot be used in Elements.**
 
-In the following example, StudyArm has three properties: `Name`, `Type`, and `Comment`. `Name` is singular and required, `Type` is optional and repeating, and `Comment` is singular and optional:
+In the following example, StudyArm has four properties: `Name`, `Type`, `Comment` and `ResearchStudy`. `Name` is singular and required, `Type` is optional and repeating, and `Comment` is singular and optional:
 
 ```
 Group:             StudyArm
@@ -373,7 +373,7 @@ Examples:
 
 ### Value
 
-`Value` represents the data type(s) an Element can accept. This keyword can only be used when defining an Element. Each Element must have exactly one `Value`, although the value itself can be a choice of several data types. Value choices can be [primitives](#primitives), [Elements](#element), [Groups](#group), or [Entries](#entry). A value may be inherited and constrained in the child class.
+`Value` represents the data type(s) an Element can accept. This keyword can only be used when defining an Element. Each Element must have exactly one `Value`, although the value itself can be a choice of several data types. Value choices can be [Primitives](#primitives), [Elements](#element), [Groups](#group), or [Entries](#entry). A value may be inherited and constrained in the child class.
 
 Examples:
 ```
@@ -739,7 +739,7 @@ For a further description, see [Keywords](#keywords).
 
 ### Class Definitions
 
-Following the header, the class file contains a number of class definitions. The order of definitions does not matter. A class definition has a sequence of declarations, although after the first declaration, a strict order is not prescribed. Follow the links for further explanation of each item:
+Following the header, the class file contains a number of class definitions. The order of definitions does not matter. Each class definition has contains declarations. The first declaration must be Class type and Name. Subsequent declarations can be in any order. Follow the links for further explanation of each item:
 
 1. [Class Type and Name Declaration](#class-type-and-name-declaration) (required)
 1. [Parent Declaration](#parent) (optional)
@@ -865,7 +865,7 @@ Map files control how classes defined in CIMPL are expressed as FHIR profiles. M
 
 Maps are defined in a series of mapping rules. A powerful feature of CIMPL is that mapping rules are inherited. If your class inherits from a parent class that already is mapped, you do not need to create a new map for your class. However, if you you want specify mappings for new properties, or override the inherited map, you may do so.
 
-The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a mapping. The first mapping rule found will be applied. If no mapping rule is found for a property defined in CIMPL, a FHIR extension will be created. If no mapping is found for an Entry, that Entry will be mapped to the [Basic resource](https://www.hl7.org/fhir/basic.html). In general, mapping to Basic is not recommended because it has no inherent semantic meaning for implementers. Any unmapped properties will appear as FHIR extensions.
+The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a mapping. The first mapping rule found will be applied. If no mapping rule is found for a `Property` defined in CIMPL, a FHIR extension will be created. If no mapping is found for an `Entry`, that `Entry` will be mapped to the [Basic resource](https://www.hl7.org/fhir/basic.html). In general, mapping to Basic is not recommended because it has no inherent semantic meaning for implementers. 
 
 ### Mapping CIMPL Primitives to FHIR
 
@@ -977,7 +977,7 @@ With FHIR as the target output, the right-hand side of the map statement can poi
 
 ### Mapping to References
 
-FHIR resources and profiles require an explicit `Reference()` indicator when referring to another resource or profile. In CIMPL, this is not required or allowed. CIMPL follows the rule that whenever a property is an Entry, that property is mapped as a reference in FHIR.
+FHIR resources and profiles require an explicit `Reference()` indicator when referring to another resource or profile. In CIMPL, whenever a property is an Entry, that property is mapped as a reference in FHIR. There is no need to create an explicit `Reference()`.
 
 Example:
 

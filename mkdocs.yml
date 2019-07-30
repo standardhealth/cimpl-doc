@@ -13,9 +13,7 @@ nav:
               - cimpl6ObjectiveFHIR.md
        - Reference Manual: 
               - cimpl6Reference.md
-       - Archive:
-              - cimpl5Reference.md
-              - cimpl5Tutorial.md
+       
 theme: 
        name: mkdocs
        custom_dir: custom_theme/
