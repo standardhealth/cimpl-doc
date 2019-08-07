@@ -295,7 +295,7 @@ Create a new file called **`index.html`** under the `myExampleC6` directory. Cop
 
 For purpose of the tutorial's focus on modeling, we have already created a configuration file called `ig-myExampleR4-config.json` for our example and had you copy this file to the `myExampleC6` directory at the start of this tutorial.
 
-But let's review some highlights of this file.  Click **[here](./cimplTutorial/ig-myExampleR4-config.json.txt)** to view the contents of `ig-myExampleR4-config.json`. The table below shows a partial listing of fields in the config file. More advanced configuration options are available **[here](https://github.com/standardhealth/shr-cli#implementation-guide-configuration)**.
+But let's review some highlights of this file.  Click **[here](./cimplTutorial/ig-myExampleR4-config.json)** to view the contents of `ig-myExampleR4-config.json`. The table below shows a partial listing of fields in the config file. More advanced configuration options are available **[here](https://github.com/standardhealth/shr-cli#implementation-guide-configuration)**.
 
 | Parameter | Value | Meaning |
 |-------|-------|-------|
