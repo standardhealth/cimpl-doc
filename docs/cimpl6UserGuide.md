@@ -143,13 +143,12 @@ A detailed list of CIMPL compilation errors and troubleshooting suggestions are 
 
 ## FHIR IG Publisher Output
 
-The final step in the IG creation process is to run the **[FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7 FHIR. 
+The final step in the IG creation process is to run the **[FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7 FHIR.
 
-At a command prompt, enter (changing mcodeR4 to your CIMPL model name, and the -ig name to an appropriate value):  (Mark & May)
+At a command prompt, use one of the 2 options:
 
-* yarn run ig: publish   QUESTION: readme has this - this needs work 
-* java -Xms4g -Xmx8g -jar mcodeR4/fhir/guide/org.hl7.fhir.publisher.jar -ig mcodeR4/fhir/guide/ig.json     (QUESTION: but is this the right command?)
-
+* **Option 1 (_if the defaults were used in running shr-cli_):** yarn run ig: publish
+* **Option 2 (_if not using defaults and specifying a directory in running shr-cli_):** java -Xms4g -Xmx8g -jar <_directory specified when running shr-cli_>/fhir/guide/org.hl7.fhir.publisher.jar -ig <_directory specified when running shr-cli_>/fhir/guide/ig.json
 
 By default, the FHIR IG Publisher will perform validation checks on the  StructureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, *qa.html*.
 
