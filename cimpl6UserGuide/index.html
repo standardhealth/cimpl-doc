@@ -278,11 +278,11 @@ Target:     FHIR_R4
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳&nbsp;&nbsp; The last three digits are simply for unique identification. <br></p>
 <p>A detailed list of CIMPL compilation errors and troubleshooting suggestions are available <strong><a href="https://github.com/standardhealth/shr-cli/wiki/Error-Message-Documentation">here</a></strong>.</p>
 <h2 id="fhir-ig-publisher-output">FHIR IG Publisher Output</h2>
-<p>The final step in the IG creation process is to run the <strong><a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR IG Publisher</a></strong>. This tool is maintained and owned by HL7 FHIR. </p>
-<p>At a command prompt, enter (changing mcodeR4 to your CIMPL model name, and the -ig name to an appropriate value):  (Mark &amp; May)</p>
+<p>The final step in the IG creation process is to run the <strong><a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR IG Publisher</a></strong>. This tool is maintained and owned by HL7 FHIR.</p>
+<p>At a command prompt, use one of the 2 options:</p>
 <ul>
-<li>yarn run ig: publish   QUESTION: readme has this - this needs work </li>
-<li>java -Xms4g -Xmx8g -jar mcodeR4/fhir/guide/org.hl7.fhir.publisher.jar -ig mcodeR4/fhir/guide/ig.json     (QUESTION: but is this the right command?)</li>
+<li><strong>Option 1 (<em>if the defaults were used in running shr-cli</em>):</strong> yarn run ig: publish</li>
+<li><strong>Option 2 (<em>if not using defaults and specifying a directory in running shr-cli</em>):</strong> java -Xms4g -Xmx8g -jar &lt;<em>directory specified when running shr-cli</em>&gt;/fhir/guide/org.hl7.fhir.publisher.jar -ig &lt;<em>directory specified when running shr-cli</em>&gt;/fhir/guide/ig.json</li>
 </ul>
 <p>By default, the FHIR IG Publisher will perform validation checks on the  StructureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, <em>qa.html</em>.</p>
 <p>An example QA output is shown in the figure below:
