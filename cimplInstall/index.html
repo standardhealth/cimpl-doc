@@ -103,19 +103,6 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archive <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../cimpl5Reference/">CIMPL 5.0 Reference Documentation</a>
-</li>
-                                    
-<li >
-    <a href="../cimpl5Tutorial/">CIMPL 5.0 Tutorial</a>
-</li>
-                                </ul>
-                            </li>
                         </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -292,16 +279,20 @@ git config --global url.&quot;https://&quot;.insteadOf git://
 <p>If you're totally new to Git, github has a great introduction where you can learn buy reading or playing with some helpful visualizations: http://try.github.io/</p>
 <h3 id="visual-studio-code">Visual Studio Code</h3>
 <p>Visual Studio Code (occasionally referred to as 'VSCode', or simply 'Code') is not a strict dependency (i.e., you can author CIMPL files using any text editor), but it is recommended that you use it for CIMPL development.  An extension for VSCode has been developed that offers syntax highlighting, autocomplete, and other things that make life easier.</p>
-<p>To get started, download and install the latest stable build from the <a href="https://code.visualstudio.com">VSCode homepage</a>.  You can use the default options in the installer file, but some developers find it helpful to check these checkboxes during the installation wizard:
-* Add "Open with Code" action to Windows Explorer file context menu
-* Add "Open with Code" action to Windows Explorer directory context menu
-* Register Code as an editor for supported file types</p>
+<p>To get started, download and install the latest stable build from the <a href="https://code.visualstudio.com">VSCode homepage</a>.  You can use the default options in the installer file, but some developers find it helpful to check these checkboxes during the installation wizard:</p>
+<ul>
+<li>Add "Open with Code" action to Windows Explorer file context menu</li>
+<li>Add "Open with Code" action to Windows Explorer directory context menu</li>
+<li>Register Code as an editor for supported file types</li>
+</ul>
 <h4 id="proxy-setup">Proxy Setup</h4>
 <p><em>Note: If your organization uses a proxy server, you'll need to set this up in the VSCode settings.  If your organization <strong>does not</strong> use a proxy server, you can skip ahead to the <a href="#cimpl-extension-setup">CIMPL Extension Setup</a>.</em></p>
-<p>To ensure that Visual Studio Code can download extensions, a couple lines of code need to be added to the user settings file.  Code's user settings are a bit different than you may be used to - they are all stored in a JSON file that can be edited from within VSCode (for more information, check out the <a href="https://code.visualstudio.com/docs/getstarted/settings">user settings documentation</a>). To add the proxy settings:
-* Open Visual Studio Code
-* Open the User Settings menu (File -&gt; Preferences -&gt; Settings in the menu bar or <code>Ctrl + ,</code>)
-* Replace <code>http://your.proxy.org</code> with your actual proxy server in the following code block:</p>
+<p>To ensure that Visual Studio Code can download extensions, a couple lines of code need to be added to the user settings file.  Code's user settings are a bit different than you may be used to - they are all stored in a JSON file that can be edited from within VSCode (for more information, check out the <a href="https://code.visualstudio.com/docs/getstarted/settings">user settings documentation</a>). To add the proxy settings:</p>
+<ul>
+<li>Open Visual Studio Code</li>
+<li>Open the User Settings menu (File -&gt; Preferences -&gt; Settings in the menu bar or <code>Ctrl + ,</code>)</li>
+<li>Replace <code>http://your.proxy.org</code> with your actual proxy server in the following code block:</li>
+</ul>
 <pre><code>&quot;http.proxy&quot;: &quot;http://your.proxy.org&quot;,
 &quot;http.proxyStrictSSL&quot;: false
 </code></pre>
@@ -310,15 +301,19 @@ git config --global url.&quot;https://&quot;.insteadOf git://
 <li>Copy and paste those lines between the curly brackets in the panel on the right side</li>
 <li>Your User Settings should now look like this:</li>
 </ul>
-<p><img alt="Windows User Settings" src="https://github.com/standardhealth/cimpl-tutorial/blob/master/images/windows_proxy_settings.png?raw=true" />
-* Save the changes (Using File -&gt; Save in the menu bar or <code>Ctrl + S</code>)
-* Exit and re-open Visual Studio Code to make sure the settings take effect</p>
+<p><img alt="Windows User Settings" src="https://github.com/standardhealth/cimpl-tutorial/blob/master/images/windows_proxy_settings.png?raw=true" /></p>
+<ul>
+<li>Save the changes (Using File -&gt; Save in the menu bar or <code>Ctrl + S</code>)</li>
+<li>Exit and re-open Visual Studio Code to make sure the settings take effect</li>
+</ul>
 <h4 id="cimpl-extension-setup">CIMPL Extension Setup</h4>
-<p>CIMPL authors have created tools for VSCode that offer syntax highlighting, autocomplete, and other things that make life easier. These tools are known as 'extensions' in VSCode (for more information, watch this <a href="https://code.visualstudio.com/docs/introvideos/extend">video about working with extensions</a>).  To enable CIMPL syntax highlighting in VSCode:
-* Open the extensions menu (Using View -&gt; Extensions in the menu bar, <code>Ctrl + Shift + X</code>, or the icon on the bottom of the left toolbar that looks like a box inside of a box)
-* By default, the extensions are filtered by <code>@sort:installs</code>. Replace this with <code>cimpl</code>
-* Look for the <code>vscode-language-cimpl</code> extension and click the <code>Install</code> button
-* When the installation has completed, click the <code>Reload</code> button</p>
+<p>CIMPL authors have created tools for VSCode that offer syntax highlighting, autocomplete, and other things that make life easier. These tools are known as 'extensions' in VSCode (for more information, watch this <a href="https://code.visualstudio.com/docs/introvideos/extend">video about working with extensions</a>).  To enable CIMPL syntax highlighting in VSCode:</p>
+<ul>
+<li>Open the extensions menu (Using View -&gt; Extensions in the menu bar, <code>Ctrl + Shift + X</code>, or the icon on the bottom of the left toolbar that looks like a box inside of a box)</li>
+<li>By default, the extensions are filtered by <code>@sort:installs</code>. Replace this with <code>cimpl</code></li>
+<li>Look for the <code>vscode-language-cimpl</code> extension and click the <code>Install</code> button</li>
+<li>When the installation has completed, click the <code>Reload</code> button</li>
+</ul>
 <h2 id="shr-cli-tool">SHR-CLI Tool</h2>
 <p>With the supporting software installed, you can move on to installing the actual <code>shr-cli</code> tool.</p>
 <p>Open <strong>'Git Bash'</strong> (not the windows command prompt) and enter the following commands:</p>
@@ -337,16 +332,24 @@ yarn
 <h2 id="fhir-ig-generation-tool">FHIR IG Generation Tool</h2>
 <p>The <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR implementation guide (IG) publisher</a> is a Java-based tool that is owned and operated by the HL7 FHIR team.  It requires that Java and Jekyll (a Ruby gem) be installed in order to run properly.</p>
 <h3 id="windows-java-installation">Windows Java Installation</h3>
-<p>The IG publisher is primarily written in java and requires JRE version 8.  To install JRE:
-* Go to the <a href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">Java SE Runtime Environment 8 Downloads</a> page
-* Click the 'Accept License Agreement' radio button
-* Download the most recent JRE 8 installer for your operating system</p>
+<p>The IG publisher is primarily written in java and requires JRE version 8.  To install JRE:</p>
+<ul>
+<li>
+<p>Go to the <a href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">Java SE Runtime Environment 8 Downloads</a> page</p>
+</li>
+<li>
+<p>Click the 'Accept License Agreement' radio button</p>
+</li>
+<li>Download the most recent JRE 8 installer for your operating system</li>
+</ul>
 <h3 id="windows-jekyll-installation">Windows Jekyll Installation</h3>
 <p>Jekyll is a <code>ruby</code> library that takes code and turns it into webpages.  That is especially helpful for generating static websites like the FHIR Implementation Guides.</p>
-<p>Use the <a href="http://jekyllrb.com/docs/windows">Windows Installation Instructions for Jekyll</a>:
-* Download RubyInstaller and run it, using the default options in the installer file (i.e., just keep clicking 'Next' until the installation is complete)
-* After clicking 'Finish', a command prompt should open asking about an <code>MSYS2 base installation</code>. Press <code>Enter</code> to continue.
-* When that installation is complete, open a new command prompt from the Windows start menu and type:</p>
+<p>Use the <a href="http://jekyllrb.com/docs/windows">Windows Installation Instructions for Jekyll</a>:</p>
+<ul>
+<li>Download RubyInstaller and run it, using the default options in the installer file (i.e., just keep clicking 'Next' until the installation is complete)</li>
+<li>After clicking 'Finish', a command prompt should open asking about an <code>MSYS2 base installation</code>. Press <code>Enter</code> to continue.</li>
+<li>When that installation is complete, open a new command prompt from the Windows start menu and type:</li>
+</ul>
 <pre><code>gem install jekyll bundler
 </code></pre>
 
@@ -365,14 +368,18 @@ yarn
 <p>That's it!  To test whether your CIMPL environment has been properly set up, try the <a href="https://github.com/standardhealth/shr-cli/wiki/Hello-World">Hello World</a> example.</p>
 <h1 id="macos-installation-instructions">macOS Installation Instructions</h1>
 <p><em>Note: These installation instructions assume that you are installing applications using an account that has administrator-level access.  If you do not have administrator rights on your machine, some of the installations will fail or the applications will refuse to install.</em></p>
-<p>For a successful installation, it is <strong>critical</strong> that you:
-* Read the instructions <strong>thoroughly</strong>
-* Follow instructions <strong>in order</strong>, without skipping around
-* Pay attention to variables (like your organization's proxy) that you may need to replace</p>
+<p>For a successful installation, it is <strong>critical</strong> that you:</p>
+<ul>
+<li>Read the instructions <strong>thoroughly</strong></li>
+<li>Follow instructions <strong>in order</strong>, without skipping around</li>
+<li>Pay attention to variables (like your organization's proxy) that you may need to replace</li>
+</ul>
 <h2 id="terminal-proxy-setup">Terminal Proxy Setup</h2>
 <p><em>Warning: Many professional organizations use proxy servers to filter incoming internet content (e.g., antivirus checks, adult material, etc.).  Many of the applications that support CIMPL require that these proxy servers be explicitly declared before they will function properly.  If your organization does not use a proxy server, you can skip ahead to installing the <a href="#supporting-software">Supporting Software</a>.</em></p>
-<p>If your organization uses a proxy server and you use the standard <a href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal app for macOS</a>, you will need to set up environment variables before proceeding.
-* Copy the following code block into a text editor and replace <code>your.proxy.org</code> with your organization's proxy server and <code>80</code> with the port used by your organization's proxy server:</p>
+<p>If your organization uses a proxy server and you use the standard <a href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal app for macOS</a>, you will need to set up environment variables before proceeding.</p>
+<ul>
+<li>Copy the following code block into a text editor and replace <code>your.proxy.org</code> with your organization's proxy server and <code>80</code> with the port used by your organization's proxy server:</li>
+</ul>
 <pre><code>echo &quot;export http_proxy=http://your.proxy.org:80
 export https_proxy=http://your.proxy.org:80
 export HTTP_PROXY=http://your.proxy.org:80
@@ -437,10 +444,12 @@ git config --global url.&quot;https://&quot;.insteadOf git://
 <p>To get started, download and install the latest stable build from the <a href="https://code.visualstudio.com">VSCode homepage</a>.</p>
 <h4 id="proxy-setup_1">Proxy Setup</h4>
 <p><em>Note: If your organization uses a proxy server, you will need to add some proxy settings to Visual Studio Code.  If your organization <strong>does not</strong> use a proxy server, you can skip ahead to the <a href="#cimpl-extension-setup-1">CIMPL Extension Setup</a>.</em></p>
-<p>To ensure that Visual Studio Code can download extensions, a couple lines of code need to be added to the user settings file.  Code's user settings are a bit different than you may be used to - they are all stored in a JSON file that can be edited from within VSCode (for more information, check out the <a href="https://code.visualstudio.com/docs/getstarted/settings">user settings documentation</a>). To add the proxy settings:
-* Open Visual Studio Code
-* Open the User Settings menu (Code -&gt; Preferences -&gt; Settings in the menu bar or <code>Command + ,</code>)
-* Replace <code>http://your.proxy.org</code> with your actual proxy server in the following code block:</p>
+<p>To ensure that Visual Studio Code can download extensions, a couple lines of code need to be added to the user settings file.  Code's user settings are a bit different than you may be used to - they are all stored in a JSON file that can be edited from within VSCode (for more information, check out the <a href="https://code.visualstudio.com/docs/getstarted/settings">user settings documentation</a>). To add the proxy settings:</p>
+<ul>
+<li>Open Visual Studio Code</li>
+<li>Open the User Settings menu (Code -&gt; Preferences -&gt; Settings in the menu bar or <code>Command + ,</code>)</li>
+<li>Replace <code>http://your.proxy.org</code> with your actual proxy server in the following code block:</li>
+</ul>
 <pre><code>&quot;http.proxy&quot;: &quot;http://your.proxy.org&quot;,
 &quot;http.proxyStrictSSL&quot;: false
 </code></pre>
@@ -449,15 +458,19 @@ git config --global url.&quot;https://&quot;.insteadOf git://
 <li>Copy and paste those lines between the curly brackets in the panel on the right side</li>
 <li>Your User Settings should now look like this:</li>
 </ul>
-<p><img alt="macOS User Settings" src="https://github.com/standardhealth/cimpl-tutorial/blob/master/images/macos_proxy_settings.png?raw=true" />
-* Save the changes (Using File -&gt; Save in the menu bar or <code>Command + S</code>)
-* Exit and re-open Visual Studio Code to make sure the settings take effect</p>
+<p><img alt="macOS User Settings" src="https://github.com/standardhealth/cimpl-tutorial/blob/master/images/macos_proxy_settings.png?raw=true" /></p>
+<ul>
+<li>Save the changes (Using File -&gt; Save in the menu bar or <code>Command + S</code>)</li>
+<li>Exit and re-open Visual Studio Code to make sure the settings take effect</li>
+</ul>
 <h4 id="cimpl-extension-setup_1">CIMPL Extension Setup</h4>
-<p>CIMPL authors have created tools for VSCode that offer syntax highlighting, autocomplete, and other things that make life easier. These tools are known as 'extensions' in VSCode (for more information, watch this <a href="https://code.visualstudio.com/docs/introvideos/extend">video about working with extensions</a>).  To enable CIMPL syntax highlighting in VSCode:
-* Open the extensions menu (Using View -&gt; Extensions in the menu bar, <code>Command + Shift + X</code>, or the icon on the bottom of the left toolbar that looks like a box inside of a box)
-* By default, the extensions are filtered by <code>@sort:installs</code>. Replace this with <code>cimpl</code>
-* Look for the <code>vscode-language-cimpl</code> extension and click the <code>Install</code> button
-* When the installation has completed, click the <code>Reload</code> button</p>
+<p>CIMPL authors have created tools for VSCode that offer syntax highlighting, autocomplete, and other things that make life easier. These tools are known as 'extensions' in VSCode (for more information, watch this <a href="https://code.visualstudio.com/docs/introvideos/extend">video about working with extensions</a>).  To enable CIMPL syntax highlighting in VSCode:</p>
+<ul>
+<li>Open the extensions menu (Using View -&gt; Extensions in the menu bar, <code>Command + Shift + X</code>, or the icon on the bottom of the left toolbar that looks like a box inside of a box)</li>
+<li>By default, the extensions are filtered by <code>@sort:installs</code>. Replace this with <code>cimpl</code></li>
+<li>Look for the <code>vscode-language-cimpl</code> extension and click the <code>Install</code> button</li>
+<li>When the installation has completed, click the <code>Reload</code> button</li>
+</ul>
 <h2 id="shr-cli-tool_1">SHR-CLI Tool</h2>
 <p>With the supporting software installed, you can move on to installing the actual <code>shr-cli</code> tool.  Open a terminal window and enter the following commands:</p>
 <pre><code>cd ~
@@ -483,10 +496,12 @@ yarn
 <h2 id="fhir-ig-generation-tool_1">FHIR IG Generation Tool</h2>
 <p>The <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR implementation guide (IG) publisher</a> is a Java-based tool that is owned and operated by the HL7 FHIR team.  It requires that Java and Jekyll (a Ruby gem) be installed in order to run properly.</p>
 <h3 id="macos-java-installation">MacOS Java Installation</h3>
-<p>The IG publisher is primarily written in java and requires JRE version 8.  To install JRE:
-* Go to the <a href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">Java SE Runtime Environment 8 Downloads</a> page
-* Click the 'Accept License Agreement' radio button
-* Download the most recent JRE 8 installer for your operating system</p>
+<p>The IG publisher is primarily written in java and requires JRE version 8.  To install JRE:</p>
+<ul>
+<li>Go to the <a href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">Java SE Runtime Environment 8 Downloads</a> page</li>
+<li>Click the 'Accept License Agreement' radio button</li>
+<li>Download the most recent JRE 8 installer for your operating system</li>
+</ul>
 <h3 id="macos-jekyll-installation">MacOS Jekyll Installation</h3>
 <p>Jekyll is a <code>ruby</code> library that takes code and turns it into webpages.  That is especially helpful for generating static websites like the FHIR Implementation Guides.</p>
 <p>If you don't know if the <code>xcode developer tools</code> are installed, run the following command:</p>
@@ -502,7 +517,7 @@ yarn
 </code></pre>
 
 <p><em>NOTE: If your system requires <code>sudo</code> to gem install bundler and jekyll, use the following command to preserve environment variables when using <code>sudo</code>:</em></p>
-<pre><code>sudo -E gem install bundler jekyl
+<pre><code>sudo -E gem install bundler jekyll
 </code></pre>
 
 <p>If you're running the IG Generation tool behind a proxy, you may need to <a href="https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy">explicitly declare the proxy at runtime</a>, since the process tries to access external terminology servers.</p>

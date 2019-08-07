@@ -103,19 +103,6 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archive <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../cimpl5Reference/">CIMPL 5.0 Reference Documentation</a>
-</li>
-                                    
-<li >
-    <a href="../cimpl5Tutorial/">CIMPL 5.0 Tutorial</a>
-</li>
-                                </ul>
-                            </li>
                         </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -216,7 +203,7 @@ Now your directory structure should look like this:</p>
             |_ myExampleC6
 </code></pre>
 
-<p>Copy the following files to the <code>myExampleC6</code> sub-directory.  These file names are hyperlinked for retrieval:</p>
+<p>Copy the following files to the <code>myExampleC6</code> sub-directory.  The files contain global definitions for Code Systems, Value Sets, maps to FHIR R4 elements and examples. These file names are hyperlinked for retrieval:</p>
 <ul>
 <li><a href="../cimplTutorial/shr_core_datatype.txt">shr_core_datatype.txt</a></li>
 <li><a href="../cimplTutorial/shr_core_datatype_vs.txt">shr_core_datatype_vs.txt</a></li>
@@ -288,13 +275,13 @@ Now your directory structure should look like this:</p>
 <h2 id="create-the-logical-model-in-cimpl">Create the Logical Model in CIMPL</h2>
 <p>Now we can start authoring models in the CIMPL development environment.</p>
 <p>In this example, we are using the "clean slate" method of defining our logical model elements without using the pre-existing "Objective FHIR" class library.</p>
-<p>CIMPL has three main files involved in the creation of a logical model. We list them here for brevity, but reference the CIMPL 6 Reference Guide for further details on each:</p>
+<p>CIMPL has three main files involved in the creation of a logical model - one of each for every CIMPL project. We list them here for brevity, but reference the CIMPL 6 Reference Guide for further details on each:</p>
 <ul>
 <li>Class file</li>
 <li>Value Set file</li>
 <li>Map file</li>
 </ul>
-<p>The class file is the place to start. Create a new file under the <code>myExample6</code> subdirectory called <strong><code>myExample.txt</code></strong>.</p>
+<p>The class file is the place to start. Create a new file under the <code>myExampleC6</code> subdirectory called <strong><code>myExample.txt</code></strong>.</p>
 <p>Type in the CIMPL header information designating the namespace and version of the DataElement parser:</p>
 <pre><code>Grammar:        DataElement 6.0
 Namespace:      myExample
@@ -342,7 +329,7 @@ Description:  &quot;The diagnosis or problem list code assigned to the OSA disor
 Value:        concept from OSADisorderVS
 
 Element:      OSACurrentStatus
-Description:  &quot;The diagnosis or problem list code assigned to the OSA disorder.&quot;
+Description:  &quot;State of the diagnosis or problem list item.&quot;
 Value:        concept from OSACurrentStatusVS
 </code></pre>
 
@@ -378,12 +365,13 @@ STAT#resolved   &quot;Resolved&quot;
 <p>Here we have defined the terminology coding system reference by the value set, specified using the <code>CodeSystem:</code> keyword up front.  This allows us to tag a short-hand notation of the coding system to the code for each term in the value set.  It also allows for the flexibility of specifying terms with different coding systems within a value set, if applicable.</p>
 <p>The format for specifying each term in the value set is as follows:
 <code>&lt;CodeSystem Abbreviation&gt;#&lt;Term Code&gt;</code></p>
-<p>For example: <code>HL7CONDSTAT#active      "Active"</code>
-Where:
-* HL7CONDSTAT is the value assigned to <code>CodeSystem:</code> which contains the canonical URL or urn: of the coding system.
-* <code>#</code> is a delimiter separating the coding system and the code
-* <em><code>active</code></em> is the term code for the concept
-* <code>"Active"</code> is the display name associated with the term code.</p>
+<p>For example: <code>HL7CONDSTAT#active      "Active"</code> Where:</p>
+<ul>
+<li>HL7CONDSTAT is the value assigned to <code>CodeSystem:</code> which contains the canonical URL or urn: of the coding system.</li>
+<li><code>#</code> is a delimiter separating the coding system and the code</li>
+<li><em><code>active</code></em> is the term code for the concept</li>
+<li><code>"Active"</code> is the display name associated with the term code.</li>
+</ul>
 <h2 id="create-logical-model-to-fhir-mappings">Create Logical Model to FHIR mappings</h2>
 <p>Create a file called <strong><code>myExample_map_r4.txt</code></strong> under the <code>myExampleC6</code> sub-directory.</p>
 <p>Copy the following header information to the top of the file:</p>
@@ -473,17 +461,56 @@ ObstructiveSleepApneaDisorder:
 <h3 id="configuring-your-output">Configuring your output</h3>
 <p>For purpose of the tutorial's focus on modeling, we have already created a configuration file called <code>ig-myExampleR4-config.json</code> for our example and had you copy this file to the <code>myExampleC6</code> directory at the start of this tutorial.</p>
 <p>But let's review some highlights of this file.  Click <strong><a href="./cimplTutorial/ig-myExampleR4-config.json.txt">here</a></strong> to view the contents of <code>ig-myExampleR4-config.json</code>. The table below shows a partial listing of fields in the config file. More advanced configuration options are available <strong><a href="https://github.com/standardhealth/shr-cli#implementation-guide-configuration">here</a></strong>.</p>
-<p>| Paramter | Value | Meaning |
-|-------|-------|-------|-------|
-| <code>ProjectName</code> | "My Example Project" | This will appear on the home page title of your generated IG. |
-| <code>fhirURL</code> | "http://example.com/fhir" | The URL  pre-pended to your StructureDefinition canonical URLs. |
-| <code>contentProfile</code> | "ig-myExample-cp.txt" | The name of the file which sets FHIR <em>must-support</em> flags. |
-| <code>filterStrategy</code> | "true" | Indicates that not all entries in the logical model should be including in the IG |
-| <code>strategy</code> | "namespace" | Indicates all logical model elements in the namespace will be in the IG. |
-| <code>target</code> | ["myExample"] | JSON array containing the namespace(s) targeted by the filtering strategy. |
-| <code>indexContent</code> | "index.html" | The file containing the IG homepage. |</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ProjectName</code></td>
+<td>"My Example Project"</td>
+<td>This will appear on the home page title of your generated IG.</td>
+</tr>
+<tr>
+<td><code>fhirURL</code></td>
+<td>"http://example.com/fhir"</td>
+<td>The URL  pre-pended to your StructureDefinition canonical URLs.</td>
+</tr>
+<tr>
+<td><code>contentProfile</code></td>
+<td>"ig-myExample-cp.txt"</td>
+<td>The name of the file which sets FHIR <em>must-support</em> flags.</td>
+</tr>
+<tr>
+<td><code>filterStrategy</code></td>
+<td>"true"</td>
+<td>Indicates that not all entries in the logical model should be including in the IG</td>
+</tr>
+<tr>
+<td><code>strategy</code></td>
+<td>"namespace"</td>
+<td>Indicates all logical model elements in the namespace will be in the IG.</td>
+</tr>
+<tr>
+<td><code>target</code></td>
+<td>["myExample"]</td>
+<td>JSON array containing the namespace(s) targeted by the filtering strategy.</td>
+</tr>
+<tr>
+<td><code>indexContent</code></td>
+<td>"index.html"</td>
+<td>The file containing the IG homepage.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="running-scripts-to-compile-cimpl-and-ig-generation">Running scripts to compile CIMPL and IG Generation</h3>
 <p>Generating the FHIR IG is a 2-step process:</p>
+<p>Before executing Step 1 to compile your CIMPL code, an <code>examples</code> directory must exist. It can be empty.  </p>
+<p>Create a subdirectory called <strong><code>examples_myFhirExamplesFolder</code></strong> under the <code>myExampleC6</code> folder.</p>
 <p><strong>Step 1:</strong>  Run the Command Line Interface (shr-cli) compiler.</p>
 <ul>
 <li>
@@ -514,8 +541,7 @@ ObstructiveSleepApneaDisorder:
 <p>Navigate to the <code>~/cimpl/shr-cli/myExampleC6r4/fhir/guide/output</code> directory and open the <strong><code>index.html</code></strong> file in a browser.  This will display the home page of the generated FHIR IG for your example project.</p>
 <p><img alt="Tutorial 1 IG Homepage" src="../img_cimpl/cimplTutorial1_IGHomepage.png" /></p>
 <h2 id="create-fhir-examples">Create FHIR examples</h2>
-<p>We're now going to add a FHIR example that conforms to our profile.  Since the details creating FHIR examples are out of scope for this tutorial, we're going to supply one for you.</p>
-<p>Create a subdirectory called <strong><code>examples_myFhirExamplesFolder</code></strong> under the <code>myExampleC6</code> folder.</p>
+<p>We're now going to add a FHIR example that conforms to our profile. This step adds an example file to the directory you created in the first step. Since the details creating FHIR examples are out of scope for this tutorial, we're going to supply one for you.</p>
 <pre><code>Directory:  cimpl
             |_ shr-cli
             |_ myExampleC6

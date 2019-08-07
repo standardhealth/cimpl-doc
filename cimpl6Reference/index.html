@@ -103,19 +103,6 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archive <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../cimpl5Reference/">CIMPL 5.0 Reference Documentation</a>
-</li>
-                                    
-<li >
-    <a href="../cimpl5Tutorial/">CIMPL 5.0 Tutorial</a>
-</li>
-                                </ul>
-                            </li>
                         </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -129,8 +116,8 @@
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li >
-                                <a rel="prev" href="../cimpl5Reference/">
+                            <li class="disabled">
+                                <a rel="prev" >
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -270,7 +257,7 @@
 </div>
 <hr />
 <h2 id="overview">Overview</h2>
-<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
 <h3 id="cimpl-versioning">CIMPL Versioning</h3>
 <p>CIMPL follows the <a href="https://semver.org">semantic versioning</a> convention (MAJOR.MINOR.PATCH).</p>
 <ul>
@@ -373,7 +360,7 @@
 <p>Within a custom value set, the individual codes (denoted by # symbol) are conventionally written in lowercase <a href="https://en.wikipedia.org/wiki/Snake_case">snake_case</a>. For example:</p>
 <pre><code>ValueSet:          HomeEnvironmentRiskVS
 #smoke_detectors   &quot;No Smoke Detectors&quot;
-#radiation         &quot;Radon or other radiation source&quot;
+#radiation         &quot;Radon or Other Radiation Source&quot;
 #swimming_pool     &quot;Swimming Pool&quot;
 </code></pre>
 
@@ -402,7 +389,7 @@ These comments can take up multiple lines.
 </code></pre>
 
 <h3 id="primitives">Primitives</h3>
-<p>Primitives are distinguished by starting with lower case letter. CIMPL defines the following primitive data types. With the exception of <code>concept</code> (a simplified representation of code, Coding, and CodeableConcept), the primitive types in CIMPL align with FHIR:</p>
+<p>Primitives are data types, distinguished by starting with lower case letter. CIMPL defines the following primitive data types. With the exception of <code>concept</code> (a simplified representation of code, Coding, and CodeableConcept), the primitive types in CIMPL align with FHIR:</p>
 <ul>
 <li><a href="#concept-codes">concept</a></li>
 <li><a href="https://www.hl7.org/fhir/datatypes.html#boolean">boolean</a></li>
@@ -426,7 +413,7 @@ These comments can take up multiple lines.
 <p><strong>Note:</strong> CIMPL does not have an explicit "Reference" type. References are determined during the mapping process.</p>
 </blockquote>
 <h3 id="concept-codes">Concept Codes</h3>
-<p>CIMPL uses a single primitive type, <code>concept</code> to represent coded terms from controlled vocabularies. A concept combines three elements: code system, code, and optional display test. The grammar for specifying concepts is:</p>
+<p>CIMPL uses a single primitive type, <code>concept</code> to represent coded terms from controlled vocabularies. A concept combines three elements: code system, code, and optional display text. The grammar for specifying concepts is:</p>
 <blockquote>
 <p><code>SYSTEM#code "Display text"</code></p>
 </blockquote>
@@ -643,7 +630,7 @@ Example:</p>
 <p><code>Path: FHIR = http://hl7.org/fhir/ValueSet</code></p>
 <h3 id="property">Property</h3>
 <p>Classes based on Group, Entry, and Abstract are composed of one or more properties (called <em>fields</em> or <em>attributes</em> in object-oriented programming). A property can be any Element, Group, or Entry, but never a primitive. Each property must have a specified cardinality range, represented as <code>min..max</code>, indicating the number of repeats of the property. <strong>The Property keyword cannot be used in Elements.</strong></p>
-<p>In the following example, StudyArm has three properties: <code>Name</code>, <code>Type</code>, and <code>Comment</code>. <code>Name</code> is singular and required, <code>Type</code> is optional and repeating, and <code>Comment</code> is singular and optional:</p>
+<p>In the following example, StudyArm has four properties: <code>Name</code>, <code>Type</code>, <code>Comment</code> and <code>ResearchStudy</code>. <code>Name</code> is singular and required, <code>Type</code> is optional and repeating, and <code>Comment</code> is singular and optional:</p>
 <pre><code>Group:             StudyArm
 Description:       &quot;Refers to participant(s) in a clinical trial assigned to receive specific interventions according to a protocol.&quot;
 Property:          Name 1..1
@@ -664,7 +651,7 @@ Property:          ResearchStudy 1..1
 <!-- TODO: VERIFY THIS: In CIMPL version 6, it is *required* that you import `shr.core` for the tooling to run.-->
 
 <h3 id="value">Value</h3>
-<p><code>Value</code> represents the data type(s) an Element can accept. This keyword can only be used when defining an Element. Each Element must have exactly one <code>Value</code>, although the value itself can be a choice of several data types. Value choices can be <a href="#primitives">primitives</a>, <a href="#element">Elements</a>, <a href="#group">Groups</a>, or <a href="#entry">Entries</a>. A value may be inherited and constrained in the child class.</p>
+<p><code>Value</code> represents the data type(s) an Element can accept. This keyword can only be used when defining an Element. Each Element must have exactly one <code>Value</code>, although the value itself can be a choice of several data types. Value choices can be <a href="#primitives">Primitives</a>, <a href="#element">Elements</a>, <a href="#group">Groups</a>, or <a href="#entry">Entries</a>. A value may be inherited and constrained in the child class.</p>
 <p>Examples:</p>
 <pre><code>Element:           DetectionTime
 Description:       &quot;The date on which the condition was first observed.&quot;
@@ -1189,7 +1176,7 @@ Description:       &quot;Globulin [Mass/​volume] in Serum by calculation&quot;
 <p><strong>Note:</strong> <code>Uses</code> imports namespaces whose classes can be used as if they were locally defined. However, if a class name in an imported namespace collides with a local class name, you must refer to that element by its <a href="#fully-qualified-names">fully qualified name</a>.</p>
 </blockquote>
 <h3 id="class-definitions">Class Definitions</h3>
-<p>Following the header, the class file contains a number of class definitions. The order of definitions does not matter. A class definition has a sequence of declarations, although after the first declaration, a strict order is not prescribed. Follow the links for further explanation of each item:</p>
+<p>Following the header, the class file contains a number of class definitions. The order of definitions does not matter. Each class definition has contains declarations. The first declaration must be Class type and Name. Subsequent declarations can be in any order. Follow the links for further explanation of each item:</p>
 <ol>
 <li><a href="#class-type-and-name-declaration">Class Type and Name Declaration</a> (required)</li>
 <li><a href="#parent">Parent Declaration</a> (optional)</li>
@@ -1375,7 +1362,7 @@ ICD10CM#C7B04  &quot;Secondary carcinoid tumors of peritoneum&quot;
 <p>Map files control how classes defined in CIMPL are expressed as FHIR profiles. Map files are FHIR-version dependent. Currently, you can map to FHIR DSTU 2, STU 3, R4. If you use the supplied <a href="../cimpl6ObjectiveFHIR/">Objective FHIR base classes</a>, you many not need to create a map file.</p>
 <h3 id="inheritance-of-mapping-rules">Inheritance of Mapping Rules</h3>
 <p>Maps are defined in a series of mapping rules. A powerful feature of CIMPL is that mapping rules are inherited. If your class inherits from a parent class that already is mapped, you do not need to create a new map for your class. However, if you you want specify mappings for new properties, or override the inherited map, you may do so.</p>
-<p>The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a mapping. The first mapping rule found will be applied. If no mapping rule is found for a property defined in CIMPL, a FHIR extension will be created. If no mapping is found for an Entry, that Entry will be mapped to the <a href="https://www.hl7.org/fhir/basic.html">Basic resource</a>. In general, mapping to Basic is not recommended because it has no inherent semantic meaning for implementers. Any unmapped properties will appear as FHIR extensions.</p>
+<p>The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a mapping. The first mapping rule found will be applied. If no mapping rule is found for a <code>Property</code> defined in CIMPL, a FHIR extension will be created. If no mapping is found for an <code>Entry</code>, that <code>Entry</code> will be mapped to the <a href="https://www.hl7.org/fhir/basic.html">Basic resource</a>. In general, mapping to Basic is not recommended because it has no inherent semantic meaning for implementers. </p>
 <h3 id="mapping-cimpl-primitives-to-fhir">Mapping CIMPL Primitives to FHIR</h3>
 <p>CIMPL follows somewhat flexible rules on how CIMPL primitives map to FHIR. For example, a unsignedInt in CIMPL can map to an integer type in FHIR (since every unsignedInt is an integer, there is no loss of information). However, mappings that lose information, such as integer in CIMPL to unsignedInt in FHIR, generally will trigger mapping errors. An exception is that CIMPL <code>concept</code> is allowed to map to FHIR <code>code</code>. The following table shows the acceptable mappings between CIMPL and FHIR:</p>
 <table>
@@ -1581,7 +1568,7 @@ MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-c
 <p><strong>Note:</strong> The mapping grammar is still at version 5.1, so the bracketed value syntax cannot be used in paths.  This is why the above example uses <code>BodySiteOrCode.concept</code> rather than <code>BodySiteOrCode[concept]</code>.</p>
 </blockquote>
 <h3 id="mapping-to-references">Mapping to References</h3>
-<p>FHIR resources and profiles require an explicit <code>Reference()</code> indicator when referring to another resource or profile. In CIMPL, this is not required or allowed. CIMPL follows the rule that whenever a property is an Entry, that property is mapped as a reference in FHIR.</p>
+<p>FHIR resources and profiles require an explicit <code>Reference()</code> indicator when referring to another resource or profile. In CIMPL, whenever a property is an Entry, that property is mapped as a reference in FHIR. There is no need to create an explicit <code>Reference()</code>.</p>
 <p>Example:</p>
 <table>
 <thead>
