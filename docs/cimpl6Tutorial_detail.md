@@ -50,7 +50,7 @@ Copy the following files to the `myExampleC6` sub-directory.  The files contain 
 
 # Introduction
 
-This tutorial will guide the user in a step by step process to build a basic clinical data model using the "Clean Slate" method of CIMPL authoring. It will also illustrate the modeling practice briefly described in Appendix A of the [CIMPL 6 Model Authoring Guide](cimpl6UserGuide.md).
+This tutorial will guide the user in a step by step process to build a basic clinical data model using the _"Clean Slate"_ method of CIMPL authoring. It will also illustrate the modeling practice briefly described in Appendix A of the [CIMPL 6 Model Authoring Guide](cimpl6UserGuide.md).
 
 The steps are briefly summarized here for conciseness:
 
