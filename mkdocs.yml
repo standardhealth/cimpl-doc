@@ -11,8 +11,9 @@ nav:
        - User Guides:
               - cimpl6UserGuide.md
               - cimpl6ObjectiveFHIR.md
-       - Reference Manual: 
-              - cimpl6Reference.md
+       - Reference Manuals: 
+              - cimpl6LanguageReference.md
+              - cimpl6ToolingReference.md
        
 theme: 
        name: mkdocs

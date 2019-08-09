@@ -13,4 +13,4 @@ CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is 
 * **CIMPL User Guides**
     - [CIMPL Authoring](cimpl6UserGuide.md) - A guide on authoring within the CIMPL development environment.
     - [CIMPL Class Library (aka Objective FHIR)](cimpl6ObjectiveFHIR) - A description of the base classes provided with CIMPL
-* [**CIMPL Reference Manual**](cimpl6Reference.md) - A detailed reference of CIMPL data primitives and syntax.  The current version of CIMPL Grammar is CIMPL 6.0.
+* [**CIMPL Reference Manual**](cimpl6LanguageReference.md) - A detailed reference of CIMPL data primitives and syntax.  The current version of CIMPL Grammar is CIMPL 6.0.
