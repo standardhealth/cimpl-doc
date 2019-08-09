@@ -25,13 +25,13 @@ Any text editor can be used to write CIMPL grammar. However, [VSCode editor](htt
 
 Elements properties can be previewed in the following ways:
 
-1. **Hovering over the element**: : This provides a drop-down list of an element's property names and cardinality, if available.
-2. **placing the cursor on the element text and right-clicking option _Peek Definition_**: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.
-3. **placing the cursor on the element text and right-clicking option _Go to Definition_**: This will redirect the author to location of the definition, opening the file for display if it's not in the same location where it is referenced.
+1. **Hovering over the element**: This provides a drop-down list of an element's property names and cardinality, if available.
+2. **Placing the cursor on the element text and right-clicking option _Peek Definition_**: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.
+3. **Placing the cursor on the element text and right-clicking option _Go to Definition_**: This will redirect the author to location of the definition, opening the file for display if it's not in the same location where it is referenced.
 
 <br />
 
-Hovering over the element: 
+Hovering over the element:
 ![Hovering over the element](img_cimpl/VSCode_Peek01.png)
 
 Using _Peek Definition_:

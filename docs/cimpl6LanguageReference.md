@@ -1,4 +1,4 @@
-# CIMPL 6.0 Reference Documentation
+# CIMPL 6.0 Language Reference
 
 >**Note:** This documentation is a draft.
 
@@ -551,7 +551,7 @@ Cardinality defines the number of repeats that can exist for a property. Cardina
 
 ### Fixed Value Constraint
 
-The `=` operator fixes a property to a specific value (e.g., a specific code, boolean value, etc.). The assigned value must be consistent with the defined data type, and is always a primitive. Fixed value constraints apply to properties and value choices.
+The `=` operator fixes a property to a specific value (e.g., a specific concept, boolean, string, integer, decimal, or URL). The assigned value must be consistent with the defined data type, and is always a primitive. Fixed value constraints apply to properties and value choices.
 
 | Example | Syntax |
 |----------|---------|
@@ -716,12 +716,13 @@ Description:       "Globulin [Mass/​volume] in Serum by calculation"
                    Code = LNC#10834-0 "Globulin [Mass/​volume] in Serum by calculation"
                    DataValue[Quantity].Units from EquivalentUnitsVS-g-per-L (required)
 
-
 ```
+
 <!--
     CM: Note that the value set above (EquivalentUnitsVS-g-per-L) violates the naming convention this reference guide encourages.  I left it as-is since this is how the
     current CIMPL source really is, but we should consider changing to EquivalentUnits-g-per-L-VS (or something like that).
 -->
+
 ### Class File Header
 
 The elements of the class file header are (in order):
