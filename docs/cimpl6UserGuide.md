@@ -94,7 +94,9 @@ MustSupport is contextual and could vary depending on the reference implementati
 
 Content Profile files are text files which use the following convention:
 
-    ig-<Content Profile Name>-cp.txt
+```
+ig-<Content Profile Name>-cp.txt
+```
 
 Where `<Content Profile Name>` is by convention the same name as the IG Configuration JSON file.
 
