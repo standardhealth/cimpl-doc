@@ -79,7 +79,7 @@ Finally, we need a configuration file. Create an `ig-hello_world-config.json` fi
 
 Now, go back to your `shr-cli` installation and run the hello world:
 
-```dos
+```
 cd ~/cimpl/shr-cli
 node . -c ig-hello_world-config.json ../hello_world
 ```
@@ -94,7 +94,7 @@ _Note: If your organization uses a proxy server, you may have to run the IG publ
 
 To generate the IG, run:
 
-```dos
+```
 cd ~/cimpl/shr-cli
 yarn run ig:publish
 ```
