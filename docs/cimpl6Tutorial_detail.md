@@ -260,7 +260,7 @@ The CIMPL toolchain provides a separate configuration file called a "Content Pro
 
 Together with specified cardinality, the MS declaration can be [interpreted as follows](http://wiki.hl7.org/index.php?title=Conformance_Implementation_Manual):
 
-| Cardinality |  Must  | Interpretation |
+| Cardinality |  Must Support  | Interpretation |
 |------------|------------|-------------|
 | 1..1 |  any | required | 
 | 0..1 | yes | required if known |
