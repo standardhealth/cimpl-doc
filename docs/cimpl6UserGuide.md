@@ -69,9 +69,9 @@ As a best practice, CIMPL map files must have the *_map.txt* naming convention.
 
 Each map file should start with the following 3 lines:
 
-* Grammar:	Map _mapping_grammar_version_
+* Grammar: Map _mapping_grammar_version_
 * Namespace:  _data element group name_
-* Target:		_fhir target version_
+* Target: _fhir target version_
 
 Where:
 
@@ -118,30 +118,6 @@ The folder created can be any name, as long as it is specified within the CIMPL 
 
 The folder location is specified using the `"examples:"` parameter in the CIMPL configuration file.  This is illustrated in the figure below:
 ![CIMPL Examples Configuration](img_cimpl/fhirexampleconfig01.png)
-
-## Compile the Model
-Now that you have created a model using CIMPL it must be compiled using `shr-cli` (Shared Health Record Command Line Interface). 
-
-At a command prompt, navigate to the directory where you installed shr-cli and enter the following (changing mcodeR4 to the model name to compile, and ig-mcode-r4-config.json to the corresponding config file): 
-
-* b.	node . ../dev6/spec -l error -o mcodeR4 -c ig-mcode-r4-config.json  
-
-# QA and Support
-
-## Troubleshooting
-
-CIMPL Compilation Errors are structured in the following format:
-
-***1*** 2 3 4 5 <br>
-&nbsp;↳&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;First digit tells whether it is an warning or error. 0 = warning, 1 = error <br>
-
-1 ***2*** 3 4 5 <br>
-&nbsp;&nbsp;&nbsp;↳&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Second digit gives the location of the issue: 1 = the grammar and importing of the text files, 2 = the expanding of the specifications, 3 = the exporting of FHIR profiles, 4 = the exporting of the JSON profiles <br>
-
-1 2 ***3 4 5*** <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳&nbsp;&nbsp; The last three digits are simply for unique identification. <br>
-
-A detailed list of CIMPL compilation errors and troubleshooting suggestions are available **[here](https://github.com/standardhealth/shr-cli/wiki/Error-Message-Documentation)**.
 
 ## FHIR IG Publisher Output
 
