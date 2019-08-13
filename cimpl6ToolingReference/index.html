@@ -159,8 +159,72 @@
 </blockquote>
 <p><em>This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line interface, auxiliary files, and configurations needed to produce a FHIR Implementation Guide (IG). If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a> or <a href="../cimpl6Tutorial_detail/">In-Depth Tutorials</a>. For details of the CIMPL language itself, see the <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a>.</em></p>
 <hr />
-<p><strong>Table of Contents</strong>
-[TOC]</p>
+<p><strong>Table of Contents</strong></p>
+<div class="toc">
+<ul>
+<li><a href="#cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</a><ul>
+<li><a href="#overview">Overview</a><ul>
+<li><a href="#cimpl-tooling-overview">CIMPL Tooling Overview</a></li>
+<li><a href="#inputs">Inputs</a></li>
+<li><a href="#processing-sequence">Processing Sequence</a></li>
+<li><a href="#outputs">Outputs</a></li>
+<li><a href="#relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</a><ul>
+<li><a href="#typical-ig-data-model-relationship">Typical IG-Data Model Relationship</a></li>
+<li><a href="#relationship-between-igs-and-data-models-in-cimpl">Relationship between IGs and Data Models in CIMPL</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#suggested-directory-structure">Suggested Directory Structure</a></li>
+<li><a href="#naming-conventions">Naming Conventions</a></li>
+<li><a href="#configuration-file">Configuration File</a><ul>
+<li><a href="#filter-strategy-configuration-parameters">Filter Strategy Configuration Parameters</a></li>
+<li><a href="#implementation-guide-configuration-parameters">Implementation Guide Configuration Parameters</a></li>
+<li><a href="#provenance-information-configuration-parameters">Provenance Information Configuration Parameters</a></li>
+</ul>
+</li>
+<li><a href="#front-matter-files">Front Matter Files</a></li>
+<li><a href="#fhir-examples">FHIR Examples</a><ul>
+<li><a href="#configuration-for-fhir-examples">Configuration for FHIR Examples</a></li>
+</ul>
+</li>
+<li><a href="#package-list-file">Package List File</a></li>
+<li><a href="#content-profile-file">Content Profile File</a></li>
+<li><a href="#executing-shr-cli">Executing SHR-CLI</a><ul>
+<li><a href="#addressing-error-messages">Addressing Error Messages</a></li>
+<li><a href="#outputs-from-shr-cli">Outputs from SHR-CLI</a><ul>
+<li><a href="#typical-contents-of-the-out-directory">Typical Contents of the /out Directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#fhir-export">FHIR Export</a><ul>
+<li><a href="#logical-model-export">Logical Model Export</a><ul>
+<li><a href="#logical-model-example">Logical Model Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#model-documentation-export">Model Documentation Export</a><ul>
+<li><a href="#model-documentation-example">Model Documentation Example</a></li>
+</ul>
+</li>
+<li><a href="#data-dictionary-export">Data Dictionary Export</a></li>
+<li><a href="#json-schema-export">JSON Schema Export</a></li>
+<li><a href="#creating-the-implementation-guide">Creating the Implementation Guide</a></li>
+<li><a href="#appendix-a-error-messages">Appendix A: Error Messages</a><ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#error-code-structure">Error Code Structure</a></li>
+<li><a href="#parsing-errors">Parsing Errors</a></li>
+<li><a href="#warning-codes">Warning Codes</a></li>
+<li><a href="#compilation-error-codes">Compilation Error Codes</a></li>
+<li><a href="#mapping-error-codes">Mapping Error Codes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 <hr />
 <h2 id="overview">Overview</h2>
 <p>This reference manual describes the configurations, files, and commands needed to create a FHIR IG from CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage). It assumes that the CIMPL Language files (classes, value sets, and maps) have been defined (see <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for details). It also assumes that the CIMPL SHR-CLI tooling has been installed according to the directions in the <a href="../cimplInstall/">Setup and Installation Guide</a>.</p>
@@ -633,7 +697,7 @@ Namespace: onco.core
 <p>The output of running SHR-CLI appear in a directory named "out". By default, the /out directory is created in the tooling directory. A different location can be designated using the <code>-o</code> <a href="#executing-shr-cli">command line option</a>.</p>
 <p>The content of the /out directory depends on which exporters were selected to run, which is controlled using the <code>-s</code> command line option. By default, the /out will contain five exports, as shown below, each corresponding to a separate export process:</p>
 <h4 id="typical-contents-of-the-out-directory"><em>Typical Contents of the /out Directory</em></h4>
-<p><img alt="Typical Contents of the /out Directory" src="../img_cimpl/out-directory.png" /></p>
+<p><img alt="Typical Contents of the /out Directory" src="img_cimpl/out-directory.png" /></p>
 <ul>
 <li>cimcore - this directory is used in the process of building the "modeldoc" export, and is not discussed further</li>
 <li><a href="#data-dictionary-export">data-dictionary</a> - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets</li>
