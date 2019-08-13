@@ -2,7 +2,7 @@
 
 >**Note:** This documentation is a draft.
 
-_This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md). If you're looking for a more in-depth introduction, try the [Tutorial](cimpl6Tutorial_detail.md)._
+_This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md). If you're looking for a more in-depth introduction, try the [Tutorial](cimpl6Tutorial_detail.md)._
 
 ***
 
@@ -150,7 +150,7 @@ Grammar:        DataElement 6.0
 
 CIMPL follows [JavaScript syntax](https://www.w3schools.com/js/js_comments.asp) for code comments:
 
-```js
+```
 // Use a double-slash for comments on a single line
 
 /*
@@ -1088,8 +1088,8 @@ For those who have created detailed models using CIMPL 5.0, there have been sign
 | Change Type | Change Description | CIMPL 5.0 Example | CIMPL 6.0 Example | Section |
 |:---- |:----------|:---------------------- |:-------------------|:----------------- |
 | New | keyword `only` eliminates all value choices except one | None | `FindingResult only concept` | [Only Constraint](#only-constraint) |
-| New |keyword `Property` is required to define properties for an Entry or Element. |```0..1 TreatmentIntent```| ```Property:  TreatmentIntent 0..1``` | [Property Keyword](#property) |
-| Replace | `EntryElement` keyword replaced by `Entry` | ```EntryElement: CourseOfTreatmentPerformed```| ```Entry:  CourseOfTreatmentPerformed``` | [Element Keyword](#element) |
+| New |keyword `Property` is required to define properties for an Entry or Element. |`0..1 TreatmentIntent`| `Property:  TreatmentIntent 0..1` | [Property Keyword](#property) |
+| Replace | `EntryElement` keyword replaced by `Entry` | `EntryElement: CourseOfTreatmentPerformed`| `Entry:  CourseOfTreatmentPerformed` | [Element Keyword](#element) |
 | Replace | `Based on` keyword replaced by `Parent` | `Based on: Observation` | `Parent:  Observation` | [Parent Keyword](#parent) |
 | Syntax change | Cardinality is specified _after_ the property or class name | `0..1 TreatmentIntent` | `Property:  TreatmentIntent 0..1` | [Property Keyword](#property), [Cardinality Constraint](#cardinality-constraint) |
 | Replace | `is` constraint for fixed values replaced by `=` | `FindingTopicCode is LNC#48676-1` | `FindingTopicCode = LNC#48676-1` | [Field Constraints](#field-constraints) |

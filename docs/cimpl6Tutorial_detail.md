@@ -1,5 +1,5 @@
 # CIMPL 6.0 In-depth Tutorial
-_This is an extensive tutorial, meant to educate people about many different aspects of CIMPL.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Language Reference documentation](cimpl6LanguageReference.md)._
+_This is an extensive tutorial, meant to educate people about many different aspects of CIMPL.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Language Reference documentation](cimpl6LanguageReference.md)._
 
 ***
 
@@ -13,7 +13,7 @@ _This is an extensive tutorial, meant to educate people about many different asp
 
 This tutorial assumes that you already have the following software components installed:
 
-* [CIMPL shr-cli](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
+* [CIMPL SHR-CLI](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
 * A text-editor (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required)
 
 >**Note:** _This tutorial was run using a MacOS environment.  While the content of CIMPL authoring are identical regardless of platform, the command lines run in a command line terminal will differ in file path specifications.  Namely, for a Windows command line terminal, replace all the path references of forward-slash `/` to back-slash `\`._
@@ -30,7 +30,7 @@ Directory:  cimpl
             |_ shr-cli
 ```
 
->**Note:** _Your top level directory where shr-cli was install might differ. If so, then you'll be instead referencing the relative directory where you have installed shr-cli._
+>**Note:** _Your top level directory where SHR-CLI was installed might differ. If so, then you'll be instead referencing the relative directory where you have installed shr-cli._
 
 Create a sub-directory under `cimpl` called **`myExampleC6`**
 Now your directory structure should look like this:
@@ -50,7 +50,7 @@ Copy the following files to the `myExampleC6` sub-directory.  The files contain 
 
 # Introduction
 
-This tutorial will guide the user in a step by step process to build a basic clinical data model using the _"Clean Slate"_ method of CIMPL authoring. It will also illustrate the modeling practice briefly described in Appendix A of the [CIMPL 6 Model Authoring Guide](cimpl6UserGuide.md).
+This tutorial will guide the user in a step by step process to build a basic clinical data model using the _"Clean Slate"_ method of CIMPL authoring. It will also illustrate the modeling practice briefly described in Appendix A of the [CIMPL Authoring Guide](cimpl6Authoring.md).
 
 The steps are briefly summarized here for conciseness:
 
@@ -317,9 +317,9 @@ Before executing Step 1 to compile your CIMPL code, an `examples` directory must
 
 Create a subdirectory called **`examples_myFhirExamplesFolder`** under the `myExampleC6` folder.
 
-**Step 1:**  Run the Command Line Interface (shr-cli) compiler.
+**Step 1:**  Run the Command Line Interface (SHR-CLI) compiler.
 
-* Open a command line terminal and navigate to the ./cimpl/shr-cli directory (or whichever directory you installed `shr-cli`).
+* Open a command line terminal and navigate to the ./cimpl/shr-cli directory (or whichever directory you installed SHR-CLI).
 
 * Run the following command:
 
@@ -374,7 +374,7 @@ The following screenshot shows an exmample of where you would find this paramete
 
 ![Tutorial1 FHIR Example Configuration Location](img_cimpl/cimplTutorial1_FHIRExampleConfigLocation.png)
 
-Now run shr-cli and the IG publisher commands again:
+Now run SHR-CLI and the IG publisher commands again:
 
 `node . ../myExampleC6 -l error -o myExampleC6r4 -c ig-myExampleR4-config.json`
 

@@ -9,7 +9,7 @@
 ***
 
 # Background
-CIMPL (and, by extension, the `shr-cli` tool) is a text-based tool that requires its users to understand and use your operating system's [command line](https://en.wikipedia.org/wiki/Command-line_interface).  If you are uncomfortable with using the command line, try [this short introduction](https://tutorial.djangogirls.org/en/intro_to_command_line/).
+CIMPL (and, by extension, the SHR-CLI tool) is a text-based tool that requires its users to understand and use your operating system's [command line](https://en.wikipedia.org/wiki/Command-line_interface).  If you are uncomfortable with using the command line, try [this short introduction](https://tutorial.djangogirls.org/en/intro_to_command_line/).
 
 # Windows Installation Instructions
 _Note: These installation instructions assume that you are installing applications using an account that has administrator-level access.  If you do not have administrator rights on your machine, some of the installations will fail or the applications will refuse to install._
@@ -61,7 +61,7 @@ yarn config set strict-ssl false
 ### Git for Windows
 Git is a free and open source distributed version control system that allows developers working simultaneously on a single project to manage various updates to their code.
 
-Git is not a strict dependency (i.e., you can run the `shr-cli` tool without git), but it is recommended for CIMPL model developers to use git, along with a hosted git solution like [GitHub](https://github.com/) or [GitLab](https://gitlab.com/explore).
+Git is not a strict dependency (i.e., you can run the SHR-CLI tool without git), but it is recommended for CIMPL model developers to use git, along with a hosted git solution like [GitHub](https://github.com/) or [GitLab](https://gitlab.com/explore).
 
 Download the [installation package for Git for Windows](https://git-scm.com/download/win) and run it, using the default options in the installer file (i.e., just keep clicking 'Next' until the installation is complete).
 
@@ -128,7 +128,7 @@ CIMPL authors have created tools for VSCode that offer syntax highlighting, auto
 * When the installation has completed, click the `Reload` button
 
 ## SHR-CLI Tool
-With the supporting software installed, you can move on to installing the actual `shr-cli` tool.
+With the supporting software installed, you can move on to installing the actual SHR-CLI tool.
 
 Open **'Git Bash'** (not the windows command prompt) and enter the following commands:
 ```
@@ -137,9 +137,9 @@ mkdir cimpl
 cd cimpl
 git clone https://github.com/standardhealth/shr-cli.git
 ```
-This grabs the latest version of the `shr-cli` tool and places it in the `~/cimpl/shr-cli` directory.
+This grabs the latest version of the SHR-CLI tool and places it in the `~/cimpl/shr-cli` directory.
 
-To set up the `shr-cli` tool, run:
+To set up the SHR-CLI tool, run:
 ```
 cd ~/cimpl/shr-cli
 yarn
@@ -238,7 +238,7 @@ brew install yarn
 ### Git for macOS
 Git is a free and open source distributed version control system that allows developers working simultaneously on a single project to manage various updates to their code.
 
-Git is not a strict dependency (i.e., you can run the `shr-cli` tool without git), but it is recommended for CIMPL model developers to use git, along with a hosted git solution like [GitHub](https://github.com/) or [GitLab](https://gitlab.com/explore).
+Git is not a strict dependency (i.e., you can run the SHR-CLI tool without git), but it is recommended for CIMPL model developers to use git, along with a hosted git solution like [GitHub](https://github.com/) or [GitLab](https://gitlab.com/explore).
 
 With [homebrew](#homebrew) installed, git can be installed by entering the following in a terminal window:
 ```
@@ -301,16 +301,16 @@ CIMPL authors have created tools for VSCode that offer syntax highlighting, auto
 * When the installation has completed, click the `Reload` button
 
 ## SHR-CLI Tool
-With the supporting software installed, you can move on to installing the actual `shr-cli` tool.  Open a terminal window and enter the following commands:
+With the supporting software installed, you can move on to installing the actual SHR-CLI tool.  Open a terminal window and enter the following commands:
 ```
 cd ~
 mkdir cimpl
 cd cimpl
 git clone https://github.com/standardhealth/shr-cli.git
 ```
-This grabs the latest version of the `shr-cli` tool and places it in the `~/cimpl/shr-cli` directory.
+This grabs the latest version of the SHR-CLI tool and places it in the `~/cimpl/shr-cli` directory.
 
-To set up the `shr-cli` tool, run:
+To set up the SHR-CLI tool, run:
 ```
 cd ~/cimpl/shr-cli
 yarn

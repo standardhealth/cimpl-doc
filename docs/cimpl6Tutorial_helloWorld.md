@@ -2,7 +2,7 @@
 <br />
 Let’s do a “Hello, World” using CIMPL v6!
 
-_Note: Make sure you have completed the [CIMPL Installation instructions](cimplInstall.md) before proceeding, and that `shr-cli` (minimum version 6.2.0) is installed in `~/cimpl/shr-cli`._
+_Note: Make sure you have completed the [CIMPL Installation instructions](cimplInstall.md) before proceeding, and that SHR-CLI (minimum version 6.2.0) is installed in `~/cimpl/shr-cli`._
 
 Start by creating a folder structure for our new project.  Open up your favorite (Unix-based) command-line tool and enter the following:
 ```
@@ -77,7 +77,7 @@ Finally, we need a configuration file. Create an `ig-hello_world-config.json` fi
 }
 ```
 
-Now, go back to your `shr-cli` installation and run the hello world:
+Now, go back to your SHR-CLI installation and run the hello world:
 
 ```
 cd ~/cimpl/shr-cli
