@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6UserGuide/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
 </li>
                                     
 <li >
@@ -95,11 +95,15 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manuals <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Reference/">CIMPL 6.0 Reference Documentation</a>
+    <a href="../cimpl6LanguageReference/">CIMPL 6.0 Language Reference</a>
+</li>
+                                    
+<li >
+    <a href="../cimpl6ToolingReference/">CIMPL 6.0 Tooling Reference</a>
 </li>
                                 </ul>
                             </li>
@@ -117,7 +121,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../cimpl6UserGuide/">
+                                <a rel="prev" href="../cimpl6Authoring/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -145,7 +149,7 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="cimpl-60-in-depth-tutorial">CIMPL 6.0 In-depth Tutorial</h1>
-<p><em>This is an extensive tutorial, meant to educate people about many different aspects of CIMPL.  If you're looking for a quick introduction to CIMPL and <code>shr-cli</code> environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>.  If you're looking for detailed guidance on CIMPL syntax, try the <a href="../cimpl6Reference/">CIMPL6 Reference documentation</a>.</em></p>
+<p><em>This is an extensive tutorial, meant to educate people about many different aspects of CIMPL.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>.  If you're looking for detailed guidance on CIMPL syntax, try the <a href="../cimpl6LanguageReference/">CIMPL6 Language Reference documentation</a>.</em></p>
 <hr />
 <p><strong>Table Of Contents</strong></p>
 <div class="toc">
@@ -180,7 +184,7 @@
 <h1 id="pre-requisite">Pre-requisite</h1>
 <p>This tutorial assumes that you already have the following software components installed:</p>
 <ul>
-<li><a href="../cimplInstall/">CIMPL shr-cli</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
+<li><a href="../cimplInstall/">CIMPL SHR-CLI</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
 <li>A text-editor (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
 </ul>
 <blockquote>
@@ -194,7 +198,7 @@
 </code></pre>
 
 <blockquote>
-<p><strong>Note:</strong> <em>Your top level directory where shr-cli was install might differ. If so, then you'll be instead referencing the relative directory where you have installed shr-cli.</em></p>
+<p><strong>Note:</strong> <em>Your top level directory where SHR-CLI was installed might differ. If so, then you'll be instead referencing the relative directory where you have installed shr-cli.</em></p>
 </blockquote>
 <p>Create a sub-directory under <code>cimpl</code> called <strong><code>myExampleC6</code></strong>
 Now your directory structure should look like this:</p>
@@ -211,7 +215,7 @@ Now your directory structure should look like this:</p>
 <li><a href="../cimplTutorial/ig-myExampleR4-config.json">ig-myExampleR4-config.json</a></li>
 </ul>
 <h1 id="introduction">Introduction</h1>
-<p>This tutorial will guide the user in a step by step process to build a basic clinical data model using the <em>"Clean Slate"</em> method of CIMPL authoring. It will also illustrate the modeling practice briefly described in Appendix A of the <a href="../cimpl6UserGuide/">CIMPL 6 Model Authoring Guide</a>.</p>
+<p>This tutorial will guide the user in a step by step process to build a basic clinical data model using the <em>"Clean Slate"</em> method of CIMPL authoring. It will also illustrate the modeling practice briefly described in Appendix A of the <a href="../cimpl6Authoring/">CIMPL Authoring Guide</a>.</p>
 <p>The steps are briefly summarized here for conciseness:</p>
 <ul>
 <li>Define use case(s)</li>
@@ -511,10 +515,10 @@ ObstructiveSleepApneaDisorder:
 <p>Generating the FHIR IG is a 2-step process:</p>
 <p>Before executing Step 1 to compile your CIMPL code, an <code>examples</code> directory must exist. It can be empty.  </p>
 <p>Create a subdirectory called <strong><code>examples_myFhirExamplesFolder</code></strong> under the <code>myExampleC6</code> folder.</p>
-<p><strong>Step 1:</strong>  Run the Command Line Interface (shr-cli) compiler.</p>
+<p><strong>Step 1:</strong>  Run the Command Line Interface (SHR-CLI) compiler.</p>
 <ul>
 <li>
-<p>Open a command line terminal and navigate to the ./cimpl/shr-cli directory (or whichever directory you installed <code>shr-cli</code>).</p>
+<p>Open a command line terminal and navigate to the ./cimpl/shr-cli directory (or whichever directory you installed SHR-CLI).</p>
 </li>
 <li>
 <p>Run the following command:</p>
@@ -557,7 +561,7 @@ ObstructiveSleepApneaDisorder:
 <p>We have already added it for you so you can just check that the parameter is there.</p>
 <p>The following screenshot shows an exmample of where you would find this parameter within the CIMPL configuration file <code>ig-myExampleR4-config.json</code>.</p>
 <p><img alt="Tutorial1 FHIR Example Configuration Location" src="../img_cimpl/cimplTutorial1_FHIRExampleConfigLocation.png" /></p>
-<p>Now run shr-cli and the IG publisher commands again:</p>
+<p>Now run SHR-CLI and the IG publisher commands again:</p>
 <p><code>node . ../myExampleC6 -l error -o myExampleC6r4 -c ig-myExampleR4-config.json</code></p>
 <p><code>java $JAVA_OPTS -jar myExampleC6r4/fhir/guide/org.hl7.fhir.publisher.jar -ig myExampleC6r4/fhir/guide/ig.json</code></p>
 <p>Open the index.html file from the generated IG output in your browser and navigate to the <strong>Profiles</strong> tab and select the MyPatient profile.</p>

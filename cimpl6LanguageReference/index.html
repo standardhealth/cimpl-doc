@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>CIMPL 6.0 Reference Documentation - CIMPL Project</title>
+        <title>CIMPL 6.0 Language Reference - CIMPL Project</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6UserGuide/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
 </li>
                                     
 <li >
@@ -95,11 +95,15 @@
                                 </ul>
                             </li>
                             <li class="dropdown active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manuals <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li class="active">
-    <a href="./">CIMPL 6.0 Reference Documentation</a>
+    <a href="./">CIMPL 6.0 Language Reference</a>
+</li>
+                                    
+<li >
+    <a href="../cimpl6ToolingReference/">CIMPL 6.0 Tooling Reference</a>
 </li>
                                 </ul>
                             </li>
@@ -116,8 +120,8 @@
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
-                            <li class="disabled">
-                                <a rel="prev" >
+                            <li >
+                                <a rel="prev" href="../cimpl6ToolingReference/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -129,7 +133,7 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#cimpl-60-reference-documentation">CIMPL 6.0 Reference Documentation</a></li>
+        <li class="main active"><a href="#cimpl-60-language-reference">CIMPL 6.0 Language Reference</a></li>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#file-types">File Types</a></li>
             <li><a href="#keywords">Keywords</a></li>
@@ -143,16 +147,16 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="cimpl-60-reference-documentation">CIMPL 6.0 Reference Documentation</h1>
+<h1 id="cimpl-60-language-reference">CIMPL 6.0 Language Reference</h1>
 <blockquote>
 <p><strong>Note:</strong> This documentation is a draft.</p>
 </blockquote>
-<p><em>This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a quick introduction to CIMPL and <code>shr-cli</code> environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>. If you're looking for a more in-depth introduction, try the <a href="../cimpl6Tutorial_detail/">Tutorial</a>.</em></p>
+<p><em>This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>. If you're looking for a more in-depth introduction, try the <a href="../cimpl6Tutorial_detail/">Tutorial</a>.</em></p>
 <hr />
 <p><strong>Table of Contents</strong></p>
 <div class="toc">
 <ul>
-<li><a href="#cimpl-60-reference-documentation">CIMPL 6.0 Reference Documentation</a><ul>
+<li><a href="#cimpl-60-language-reference">CIMPL 6.0 Language Reference</a><ul>
 <li><a href="#overview">Overview</a><ul>
 <li><a href="#cimpl-versioning">CIMPL Versioning</a></li>
 <li><a href="#namespaces">Namespaces</a></li>
@@ -380,7 +384,7 @@ Namespace:  myExampleNamespace
 
 <h3 id="comments">Comments</h3>
 <p>CIMPL follows <a href="https://www.w3schools.com/js/js_comments.asp">JavaScript syntax</a> for code comments:</p>
-<pre><code class="js">// Use a double-slash for comments on a single line
+<pre><code>// Use a double-slash for comments on a single line
 
 /*
 Use slash-asterisk and asterisk-slash for larger block comments.
@@ -921,7 +925,7 @@ Property:          Units 0..1
 <p><strong>Note:</strong> By constraining a property to 0..0, you effectively remove the property. Use 0..0 with caution, because if an instance <em>does</em> include that property, the instance will fail validation and may be rejected.</p>
 </blockquote>
 <h3 id="fixed-value-constraint">Fixed Value Constraint</h3>
-<p>The <code>=</code> operator fixes a property to a specific value (e.g., a specific code, boolean value, etc.). The assigned value must be consistent with the defined data type, and is always a primitive. Fixed value constraints apply to properties and value choices.</p>
+<p>The <code>=</code> operator fixes a property to a specific value (e.g., a specific concept, boolean, string, integer, decimal, or URL). The assigned value must be consistent with the defined data type, and is always a primitive. Fixed value constraints apply to properties and value choices.</p>
 <table>
 <thead>
 <tr>
@@ -1152,7 +1156,6 @@ Parent:            SimpleQuantLabWithRequiredUnits
 Description:       &quot;Globulin [Mass/​volume] in Serum by calculation&quot;
                    Code = LNC#10834-0 &quot;Globulin [Mass/​volume] in Serum by calculation&quot;
                    DataValue[Quantity].Units from EquivalentUnitsVS-g-per-L (required)
-
 
 </code></pre>
 

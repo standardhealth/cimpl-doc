@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6UserGuide/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
 </li>
                                     
 <li >
@@ -95,11 +95,15 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manuals <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Reference/">CIMPL 6.0 Reference Documentation</a>
+    <a href="../cimpl6LanguageReference/">CIMPL 6.0 Language Reference</a>
+</li>
+                                    
+<li >
+    <a href="../cimpl6ToolingReference/">CIMPL 6.0 Tooling Reference</a>
 </li>
                                 </ul>
                             </li>
@@ -210,7 +214,7 @@
 </div>
 <hr />
 <h1 id="background">Background</h1>
-<p>CIMPL (and, by extension, the <code>shr-cli</code> tool) is a text-based tool that requires its users to understand and use your operating system's <a href="https://en.wikipedia.org/wiki/Command-line_interface">command line</a>.  If you are uncomfortable with using the command line, try <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this short introduction</a>.</p>
+<p>CIMPL (and, by extension, the SHR-CLI tool) is a text-based tool that requires its users to understand and use your operating system's <a href="https://en.wikipedia.org/wiki/Command-line_interface">command line</a>.  If you are uncomfortable with using the command line, try <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this short introduction</a>.</p>
 <h1 id="windows-installation-instructions">Windows Installation Instructions</h1>
 <p><em>Note: These installation instructions assume that you are installing applications using an account that has administrator-level access.  If you do not have administrator rights on your machine, some of the installations will fail or the applications will refuse to install.</em></p>
 <p>For a successful installation, it is critical that you:</p>
@@ -254,7 +258,7 @@ yarn config set strict-ssl false
 <p>...then run the modified code block (with your organization's proxy server) in the command prompt</p>
 <h3 id="git-for-windows">Git for Windows</h3>
 <p>Git is a free and open source distributed version control system that allows developers working simultaneously on a single project to manage various updates to their code.</p>
-<p>Git is not a strict dependency (i.e., you can run the <code>shr-cli</code> tool without git), but it is recommended for CIMPL model developers to use git, along with a hosted git solution like <a href="https://github.com/">GitHub</a> or <a href="https://gitlab.com/explore">GitLab</a>.</p>
+<p>Git is not a strict dependency (i.e., you can run the SHR-CLI tool without git), but it is recommended for CIMPL model developers to use git, along with a hosted git solution like <a href="https://github.com/">GitHub</a> or <a href="https://gitlab.com/explore">GitLab</a>.</p>
 <p>Download the <a href="https://git-scm.com/download/win">installation package for Git for Windows</a> and run it, using the default options in the installer file (i.e., just keep clicking 'Next' until the installation is complete).</p>
 <p>This will install a few applications, but the most useful for CIMPL development will be the 'Git Bash' application.  This opens a command-line prompt which emulates the use of git on a Unix-based system (e.g., Linux or macOS).  Most CIMPL developers use Unix-based systems, so you may want to use 'Git Bash' for working with CIMPL instead of the standard Windows command line.  There are many tutorials online about the use of git.  Users that are new to Unix or bash may find this <a href="https://www.youtube.com/watch?v=oQc-2gsjgDg">video introduction to Git Bash</a> helpful.</p>
 <p>You should also set up git so that any changes you make to the codebase are properly identified (replacing the name and email placeholders with your name and email):</p>
@@ -315,7 +319,7 @@ git config --global url.&quot;https://&quot;.insteadOf git://
 <li>When the installation has completed, click the <code>Reload</code> button</li>
 </ul>
 <h2 id="shr-cli-tool">SHR-CLI Tool</h2>
-<p>With the supporting software installed, you can move on to installing the actual <code>shr-cli</code> tool.</p>
+<p>With the supporting software installed, you can move on to installing the actual SHR-CLI tool.</p>
 <p>Open <strong>'Git Bash'</strong> (not the windows command prompt) and enter the following commands:</p>
 <pre><code>cd ~
 mkdir cimpl
@@ -323,8 +327,8 @@ cd cimpl
 git clone https://github.com/standardhealth/shr-cli.git
 </code></pre>
 
-<p>This grabs the latest version of the <code>shr-cli</code> tool and places it in the <code>~/cimpl/shr-cli</code> directory.</p>
-<p>To set up the <code>shr-cli</code> tool, run:</p>
+<p>This grabs the latest version of the SHR-CLI tool and places it in the <code>~/cimpl/shr-cli</code> directory.</p>
+<p>To set up the SHR-CLI tool, run:</p>
 <pre><code>cd ~/cimpl/shr-cli
 yarn
 </code></pre>
@@ -414,7 +418,7 @@ source ~/.bash_profile
 
 <h3 id="git-for-macos">Git for macOS</h3>
 <p>Git is a free and open source distributed version control system that allows developers working simultaneously on a single project to manage various updates to their code.</p>
-<p>Git is not a strict dependency (i.e., you can run the <code>shr-cli</code> tool without git), but it is recommended for CIMPL model developers to use git, along with a hosted git solution like <a href="https://github.com/">GitHub</a> or <a href="https://gitlab.com/explore">GitLab</a>.</p>
+<p>Git is not a strict dependency (i.e., you can run the SHR-CLI tool without git), but it is recommended for CIMPL model developers to use git, along with a hosted git solution like <a href="https://github.com/">GitHub</a> or <a href="https://gitlab.com/explore">GitLab</a>.</p>
 <p>With <a href="#homebrew">homebrew</a> installed, git can be installed by entering the following in a terminal window:</p>
 <pre><code>brew install git
 </code></pre>
@@ -472,15 +476,15 @@ git config --global url.&quot;https://&quot;.insteadOf git://
 <li>When the installation has completed, click the <code>Reload</code> button</li>
 </ul>
 <h2 id="shr-cli-tool_1">SHR-CLI Tool</h2>
-<p>With the supporting software installed, you can move on to installing the actual <code>shr-cli</code> tool.  Open a terminal window and enter the following commands:</p>
+<p>With the supporting software installed, you can move on to installing the actual SHR-CLI tool.  Open a terminal window and enter the following commands:</p>
 <pre><code>cd ~
 mkdir cimpl
 cd cimpl
 git clone https://github.com/standardhealth/shr-cli.git
 </code></pre>
 
-<p>This grabs the latest version of the <code>shr-cli</code> tool and places it in the <code>~/cimpl/shr-cli</code> directory.</p>
-<p>To set up the <code>shr-cli</code> tool, run:</p>
+<p>This grabs the latest version of the SHR-CLI tool and places it in the <code>~/cimpl/shr-cli</code> directory.</p>
+<p>To set up the SHR-CLI tool, run:</p>
 <pre><code>cd ~/cimpl/shr-cli
 yarn
 </code></pre>

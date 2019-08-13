@@ -95,11 +95,15 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manuals <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Reference/">CIMPL 6.0 Reference Documentation</a>
+    <a href="../cimpl6LanguageReference/">CIMPL 6.0 Language Reference</a>
+</li>
+                                    
+<li >
+    <a href="../cimpl6ToolingReference/">CIMPL 6.0 Tooling Reference</a>
 </li>
                                 </ul>
                             </li>
@@ -136,9 +140,6 @@
             <li><a href="#mapping-to-fhir">Mapping to FHIR</a></li>
             <li><a href="#specifying-fhir-mustsupport-elements">Specifying FHIR "MustSupport" Elements</a></li>
             <li><a href="#embedding-fhir-examples-in-the-ig">Embedding FHIR Examples in the IG</a></li>
-            <li><a href="#compile-the-model">Compile the Model</a></li>
-        <li class="main "><a href="#qa-and-support">QA and Support</a></li>
-            <li><a href="#troubleshooting">Troubleshooting</a></li>
             <li><a href="#fhir-ig-publisher-output">FHIR IG Publisher Output</a></li>
             <li><a href="#support">Support</a></li>
         <li class="main "><a href="#appendix-a-an-approach-to-cimpl-modeling-for-fhir">Appendix A: An Approach to CIMPL Modeling for FHIR</a></li>
@@ -147,7 +148,7 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="cimpl-authoring">CIMPL Authoring</h1>
-<p><em>The purpose of this guide is to educate people about many different aspects of creating CIMPL models and its supporting utilities.  If you're looking for a quick introduction to CIMPL and <code>shr-cli</code> environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>.  If you're looking for detailed guidance on CIMPL syntax, try the <a href="../cimpl6Reference/">CIMPL6 Reference documentation</a>.</em></p>
+<p><em>The purpose of this guide is to educate people about many different aspects of creating CIMPL models and its supporting utilities.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>.  If you're looking for detailed guidance on CIMPL syntax, try the <a href="../cimpl6LanguageReference/">CIMPL6 Language Reference documentation</a>.</em></p>
 <hr />
 <p><strong>Table Of Contents</strong></p>
 <div class="toc">
@@ -164,11 +165,6 @@
 <li><a href="#mapping-to-fhir">Mapping to FHIR</a></li>
 <li><a href="#specifying-fhir-mustsupport-elements">Specifying FHIR "MustSupport" Elements</a></li>
 <li><a href="#embedding-fhir-examples-in-the-ig">Embedding FHIR Examples in the IG</a></li>
-<li><a href="#compile-the-model">Compile the Model</a></li>
-</ul>
-</li>
-<li><a href="#qa-and-support">QA and Support</a><ul>
-<li><a href="#troubleshooting">Troubleshooting</a></li>
 <li><a href="#fhir-ig-publisher-output">FHIR IG Publisher Output</a></li>
 <li><a href="#support">Support</a></li>
 </ul>
@@ -191,12 +187,12 @@
 <h3 id="navigating-a-cimpl-model-within-vscode">Navigating a CIMPL Model within VSCode</h3>
 <p>Elements properties can be previewed in the following ways:</p>
 <ol>
-<li><strong>Hovering over the element</strong>: : This provides a drop-down list of an element's property names and cardinality, if available.</li>
-<li><strong>placing the cursor on the element text and right-clicking option <em>Peek Definition</em></strong>: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.</li>
-<li><strong>placing the cursor on the element text and right-clicking option <em>Go to Definition</em></strong>: This will redirect the author to location of the definition, opening the file for display if it's not in the same location where it is referenced.</li>
+<li><strong>Hovering over the element</strong>: This provides a drop-down list of an element's property names and cardinality, if available.</li>
+<li><strong>Placing the cursor on the element text and right-clicking option <em>Peek Definition</em></strong>: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.</li>
+<li><strong>Placing the cursor on the element text and right-clicking option <em>Go to Definition</em></strong>: This will redirect the author to location of the definition, opening the file for display if it's not in the same location where it is referenced.</li>
 </ol>
 <p><br /></p>
-<p>Hovering over the element: 
+<p>Hovering over the element:
 <img alt="Hovering over the element" src="../img_cimpl/VSCode_Peek01.png" /></p>
 <p>Using <em>Peek Definition</em>:
 <img alt="Using Peek" src="../img_cimpl/VSCode_Peek02.png" /></p>
@@ -223,9 +219,9 @@
 As a best practice, CIMPL map files must have the <em>_map.txt</em> naming convention.</p>
 <p>Each map file should start with the following 3 lines:</p>
 <ul>
-<li>Grammar:  Map <em>mapping_grammar_version</em></li>
+<li>Grammar: Map <em>mapping_grammar_version</em></li>
 <li>Namespace:  <em>data element group name</em></li>
-<li>Target:       <em>fhir target version</em></li>
+<li>Target: <em>fhir target version</em></li>
 </ul>
 <p>Where:</p>
 <ul>
@@ -245,6 +241,7 @@ Target:     FHIR_R4
 <p>Content Profile files are text files which use the following convention:</p>
 <pre><code>ig-&lt;Content Profile Name&gt;-cp.txt
 </code></pre>
+
 <p>Where <code>&lt;Content Profile Name&gt;</code> is by convention the same name as the IG Configuration JSON file.</p>
 <p>For example, the two file name examples of a CIMPL Configuration File and its respective Content Profile are show below:</p>
 <ul>
@@ -261,28 +258,12 @@ Target:     FHIR_R4
 <p>The folder created can be any name, as long as it is specified within the CIMPL configuration file.</p>
 <p>The folder location is specified using the <code>"examples:"</code> parameter in the CIMPL configuration file.  This is illustrated in the figure below:
 <img alt="CIMPL Examples Configuration" src="../img_cimpl/fhirexampleconfig01.png" /></p>
-<h2 id="compile-the-model">Compile the Model</h2>
-<p>Now that you have created a model using CIMPL it must be compiled using <code>shr-cli</code> (Shared Health Record Command Line Interface). </p>
-<p>At a command prompt, navigate to the directory where you installed shr-cli and enter the following (changing mcodeR4 to the model name to compile, and ig-mcode-r4-config.json to the corresponding config file): </p>
-<ul>
-<li>b.    node . ../dev6/spec -l error -o mcodeR4 -c ig-mcode-r4-config.json  </li>
-</ul>
-<h1 id="qa-and-support">QA and Support</h1>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<p>CIMPL Compilation Errors are structured in the following format:</p>
-<p><strong><em>1</em></strong> 2 3 4 5 <br>
-&nbsp;↳&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;First digit tells whether it is an warning or error. 0 = warning, 1 = error <br></p>
-<p>1 <strong><em>2</em></strong> 3 4 5 <br>
-&nbsp;&nbsp;&nbsp;↳&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Second digit gives the location of the issue: 1 = the grammar and importing of the text files, 2 = the expanding of the specifications, 3 = the exporting of FHIR profiles, 4 = the exporting of the JSON profiles <br></p>
-<p>1 2 <strong><em>3 4 5</em></strong> <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳&nbsp;&nbsp; The last three digits are simply for unique identification. <br></p>
-<p>A detailed list of CIMPL compilation errors and troubleshooting suggestions are available <strong><a href="https://github.com/standardhealth/shr-cli/wiki/Error-Message-Documentation">here</a></strong>.</p>
 <h2 id="fhir-ig-publisher-output">FHIR IG Publisher Output</h2>
 <p>The final step in the IG creation process is to run the <strong><a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR IG Publisher</a></strong>. This tool is maintained and owned by HL7 FHIR.</p>
 <p>At a command prompt, use one of the 2 options:</p>
 <ul>
-<li><strong>Option 1 (<em>if the defaults were used in running shr-cli</em>):</strong> yarn run ig: publish</li>
-<li><strong>Option 2 (<em>if not using defaults and specifying a directory in running shr-cli</em>):</strong> java -Xms4g -Xmx8g -jar &lt;<em>directory specified when running shr-cli</em>&gt;/fhir/guide/org.hl7.fhir.publisher.jar -ig &lt;<em>directory specified when running shr-cli</em>&gt;/fhir/guide/ig.json</li>
+<li><strong>Option 1 (<em>if the defaults were used in running SHR-CLI</em>):</strong> yarn run ig: publish</li>
+<li><strong>Option 2 (<em>if not using defaults and specifying a directory in running SHR-CLI</em>):</strong> java -Xms4g -Xmx8g -jar &lt;<em>directory specified when running shr-cli</em>&gt;/fhir/guide/org.hl7.fhir.publisher.jar -ig &lt;<em>directory specified when running shr-cli</em>&gt;/fhir/guide/ig.json</li>
 </ul>
 <p>By default, the FHIR IG Publisher will perform validation checks on the  StructureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, <em>qa.html</em>.</p>
 <p>An example QA output is shown in the figure below:
@@ -291,8 +272,8 @@ Target:     FHIR_R4
 <p>Questions on using CIMPL and its toolchain can be addressed on the HL7 Zulip chat channel <a href="https://chat.fhir.org/#streams/197290/cimpl">#cimpl</a></p>
 <p>Report any issues on one of the following GitHub repositories:</p>
 <ul>
-<li>Related to modeling of CIMPL constructs or its FHIR-based classes: https://github.com/standardhealth/shr_spec/issues</li>
-<li>Related to running the CIMPL <code>shr-cli</code> compiler, CIMPL export configuration files, or generating the FHIR Implementation Guide (IG): https://github.com/standardhealth/shr-cli/issues</li>
+<li>Related to running the SHR-CLI compiler, configuration files, or generating the FHIR Implementation Guide (IG): https://standardhealthrecord.atlassian.net/projects/CIMPL/issues</li>
+<li>Related to CIMPL base classes (Objective FHIR): https://standardhealthrecord.atlassian.net/projects/SHRM/issues</li>
 </ul>
 <h1 id="appendix-a-an-approach-to-cimpl-modeling-for-fhir">Appendix A: An Approach to CIMPL Modeling for FHIR</h1>
 <p>Keeping in mind that CIMPL is primarily a way to create logical models with the capability to "model-once, translate-many", the modeling author should consider requirements-gathering and high level modeling steps.  While one approach is proposed below, the modeling author is not limited to following these steps and might find better approaches to creating detailed clinical models.</p>
