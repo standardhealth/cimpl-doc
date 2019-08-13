@@ -583,32 +583,32 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 12008          | Cannot override `$OLD_VALUE` with `$NEW_VALUE` since overriding ChoiceValue is not supported  | Verify Identifiers match. |
 | 12009          | Unsupported constraint type: `$CONSTRAINT` Invalid constraint syntax.    | Consult documentation to see what constraints are supported |
 | 12010          | Cannot constrain cardinality of `$NAME` from `$SMALL_CARDINALITY` to `$BIGGER_CARDINALITY`              | You can only narrow the cardinality. You cannot constrain it to have a larger range than its parent |
-| 12011          | Cannot further constrain cardinality of `$NAME` from `$CARDINALITY` to `$CARDINALITY`      | You can only narrow the cardinality. You cannot constrain it to have a larger range than its parent |
-| 12012          | Cannot constrain type of `$NAME` to `$TYPE`                        | Make sure base types match |
-| 12013          | Cannot constrain type of `$NAME` since it has no identifier        | Invalid Element |
-| 12014          | Cannot constrain type of `$NAME` to `$TYPE`                        | Make sure base types match |
-| 12015          | Cannot further constrain type of `$NAME` from `$TYPE` to `$TYPE`   | The two elements aren't based on the same parent. You cannot constrain an element to one that is completely distinct. |
-| 12017          | Cannot constrain type of `$NAME` since it has no identifier        | |
-| 12018          | Cannot constrain element `$NAME` to `$TARGET` since it is an invalid sub-type | Element has to be based on `$s` or otherwise is a child of `$s`. |
-| 12020          | Cardinality of `$NAME` not found                                   | Please explicitly define the cardinality. |
-| 12021          | Cannot include cardinality on `$NAME`, cardinality of `$CARD` doesnt fit within `$CARD` | The cardinality of included parameters must be as narrow or narrower than the  property it contains. |
-| 12022          | Cannot constrain valueset of `$NAME` since it has no identifier    | |
-| 12023          | Cannot constrain valueset of `$NAME` since neither it nor its value is a code, Coding, or CodeableConcept                              | ? |
-| 12024          | Cannot constrain valueset of `$NAME` since it is already constrained to a single code                                                  | ? |
-| 12025          | Cannot constrain code of `$NAME` since neither it nor its value is a code, based on a Coding, or based on CodeableConcept              | ? |
-| 12026          | Cannot constrain included code of `$NAME` since neither it nor its value is a code, based on a Coding, or based on CodeableConcept     | ? |
-| 12027          | Cannot constrain boolean value of `$NAME` since neither it nor its value is a boolean                                                  | ? |
-| 12028          | Cannot constrain boolean value of `$NAME` to `$VALUE` since a previous constraint constrains it to `$VALUE`                                        | ? |
+| 12011          | Cannot further constrain cardinality of `$NAME` from `$CARDINALITY` to `$CARDINALITY`  | You can only narrow the cardinality. You cannot constrain it to have a larger range than its parent |
+| 12012 | Cannot constrain type of `$NAME` to `$TYPE`  | Make sure base types match |
+| 12013 | Cannot constrain type of `$NAME` since it has no identifier        | Invalid Element |
+| 12014  Cannot constrain type of `$NAME` to `$TYPE` | Make sure base types match |
+| 12015  | Cannot further constrain type of `$NAME` from `$TYPE` to `$TYPE`   | The two elements aren't based on the same parent. You cannot constrain an element to one that is completely distinct. |
+| 12017 | Cannot constrain type of `$NAME` since it has no identifier| |
+| 12018 | Cannot constrain element `$NAME` to `$TARGET` since it is an invalid sub-type | Element has to be based on `$s` or otherwise is a child of `$s`. |
+| 12020 | Cardinality of `$NAME` not found | Please explicitly define the cardinality. |
+| 12021 | Cannot include cardinality on `$NAME`, cardinality of `$CARD` doesnt fit within `$CARD` | The cardinality of included parameters must be as narrow or narrower than the  property it contains. |
+| 12022 | Cannot constrain valueset of `$NAME` since it has no identifier    | |
+| 12023 | Cannot constrain valueset of `$NAME` since neither it nor its value is a concept | Only elements whose datatype is `concept` can be bound to a value set. |
+| 12024 | Cannot constrain valueset of `$NAME` since it is already constrained to a single code |  |
+| 12025 | Cannot constrain code of `$NAME` since neither it nor its value is a concept |  |
+| 12026          | Cannot constrain included code of `$NAME` since neither it nor its value is a concept |  |
+| 12027  | Cannot constrain boolean value of `$NAME` since neither it nor its value is a boolean  | You may be trying to set an element that is not a boolean to true or false. |
+| 12028 | Cannot constrain boolean value of `$NAME` to `$VALUE` since a previous constraint constrains it to `$VALUE` | Once a fixed constraint is applied, it cannot be changed in a child class. In this case, you might be switching a true to a false or vice versa. |
 | 12029          | Cannot resolve element definition for `$NAME`                      | This is due to a incomplete definition for an element. Please refer to the document for proper definition syntax. |
-| 12030          | Cannot determine target item                                       | System error. |
-| 12031          | Cannot resolve data element definition from path: `$PATH`          | Check spelling for field or value. |
-| 12032          | Cannot resolve data element definition from path: `$PATH`          | Check spelling for field or value. |
-| 12033          | Cannot map Value since element does not define a value             | Define a value for your element |
-| 12034          | Cannot map Value since it is unsupported type: `$VALUE_TYPE`       | ? |
-| 12035          | Found multiple matches for field `$FIELD`                          | Please use fully qualified identifier. |
-| 12036          | Could not find expanded definition of `$ELEMENT`. Inheritance calculations will be incomplete. | Double check `shr.base.Entry` is defined within the specifications. |
-| 12037          | Could not find based on element `$ELEMENT` for child element `$ELEMENT`. | Double check the `basedOn` element is defined within the specifications and correctly referenced. |
-| 14001          | Unsupported value set rule type: `$s` |
+| 12030          | Cannot determine target item | System error. |
+| 12031 | Cannot resolve data element definition from path: `$PATH` | Check spelling for field or value. |
+| 12032 | Cannot resolve data element definition from path: `$PATH`          | Check spelling for field or value. |
+| 12033  | Cannot map Value since element does not define a value| Define a value for your element |
+| 12034 | Cannot map Value since it is unsupported type: `$VALUE_TYPE` |  |
+| 12035  | Found multiple matches for field `$FIELD` | Please use fully qualified identifier. |
+| 12036  | Could not find expanded definition of `$ELEMENT`. Inheritance calculations will be incomplete. | Double check `shr.base.Entry` is defined within the specifications. |
+| 12037  | Could not find based on element `$ELEMENT` for child element `$ELEMENT`. | Double check the `basedOn` element is defined within the specifications and correctly referenced. |
+| 14001  | Unsupported value set rule type: `$s` |
 | 14002          | Unknown type for value `$VALUE` |
 | 14003          | Unknown type for constraint `$CONSTRAINT` |
 
@@ -631,16 +631,16 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13013          | Invalid target path. Cannot apply cardinality constraint. |
 | 13014          | Cannot constrain cardinality from `$CARD` to `$CARD` |
 | 13015          | Invalid target path. Cannot apply fixed value. |
-| 13016          | Currently, only fixing codes is supported (value must contain "#").  Unable to fix to `$VALUE`. |
+| 13016          | Currently, only fixing codes is supported (value must contain "#").  Unable to fix to `$VALUE`. | This error message applies to SHR-CLI 6.4 and earlier. In SHR-CLI 6.5 and higher, fixed value constraints can be applied to integer and decimal values. |
 | 13017          | Incompatible cardinality (using aggregation). Source cardinality `$CARD` does not fit in target cardinality       | |
-| 13018          | Cannot constrain cardinality to `$CARD` because cardinality placement is ambiguous. Explicitly constrain          | parent elements in target path.
-| 13019          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality min that can get us there |
-| 13020          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality max that can get us there |
-| 13021          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality that can get us there |
-| 13022          | Mismatched types. Cannot map `$SOURCE_VALUE` to `$MAPPING`. | Find the `EntryElement` referenced in the error details and change it to match the data type of the target field.
+| 13018          | Cannot constrain cardinality to `$CARD` because cardinality placement is ambiguous. Explicitly constrain parent elements in target path. | See Error 13020 |
+| 13019          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality min that can get us there | See Error 13020 |
+| 13020          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality max that can get us there | When the target path is deeper than one level, cardinalities combine to get to the final (target) cardinality. The correct way to constrain the cardinality is ambiguous. For example, if B maps to a.b, and B is constrained to [0,4], there are multiple ways to get there: a[0..1].b[0..4] or a[0..1].b[1..4] or a[1..1].b[0..4] or a[0..4].b[0..1] etc. To resolve this error, ambiguous cardinalities in intermediate paths must be explicitly declared in the mapping file using the `constrain` keyword. |
+| 13021          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality that can get us there | See Error 13020 |
+| 13022          | Mismatched types. Cannot map `$SOURCE_VALUE` to `$MAPPING`. | Find the Entry referenced in the error details and change it to match the data type of the target field.
 | 13023          | Cannot resolve element definition for `$ELEMENT` |
 | 13024          | Failed to resolve element path from `$ELEMENT` to `$PATH` |
-| 13025          | Applying constraints to profiled children not yet supported. SHR doesn\ |
+| 13025          | Applying constraints to profiled children not yet supported. |
 | 13026          | Failed to resolve path from `$ELEMENT` to `$PATH` |
 | 13027          | Unsupported binding strength: `$BINDING_STRENGTH` |
 | 13028          | Cannot change binding strength from `$BINDING_STRENGTH` to `$BINDING_STRENGTH` |
