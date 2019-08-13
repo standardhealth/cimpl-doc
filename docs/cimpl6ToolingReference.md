@@ -2,7 +2,7 @@
 
 >**Note:** This documentation is a draft.
 
-_This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line interface, auxiliary files, and configurations needed to produce a FHIR Implementation Guide (IG). If you're looking for a quick introduction to CIMPL and `SHR-CLI` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md) or [In-Depth Tutorials](cimpl6Tutorial_detail.md). For details of the CIMPL language itself, see the [CIMPL Language Reference Manual](cimpl6LanguageReference.md)._
+_This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line interface, auxiliary files, and configurations needed to produce a FHIR Implementation Guide (IG). If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md) or [In-Depth Tutorials](cimpl6Tutorial_detail.md). For details of the CIMPL language itself, see the [CIMPL Language Reference Manual](cimpl6LanguageReference.md)._
 
 ***
 
@@ -438,11 +438,11 @@ For many users, especially those with experience in object-oriented modeling, th
 
 The Data Dictionary is an Microsoft Excel file containing a simplified, flattened list of model elements and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
 
-* The first tab contains a key to the columns in the other tabs;
-* The second tab contains a list of the primary profiles and their descriptions;
-* The third tab contains a list of Must-support and required elements associated with those profiles;
-* The fourth tab contains a list of value sets used in the IG, and their descriptions;
-* The fifth and last tab contains a list of the codes and/or implicit definitions in those value sets.
+* The "Key" tab contains a key to the columns in the other tabs;
+* The "Profiles" tab contains a list of the primary profiles and their descriptions;
+* The "Data Elements" tab contains a list of Must-support and required elements associated with those profiles;
+* The "Value Sets" tab contains a list of value sets used in the IG, and their descriptions;
+* The "Value Set Details" tab contains a list of the codes and/or implicit definitions in those value sets.
 
 The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR profiles, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
 
