@@ -18,8 +18,6 @@ This reference manual describes the configurations, files, and commands needed t
 
 The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
 
-#### _CIMPL Tooling Overview_
-
 ![CIMPL Tooling Overview](img_cimpl/cli-overview.png)
 
 ### Inputs
@@ -55,15 +53,12 @@ It is important to understand the relationship between models defined in CIMPL a
 
 The state-of-practice for FHIR IGs is still evolving, but currently, most IGs are developed by separate groups and define their own data models, as follows:
 
-#### _Typical IG-Data Model Relationship_
-
 ![Typical data model IG relationship](img_cimpl/typical-data-model-ig-relationship.png)
 
 The drawback of this approach is that different IGs can require very similar data models. If different data models are developed by different teams, interoperability will suffer.
 
 In CIMPL, data models are independent of IGs. IGs are _consumers_ of models, rather than _owners_ of models (although new models can certainly be created in the context of IG development). Each IG uses a different subset of models, reflecting the different use cases they address, but the commonality of data models assures interoperability between the use cases. This idea is illustrated below:
 
-#### _Relationship between IGs and Data Models in CIMPL_
 
 ![Data model IG relationship](img_cimpl/Data-model-use-case-model.png)
 
@@ -246,7 +241,6 @@ The name of the folder is arbitrary, however, following [directory structure](#s
 
 The folder location is specified using the `"examples:"` parameter in the CIMPL configuration file.  This is illustrated below:
 
-#### _Configuration for FHIR Examples_
 ![CIMPL Examples Configuration](img_cimpl/fhirexampleconfig01.png)
 
 ## Package List File
@@ -398,9 +392,7 @@ The output of running SHR-CLI appear in a directory named "out". By default, the
 
 The content of the /out directory depends on which exporters were selected to run, which is controlled using the `-s` command line option. By default, the /out will contain five exports, as shown below, each corresponding to a separate export process:
 
-#### _Typical Contents of the /out Directory_
-
-![Typical Contents of the /out Directory](img_cimpl/out-directory.png)
+![Typical Contents of the /out Directory](img_cimpl/typical-out-directory.png)
 
 * cimcore - this directory is used in the process of building the "modeldoc" export, and is not discussed further
 * [data-dictionary](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets
@@ -422,7 +414,6 @@ Because the logical model does not entail the additional complication of mapping
 
 An optional part of the FHIR export, the logical model can be turned on or off using the `includeLogicalModels` flag in the configuration file.
 
-#### _Logical Model Example_
 ![Logical Model Example](img_cimpl/logical-model-sw-example.png)
 
 ## Model Documentation Export
@@ -431,7 +422,6 @@ The model documentation provides another way to view the logical model. This vie
 
 For many users, especially those with experience in object-oriented modeling, the model documentation is the quickest way to navigate around the model.
 
-#### _Model Documentation Example_
 
 ![Model Documentation Example](img_cimpl/model-documentation-example.png)
 
@@ -461,9 +451,9 @@ Open a command prompt, change directories to the tooling directory, and use one 
 
   $  `yarn run ig:publish`
 
-* If you used a different "out" directory:
+* If you used a different "out" directory (e.g., mypath/out):
 
-  $  `java -Xms4g -Xmx8g -jar /your/out/directory/fhir/guide/org.hl7.fhir.publisher.jar -ig /your/out/directory/fhir/guide/ig.json`
+  $  `java -Xms4g -Xmx8g -jar mypath/out/fhir/guide/org.hl7.fhir.publisher.jar -ig mypath/out/fhir/guide/ig.json`
 
 **Note:** The IG publisher can take 15-30 minutes or even longer to run, depending on the size of the IG, and it takes _lots_ of memory. The yarn script above will allocate up to 8GB of RAM. A minimum of 4GB of RAM is recommended to run the IG Publisher tool.
 
@@ -473,9 +463,7 @@ When the publisher finishes, the IG can be opened by running the following comma
 
   $  `yarn run ig:open`
 
-* If you used a different "out" directory, by manually opening the file:
-
-  $  `/your/out/directory/fhir/guide/output/index.html`
+* If you used a different "out" directory, by manually opening the file  `mypath/out/fhir/guide/output/index.html`
 
 You now have your completed IG.
 
