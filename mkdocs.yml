@@ -9,7 +9,7 @@ nav:
               - cimpl6Tutorial_helloWorld.md
               - cimpl6Tutorial_detail.md
        - User Guides:
-              - cimpl6UserGuide.md
+              - cimpl6Authoring.md
               - cimpl6ObjectiveFHIR.md
        - Reference Manuals: 
               - cimpl6LanguageReference.md
