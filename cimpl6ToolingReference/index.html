@@ -164,15 +164,10 @@
 <ul>
 <li><a href="#cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</a><ul>
 <li><a href="#overview">Overview</a><ul>
-<li><a href="#cimpl-tooling-overview">CIMPL Tooling Overview</a></li>
 <li><a href="#inputs">Inputs</a></li>
 <li><a href="#processing-sequence">Processing Sequence</a></li>
 <li><a href="#outputs">Outputs</a></li>
-<li><a href="#relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</a><ul>
-<li><a href="#typical-ig-data-model-relationship">Typical IG-Data Model Relationship</a></li>
-<li><a href="#relationship-between-igs-and-data-models-in-cimpl">Relationship between IGs and Data Models in CIMPL</a></li>
-</ul>
-</li>
+<li><a href="#relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</a></li>
 </ul>
 </li>
 <li><a href="#suggested-directory-structure">Suggested Directory Structure</a></li>
@@ -184,31 +179,19 @@
 </ul>
 </li>
 <li><a href="#front-matter-files">Front Matter Files</a></li>
-<li><a href="#fhir-examples">FHIR Examples</a><ul>
-<li><a href="#configuration-for-fhir-examples">Configuration for FHIR Examples</a></li>
-</ul>
-</li>
+<li><a href="#fhir-examples">FHIR Examples</a></li>
 <li><a href="#package-list-file">Package List File</a></li>
 <li><a href="#content-profile-file">Content Profile File</a></li>
 <li><a href="#executing-shr-cli">Executing SHR-CLI</a><ul>
 <li><a href="#addressing-error-messages">Addressing Error Messages</a></li>
-<li><a href="#outputs-from-shr-cli">Outputs from SHR-CLI</a><ul>
-<li><a href="#typical-contents-of-the-out-directory">Typical Contents of the /out Directory</a></li>
-</ul>
-</li>
+<li><a href="#outputs-from-shr-cli">Outputs from SHR-CLI</a></li>
 </ul>
 </li>
 <li><a href="#fhir-export">FHIR Export</a><ul>
-<li><a href="#logical-model-export">Logical Model Export</a><ul>
-<li><a href="#logical-model-example">Logical Model Example</a></li>
+<li><a href="#logical-model-export">Logical Model Export</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#model-documentation-export">Model Documentation Export</a><ul>
-<li><a href="#model-documentation-example">Model Documentation Example</a></li>
-</ul>
-</li>
+<li><a href="#model-documentation-export">Model Documentation Export</a></li>
 <li><a href="#data-dictionary-export">Data Dictionary Export</a></li>
 <li><a href="#json-schema-export">JSON Schema Export</a></li>
 <li><a href="#creating-the-implementation-guide">Creating the Implementation Guide</a></li>
@@ -229,7 +212,6 @@
 <h2 id="overview">Overview</h2>
 <p>This reference manual describes the configurations, files, and commands needed to create a FHIR IG from CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage). It assumes that the CIMPL Language files (classes, value sets, and maps) have been defined (see <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for details). It also assumes that the CIMPL SHR-CLI tooling has been installed according to the directions in the <a href="../cimplInstall/">Setup and Installation Guide</a>.</p>
 <p>The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:</p>
-<h4 id="cimpl-tooling-overview"><em>CIMPL Tooling Overview</em></h4>
 <p><img alt="CIMPL Tooling Overview" src="../img_cimpl/cli-overview.png" /></p>
 <h3 id="inputs">Inputs</h3>
 <ul>
@@ -260,11 +242,9 @@
 <h3 id="relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</h3>
 <p>It is important to understand the relationship between models defined in CIMPL and implementation guide(s) created from those models.</p>
 <p>The state-of-practice for FHIR IGs is still evolving, but currently, most IGs are developed by separate groups and define their own data models, as follows:</p>
-<h4 id="typical-ig-data-model-relationship"><em>Typical IG-Data Model Relationship</em></h4>
 <p><img alt="Typical data model IG relationship" src="../img_cimpl/typical-data-model-ig-relationship.png" /></p>
 <p>The drawback of this approach is that different IGs can require very similar data models. If different data models are developed by different teams, interoperability will suffer.</p>
 <p>In CIMPL, data models are independent of IGs. IGs are <em>consumers</em> of models, rather than <em>owners</em> of models (although new models can certainly be created in the context of IG development). Each IG uses a different subset of models, reflecting the different use cases they address, but the commonality of data models assures interoperability between the use cases. This idea is illustrated below:</p>
-<h4 id="relationship-between-igs-and-data-models-in-cimpl"><em>Relationship between IGs and Data Models in CIMPL</em></h4>
 <p><img alt="Data model IG relationship" src="../img_cimpl/Data-model-use-case-model.png" /></p>
 <p>Much of what is discussed subsequently reflects this conceptual picture of the relationship between CIMPL models and IGs.</p>
 <h2 id="suggested-directory-structure">Suggested Directory Structure</h2>
@@ -570,7 +550,6 @@
 </ul>
 <p>The name of the folder is arbitrary, however, following <a href="#suggested-directory-structure">directory structure</a> and <a href="#naming-conventions">naming conventions</a> is recommended.</p>
 <p>The folder location is specified using the <code>"examples:"</code> parameter in the CIMPL configuration file.  This is illustrated below:</p>
-<h4 id="configuration-for-fhir-examples"><em>Configuration for FHIR Examples</em></h4>
 <p><img alt="CIMPL Examples Configuration" src="../img_cimpl/fhirexampleconfig01.png" /></p>
 <h2 id="package-list-file">Package List File</h2>
 <p>The format and content of this file follows the <a href="http://wiki.hl7.org/index.php?title=FHIR_IG_PackageList_doco">FHIR specification for package lists</a>. The package list is required for IGs published by HL7. The file containing the package list is named by the <code>packageList</code> parameter of the <a href="#configuration-file">configuration file</a>. If the <code>packageList</code> parameter is not supplied and no file is found at the default location (packageList.json), and <code>fhirURL</code> is an hl7.org or fhir.org URL (indicating it is an HL7 publication), then a basic package list file will be created. In this case, the IG author should review and modify the file as needed.</p>
@@ -696,8 +675,7 @@ Namespace: onco.core
 <h3 id="outputs-from-shr-cli">Outputs from SHR-CLI</h3>
 <p>The output of running SHR-CLI appear in a directory named "out". By default, the /out directory is created in the tooling directory. A different location can be designated using the <code>-o</code> <a href="#executing-shr-cli">command line option</a>.</p>
 <p>The content of the /out directory depends on which exporters were selected to run, which is controlled using the <code>-s</code> command line option. By default, the /out will contain five exports, as shown below, each corresponding to a separate export process:</p>
-<h4 id="typical-contents-of-the-out-directory"><em>Typical Contents of the /out Directory</em></h4>
-<p><img alt="Typical Contents of the /out Directory" src="img_cimpl/out-directory.png" /></p>
+<p><img alt="Typical Contents of the /out Directory" src="../img_cimpl/typical-out-directory.png" /></p>
 <ul>
 <li>cimcore - this directory is used in the process of building the "modeldoc" export, and is not discussed further</li>
 <li><a href="#data-dictionary-export">data-dictionary</a> - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets</li>
@@ -712,12 +690,10 @@ Namespace: onco.core
 <p>The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model <em>prior to</em> mapping to FHIR resources. Each entry is presented as if it were a new FHIR resource, rather than a profile. The logical model is formally expressed as a set of FHIR <code>StructureDefinitions</code>. These definitions are distinguished from profiles because the names generated by the tooling end in <code>-model</code>.</p>
 <p>Because the logical model does not entail the additional complication of mapping, it is useful for review purposes. The logical model can be checked for clinical relevance and sufficiency before making mapping decisions.</p>
 <p>An optional part of the FHIR export, the logical model can be turned on or off using the <code>includeLogicalModels</code> flag in the configuration file.</p>
-<h4 id="logical-model-example"><em>Logical Model Example</em></h4>
 <p><img alt="Logical Model Example" src="../img_cimpl/logical-model-sw-example.png" /></p>
 <h2 id="model-documentation-export">Model Documentation Export</h2>
 <p>The model documentation provides another way to view the logical model. This view emphasizes the class hierarchy defined in CIMPL, the datatypes, associated constraints, and relationships between the classes (references). The panel in the upper left allows the user to filter on the namespace and (in SHR-CLI 6.6 and higher) the class type (Entry, Group, or Element). The right-hand panel shows details for the selected class, include the full set of properties and constraints. </p>
 <p>For many users, especially those with experience in object-oriented modeling, the model documentation is the quickest way to navigate around the model.</p>
-<h4 id="model-documentation-example"><em>Model Documentation Example</em></h4>
 <p><img alt="Model Documentation Example" src="../img_cimpl/model-documentation-example.png" /></p>
 <h2 id="data-dictionary-export">Data Dictionary Export</h2>
 <p>The Data Dictionary is an Microsoft Excel file containing a simplified, flattened list of model elements and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:</p>
@@ -739,9 +715,9 @@ Namespace: onco.core
 </ul>
 <p>$  <code>yarn run ig:publish</code></p>
 <ul>
-<li>If you used a different "out" directory:</li>
+<li>If you used a different "out" directory (e.g., mypath/out):</li>
 </ul>
-<p>$  <code>java -Xms4g -Xmx8g -jar /your/out/directory/fhir/guide/org.hl7.fhir.publisher.jar -ig /your/out/directory/fhir/guide/ig.json</code></p>
+<p>$  <code>java -Xms4g -Xmx8g -jar mypath/out/fhir/guide/org.hl7.fhir.publisher.jar -ig mypath/out/fhir/guide/ig.json</code></p>
 <p><strong>Note:</strong> The IG publisher can take 15-30 minutes or even longer to run, depending on the size of the IG, and it takes <em>lots</em> of memory. The yarn script above will allocate up to 8GB of RAM. A minimum of 4GB of RAM is recommended to run the IG Publisher tool.</p>
 <p>When the publisher finishes, the IG can be opened by running the following commands.</p>
 <ul>
@@ -749,9 +725,8 @@ Namespace: onco.core
 </ul>
 <p>$  <code>yarn run ig:open</code></p>
 <ul>
-<li>If you used a different "out" directory, by manually opening the file:</li>
+<li>If you used a different "out" directory, by manually opening the file  <code>mypath/out/fhir/guide/output/index.html</code></li>
 </ul>
-<p>$  <code>/your/out/directory/fhir/guide/output/index.html</code></p>
 <p>You now have your completed IG.</p>
 <p>The FHIR IG Publisher performs numerous validation checks on the content of the IG. The output of these checks can be accessed through the "QA Report" link in the footer of the home page, or by opening the file <code>/out/fhir/guide/output/qa.html</code>.</p>
 <p>An example QA output is shown below:</p>
@@ -1140,9 +1115,9 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 <td>Invalid Element</td>
 </tr>
 <tr>
-<td>12014</td>
-<td>Cannot constrain type of <code>$NAME</code> to <code>$TYPE</code></td>
+<td>12014  Cannot constrain type of <code>$NAME</code> to <code>$TYPE</code></td>
 <td>Make sure base types match</td>
+<td></td>
 </tr>
 <tr>
 <td>12015</td>
@@ -1176,33 +1151,33 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 </tr>
 <tr>
 <td>12023</td>
-<td>Cannot constrain valueset of <code>$NAME</code> since neither it nor its value is a code, Coding, or CodeableConcept</td>
-<td>?</td>
+<td>Cannot constrain valueset of <code>$NAME</code> since neither it nor its value is a concept</td>
+<td>Only elements whose datatype is <code>concept</code> can be bound to a value set.</td>
 </tr>
 <tr>
 <td>12024</td>
 <td>Cannot constrain valueset of <code>$NAME</code> since it is already constrained to a single code</td>
-<td>?</td>
+<td></td>
 </tr>
 <tr>
 <td>12025</td>
-<td>Cannot constrain code of <code>$NAME</code> since neither it nor its value is a code, based on a Coding, or based on CodeableConcept</td>
-<td>?</td>
+<td>Cannot constrain code of <code>$NAME</code> since neither it nor its value is a concept</td>
+<td></td>
 </tr>
 <tr>
 <td>12026</td>
-<td>Cannot constrain included code of <code>$NAME</code> since neither it nor its value is a code, based on a Coding, or based on CodeableConcept</td>
-<td>?</td>
+<td>Cannot constrain included code of <code>$NAME</code> since neither it nor its value is a concept</td>
+<td></td>
 </tr>
 <tr>
 <td>12027</td>
 <td>Cannot constrain boolean value of <code>$NAME</code> since neither it nor its value is a boolean</td>
-<td>?</td>
+<td>You may be trying to set an element that is not a boolean to true or false.</td>
 </tr>
 <tr>
 <td>12028</td>
 <td>Cannot constrain boolean value of <code>$NAME</code> to <code>$VALUE</code> since a previous constraint constrains it to <code>$VALUE</code></td>
-<td>?</td>
+<td>Once a fixed constraint is applied, it cannot be changed in a child class. In this case, you might be switching a true to a false or vice versa.</td>
 </tr>
 <tr>
 <td>12029</td>
@@ -1232,7 +1207,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 <tr>
 <td>12034</td>
 <td>Cannot map Value since it is unsupported type: <code>$VALUE_TYPE</code></td>
-<td>?</td>
+<td></td>
 </tr>
 <tr>
 <td>12035</td>
@@ -1354,7 +1329,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 <tr>
 <td>13016</td>
 <td>Currently, only fixing codes is supported (value must contain "#").  Unable to fix to <code>$VALUE</code>.</td>
-<td></td>
+<td>This error message applies to SHR-CLI 6.4 and earlier. In SHR-CLI 6.5 and higher, fixed value constraints can be applied to integer and decimal values.</td>
 </tr>
 <tr>
 <td>13017</td>
@@ -1363,28 +1338,28 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 </tr>
 <tr>
 <td>13018</td>
-<td>Cannot constrain cardinality to <code>$CARD</code> because cardinality placement is ambiguous. Explicitly constrain</td>
-<td>parent elements in target path.</td>
+<td>Cannot constrain cardinality to <code>$CARD</code> because cardinality placement is ambiguous. Explicitly constrain parent elements in target path.</td>
+<td>See Error 13020</td>
 </tr>
 <tr>
 <td>13019</td>
 <td>Cannot constrain cardinality to <code>$CARD</code> because there is no tail cardinality min that can get us there</td>
-<td></td>
+<td>See Error 13020</td>
 </tr>
 <tr>
 <td>13020</td>
 <td>Cannot constrain cardinality to <code>$CARD</code> because there is no tail cardinality max that can get us there</td>
-<td></td>
+<td>When the target path is deeper than one level, cardinalities combine to get to the final (target) cardinality. The correct way to constrain the cardinality is ambiguous. For example, if B maps to a.b, and B is constrained to [0,4], there are multiple ways to get there: a[0..1].b[0..4] or a[0..1].b[1..4] or a[1..1].b[0..4] or a[0..4].b[0..1] etc. To resolve this error, ambiguous cardinalities in intermediate paths must be explicitly declared in the mapping file using the <code>constrain</code> keyword.</td>
 </tr>
 <tr>
 <td>13021</td>
 <td>Cannot constrain cardinality to <code>$CARD</code> because there is no tail cardinality that can get us there</td>
-<td></td>
+<td>See Error 13020</td>
 </tr>
 <tr>
 <td>13022</td>
 <td>Mismatched types. Cannot map <code>$SOURCE_VALUE</code> to <code>$MAPPING</code>.</td>
-<td>Find the <code>EntryElement</code> referenced in the error details and change it to match the data type of the target field.</td>
+<td>Find the Entry referenced in the error details and change it to match the data type of the target field.</td>
 </tr>
 <tr>
 <td>13023</td>
@@ -1398,7 +1373,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 </tr>
 <tr>
 <td>13025</td>
-<td>Applying constraints to profiled children not yet supported. SHR doesn\</td>
+<td>Applying constraints to profiled children not yet supported.</td>
 <td></td>
 </tr>
 <tr>
