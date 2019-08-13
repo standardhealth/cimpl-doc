@@ -28,7 +28,7 @@ The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Inte
 * An optional [Content Profile](#content-profile-file) file, which specifies Must-Support elements and profiling options specific to an IG,
 * One or more [Front Matter](#front-matter-files) files, which are the narratives and graphics that introduce the IG,
 * [FHIR Examples](#fhir-examples) that are to be included in the IG, and
-* A [Package List](#package-list) that has information required for building the IG.
+* A [Package List](#package-list-file) that has information required for building the IG.
 
 ### Processing Sequence
 
@@ -183,7 +183,7 @@ These configurations are used to control the production of the IG. The contents 
 |`npmName`                 |`string` |The assigned node package manager name for this IG, for example "hl7.fhir.us.mcode". The npm name is usually assigned by HL7.   |
 |`version` |`string` |The version of this IG (not necessarily the version of FHIR), usually in the form _major.minor.revision_, for example, "3.0.1"  |
 |`ballotStatus`            |`string` |The HL7 ballot status of the IG (e.g., STU1 Ballot, Continuous Integration Build, etc.)      |
-|`packageList` |`string` |The name of the file to use as the [IG's package list](#package-list), relative to the Specification Directory. |
+|`packageList` |`string` |The name of the file to use as the [IG's package list](#package-list-file), relative to the Specification Directory. |
 |`includeLogicalModels`    |`boolean`|A "true" or "false" value indicating whether to include logical models in the IG.     |
 |`includeModelDoc`         |`boolean`|A "true" or "false" value indicating whether to include the model documentation in the IG. |
 |`indexContent` |`string` |The name of the file or folder containing the [front matter](#front-matter-files), relative to the Specification Directory, for example, "ig-mcode/IndexFolder-Oncocore". If the `indexContent` is a folder, then it must contain an `index.html` file whose contents will be used as the body of the IG home page.  |
@@ -422,7 +422,7 @@ Because the logical model does not entail the additional complication of mapping
 An optional part of the FHIR export, the logical model can be turned on or off using the `includeLogicalModels` flag in the configuration file.
 
 #### _Logical Model Example_
-![Logical Model Example](img_cimpl/logical-model-example.png)
+![Logical Model Example](img_cimpl/logical-model-sw-example.png)
 
 ## Model Documentation Export
 
@@ -432,7 +432,7 @@ For many users, especially those with experience in object-oriented modeling, th
 
 #### _Model Documentation Example_
 
-![Model Documentation Example](img_cimpl/model-doc-example.png)
+![Model Documentation Example](img_cimpl/model-documentation-example.png)
 
 ## Data Dictionary Export
 

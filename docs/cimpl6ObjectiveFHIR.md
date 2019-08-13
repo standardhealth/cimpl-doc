@@ -2,7 +2,7 @@
 
 >**Note:** This documentation is in draft form.
 
-_This is an introductory guide to CIMPL's class library: **Objective FHIR Version 1.0**. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the [CIMPL 6 Tutorial](cimpl6Tutorial_detail.md), the [CIMPL 6 User Guide](cimpl6UserGuide.md), or the [CIMPL 6 Language Reference Manual](cimpl6LanguageReference.md)._
+_This is an introductory guide to CIMPL's class library: **Objective FHIR Version 1.0**. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the [CIMPL 6 Tutorial](cimpl6Tutorial_detail.md), the [CIMPL Authoring](cimpl6Authoring.md), or the [CIMPL 6 Language Reference Manual](cimpl6LanguageReference.md)._
 
 ***
 
@@ -16,7 +16,9 @@ _This is an introductory guide to CIMPL's class library: **Objective FHIR Versio
 
 Objective FHIR ("OBF") is an [**object-oriented**](https://en.wikipedia.org/wiki/Object-oriented_programming) abstraction of FHIR. It provides modelers a way to define a detailed clinical information model by subclassing, extending, and constraining a pre-existing class library. These classes can then be translated automatically into FHIR profiles, FHIR Implementation Guides, data dictionaries, schemas, and other assets, using a choice of the three major FHIR versions: DSTU 2, STU 3, and R4.
 
-OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. _Tabula rasa_ (blank slate) use of CIMPL is also possible and appropriate for some projects. For more information on the choice between using OBF and the _tabula rasa_ approach, see [CIMPL 6 User Guide](cimpl6UserGuide.md).
+OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. "blank slate" use of CIMPL is also possible and appropriate for some projects. 
+
+(**TO DO: Move discussion of Blank Slate approach to here**)
 
 ### Philosophy
 
