@@ -7,6 +7,7 @@ _This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line 
 ***
 
 **Table of Contents**
+
 [TOC]
 
 ***
