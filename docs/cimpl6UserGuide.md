@@ -1,5 +1,5 @@
 # CIMPL Authoring
-_The purpose of this guide is to educate people about many different aspects of creating CIMPL models and its supporting utilities.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Reference documentation](cimpl6Reference.md)._
+_The purpose of this guide is to educate people about many different aspects of creating CIMPL models and its supporting utilities.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Language Reference documentation](cimpl6LanguageReference.md)._
 
 ***
 
@@ -25,13 +25,13 @@ Any text editor can be used to write CIMPL grammar. However, [VSCode editor](htt
 
 Elements properties can be previewed in the following ways:
 
-1. **Hovering over the element**: : This provides a drop-down list of an element's property names and cardinality, if available.
-2. **placing the cursor on the element text and right-clicking option _Peek Definition_**: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.
-3. **placing the cursor on the element text and right-clicking option _Go to Definition_**: This will redirect the author to location of the definition, opening the file for display if it's not in the same location where it is referenced.
+1. **Hovering over the element**: This provides a drop-down list of an element's property names and cardinality, if available.
+2. **Placing the cursor on the element text and right-clicking option _Peek Definition_**: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.
+3. **Placing the cursor on the element text and right-clicking option _Go to Definition_**: This will redirect the author to location of the definition, opening the file for display if it's not in the same location where it is referenced.
 
 <br />
 
-Hovering over the element: 
+Hovering over the element:
 ![Hovering over the element](img_cimpl/VSCode_Peek01.png)
 
 Using _Peek Definition_:
@@ -69,9 +69,9 @@ As a best practice, CIMPL map files must have the *_map.txt* naming convention.
 
 Each map file should start with the following 3 lines:
 
-* Grammar:	Map _mapping_grammar_version_
+* Grammar: Map _mapping_grammar_version_
 * Namespace:  _data element group name_
-* Target:		_fhir target version_
+* Target: _fhir target version_
 
 Where:
 
@@ -94,7 +94,9 @@ MustSupport is contextual and could vary depending on the reference implementati
 
 Content Profile files are text files which use the following convention:
 
-    ig-<Content Profile Name>-cp.txt
+```
+ig-<Content Profile Name>-cp.txt
+```
 
 Where `<Content Profile Name>` is by convention the same name as the IG Configuration JSON file.
 
@@ -116,30 +118,6 @@ The folder created can be any name, as long as it is specified within the CIMPL 
 
 The folder location is specified using the `"examples:"` parameter in the CIMPL configuration file.  This is illustrated in the figure below:
 ![CIMPL Examples Configuration](img_cimpl/fhirexampleconfig01.png)
-
-## Compile the Model
-Now that you have created a model using CIMPL it must be compiled using `shr-cli` (Shared Health Record Command Line Interface). 
-
-At a command prompt, navigate to the directory where you installed shr-cli and enter the following (changing mcodeR4 to the model name to compile, and ig-mcode-r4-config.json to the corresponding config file): 
-
-* b.	node . ../dev6/spec -l error -o mcodeR4 -c ig-mcode-r4-config.json  
-
-# QA and Support
-
-## Troubleshooting
-
-CIMPL Compilation Errors are structured in the following format:
-
-***1*** 2 3 4 5 <br>
-&nbsp;↳&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;First digit tells whether it is an warning or error. 0 = warning, 1 = error <br>
-
-1 ***2*** 3 4 5 <br>
-&nbsp;&nbsp;&nbsp;↳&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Second digit gives the location of the issue: 1 = the grammar and importing of the text files, 2 = the expanding of the specifications, 3 = the exporting of FHIR profiles, 4 = the exporting of the JSON profiles <br>
-
-1 2 ***3 4 5*** <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳&nbsp;&nbsp; The last three digits are simply for unique identification. <br>
-
-A detailed list of CIMPL compilation errors and troubleshooting suggestions are available **[here](https://github.com/standardhealth/shr-cli/wiki/Error-Message-Documentation)**.
 
 ## FHIR IG Publisher Output
 

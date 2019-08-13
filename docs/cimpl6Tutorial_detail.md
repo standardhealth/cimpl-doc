@@ -1,5 +1,5 @@
 # CIMPL 6.0 In-depth Tutorial
-_This is an extensive tutorial, meant to educate people about many different aspects of CIMPL.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Reference documentation](cimpl6Reference.md)._
+_This is an extensive tutorial, meant to educate people about many different aspects of CIMPL.  If you're looking for a quick introduction to CIMPL and `shr-cli` environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Language Reference documentation](cimpl6LanguageReference.md)._
 
 ***
 
@@ -260,7 +260,7 @@ The CIMPL toolchain provides a separate configuration file called a "Content Pro
 
 Together with specified cardinality, the MS declaration can be [interpreted as follows](http://wiki.hl7.org/index.php?title=Conformance_Implementation_Manual):
 
-| Cardinality |  Must Support | Interpretation |
+| Cardinality |  Must Support  | Interpretation |
 |------------|------------|-------------|
 | 1..1 |  any | required | 
 | 0..1 | yes | required if known |

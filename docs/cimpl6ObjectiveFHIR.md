@@ -2,7 +2,7 @@
 
 >**Note:** This documentation is in draft form.
 
-_This is an introductory guide to CIMPL's class library: **Objective FHIR Version 1.0**. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the [CIMPL 6 Tutorial](cimpl6Tutorial_detail.md), the [CIMPL 6 User Guide](cimpl6UserGuide.md), or the [CIMPL 6 Reference Manual](cimpl6Reference.md)._
+_This is an introductory guide to CIMPL's class library: **Objective FHIR Version 1.0**. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the [CIMPL 6 Tutorial](cimpl6Tutorial_detail.md), the [CIMPL 6 User Guide](cimpl6UserGuide.md), or the [CIMPL 6 Language Reference Manual](cimpl6LanguageReference.md)._
 
 ***
 
@@ -94,7 +94,7 @@ When clinical modeling projects grow to a certain size, activities increasingly 
 
 ### Data Types
 
-The primitive types used in OBF are those defined in CIMPL, which correspond one-to-one with FHIR primitives, except for [the way CIMPL handles coded types](cimpl6Reference.md#concept-codes).
+The primitive types used in OBF are those defined in CIMPL, which correspond one-to-one with FHIR primitives, except for [the way CIMPL handles coded types](cimpl6LanguageReference.md#concept-codes).
 
 Complex data types in OBF are also the same as FHIR R4. They are found in the `obf.datatype` namespace. Since complex types like Quantity are ubiquitous, you will almost certainly need to import the `obf.datatype` into your namespace. This is done using the `Uses` keyword.
 
