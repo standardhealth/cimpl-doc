@@ -42,7 +42,7 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR StructureDefinitions,
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
 * A [Data Dictionary](#data-dictionary-export) that lists the Must-Support data elements in the IG, as well as value sets and value set members,
-* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](#https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
+* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
 
 
 ### Relationship of CIMPL Models and Implementation Guides
@@ -435,7 +435,7 @@ The content of the /out directory depends on which exporters were selected to ru
 * [data-dictionary](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets
 * [fhir](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
 * [json-schema](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
-* [modeldoc](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](#https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
+* [modeldoc](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
 
 ### FHIR Export
 
