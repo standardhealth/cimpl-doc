@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6UserGuide/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
 </li>
                                     
 <li >
@@ -95,24 +95,15 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manuals <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Reference/">CIMPL 6.0 Reference Documentation</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archive <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../cimpl5Reference/">CIMPL 5.0 Reference Documentation</a>
+    <a href="../cimpl6LanguageReference/">CIMPL 6.0 Language Reference</a>
 </li>
                                     
 <li >
-    <a href="../cimpl5Tutorial/">CIMPL 5.0 Tutorial</a>
+    <a href="../cimpl6ToolingReference/">CIMPL 6.0 Tooling Reference</a>
 </li>
                                 </ul>
                             </li>
@@ -143,8 +134,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#cimpl-60-hello-world-tutorial">CIMPL 6.0 'Hello World' Tutorial</a></li>
-            <li><a href="#ig-generation-with-a-proxy-server">IG Generation with a Proxy Server</a></li>
-            <li><a href="#ig-generation-without-a-proxy-server">IG Generation (without a Proxy Server)</a></li>
+            <li><a href="#ig-generation">IG Generation</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -152,7 +142,7 @@
 <h1 id="cimpl-60-hello-world-tutorial">CIMPL 6.0 'Hello World' Tutorial</h1>
 <p><br />
 Let’s do a “Hello, World” using CIMPL v6!</p>
-<p><em>Note: Make sure you have completed the <a href="../cimplInstall/">CIMPL Installation instructions</a> before proceeding, and that <code>shr-cli</code> is installed in <code>~/cimpl/shr-cli</code>.</em></p>
+<p><em>Note: Make sure you have completed the <a href="../cimplInstall/">CIMPL Installation instructions</a> before proceeding, and that SHR-CLI (minimum version 6.2.0) is installed in <code>~/cimpl/shr-cli</code>.</em></p>
 <p>Start by creating a folder structure for our new project.  Open up your favorite (Unix-based) command-line tool and enter the following:</p>
 <pre><code>cd ~/cimpl
 mkdir hello_world
@@ -163,7 +153,7 @@ mkdir hello_world
 Namespace:       hello
 Description:     &quot;A simple example of CIMPL.&quot;
 
-EntryElement:    HelloWorld
+Entry:           HelloWorld
 Description:     &quot;A silly profile.&quot;
 Property:        SayHello 0..1
 
@@ -186,7 +176,7 @@ HelloWorld maps to Basic:
 </code></pre>
 
 <p>Finally, we need a configuration file. Create an <code>ig-hello_world-config.json</code> file with these contents:</p>
-<pre><code class="json">{
+<pre><code>{
     &quot;projectName&quot;: &quot;Example Project&quot;,
     &quot;projectShorthand&quot;: &quot;EXAMPLE&quot;,
     &quot;projectURL&quot;: &quot;http://example.com&quot;,
@@ -218,40 +208,25 @@ HelloWorld maps to Basic:
 }
 </code></pre>
 
-<p>Now, go back to your <code>shr-cli</code> installation and run the hello world:</p>
+<p>Now, go back to your SHR-CLI installation and run the hello world:</p>
 <pre><code>cd ~/cimpl/shr-cli
 node . -c ig-hello_world-config.json ../hello_world
 </code></pre>
 
 <p>When the program runs, it will output a warning message alerting you that mapping to Basic usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (a FHIR <code>StructureDefinition</code>) will be found in <code>~/cimpl/shr-cli/out/fhir/profiles/</code>.  <code>StructureDefinition</code>s are verbose, and this one clocks in at several hundred lines.</p>
 <p>A friendlier view is created when we create an implementation guide (IG). To do this, we use the <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">existing FHIR implementation guide (IG) publisher</a>.</p>
-<p><br /></p>
-<h2 id="ig-generation-with-a-proxy-server">IG Generation with a Proxy Server</h2>
-<p><em>Note: If your organization uses a proxy server, you'll need to explicitly declare a few options.  If your organization <strong>does not</strong> use a proxy server, you can skip ahead to <a href="#ig-generation">IG Generation</a>.</em></p>
-<p><strong>On Windows:</strong></p>
-<pre><code>java %JAVA_OPTS% -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
-</code></pre>
-
-<p><em>Note: users have reported issues with running the IG publisher on windows behind a proxy.  Please try to run the IG publisher without connecting to a proxy</em></p>
-<p><strong>On Linux/MacOS:</strong></p>
-<pre><code>java $JAVA_OPTS -Xms4g -Xmx8g -jar out/fhir/guide/org.hl7.fhir.igpublisher.jar -ig out/fhir/guide/ig.json
-</code></pre>
-
-<p><br /></p>
-<h2 id="ig-generation-without-a-proxy-server">IG Generation (without a Proxy Server)</h2>
+<h2 id="ig-generation">IG Generation</h2>
+<p>_Note: If your organization uses a proxy server, you may have to run the IG publishing process from outside your organization's firewall. For more information, see FHIR's GForge tracker as issue <a href="https://gforge.hl7.org/gf/project/fhir/tracker/?action=TrackerItemEdit&amp;tracker_item_id=19815">#19815</a>.</p>
 <p>To generate the IG, run:</p>
 <pre><code>cd ~/cimpl/shr-cli
 yarn run ig:publish
 </code></pre>
 
-<blockquote>
-<p><strong>Note</strong>: If you're running the IG Generation tool behind a proxy, you may need to <a href="https://github.com/standardhealth/shr-cli#creating-the-fhir-implementation-guide-using-an-http-proxy">explicitly declare the proxy at runtime</a>, since the process tries to access external terminology servers.</p>
-</blockquote>
 <p>The generated profile page will be located at <code>~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html</code>.  Open this page in your favorite web browser.</p>
+<p>You should see a FHIR profile that looks like a traditional <a href="https://www.hl7.org/fhir/implementationguide.html">FHIR Implementation Guide</a>.  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the <a href="https://github.com/standardhealth/shr-cli/wiki/Tutorial">Tutorial</a>.</p>
 <blockquote>
 <p><strong>Note:</strong> the IG is automatically branded as part of the Standard Health Record (SHR). We are working on “de-branding” the IG, so please ignore the SHR references for now.</p>
-</blockquote>
-<p>You should see a FHIR profile that looks like a traditional <a href="https://www.hl7.org/fhir/implementationguide.html">FHIR Implementation Guide</a>.  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the <a href="https://github.com/standardhealth/shr-cli/wiki/Tutorial">Tutorial</a>.</p></div>
+</blockquote></div>
         </div>
 
         <footer class="col-md-12">

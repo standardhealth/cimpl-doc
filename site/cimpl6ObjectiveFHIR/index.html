@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6UserGuide/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
 </li>
                                     
 <li class="active">
@@ -95,24 +95,15 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manual <b class="caret"></b></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manuals <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Reference/">CIMPL 6.0 Reference Documentation</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archive <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../cimpl5Reference/">CIMPL 5.0 Reference Documentation</a>
+    <a href="../cimpl6LanguageReference/">CIMPL 6.0 Language Reference</a>
 </li>
                                     
 <li >
-    <a href="../cimpl5Tutorial/">CIMPL 5.0 Tutorial</a>
+    <a href="../cimpl6ToolingReference/">CIMPL 6.0 Tooling Reference</a>
 </li>
                                 </ul>
                             </li>
@@ -125,12 +116,12 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../cimpl6UserGuide/">
+                                <a rel="next" href="../cimpl6Authoring/">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../cimpl6Reference/">
+                                <a rel="prev" href="../cimpl6LanguageReference/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -156,7 +147,7 @@
 <blockquote>
 <p><strong>Note:</strong> This documentation is in draft form.</p>
 </blockquote>
-<p><em>This is an introductory guide to CIMPL's class library: <strong>Objective FHIR Version 1.0</strong>. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the <a href="../cimpl6Tutorial_detail/">CIMPL 6 Tutorial</a>, the <a href="../cimpl6UserGuide/">CIMPL 6 User Guide</a>, or the <a href="../cimpl6Reference/">CIMPL 6 Reference Manual</a>.</em></p>
+<p><em>This is an introductory guide to CIMPL's class library: <strong>Objective FHIR Version 1.0</strong>. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the <a href="../cimpl6Tutorial_detail/">CIMPL 6 Tutorial</a>, the <a href="../cimpl6Authoring/">CIMPL Authoring</a>, or the <a href="../cimpl6LanguageReference/">CIMPL 6 Language Reference Manual</a>.</em></p>
 <hr />
 <p><strong>Table of Contents</strong></p>
 <div class="toc">
@@ -198,7 +189,8 @@
 <hr />
 <h2 id="overview">Overview</h2>
 <p>Objective FHIR ("OBF") is an <a href="https://en.wikipedia.org/wiki/Object-oriented_programming"><strong>object-oriented</strong></a> abstraction of FHIR. It provides modelers a way to define a detailed clinical information model by subclassing, extending, and constraining a pre-existing class library. These classes can then be translated automatically into FHIR profiles, FHIR Implementation Guides, data dictionaries, schemas, and other assets, using a choice of the three major FHIR versions: DSTU 2, STU 3, and R4.</p>
-<p>OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. <em>Tabula rasa</em> (blank slate) use of CIMPL is also possible and appropriate for some projects. For more information on the choice between using OBF and the <em>tabula rasa</em> approach, see <a href="../cimpl6UserGuide/">CIMPL 6 User Guide</a>.</p>
+<p>OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. "blank slate" use of CIMPL is also possible and appropriate for some projects. </p>
+<p>(<strong>TO DO: Move discussion of Blank Slate approach to here</strong>)</p>
 <h3 id="philosophy">Philosophy</h3>
 <p>OBF classes resemble FHIR R4, but differ in carefully considered ways that increase consistency and reusability of the resulting models and profiles. Objective FHIR allows data structures of all sorts to be reused. This means that individual data elements and frequently-occurring structures can be defined once and used repeatedly.</p>
 <p>Objective FHIR addresses one of the most frequent criticisms of FHIR, namely, its <a href="https://wolandscat.net/2019/05/05/a-fhir-experience-consistently-inconsistent/">lack of consistency</a>. FHIR not only uses different <em>names</em> for equivalent things in different resources, but sometimes, entirely different modeling approaches. This is almost certainly the result of having resources managed by separate HL7 work groups. OBF creates a layer that smooths over many of these differences, not for aesthetic or theoretical reasons, but to make the whole framework easier to learn, enable greater code reuse, and most importantly, to make the resulting clinical models <em>more interoperable</em>.</p>
@@ -253,7 +245,7 @@ Property:          RegionStudied 0..*
 <p>When clinical modeling projects grow to a certain size, activities increasingly revolve around repeatedly revisiting, revising, refactoring, and renaming. As a text language, CIMPL allows you to do global search and replace, which will become your new <a href="https://en.wikipedia.org/wiki/Best_friends_forever">BFF</a>. Using text also enables meaningful source code control. CIMPL files can be hosted in Github, which gives model developers the ability distribute work across multiple branches, compare changes (with meaningful diffs), and automatically merge contributions, allowing projects to scale in ways that visual editors can't support.</p>
 <h2 id="key-concepts">Key Concepts</h2>
 <h3 id="data-types">Data Types</h3>
-<p>The primitive types used in OBF are those defined in CIMPL, which correspond one-to-one with FHIR primitives, except for <a href="../cimpl6Reference/#concept-codes">the way CIMPL handles coded types</a>.</p>
+<p>The primitive types used in OBF are those defined in CIMPL, which correspond one-to-one with FHIR primitives, except for <a href="../cimpl6LanguageReference/#concept-codes">the way CIMPL handles coded types</a>.</p>
 <p>Complex data types in OBF are also the same as FHIR R4. They are found in the <code>obf.datatype</code> namespace. Since complex types like Quantity are ubiquitous, you will almost certainly need to import the <code>obf.datatype</code> into your namespace. This is done using the <code>Uses</code> keyword.</p>
 <h3 id="naming">Naming</h3>
 <p>Attribute names in OBF may differ from FHIR names. When they do so, it is usually to make the meaning of the attribute more explicit. OBF names are meant to be meaningful outside of the context of a single class.</p>
