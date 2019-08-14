@@ -1,7 +1,5 @@
 # CIMPL 6.0 Tooling Reference
 
->**Note:** This documentation is a draft.
-
 _This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line interface, auxiliary files, and configurations needed to produce a FHIR Implementation Guide (IG). If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md) or [In-Depth Tutorials](cimpl6Tutorial_detail.md). For details of the CIMPL language itself, see the [CIMPL Language Reference Manual](cimpl6LanguageReference.md)._
 
 ***
@@ -16,11 +14,12 @@ _This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line 
 
 This reference manual describes the configurations, files, and commands needed to create a FHIR IG from CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage). It assumes that the CIMPL Language files (classes, value sets, and maps) have been defined (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). It also assumes that the CIMPL SHR-CLI tooling has been installed according to the directions in the [Setup and Installation Guide](cimplInstall.md).
 
+### Processing Flow
 The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
 
 ![CIMPL Tooling Overview](img_cimpl/cli-overview.png)
 
-### Inputs
+The inputs to SHR-CLI include:
 
 * [CIMPL Language files](cimpl6LanguageReference.md), including class files, value set files, and mapping files that define your clinical information model,
 * A [Configuration file](#configuration-file) that contains directives to the tooling, and points to other resources,
@@ -29,7 +28,7 @@ The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Inte
 * [FHIR Examples](#fhir-examples) that are to be included in the IG, and
 * A [Package List](#package-list-file) that has information required for building the IG.
 
-### Processing Sequence
+The inputs are processed in the following sequence:
 
 * The user [issues a build command](#executing-shr-cli) through the command-line interface (CLI) to launch SHR-CLI.
 * The CIMPL tooling imports definitions from CIMPL files (class, value set, and map files). SHR-CLI [reports any errors](#addressing-error-messages) in the CIMPL definitions.
@@ -37,15 +36,14 @@ The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Inte
 * To complete the build process, SHR-CLI exports the selected CIMPL definitions into desired formats, such as FHIR profiles, data dictionaries, etc. The exports can be selected through [command line options](#executing-shr-cli). 
 * The user [issues a separate command](#creating-the-implementation-guide) to produce the IG.
 
-### Outputs
-
-Depending on the configuration options selected, the SHR-CLI produces one or more of the following outputs:
+SHR-CLI produces one or all of the following outputs, depending on configuration parameters:
 
 * [FHIR Profiles, Extensions, Value Sets](#fhir-export) that form the core content of the IG,
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR StructureDefinitions,
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
 * A [Data Dictionary](#data-dictionary-export) that lists the Must-Support data elements in the IG, as well as value sets and value set members,
-* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](#https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
+* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
+
 
 ### Relationship of CIMPL Models and Implementation Guides
 
@@ -64,7 +62,9 @@ In CIMPL, data models are independent of IGs. IGs are _consumers_ of models, rat
 
 Much of what is discussed subsequently reflects this conceptual picture of the relationship between CIMPL models and IGs.
 
-## Suggested Directory Structure
+## Conventions
+
+### Suggested Directory Structure
 
 The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG can be produced under FHIR STU3 and R4:
 
@@ -114,7 +114,7 @@ In this reference guide, we will refer to several directories:
 
 **Note:** There is currently no way to combine profiles for multiple FHIR versions in single IG.
 
-## Naming Conventions
+### Suggested File Naming
 
 The naming of configuration, content profiles, and package list files is arbitrary, but it is useful for different teams to follow similar conventions. The suggested approach to naming uses variations on the same shortened IG name, as follows:
 
@@ -122,7 +122,7 @@ The naming of configuration, content profiles, and package list files is arbitra
 * Content Profile file: `ig-<guide-name>-cp.txt`
 * Package List file: `ig-<guide-name>-plist.json`
 
-If more than one FHIR version will be supported, the FHIR version should be included:
+If your project will support more than one FHIR version, the FHIR version should be included:
 
 * Configuration file: `ig-<guide-name>-<FHIR Version>-config.json`
 * Content Profile file: `ig-<guide-name>-<FHIR Version>-cp.txt`
@@ -130,7 +130,42 @@ If more than one FHIR version will be supported, the FHIR version should be incl
 
 where FHIR version is dstu2, stu3, or r4.
 
-## Configuration File
+## Inputs to SHR-CLI
+### CIMPL Files
+
+Any text editor can be used to write CIMPL grammar. However, [VSCode editor](https://code.visualstudio.com/) is recommended to take advantage of a CIMPL plug-in.
+
+#### Setting up the VSCode Authoring
+
+>**Note:** VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.
+
+* Download the [VSCode editor](https://code.visualstudio.com/). 
+* Open VSCode, open the extensions panel, and search for the extension **vscode-lang-cimpl**. The figure below shows where to find VSCode extensions on MacOS (on Windows, navigate _View -> Extensions_). Alternatively, select the extension icon (the squarish icon on the far left).
+
+![CIMPL VSCode Extension](img_cimpl/VSCodeLangCimplExtension.png)
+
+#### Navigating a CIMPL Model within VSCode
+
+The inherited properties of Groups and Entries can be previewed in the following ways:
+
+1. **Hovering over the element**: This provides a drop-down list of all properties and cardinality of a Group or Entry (including inherited properties).
+2. **Placing the cursor on the class declaration, right-click and select _Peek Definition_**: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.
+3. **Placing the cursor on a property declaration and right-clicking option _Go to Definition_**: This will redirect the editor to location of the definition, opening the file if necessary.
+
+Hovering over the element:
+
+![Hovering over the element](img_cimpl/VSCode_Peek01.png)
+
+Using _Peek Definition_:
+
+![Using Peek](img_cimpl/VSCode_Peek02.png)
+
+Using _Go to Definition_:
+
+![Using Go to Definition](img_cimpl/VSCode_GotoDef.png)
+
+
+### Configuration File
 
 SHR-CLI requires a configuration file to run. The name of this file is typically specified on the command line [using the -c command line option](#executing-shr-cli). If the name is not specified, the tooling looks for a file named `config.json` in the working directory. If that cannot be found, or the contents of the configuration file are invalid, an error message is returned.
 
@@ -152,7 +187,7 @@ The configuration file is a [JSON file](https://www.json.org/) with the followin
 |`contact`            |`[]`    |A JSON array containing HL7 FHIR R4 [ContactPoint objects](http://hl7.org/fhir/R4/datatypes.html#ContactPoint).  |
 |`provenanceInfo`     |`{}`    | A JSON object specifying author and other information ([see below](#provenance-information-configuration-parameters)) |
 
-### Filter Strategy Configuration Parameters
+#### Filter Strategy Configuration Parameters
 
 Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when [specification directory](#suggested-directory-structure) contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.
 
@@ -170,7 +205,7 @@ The contents of the `filterStrategy` object are as follows:
 
 When specifying an Entry in the `target` array, use the [fully qualified name (FQN)](cimpl6LanguageReference.md#fully-qualified-names) format.
 
-### Implementation Guide Configuration Parameters
+#### Implementation Guide Configuration Parameters
 
 These configurations are used to control the production of the IG. The contents of the `implementationGuide` object are as follows:
 
@@ -204,7 +239,7 @@ The `strategy` options are as follows:
 
 When specifying an Entry in the target array, use the fully qualified name (FQN) format.
 
-### Provenance Information Configuration Parameters
+#### Provenance Information Configuration Parameters
 
 **(TO DO: document what this structure can contain)**
 
@@ -222,7 +257,7 @@ Here is an example of provenanceInformation:
     }
 ```
 
-## Front Matter Files
+### Front Matter Files
 
 Every IG contains some amount of narrative content, which we refer to as the "[front matter](https://www.scribendi.com/advice/front_matter.en.html)". The front matter is typically a set of hyperlinked HTML files, graphics, and sometimes, downloads. These files are manually authored using any convenient tool; there are no special facilities in CIMPL to author the front matter.
 
@@ -230,20 +265,20 @@ If multiple files are involved, they must be placed into a single folder, named 
 
 If a single file is used, the file should be named in the `indexContent` parameter of the configuration file, and a folder is not required.
 
-## FHIR Examples
+### FHIR Examples
 
 Configuring FHIR examples to appear in the generated IG involves the following steps:
 
 * Create a folder which will contain your FHIR examples
 * Modify the CIMPL configuration file to specify the folder containing your examples
 
-The name of the folder is arbitrary, however, following [directory structure](#suggested-directory-structure) and [naming conventions](#naming-conventions) is recommended.
+The name of the folder is arbitrary, however, following [directory structure](#suggested-directory-structure) and [naming conventions](#suggested-file-naming) is recommended.
 
 The folder location is specified using the `"examples:"` parameter in the CIMPL configuration file.  This is illustrated below:
 
 ![CIMPL Examples Configuration](img_cimpl/fhirexampleconfig01.png)
 
-## Package List File
+### Package List File
 
 The format and content of this file follows the [FHIR specification for package lists](http://wiki.hl7.org/index.php?title=FHIR_IG_PackageList_doco). The package list is required for IGs published by HL7. The file containing the package list is named by the `packageList` parameter of the [configuration file](#configuration-file). If the `packageList` parameter is not supplied and no file is found at the default location (packageList.json), and `fhirURL` is an hl7.org or fhir.org URL (indicating it is an HL7 publication), then a basic package list file will be created. In this case, the IG author should review and modify the file as needed.
 
@@ -275,7 +310,7 @@ Here is an example of a package list file:
 }
 ```
 
-## Content Profile File
+### Content Profile File
 
 In FHIR, [Must-Support](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. The Content Profile is where Must-Support elements are declared.
 
@@ -345,6 +380,8 @@ Namespace: onco.core
 
 ## Executing SHR-CLI
 
+### Command Line
+
 The general form of the SHR-CLI execution command is as follows (where $ stands for the command prompt, which could be different on your system):
 
 $ `node <tooling-directory> <specification-directory> [options]`
@@ -386,7 +423,7 @@ Here are some general tips on approaching debugging your model:
 * Don't be discouraged by the number of errors, since a single correction can silence multiple logged errors.
 * Read the error messages carefully. Although the messages might be cryptic, especially at first, the names of classes and paths are often excellent clues.
 
-### Outputs from SHR-CLI
+## Outputs from SHR-CLI
 
 The output of running SHR-CLI appear in a directory named "out". By default, the /out directory is created in the tooling directory. A different location can be designated using the `-o` [command line option](#executing-shr-cli).
 
@@ -398,15 +435,15 @@ The content of the /out directory depends on which exporters were selected to ru
 * [data-dictionary](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets
 * [fhir](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
 * [json-schema](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
-* [modeldoc](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](#https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
+* [modeldoc](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
 
-## FHIR Export
+### FHIR Export
 
 The FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create a FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [IG publisher](#creating-the-implementation-guide) to create the IG itself.
 
 The FHIR export appears in the /fhir subdirectory under the designated "out" directory. The directory contains further subdirectories for code systems, extensions, the IG (guide), the logical model (logical), profiles, and value sets.
 
-### Logical Model Export
+#### Logical Model Export
 
 The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model _prior to_ mapping to FHIR resources. Each entry is presented as if it were a new FHIR resource, rather than a profile. The logical model is formally expressed as a set of FHIR `StructureDefinitions`. These definitions are distinguished from profiles because the names generated by the tooling end in `-model`.
 
@@ -416,7 +453,7 @@ An optional part of the FHIR export, the logical model can be turned on or off u
 
 ![Logical Model Example](img_cimpl/logical-model-sw-example.png)
 
-## Model Documentation Export
+### Model Documentation Export
 
 The model documentation provides another way to view the logical model. This view emphasizes the class hierarchy defined in CIMPL, the datatypes, associated constraints, and relationships between the classes (references). The panel in the upper left allows the user to filter on the namespace and (in SHR-CLI 6.6 and higher) the class type (Entry, Group, or Element). The right-hand panel shows details for the selected class, include the full set of properties and constraints. 
 
@@ -425,7 +462,7 @@ For many users, especially those with experience in object-oriented modeling, th
 
 ![Model Documentation Example](img_cimpl/model-documentation-example.png)
 
-## Data Dictionary Export
+### Data Dictionary Export
 
 The Data Dictionary is an Microsoft Excel file containing a simplified, flattened list of model elements and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
 
@@ -437,7 +474,7 @@ The Data Dictionary is an Microsoft Excel file containing a simplified, flattene
 
 The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR profiles, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
 
-## JSON Schema Export
+### JSON Schema Export
 
 (**TO DO: determine what to say here**)
 

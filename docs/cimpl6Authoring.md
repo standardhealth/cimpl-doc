@@ -1,4 +1,7 @@
 # CIMPL Authoring
+
+**NOTE:** This guide is under development. Please refer to the Tutorials and Reference Manuals as primary documentation.
+
 _The purpose of this guide is to educate people about many different aspects of creating CIMPL models and its supporting utilities.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Language Reference documentation](cimpl6LanguageReference.md)._
 
 ***
@@ -8,37 +11,6 @@ _The purpose of this guide is to educate people about many different aspects of 
 [TOC]
 
 ***
-# Authoring Environment
-
-Any text editor can be used to write CIMPL grammar. However, [VSCode editor](https://code.visualstudio.com/) is recommended to take advantage of custom-developed to better navigate CIMPL constructs.  
-
-## Setting up the VSCode Authoring
-
->**Note:** VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.
-
-* Download the [VSCode editor](https://code.visualstudio.com/). 
-* Open VSCode and search for the extension **vscode-lang-cimpl**.  The figure below shows where to find VSCode extensions.
-
-![CIMPL VSCode Extension](img_cimpl/VSCodeLangCimplExtension.png)
-
-### Navigating a CIMPL Model within VSCode
-
-Elements properties can be previewed in the following ways:
-
-1. **Hovering over the element**: This provides a drop-down list of an element's property names and cardinality, if available.
-2. **Placing the cursor on the element text and right-clicking option _Peek Definition_**: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.
-3. **Placing the cursor on the element text and right-clicking option _Go to Definition_**: This will redirect the author to location of the definition, opening the file for display if it's not in the same location where it is referenced.
-
-<br />
-
-Hovering over the element:
-![Hovering over the element](img_cimpl/VSCode_Peek01.png)
-
-Using _Peek Definition_:
-![Using Peek](img_cimpl/VSCode_Peek02.png)
-
-Using _Go to Definition_:
-![Using Go to Definition](img_cimpl/VSCode_GotoDef.png)
 
 # Using CIMPL to Create FHIR-based Models
 
