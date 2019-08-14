@@ -14,6 +14,7 @@ _This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line 
 
 This reference manual describes the configurations, files, and commands needed to create a FHIR IG from CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage). It assumes that the CIMPL Language files (classes, value sets, and maps) have been defined (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). It also assumes that the CIMPL SHR-CLI tooling has been installed according to the directions in the [Setup and Installation Guide](cimplInstall.md).
 
+### Processing Flow
 The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
 
 ![CIMPL Tooling Overview](img_cimpl/cli-overview.png)
