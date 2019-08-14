@@ -134,8 +134,6 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#cimpl-authoring">CIMPL Authoring</a></li>
-        <li class="main "><a href="#authoring-environment">Authoring Environment</a></li>
-            <li><a href="#setting-up-the-vscode-authoring">Setting up the VSCode Authoring</a></li>
         <li class="main "><a href="#using-cimpl-to-create-fhir-based-models">Using CIMPL to Create FHIR-based Models</a></li>
             <li><a href="#mapping-to-fhir">Mapping to FHIR</a></li>
             <li><a href="#specifying-fhir-mustsupport-elements">Specifying FHIR "MustSupport" Elements</a></li>
@@ -148,19 +146,13 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="cimpl-authoring">CIMPL Authoring</h1>
+<p><strong>NOTE:</strong> This guide is under development. Please refer to the Tutorials and Reference Manuals as primary documentation.</p>
 <p><em>The purpose of this guide is to educate people about many different aspects of creating CIMPL models and its supporting utilities.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>.  If you're looking for detailed guidance on CIMPL syntax, try the <a href="../cimpl6LanguageReference/">CIMPL6 Language Reference documentation</a>.</em></p>
 <hr />
 <p><strong>Table Of Contents</strong></p>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-authoring">CIMPL Authoring</a></li>
-<li><a href="#authoring-environment">Authoring Environment</a><ul>
-<li><a href="#setting-up-the-vscode-authoring">Setting up the VSCode Authoring</a><ul>
-<li><a href="#navigating-a-cimpl-model-within-vscode">Navigating a CIMPL Model within VSCode</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li><a href="#using-cimpl-to-create-fhir-based-models">Using CIMPL to Create FHIR-based Models</a><ul>
 <li><a href="#mapping-to-fhir">Mapping to FHIR</a></li>
 <li><a href="#specifying-fhir-mustsupport-elements">Specifying FHIR "MustSupport" Elements</a></li>
@@ -173,31 +165,6 @@
 </ul>
 </div>
 <hr />
-<h1 id="authoring-environment">Authoring Environment</h1>
-<p>Any text editor can be used to write CIMPL grammar. However, <a href="https://code.visualstudio.com/">VSCode editor</a> is recommended to take advantage of custom-developed to better navigate CIMPL constructs.  </p>
-<h2 id="setting-up-the-vscode-authoring">Setting up the VSCode Authoring</h2>
-<blockquote>
-<p><strong>Note:</strong> VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.</p>
-</blockquote>
-<ul>
-<li>Download the <a href="https://code.visualstudio.com/">VSCode editor</a>. </li>
-<li>Open VSCode and search for the extension <strong>vscode-lang-cimpl</strong>.  The figure below shows where to find VSCode extensions.</li>
-</ul>
-<p><img alt="CIMPL VSCode Extension" src="../img_cimpl/VSCodeLangCimplExtension.png" /></p>
-<h3 id="navigating-a-cimpl-model-within-vscode">Navigating a CIMPL Model within VSCode</h3>
-<p>Elements properties can be previewed in the following ways:</p>
-<ol>
-<li><strong>Hovering over the element</strong>: This provides a drop-down list of an element's property names and cardinality, if available.</li>
-<li><strong>Placing the cursor on the element text and right-clicking option <em>Peek Definition</em></strong>: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.</li>
-<li><strong>Placing the cursor on the element text and right-clicking option <em>Go to Definition</em></strong>: This will redirect the author to location of the definition, opening the file for display if it's not in the same location where it is referenced.</li>
-</ol>
-<p><br /></p>
-<p>Hovering over the element:
-<img alt="Hovering over the element" src="../img_cimpl/VSCode_Peek01.png" /></p>
-<p>Using <em>Peek Definition</em>:
-<img alt="Using Peek" src="../img_cimpl/VSCode_Peek02.png" /></p>
-<p>Using <em>Go to Definition</em>:
-<img alt="Using Go to Definition" src="../img_cimpl/VSCode_GotoDef.png" /></p>
 <h1 id="using-cimpl-to-create-fhir-based-models">Using CIMPL to Create FHIR-based Models</h1>
 <p>CIMPL is designed to be modular and extensible, allowing for the reuse of other logical models, and inheriting its properties. The figure below illustrates this notion.</p>
 <p><img alt="CIMPL Modularity" src="../img_cimpl/CIMPLBuildingBlocks.png" /></p>
