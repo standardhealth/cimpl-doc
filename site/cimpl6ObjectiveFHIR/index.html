@@ -358,11 +358,13 @@ Property:          RegionStudied 0..*
 </tbody>
 </table>
 <h2 id="class-hierarchy">Class Hierarchy</h2>
-<p>In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the <a href="#model-documentation">OBF model documentation</a>.</p>
+<p>In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the <a href="#http://standardhealthrecord.org/guides/obf/modeldoc.html">OBF Reference Model Specification</a>.</p>
 <p><img alt="The Objective FHIR Class Hierarchy (partial)" src="../img_cimpl/obf.png" /></p>
 <p>The purpose of the hierarchy is two-fold:</p>
-<p>1) To define properties uniformly across multiple classes. For example, almost every FHIR resource should have an author, but <a href="https://lightmyfhir.org/2019/05/03/fhir-inconsistency-data-please/">many don't, and those that do use a variety of different names</a>.  It shouldn't be left up to individual resources, managed by different work groups, to each define <code>author</code> themselves. Inevitably, they will define it differently, or forget entirely, as FHIR R4 shows. Inheriting from a common parent prevents that.
-1) To provide a set of ready-made classes that users can extend. An example is <code>QuantitativeLaboratoryObservation</code>, based on <code>Observation</code>.</p>
+<ol>
+<li>To define properties uniformly across multiple classes. For example, almost every FHIR resource should have an author, but <a href="https://lightmyfhir.org/2019/05/03/fhir-inconsistency-data-please/">many don't, and those that do use a variety of different names</a>.  It shouldn't be left up to individual resources, managed by different work groups, to each define <code>author</code> themselves. Inevitably, they will define it differently, or forget entirely, as FHIR R4 shows. Inheriting from a common parent prevents that.</li>
+<li>To provide a set of ready-made classes that users can extend. An example is <code>QuantitativeLaboratoryObservation</code>, based on <code>Observation</code>.</li>
+</ol>
 <p>FHIR's approach to uniformity is to define certain patterns, such as the <a href="https://www.hl7.org/fhir/request.html">request pattern</a>. However, FHIR stops short of actually implementing these patterns across resources. Implementations can't assume all requests have the same core properties, and can't write generic methods for processing requests. Instead, each type of request must be implemented as a one-off.</p>
 <h3 id="resource-domain-resource-metadata">Resource, Domain Resource, Metadata</h3>
 <p>At the top of the OBF hierarchy are the classes Resource and DomainResource. They involve the Metadata group. These classes align with FHIR.</p>
@@ -387,7 +389,7 @@ Property:          RegionStudied 0..*
 <p>Conceptually, Objective FHIR could be expressed in other modeling frameworks, besides CIMPL. Some of the potential frameworks include:</p>
 <ul>
 <li><a href="https://www.uml.org/">Unified Modeling Language (UML)</a> for structure coupled with <a href="https://www.omg.org/spec/OCL">Object Constraint Language</a> (OCL) for constraint representation. The <a href="https://www.fhims.org/">Federal Health Information Model initiative</a> (FHIM) has conducted some experiments using <a href="https://projects.eclipse.org/proposals/model-driven-health-tools">Model-Driven Health Tools</a> to try and convert UML/OCL models into FHIR profiles.</li>
-<li><a href="https://specifications.openehr.org/releases/LANG/latest/bmm.html">Basic Meta-Model</a> (BMM) for class hierarchy, coupled with <a href="https://specifications.openehr.org/releases/AM/latest/ADL2.html">Archetype Description Language</a> (ADL) for constraint representation. BMM/ADL has been used in <a href="https://www.openehr.org/">openEHR</a>. <a href="https://faculty.utah.edu/u6017542-Claude_Nanjo/contact/index.hml">Claude Nanjo of University of Utah</a> has conducted some experiments to try to convert ADL/BMM models into FHIR profiles. </li>
+<li><a href="https://specifications.openehr.org/releases/LANG/latest/bmm.html">Basic Meta-Model</a> (BMM) for class hierarchy, coupled with <a href="https://specifications.openehr.org/releases/AM/latest/ADL2.html">Archetype Description Language</a> (ADL) for constraint representation. BMM/ADL has been used in <a href="https://www.openehr.org/">openEHR</a>. <a href="https://faculty.utah.edu/u6017542-Claude_Nanjo/contact/index.hml">Claude Nanjo of University of Utah</a> has conducted some experiments to try to convert ADL/BMM models into FHIR profiles.</li>
 <li><a href="http://www.clinicalelement.com/#/">Clinical Element Models</a>. CEMs are being used to produce some <a href="http://models.opencimi.org/ig/">Clinical Information Modeling Initiative (CIMI) FHIR Implementation Guides</a>. Essential parts of CEM-related tooling are internal to Intermountain Healthcare.</li>
 </ul>
 <p>Objective FHIR is an <a href="https://github.com/standardhealth/shr-models">open source project</a>, and we welcome contributions.</p></div>
@@ -395,6 +397,7 @@ Property:          RegionStudied 0..*
 
         <footer class="col-md-12">
             <hr>
+                <p>© 2019 The MITRE Corporation. All rights reserved.<br>Approved for Public Release. Distribution Unlimited. Case Number 16-1988</p>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
