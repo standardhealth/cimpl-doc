@@ -141,17 +141,16 @@ OBF classes fall into one of four categories, which are the building blocks of C
 | `Entry`  | A building block representing a group of related information, complete enough to support stand-alone interpretation. | Entry or Abstract | Resource or Profile |
 | `Abstract` | A special type of Entry that cannot be instantiated, and will not be present in the target mapping. | Abstract | none |
 
-
 ## Class Hierarchy
 
-In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the [OBF model documentation](#model-documentation).
+In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the [OBF Reference Model Specification](#http://standardhealthrecord.org/guides/obf/modeldoc.html).
 
 ![The Objective FHIR Class Hierarchy (partial)](img_cimpl/obf.png)
 
 The purpose of the hierarchy is two-fold:
 
-1) To define properties uniformly across multiple classes. For example, almost every FHIR resource should have an author, but [many don't, and those that do use a variety of different names](https://lightmyfhir.org/2019/05/03/fhir-inconsistency-data-please/).  It shouldn't be left up to individual resources, managed by different work groups, to each define `author` themselves. Inevitably, they will define it differently, or forget entirely, as FHIR R4 shows. Inheriting from a common parent prevents that.
-1) To provide a set of ready-made classes that users can extend. An example is `QuantitativeLaboratoryObservation`, based on `Observation`.
+1. To define properties uniformly across multiple classes. For example, almost every FHIR resource should have an author, but [many don't, and those that do use a variety of different names](https://lightmyfhir.org/2019/05/03/fhir-inconsistency-data-please/).  It shouldn't be left up to individual resources, managed by different work groups, to each define `author` themselves. Inevitably, they will define it differently, or forget entirely, as FHIR R4 shows. Inheriting from a common parent prevents that.
+2. To provide a set of ready-made classes that users can extend. An example is `QuantitativeLaboratoryObservation`, based on `Observation`.
 
 FHIR's approach to uniformity is to define certain patterns, such as the [request pattern](https://www.hl7.org/fhir/request.html). However, FHIR stops short of actually implementing these patterns across resources. Implementations can't assume all requests have the same core properties, and can't write generic methods for processing requests. Instead, each type of request must be implemented as a one-off.
 
@@ -164,6 +163,7 @@ At the top of the OBF hierarchy are the classes Resource and DomainResource. The
 `InformationItem` includes definitional items, value set definitions, questionnaire, research study, entities such as locations and organizations, people, financial information, etc. While `InformationItem` has no attributes itself, it serves as a conceptual grouper for things that exist in the clinical world that are not statements about a patient's health or healthcare.
 
 #### EntityOrRole
+
 This branch of the hierarchy, which splits into Entity and Role, represent the potential actors in healthcare scenarios.
 
 * Entities include organizations, locations, devices, medications, and other "things", physical and conceptual.
@@ -187,7 +187,7 @@ Current work is focused on using the classes defined in Objective FHIR directly 
 Conceptually, Objective FHIR could be expressed in other modeling frameworks, besides CIMPL. Some of the potential frameworks include:
 
 * [Unified Modeling Language (UML)](https://www.uml.org/) for structure coupled with [Object Constraint Language](https://www.omg.org/spec/OCL) (OCL) for constraint representation. The [Federal Health Information Model initiative](https://www.fhims.org/) (FHIM) has conducted some experiments using [Model-Driven Health Tools](https://projects.eclipse.org/proposals/model-driven-health-tools) to try and convert UML/OCL models into FHIR profiles.
-* [Basic Meta-Model](https://specifications.openehr.org/releases/LANG/latest/bmm.html) (BMM) for class hierarchy, coupled with [Archetype Description Language](https://specifications.openehr.org/releases/AM/latest/ADL2.html) (ADL) for constraint representation. BMM/ADL has been used in [openEHR](https://www.openehr.org/). [Claude Nanjo of University of Utah](https://faculty.utah.edu/u6017542-Claude_Nanjo/contact/index.hml) has conducted some experiments to try to convert ADL/BMM models into FHIR profiles. 
+* [Basic Meta-Model](https://specifications.openehr.org/releases/LANG/latest/bmm.html) (BMM) for class hierarchy, coupled with [Archetype Description Language](https://specifications.openehr.org/releases/AM/latest/ADL2.html) (ADL) for constraint representation. BMM/ADL has been used in [openEHR](https://www.openehr.org/). [Claude Nanjo of University of Utah](https://faculty.utah.edu/u6017542-Claude_Nanjo/contact/index.hml) has conducted some experiments to try to convert ADL/BMM models into FHIR profiles.
 * [Clinical Element Models](http://www.clinicalelement.com/#/). CEMs are being used to produce some [Clinical Information Modeling Initiative (CIMI) FHIR Implementation Guides](http://models.opencimi.org/ig/). Essential parts of CEM-related tooling are internal to Intermountain Healthcare.
 
 Objective FHIR is an [open source project](https://github.com/standardhealth/shr-models), and we welcome contributions.

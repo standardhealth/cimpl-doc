@@ -1,4 +1,5 @@
 site_name: CIMPL Project
+copyright: "© 2019 The MITRE Corporation. All rights reserved.<br>Approved for Public Release. Distribution Unlimited. Case Number 16-1988"
 nav:
        - About: 
               - about.md
