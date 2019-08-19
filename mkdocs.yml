@@ -1,4 +1,5 @@
 site_name: CIMPL Project
+copyright: "© 2019 The MITRE Corporation. All rights reserved."
 nav:
        - About: 
               - about.md
