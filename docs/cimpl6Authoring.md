@@ -1,8 +1,8 @@
-# CIMPL Authoring
+# CIMPL Authoring Guide
 
-**NOTE:** This guide is under development. Please refer to the Tutorials and Reference Manuals as primary documentation.
+## Introduction
 
-_The purpose of this guide is to educate people about many different aspects of creating CIMPL models and its supporting utilities.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Language Reference documentation](cimpl6LanguageReference.md)._
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [HL7 Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model as Implementation Guides to multiple versions of FHIR.
 
 ***
 
@@ -12,93 +12,122 @@ _The purpose of this guide is to educate people about many different aspects of 
 
 ***
 
+## Scope
+
+This document provides a step-by-step guide from documenting a model, to generating an HL7 FHIR implementaiton guide (IG). 
+
+If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World Tutorial](cimpl6Tutorial_helloWorld.md).  
+
+If you're looking for detailed guidance on CIMPL syntax, try the _[CIMPL6 Language Reference documentation](cimpl6LanguageReference.md)._
+
+Upon completion of this tutorial, you will be able to document a model based on FHIR resources or profiles and create an implementation guide.
+
+## Intended Audience
+
+The CIMPL Authoring Guide is targeted to any person comfortable with using software developers or people comfortable with programming languages. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)
+
+## Pre-requisite
+
+This guide assumes you installed the software documented here 
+
+* [CIMPL SetUp and Installation](cimplInstall.md) 
+
+and have at least reviewed the [Hello World](cimpl6Tutorial_helloWorld.md), and the [CIMPL In-Depth](cimpl6TutorialDetail.md) tutorials. 
+
+
+>**Note:** _This guide is written assuming a MacOS environment.  While the contents of CIMPL authoring are identical regardless of platform, the command lines run in a command line terminal will differ in file path specifications.  Namely, for a Windows command line terminal, replace all the path references of forward-slash `/` to back-slash `\`._
+
+## Helpful Documentation
+
+If you want to learn more about the commands and files referenced in this guide, refer to the [CIMPL Language Reference Guide](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Guide](cimpl6LanguageReference.md).   
+
+
 # Using CIMPL to Create FHIR-based Models
 
-CIMPL is designed to be modular and extensible, allowing for the reuse of other logical models, and inheriting its properties. The figure below illustrates this notion.
+CIMPL is designed to be modular and extensible, allowing for the reuse of other logical models, and inheriting their properties. The figure below illustrates this notion.
 
 ![CIMPL Modularity](img_cimpl/CIMPLBuildingBlocks.png)
 
 The modeling author has multiple ways in CIMPL to represent  FHIR profiles:
 
-* **Define all of the customized resource attributes you need from scratch (_"Clean slate"_)** - In this approach, the modeling author already knows which FHIR base resources they will be customize, and just define the element constraints or extensions in the FHIR profile.
-* **Leverage CIMPL's "ObjectiveFHIR" (OBF) base FHIR models** -  In this approach, the modeling author will define their profile and specify a `Parent` class from the **ObjectiveFHIR** elements. Reference the [ObjectiveFHIR User Guide](cimpl6ObjectiveFHIR.md) for details.
+* **Define the model specific resource attributes you need using FHIR resources or profiles as a base (*clean slate*).** In this approach, the modeling author already knows the FHIR resources or profiles to customize, and defines the element constraints or extensions in the new FHIR profile.
+* **Leverage CIMPL's _ObjectiveFHIR_ (OBF) base FHIR models** -  In this approach, the modeling author defines their FHIR profile and specifies a `Parent` class from the [ObjectiveFHIR User Guide](cimpl6ObjectiveFHIR.md) elements. 
 
-Each profiling specification approach has advantages and disadvantages.
+Each modeling approach has advantages and disadvantages.
 
-The CIMPL "clean slate" authoring approach might be beneficial when prototyping models containing only small number of profiles with minimal repetition of elements.  However, as the number of customizations increase, maintenance becomes more cumbersome and difficult to keep consistent between FHIR profiles.
+The CIMPL _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new profiles with minimal changes from base FHIR.  However, as the number of customizations increases, maintenance becomes more cumbersome and difficult to keep consistent between FHIR profiles.
 
-On the other hand, using ObjectiveFHIR (OBF) base FHIR models has the significant benefits which include but are not limited to:
+On the other hand, using OBF base FHIR models has the significant benefits which include but are not limited to:
 
-* saves the modeling author time in mapping common elements to its equivalent FHIR attribute.
+* saves the modeling author time in mapping common elements to their equivalent FHIR attribute.
 * ensures consistency in the representation of commonly used attributes in different FHIR resources.
 
-The user must however invest time to understand the ObjectiveFHIR logical model. Also, ObjectiveFHIR does not comprehensively support all FHIR resources, especially the new ones in R4 which have a low maturity level.
+The user must however invest time to understand the OBF logical model. Also, OBF does not comprehensively support all FHIR resources, especially the new ones in R4 with a low maturity level.
 
-## Mapping to FHIR
+## Getting Started
 
-Logical model elements are mapped to FHIR by creating and editing map files.
-As a best practice, CIMPL map files must have the *_map.txt* naming convention.
+### Define the Logical Model
+As mentioned in the [CIMPL Language Reference Guide](cimpl6LanguageReference.md), you should start by understanding the model you want to document in CIMPL, and its relationship to either base FHIR resources and profiles, or to OBF.
 
-Each map file should start with the following 3 lines:
+### Create the XXX Folder Structure
+Place your files under source control.
 
-* Grammar: Map _mapping_grammar_version_
-* Namespace:  _data element group name_
-* Target: _fhir target version_
+### Create the Configuration File
+A configuration file sets parameters to drive IG creation. 
 
-Where:
+### Determine the Namespace
+Each model must define a namespace - this differentiates your artifacts from others. 
 
-* _mapping_grammar_version_ is the version number for parsing the contents of the map file. The current version is 5.1.
-* _data element group name_ is the name of the grouping of elements that you have identified.
-* _fhir target version_ is a choice of FHIR_DSTU_2, FHIR_STU_3, or FHIR_R4
+### Create the Class File
 
-The snippet below shows an example:
-```
-Grammar:	Map 5.1
-Namespace:	shr.core
-Target:		FHIR_R4
-```
+The Class file documents your model. 
 
-## Specifying FHIR "MustSupport" Elements
+Decide if you need to import any namespaces (e.g. OBF). 
 
-FHIR specifies a ["MustSupport"](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) boolean flag which allows a profile to indicate that a reference implementation must be able to process the existence of particular element in a FHIR instance and display it if contents are available.
+Create your Class file with namespaces to import, and `Entry`, `Property`, `Abstract` and `Element` declarations. 
 
-MustSupport is contextual and could vary depending on the reference implementation. CIMPL uses a separate file so that MustSupport elements are at the IG configuration level through a *Content Profile* file.
+### Create the Map File
 
-Content Profile files are text files which use the following convention:
+You need a Map file if your model added properties beyond any inherited models. 
 
-```
-ig-<Content Profile Name>-cp.txt
-```
+Map the model specific properties to either FHIR resource/profile elements, or OBF. 
 
-Where `<Content Profile Name>` is by convention the same name as the IG Configuration JSON file.
+### Create the Value Set File
 
-For example, the two file name examples of a CIMPL Configuration File and its respective Content Profile are show below:
+Create this file when you need to constrain an `Element Value` of `concept` in the Class file and there is not an existing value set to reference.  
 
-* Configuration filename: `ig-myCIMPLConfiguration-config.json`
-* Content Profile filename: `ig-myCIMPLConfiguration-cp.txt`
+To avoid redundant value sets, try to find an existing value set that fits your use case. 
 
-## Embedding FHIR Examples in the IG
+### Specify FHIR _MustSupport_ Elements
+
+If any of the properties from either your model,or one of the inherited models should be defined as _MustSupport_, create a *Content Profile* file.
+
+## Create Front Matter
+If you got this far, you have enough to create an IG. However, for readers to understand the background, intended use and other important information, introductory text and possibly detailed text is required. 
+
+Create this information and declare the location in the Configuration file. 
+
+Carmela: Decide if you want Model Doc to appear (config file?) and the graphical view? Data Dictionary?
+
+## Embed FHIR Examples in the IG
+
+A FHIR IG can be generated without any examples, however it is recommended to include examples. 
+
+The FHIR IG generation process requires an examples folder be defined in the Configuration file. The folder may be empty.   
 
 Pre-requisite: the author has already created a FHIR example in JSON or XML format.
 
 Configuring FHIR examples to appear in the generated IG involves the following steps:
 
-* Create a folder which will contain your FHIR examples
-* Modify the CIMPL configuration file to specify the folder containing your examples
+* Create a folder to contain your FHIR examples
+* Modify the CIMPL Configuration file to specify the folder containing the examples
 
-The folder created can be any name, as long as it is specified within the CIMPL configuration file.
+## Compile the CIMPL Model
+This step runs a syntax check on the Class, Map and Value Set files and makes sure everything is in place to create an IG.
 
-The folder location is specified using the `"examples:"` parameter in the CIMPL configuration file.  This is illustrated in the figure below:
-![CIMPL Examples Configuration](img_cimpl/fhirexampleconfig01.png)
-
-## FHIR IG Publisher Output
+## Publish the FHIR IG
 
 The final step in the IG creation process is to run the **[FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7 FHIR.
-
-At a command prompt, use one of the 2 options:
-
-* **Option 1 (_if the defaults were used in running SHR-CLI_):** yarn run ig: publish
-* **Option 2 (_if not using defaults and specifying a directory in running SHR-CLI_):** java -Xms4g -Xmx8g -jar <_directory specified when running shr-cli_>/fhir/guide/org.hl7.fhir.publisher.jar -ig <_directory specified when running shr-cli_>/fhir/guide/ig.json
 
 By default, the FHIR IG Publisher will perform validation checks on the  StructureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, *qa.html*.
 
@@ -109,14 +138,14 @@ An example QA output is shown in the figure below:
 
 Questions on using CIMPL and its toolchain can be addressed on the HL7 Zulip chat channel [#cimpl](https://chat.fhir.org/#streams/197290/cimpl)
 
-Report any issues on one of the following GitHub repositories:
+If you find an issue you can't resolve, report it on one of two JIRA projects:
 
 * Related to running the SHR-CLI compiler, configuration files, or generating the FHIR Implementation Guide (IG): https://standardhealthrecord.atlassian.net/projects/CIMPL/issues
 * Related to CIMPL base classes (Objective FHIR): https://standardhealthrecord.atlassian.net/projects/SHRM/issues
 
 # Appendix A: An Approach to CIMPL Modeling for FHIR
 
-Keeping in mind that CIMPL is primarily a way to create logical models with the capability to "model-once, translate-many", the modeling author should consider requirements-gathering and high level modeling steps.  While one approach is proposed below, the modeling author is not limited to following these steps and might find better approaches to creating detailed clinical models.
+Keeping in mind that CIMPL is primarily a way to create logical models with the capability to _model-once, translate-to-many_, the modeling author should consider requirements-gathering and high level modeling steps.  While one approach is proposed below, the modeling author is not limited to following these steps and might find better approaches to creating detailed clinical models.
 
 * Define the use cases behind the creation of a model.
 * Create a high-level conceptual model which addresses your defined use case and can be easily understood by both technical and clinical communities.
