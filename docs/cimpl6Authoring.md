@@ -30,10 +30,13 @@ This guide assumes you installed the software documented here:
 
 and have at least reviewed the [Hello World](cimpl6Tutorial_helloWorld.md), and [CIMPL In-Depth](cimpl6TutorialDetail.md) tutorials. 
 
+If you already have installed shr-cli, check to see if there is a new version.
+
 
 ## Helpful Documentation
 
 If you want to learn more about the commands and files referenced in this guide, refer to the [CIMPL Language Reference Guide](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Guide](cimpl6LanguageReference.md).   
+
 
 
 # Using CIMPL to Create FHIR-based Models
@@ -60,7 +63,7 @@ Each modeling approach has advantages and disadvantages.
 
 The CIMPL _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new profiles with minimal changes from base FHIR.  However, as the number of customizations increases, maintenance becomes more cumbersome and difficult to keep consistent between FHIR profiles.
 
-On the other hand, using OBF base FHIR models has the significant benefits which include but are not limited to:
+On the other hand, using OBF FHIR models has the significant benefits which include but are not limited to:
 
 * saves the modeling author time in mapping common elements to their equivalent FHIR attribute.
 * ensures consistency in the representation of commonly used attributes in different FHIR resources.
