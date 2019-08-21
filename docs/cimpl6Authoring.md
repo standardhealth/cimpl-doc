@@ -16,7 +16,7 @@ CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is 
 
 This document provides a step-by-step guide to generate an HL7 FHIR implementation guide (IG) starting with documenting a model using CIMPL. 
 
-The details about how to accomplish each step are in the [CIMPL Language Reference Guide](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Guide](cimpl6LanguageReference.md). 
+The details about how to accomplish each step are in the [CIMPL Language Reference Guide](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Guide](cimpl6LanguageReference.md). Links to these documents are provided in each section.
 
 ## Intended Audience
 
@@ -30,7 +30,7 @@ This guide assumes you installed the software documented here:
 
 and have at least reviewed the [Hello World](cimpl6Tutorial_helloWorld.md), and [CIMPL In-Depth](cimpl6TutorialDetail.md) tutorials. 
 
-If you already have installed shr-cli, check to see if there is a new version.
+If you already have installed shr-cli, make sure you have the latest version installed. 
 
 
 ## Helpful Documentation
@@ -49,10 +49,11 @@ Model key:
 
 * Gray: CIMPL data types `Primitives` 
 * Light blue: [ObjectiveFHIR (OBF)](cimpl6ObjectiveFHIR.md) models 
-* Dark green: models created using CIMPL and leveraging OBF
+* Dark green: models created using CIMPL, leveraging OBF
 * Light yellow: mCode model, _constrains_ and _extends_ oncoCore, leverages OBF
 * Tan: models that _constrain_ and _extend_ mCode
 * Dark blue: FHIR resources and profiles
+
 
 CIMPL allows the modeling author to represent  FHIR profiles in one of two ways:
 
@@ -63,7 +64,7 @@ Each modeling approach has advantages and disadvantages.
 
 The CIMPL _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new profiles with minimal changes from base FHIR.  However, as the number of customizations increases, maintenance becomes more cumbersome and difficult to keep consistent between FHIR profiles.
 
-On the other hand, using OBF FHIR models has the significant benefits which include but are not limited to:
+On the other hand, using OBF FHIR models has significant benefits which include but are not limited to:
 
 * saves the modeling author time in mapping common elements to their equivalent FHIR attribute.
 * ensures consistency in the representation of commonly used attributes in different FHIR resources.
@@ -77,13 +78,17 @@ Review the information in [Appendix A](#Appendix-A) to get started.
 
 Each section below includes a link to the reference guide where you will find more information.
 
-## Model Folder Structure
-Place your files under source control.
+## Model Folder Structure and Source Control
+Create a folder/directory to contain all files you create for the model. All files should be governed by a source control system. 
+
+[CIMPL In-Depth Tutorial](#cimpl6Tutorial_detail.md).
 
 ## Configuration File
 A configuration file sets parameters to drive IG creation.
 
-By declaring optional parameters, your IG may include model documentation, a graphical view of the model, examples, or a data dictionary. 
+By declaring optional parameters, your IG may include model documentation, a graphical view of the model, examples, or a data dictionary. These sections are automatically generated, are not required to include in the IG, but provide valuable information to IG consumers.
+
+[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
 
 ## Namespace
 Each model must define a namespace - this differentiates your model artifacts from others. 
@@ -102,7 +107,7 @@ Create your Class file with namespaces to import, and `Entry`, `Property`, `Abst
 
 ## Map File
 
-You need a Map file if your model added properties beyond any inherited models. 
+Create a Map file if your model added properties beyond any inherited models. 
 
 Map the model specific properties to either FHIR resource/profile elements, or OBF. 
 
@@ -116,16 +121,18 @@ To avoid redundant value sets, try to find an existing value set that fits your 
 
 [CIMPL Language Reference Guide](cimpl6LanguageReference.md)
 
-## FHIR _MustSupport_ Elements
+## Content Profile File
 
-If any of the properties from either your model,or one of the inherited models should be defined as _MustSupport_, create a *Content Profile* file.
+Create a *Content Profile* file if there are properties in your model, or an inherited model that are critical to IG compliance and _must_ be supported. [_MustSupport_](https://www.hl7.org/fhir/conformance-rules.html).
 
 [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
 
 ## Front Matter
-For IG readers and implementers to understand the background, intended use and other important information, introductory text and possibly detailed text is required. 
+Introductory text and possibly detailed text is requiredFor IG readers and implementers to understand the background and intended use of your IG.
 
 Create this information and declare the location in the Configuration file. 
+
+Reviewing a [published IG](http://www.fhir.org/guides/registry/) might help you structure this material. 
 
 [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
 
