@@ -402,12 +402,12 @@ where options include:
 
 The options are not order-sensitive. Here is an example of a SHR-CLI command and an explanation of its parts:
 
-$ `node . ../shr_spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
+$ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 
 * `node` is the command that starts the SHR-CLI application.
 * The dot `.` represents the current directory in Windows and macOS. In this example, the tooling directory is the current working directory.
-* `../shr_spec/spec` represents the location of the specification directory. The the double dot `..` represents the directory above the current working directory, in Windows and macOS. In this case, `/shr_spec` is parallel to the tooling directory, and `/spec` is one level below that.
-* `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is `../shr_spec/spec/ig-mcode/ig-mcode-r4-config.json`
+* `../shr-spec/spec` represents the location of the specification directory. The the double dot `..` represents the directory above the current working directory, in Windows and macOS. In this case, `/shr-spec` is parallel to the tooling directory, and `/spec` is one level below that.
+* `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is `../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json`
 * `-l error` is an option that sets tells the system to surpress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
 
 ### Addressing Error Messages
@@ -543,7 +543,7 @@ A typical parsing error looks like this:
 
 ```
 extraneous input 'Entry' expecting {<EOF>, 'CodeSystem:', 'Abstract:', 'Element:', 'Entry:', 'Group:'}.
-ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\oncocore.txt, line=9, column=0)
+ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\oncocore.txt, line=9, column=0)
 ```
 When a parsing error occurs, the associated error code number and subsequent errors are not meaningful, since the entire model could not be read.
 

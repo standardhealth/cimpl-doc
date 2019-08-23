@@ -43,10 +43,12 @@ Directory:  cimpl
 
 Copy the following files to the `myExampleC6` sub-directory.  The files contain global definitions for Code Systems, Value Sets, maps to FHIR R4 elements and examples. These file names are hyperlinked for retrieval:
 
-* [shr_core_datatype.txt](./cimplTutorial/shr_core_datatype.txt)
-* [shr_core_datatype_vs.txt](./cimplTutorial/shr_core_datatype_vs.txt)
-* [shr_core_datatype_map_r4.txt](./cimplTutorial/shr_core_datatype_map_r4.txt)
+* [obf-datatype.txt](./cimplTutorial/obf-datatype.txt)
+* [obf-datatype-vs.txt](./cimplTutorial/obf-datatype-vs.txt)
+* [obf-datatype-map-r4.txt](./cimplTutorial/obf-datatype-map-r4.txt)
 * [ig-myExampleR4-config.json](./cimplTutorial/ig-myExampleR4-config.json)
+
+The first three of these files contain definitions of the basic data types used in CIMPL. The last file contains configurations related to compiling the example and generating the Implementation Guide.
 
 # Introduction
 
@@ -107,14 +109,14 @@ Type in the CIMPL header information designating the namespace and version of th
 Grammar:        DataElement 6.0
 Namespace:      myExample
 Description:    "CIMPL Tutorial: myExample for an OSA patient."
-Uses:           shr.core
+Uses:           obf.datatype
 ```
 
 Where:
 
 * `Grammar` is a required keyword indicating the parser to be used, in this case _DataElement 6.0_
 * `Namespace`, also required, is a short name for your project, implementation guide, or module you are defining.
-* `Uses` is the list of all namespaces which your model elements will reference.  For our example, we fix this to _shr.core_.
+* `Uses` is the list of all namespaces which your model elements will reference.  For our example, we fix this to _obf.datatype_.
 
 Next, we will create our first profile called **`MyPatient`** which we determined will also have the following properties:
 
@@ -366,11 +368,11 @@ Copy the file [myPatientExample1.json](./cimplTutorial/myPatientExample1.json) a
 
 Add the following line to your cimpl configuration file within the `"implementationGuide":` JSON object:
 
-**`        "examples": "examples_myFhirExamplesFolder"`**
+**`"examples": "examples_myFhirExamplesFolder"`**
 
 We have already added it for you so you can just check that the parameter is there.
 
-The following screenshot shows an exmample of where you would find this parameter within the CIMPL configuration file `ig-myExampleR4-config.json`.
+The following screenshot shows an example of where you would find this parameter within the CIMPL configuration file `ig-myExampleR4-config.json`.
 
 ![Tutorial1 FHIR Example Configuration Location](img_cimpl/cimplTutorial1_FHIRExampleConfigLocation.png)
 

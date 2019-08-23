@@ -58,52 +58,6 @@ Namespace:	shr.core
 Target:		FHIR_R4
 ```
 
-## Specifying FHIR "MustSupport" Elements
-
-FHIR specifies a ["MustSupport"](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) boolean flag which allows a profile to indicate that a reference implementation must be able to process the existence of particular element in a FHIR instance and display it if contents are available.
-
-MustSupport is contextual and could vary depending on the reference implementation. CIMPL uses a separate file so that MustSupport elements are at the IG configuration level through a *Content Profile* file.
-
-Content Profile files are text files which use the following convention:
-
-```
-ig-<Content Profile Name>-cp.txt
-```
-
-Where `<Content Profile Name>` is by convention the same name as the IG Configuration JSON file.
-
-For example, the two file name examples of a CIMPL Configuration File and its respective Content Profile are show below:
-
-* Configuration filename: `ig-myCIMPLConfiguration-config.json`
-* Content Profile filename: `ig-myCIMPLConfiguration-cp.txt`
-
-## Embedding FHIR Examples in the IG
-
-Pre-requisite: the author has already created a FHIR example in JSON or XML format.
-
-Configuring FHIR examples to appear in the generated IG involves the following steps:
-
-* Create a folder which will contain your FHIR examples
-* Modify the CIMPL configuration file to specify the folder containing your examples
-
-The folder created can be any name, as long as it is specified within the CIMPL configuration file.
-
-The folder location is specified using the `"examples:"` parameter in the CIMPL configuration file.  This is illustrated in the figure below:
-![CIMPL Examples Configuration](img_cimpl/fhirexampleconfig01.png)
-
-## FHIR IG Publisher Output
-
-The final step in the IG creation process is to run the **[FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7 FHIR.
-
-At a command prompt, use one of the 2 options:
-
-* **Option 1 (_if the defaults were used in running SHR-CLI_):** yarn run ig: publish
-* **Option 2 (_if not using defaults and specifying a directory in running SHR-CLI_):** java -Xms4g -Xmx8g -jar <_directory specified when running shr-cli_>/fhir/guide/org.hl7.fhir.publisher.jar -ig <_directory specified when running shr-cli_>/fhir/guide/ig.json
-
-By default, the FHIR IG Publisher will perform validation checks on the  StructureDefinition of specified FHIR profiles, value sets, and examples which reference any base resources or FHIR profiles.  An output of these checks are found in the CIMPL output, *qa.html*.
-
-An example QA output is shown in the figure below:
-![qa.html example output](img_cimpl/igpublisher_output.png)
 
 ## Support
 
