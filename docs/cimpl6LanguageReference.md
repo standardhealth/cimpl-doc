@@ -6,7 +6,7 @@ _This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a qui
 
 ***
 
-**Table of Contents**
+## Table Of Contents
 
 [TOC]
 
@@ -56,14 +56,14 @@ Each namespace will typically have one or more class files, and if needed, a val
 
 File names must begin with lower case and typically include the namespace:
 
-* Class files: `namespace.txt` or `namespace_something.txt`
-* Value Set files: `namespace_vs.txt` or `namespace_something_vs.txt`
-* Mapping files: `namespace_map.txt` or `namespace_something_map.txt`
+* Class files: `namespace.txt` or `namespace-something.txt`
+* Value Set files: `namespace-vs.txt` or `namespace-something-vs.txt`
+* Mapping files: `namespace-map.txt` or `namespace-something-map.txt`
 
-Any periods in the `namespace` should be replaced by underscores. For example, a namespace called `odh.occupation`, the recommended value set file name is `odh_occupation_vs.txt`. The `something` is useful when you want to break up the contents of a single namespace into multiple files, for example:
+Any periods in the `namespace` should be replaced by dashes. For example, a namespace called `odh.occupation`, the recommended value set file name is `odh-occupation-vs.txt`. The `something` is useful when you want to break up the contents of a single namespace into multiple files, for example:
 
-* `obf_action.txt`
-* `obf_finding.txt`
+* `obf-action.txt`
+* `obf-finding.txt`
 
 >**Note:** `obf` stands for _Objective FHIR_, a set of classes provided with CIMPL that can help you create FHIR profiles. For more information, see [Objective FHIR Overview](cimpl6ObjectiveFHIR.md)
 
@@ -450,12 +450,12 @@ Value[concept] from PriorityVS (required)  // not Priority[concept]
 
 ```
 
-
 >**Note:** The requirement in CIMPL 6.0 to use bracket notation _even when the value has only one choice_ is a change from CIMPL 5.
 
 ### Path Example
 
 ```
+
 Group:             Landmark
 Description:       "A point on the body that helps determine a body location."
 Property:          Location 0..1
@@ -488,7 +488,7 @@ Property:          Units 0..1
 
 ```
 
-This example assumes all paths begin at Landmark.
+This example assumes all paths begin at Landmark, which is a Group, but the same patterns would apply if an Entry were the start of the path.
 
 | Path to | Path |
 |---------|---------|
@@ -1022,7 +1022,7 @@ Example:
 
 When fields are allowed to repeat on a target model (e.g., have cardinality with an upper bound greater than 1), it is common practice to specify which CIMPL elements are mapped to instances of that repeated field on the target model.  This process is called **slicing**. For example, the [FHIR Task resource](https://www.hl7.org/fhir/task.html) allows for an arbitrary number of `input` fields to be added.  To ensure that each `input` field is uniquely addressable by a parsing engine, those inputs need to be differentiated by a **discriminator**.
 
-See the FHIR documentation for more detail about [slicing](https://www.hl7.org/fhir/profiling.html#slicing) and [discriminators](https://www.hl7.org/fhir/profiling.html#discriminator).
+See the FHIR documentation for more detail about [slicing](https://www.hl7.org/fhir/profiling.html#slicing).
 
 #### Slicing Rules
 
@@ -1035,27 +1035,21 @@ In CIMPL, slicing rules are specified in the map file.  Four reserved phrases ar
 * `slice strategy` (optional)
 * `slice at` (optional)
 
-Examples of their usage in a statement are shown below:
-
-| Phrase | Example |
-|:----------|:---------|
-| `slice on` / `slice strategy` | Components.ObservationComponent maps to component `(slice on = code.coding.code; slice strategy = includes)` |
-| `slice on` / `slice strategy` | Members.Observation maps to related.target `(slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)` |
-| `slice on` | `Laterality maps to qualifier (slice on = concept)` |
-
-#### Declaring a Discriminator
+#### Declaring a Discriminator (slice on, slice on type)
 
 Discriminators are used to indicate how each slice can be distinguished from the others. FHIR requires discriminators to uniquely identify the slice to which an instance of data belongs.
 
-To perform any slicing, a discriminator path needs to be declared, using `slice on` followed by the discriminator path.  This is the path to the property whose data identifies the slice in which an instance belongs.
+To perform any slicing, a discriminator path needs to be declared, using `slice on` followed by the discriminator path. This is the path to the property whose data identifies the slice an instance belongs to. For example, if `slice on = code.coding.code`, the code in each slice must be a unique, fixed value, and every instance must have a code that matches one of the defined slices.
 
-FHIR also requires a discriminator type to be indicated.  By default, CIMPL will use the `value` discriminator type, but a different discriminator type can be declared using `slice on type` followed by one of the following FHIR-defined discriminator types:
+For more explanation of how discriminators are defined in FHIR, see [discriminators](https://www.hl7.org/fhir/profiling.html#discriminator).
 
-| Discriminator Type | Definition |
+FHIR also requires a discriminator type to be indicated.  By default, CIMPL uses the `value` discriminator type. However, a different discriminator type can be declared using `slice on type` followed by one of the following FHIR-defined discriminator types:
+
+| Slice on type | Definition |
 | ------------- | ---------- |
-| value	| The slices have different values in the nominated element|
+| value| The slices have different values in the nominated element |
 | exists | The slices are differentiated by the presence or absence of the nominated element|
-| pattern |	The slices have different values in the nominated element, as determined by testing them against the applicable ElementDefinition.pattern[x]|
+| pattern |The slices have different values in the nominated element, as determined by testing them against the applicable ElementDefinition.pattern[x]|
 | type |The slices are differentiated by type of the nominated element to a specified profile|
 | profile |	The slices are differentiated by conformance of the nominated element to a specified profile (not recommended)|
 
@@ -1069,7 +1063,7 @@ The `slice_strategy` indicates how the CIMPL property should map to slices in th
 
 In the above example, each included `ObservationComponent` subtype will create a new slice in the FHIR `component` array.  Each slice is distinguished by the value at the path `component.code.coding.code`.
 
-#### Moving the Slice Location
+#### Moving the Slice Location (slice at)
 
 If the discriminator used for slicing is not the actual field that is being mapped to, `slice at` can allow you to explicitly define the location of the slice.
 
@@ -1078,6 +1072,14 @@ If the discriminator used for slicing is not the actual field that is being mapp
 | `slice at` | `Members.Observation maps to related.target (slice at = related; slice on = type)` |
 
 In the above example, though the mapping is declared such that `Members.Observation maps to related.target`, the slicing is not occurring at `related.target`.  Instead, the `slice at = related` ensures that the slicing is occurring at the `related` element.
+
+#### Slicing Examples
+
+| Phrase | Example |
+|:----------|:---------|
+| `slice on` / `slice strategy` | `Components.ObservationComponent maps to component (slice on = code.coding.code; slice strategy = includes)` | 
+| `slice on` / `slice strategy` | `Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)` |
+| `slice on` | `Laterality maps to qualifier (slice on = concept)` |
 
 ***
 
@@ -1089,6 +1091,7 @@ For those who have created detailed models using CIMPL 5.0, there have been sign
 |:---- |:----------|:---------------------- |:-------------------|:----------------- |
 | New | keyword `only` eliminates all value choices except one | None | `FindingResult only concept` | [Only Constraint](#only-constraint) |
 | New |keyword `Property` is required to define properties for an Entry or Element. |`0..1 TreatmentIntent`| `Property:  TreatmentIntent 0..1` | [Property Keyword](#property) |
+| New |keyword `Group` is required to a reusable collection of properties, that is not an `Entry`. | None | `Group: Address` | [Group Keyword](#group) |
 | Replace | `EntryElement` keyword replaced by `Entry` | `EntryElement: CourseOfTreatmentPerformed`| `Entry:  CourseOfTreatmentPerformed` | [Element Keyword](#element) |
 | Replace | `Based on` keyword replaced by `Parent` | `Based on: Observation` | `Parent:  Observation` | [Parent Keyword](#parent) |
 | Syntax change | Cardinality is specified _after_ the property or class name | `0..1 TreatmentIntent` | `Property:  TreatmentIntent 0..1` | [Property Keyword](#property), [Cardinality Constraint](#cardinality-constraint) |

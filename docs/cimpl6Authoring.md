@@ -6,7 +6,7 @@ CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is 
 
 ***
 
-**Table Of Contents**
+## Table Of Contents
 
 [TOC]
 
