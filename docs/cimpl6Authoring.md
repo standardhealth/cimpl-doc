@@ -86,7 +86,9 @@ Create a folder/directory to contain all files you create for the model. All fil
 ## Configuration File
 A configuration file sets parameters to drive IG creation.
 
-By declaring optional parameters, your IG may include model documentation, a graphical view of the model, examples, or a data dictionary. These sections are automatically generated, are not required to include in the IG, but provide valuable information to IG consumers.
+By declaring optional parameters, your IG may include model documentation, a graphical view of the model, examples, or a data dictionary. These sections are automatically generated, are not required to include in the IG, but provide valuable information to IG consumers. 
+
+The data dictionary export might require manual adjustments before the IG is published. Review this document to make sure it meets your needs.
 
 [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
 
