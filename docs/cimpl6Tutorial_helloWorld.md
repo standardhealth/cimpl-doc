@@ -1,16 +1,16 @@
 # CIMPL 6.0 'Hello World' Tutorial
-<br />
+
 Let’s do a “Hello, World” using CIMPL v6!
 
-_Note: Make sure you have completed the [CIMPL Installation instructions](cimplInstall.md) before proceeding, and that SHR-CLI (minimum version 6.2.0) is installed in `~/cimpl/shr-cli`._
+**Note:** Make sure you have completed the [CIMPL Installation instructions](cimplInstall.md) before proceeding, and that SHR-CLI (minimum version 6.2.0) is installed in `~/cimpl/shr-cli`.
 
-Start by creating a folder structure for our new project.  Open up your favorite (Unix-based) command-line tool and enter the following:
+Start by creating a folder structure for our new project. Open up your favorite command-line tool and enter the following:
 ```
 cd ~/cimpl
-mkdir hello_world
+mkdir hello-world
 ```
 
-Now, create a file called `HelloWorld.txt` in the `~/cimpl/hello_world` folder and add the following data definitions:
+Now, create a file called `HelloWorld.txt` in the `~/cimpl/hello-world` folder and add the following data definitions:
 
 ```
 Grammar:         DataElement 6.0
@@ -42,7 +42,7 @@ Next, we need some simple HTML for the Implementation Guide pages, so create an 
 HELLO HELLO HELLO
 ```
 
-Finally, we need a configuration file. Create an `ig-hello_world-config.json` file with these contents:
+Finally, we need a configuration file. Create an `ig-hello-world-config.json` file with these contents:
 
 ```
 {
@@ -51,7 +51,7 @@ Finally, we need a configuration file. Create an `ig-hello_world-config.json` fi
     "projectURL": "http://example.com",
     "fhirURL": "http://example.com/fhir",
     "implementationGuide": {
-      "npmName": "hello_world",
+      "npmName": "hello-world",
       "indexContent": "exampleIndexContent.html"
     },
     "publisher": "Example Publisher",
@@ -81,7 +81,7 @@ Now, go back to your SHR-CLI installation and run the hello world:
 
 ```
 cd ~/cimpl/shr-cli
-node . -c ig-hello_world-config.json ../hello_world
+node . -c ig-hello-world-config.json ../hello-world
 ```
 
 When the program runs, it will output a warning message alerting you that mapping to Basic usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (a FHIR `StructureDefinition`) will be found in `~/cimpl/shr-cli/out/fhir/profiles/`.  `StructureDefinition`s are verbose, and this one clocks in at several hundred lines.
@@ -101,7 +101,7 @@ yarn run ig:publish
 
 The generated profile page will be located at `~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html`.  Open this page in your favorite web browser.
 
-You should see a FHIR profile that looks like a traditional [FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html).  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the [Tutorial](https://github.com/standardhealth/shr-cli/wiki/Tutorial).
+You should see a FHIR profile that looks like a traditional [FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html).  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the [Tutorial]().
 
 > **Note:** the IG is automatically branded as part of the Standard Health Record (SHR). We are working on “de-branding” the IG, so please ignore the SHR references for now.
 

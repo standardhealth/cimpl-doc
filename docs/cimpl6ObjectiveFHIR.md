@@ -6,7 +6,7 @@ _This is an introductory guide to CIMPL's class library: **Objective FHIR Versio
 
 ***
 
-**Table of Contents**
+## Table of Contents
 
 [TOC]
 
@@ -16,7 +16,7 @@ _This is an introductory guide to CIMPL's class library: **Objective FHIR Versio
 
 Objective FHIR ("OBF") is an [**object-oriented**](https://en.wikipedia.org/wiki/Object-oriented_programming) abstraction of FHIR. It provides modelers a way to define a detailed clinical information model by subclassing, extending, and constraining a pre-existing class library. These classes can then be translated automatically into FHIR profiles, FHIR Implementation Guides, data dictionaries, schemas, and other assets, using a choice of the three major FHIR versions: DSTU 2, STU 3, and R4.
 
-OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. "blank slate" use of CIMPL is also possible and appropriate for some projects. 
+OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. "blank slate" use of CIMPL is also possible and appropriate for some projects.
 
 (**TO DO: Move discussion of Blank Slate approach to here**)
 
@@ -71,6 +71,7 @@ Property:          RegionStudied 0..*
                       includes GeneticVariantTested 0..*
                    SpecimenType from GeneticSpecimenTypeVS (extensible)
 ```
+
 Although the purpose of this guide is not to teach CIMPL, this is worth pulling apart:
 
 * The first two lines create the class `GenomicsReport`, based on `DiagnosticReport`. `Entry` is a CIMPL building block that roughly corresponds to a FHIR resource, and `Parent` obviously identifies the parent class.
@@ -86,6 +87,7 @@ After the keyword section, there is a series of constraint statements. Without d
 We now have a general-purpose genomics report. We can use this class in the form of a FHIR profile, or use it as a parent for defining more specific genomics reports, perhaps `AncestryDotComGenomicsReport`.
 
 ### Comparison Between Profiling Tools
+
 In FHIR terms, subclassing is akin to profiling profiles, which can be achieved in a number of tools, notably [Forge](https://fire.ly/products/forge/) and [Trifolia](https://trifolia-fhir.lantanagroup.com/home). Both these tools are extremely well-done, and supported by commercial entities.
 
 Forge and Trifolia are essentially graphical user interfaces on top of StructureDefinitions, the low-level "assembly language" of FHIR. By contrast, CIMPL is like a high-level programming language. Experience has shown that creating and maintaining a complex project is **much** easier when you use a language, compared to a visual editor. That's why programming languages are almost always text-based, while visual programming has had comparatively little uptake. Even [Unified Modeling Language (UML)](https://www.uml.org/) - a model-diagramming standard that has been around for decades - is fraught with [portability problems](https://www.researchgate.net/publication/322557945_Solving_the_interoperability_problem_between_UML_modeling_tools_Modelio_and_ArgoUML), despite having its own exchange format, [XMI](https://en.wikipedia.org/wiki/XML_Metadata_Interchange). As [stated by Thomas Beale](https://wolandscat.net/2019/03/07/the-long-slow-death-of-uml/), "Architects these days tend to limit their use of UML to package diagrams and a few illustrative class diagrams, while _developers tend to go straight to code_ or use tools that pretty-print extracted textual forms of software such as swagger and apiary." (emphasis added). CIMPL takes the latter approach, producing a variety of explanatory and implementable assets generated from CIMPL code, rather than vice versa.
@@ -129,7 +131,6 @@ For example, the FHIR attribute `Encounter.period` is not entirely self-explanat
 | `RelevantTime` | The time or time period that the statement addresses, not necessarily when the information is gathered. |
 | `LastUpdated` | The last time a record was updated. |
 
-
 ### Building Blocks
 
 OBF classes fall into one of four categories, which are the building blocks of CIMPL:
@@ -143,7 +144,7 @@ OBF classes fall into one of four categories, which are the building blocks of C
 
 ## Class Hierarchy
 
-In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the [OBF Reference Model Specification](#http://standardhealthrecord.org/guides/obf/modeldoc.html).
+In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the [OBF Reference Model Specification](http://standardhealthrecord.org/guides/obf/modeldoc.html).
 
 ![The Objective FHIR Class Hierarchy (partial)](img_cimpl/obf.png)
 
@@ -171,7 +172,7 @@ This branch of the hierarchy, which splits into Entity and Role, represent the p
 
 ### Clinical Statement
 
-`ClinicalStatement` provides properties and behaviors common to entries in a medical record. This class also allows for common representation of simple data provenance elements: `SubjectOfRecord`, `CareContext` (`Encounter` or `EpisodeOfCare`), and `StatementDateTime`. 
+`ClinicalStatement` provides properties and behaviors common to entries in a medical record. This class also allows for common representation of simple data provenance elements: `SubjectOfRecord`, `CareContext` (`Encounter` or `EpisodeOfCare`), and `StatementDateTime`.
 
 Below `ClinicalStatement` are two classes, `SituationStatement` and `ActionStatement`:
 

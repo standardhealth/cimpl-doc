@@ -1,9 +1,9 @@
 # CIMPL 6.0 In-depth Tutorial
-_This is an extensive tutorial, meant to educate people about many different aspects of CIMPL.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL6 Language Reference documentation](cimpl6LanguageReference.md)._
+_This is an extensive tutorial, meant to educate people about many different aspects of CIMPL. If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL Language Reference documentation](cimpl6LanguageReference.md). The tooling is described in the [CIMPL Tooling Reference](cimpl6ToolingReference.md)._
 
 ***
 
-**Table Of Contents**
+## Table Of Contents
 
 [TOC]
 

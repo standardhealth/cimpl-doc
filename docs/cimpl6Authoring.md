@@ -6,7 +6,7 @@ _The purpose of this guide is to educate people about many different aspects of 
 
 ***
 
-**Table Of Contents**
+## Table Of Contents
 
 [TOC]
 

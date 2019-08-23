@@ -6,7 +6,7 @@ _This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a qui
 
 ***
 
-**Table of Contents**
+## Table Of Contents
 
 [TOC]
 
