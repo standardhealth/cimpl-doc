@@ -682,12 +682,12 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13025          | Applying constraints to profiled children not yet supported. |
 | 13026          | Failed to resolve path from `$ELEMENT` to `$PATH` |
 | 13027          | Unsupported binding strength: `$BINDING_STRENGTH` |
-| 13028          | Cannot change binding strength from `$BINDING_STRENGTH` to `$BINDING_STRENGTH` |
-| 13029          | Cannot override value set constraint from `$URI` to `$URI` |
+| 13028          | Cannot change binding strength from `$FHIR_BINDING_STRENGTH` to `$CIMPL_BINDING_STRENGTH` | The value set binding strength specified in CIMPL is weaker than the binding already specified in FHIR. You must increase the binding strength in the CIMPL model to at least the same level as in FHIR. Note that this error message gives the FHIR binding strength first. |
+| 13029          | Cannot override value set constraint from `$URI` to `$URI` | This message is given when you try to replace a FHIR value set, which is either extensible or required, with a different value set. |
 | 13030          | Found more than one value set to apply to `$ELEMENT`. This should never happen and is probably a bug in the tool. |
 | 13031          | Found more than one code to fix on `$ELEMENT`. This should never happen and is probably a bug in the tool. |
-| 13032          | Can’t fix code on `$ELEMENT` because source value isn’t code-like. This should never happen and is probably a bug in the tool. |
-| 13033          | Can’t fix code on `$ELEMENT` because source value isn’t code-like. This should never happen and is probably a bug in the tool. |
+| 13032          | Can’t fix code on `$ELEMENT` because source value isn’t code-like. | This should never happen and is probably a bug in the tool. |
+| 13033          | Can’t fix code on `$ELEMENT` because source value isn’t code-like. | This should never happen and is probably a bug in the tool. |
 | 13034          | Cannot override code constraint from `$VALUE` to `$VALUE` |
 | 13035          | Cannot override boolean constraint from `$VALUE` to `$VALUE` |
 | 13036          | Found more than one boolean to fix on `$ELEMENT`. This should never happen and is probably a bug in the tool. |
@@ -696,7 +696,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13039          | Conversion from `$VALUE` to one of `$TYPE` drops code constraints |
 | 13040          | Conversion from `$VALUE` to one of `$TYPE` drops includesCode constraints |
 | 13041          | Unable to establish namespace for `$ELEMENT` |
-| 13042          | No slice name supplied for target. This should never happen and is probably a bug in the tool. |
+| 13042          | No slice name supplied for target. | This should never happen and is probably a bug in the tool. |
 | 13043          | Couldn’t find target in slice `$SLICE` | (Exporting) |
 | 13044          | Target resolves to multiple elements but is not sliced |
 | 13045          | Unable to establish namespace for `$FIELD` | (Extensions) |
