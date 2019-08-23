@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring Guide</a>
 </li>
                                     
 <li >
@@ -134,6 +134,8 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</a></li>
+            <li><a href="#preface">Preface</a></li>
+            <li><a href="#table-of-contents">Table of Contents</a></li>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#conventions">Conventions</a></li>
             <li><a href="#inputs-to-shr-cli">Inputs to SHR-CLI</a></li>
@@ -146,14 +148,31 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</h1>
-<p><em>This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line interface, auxiliary files, and configurations needed to produce a FHIR Implementation Guide (IG). If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a> or <a href="../cimpl6Tutorial_detail/">In-Depth Tutorials</a>. For details of the CIMPL language itself, see the <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a>.</em></p>
+<h2 id="preface">Preface</h2>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage).</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL SetUp and Installation</a>.</li>
+<li>Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for details). </li>
+<li>Reviewed the <a href="../cimpl6Tutorial_detail/">In-Depth Tutorial</a>.</li>
+</ul>
 <hr />
-<p><strong>Table of Contents</strong></p>
+<h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</a><ul>
+<li><a href="#preface">Preface</a><ul>
+<li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
+<li><a href="#intended-audience">Intended Audience</a></li>
+<li><a href="#prerequisite">Prerequisite</a></li>
+</ul>
+</li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#overview">Overview</a><ul>
-<li><a href="#processing-flow">Processing Flow</a></li>
 <li><a href="#relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</a></li>
 </ul>
 </li>
@@ -197,7 +216,7 @@
 </li>
 <li><a href="#creating-the-implementation-guide">Creating the Implementation Guide</a></li>
 <li><a href="#appendix-a-error-messages">Appendix A: Error Messages</a><ul>
-<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#table-of-contents_1">Table of Contents</a></li>
 <li><a href="#error-code-structure">Error Code Structure</a></li>
 <li><a href="#parsing-errors">Parsing Errors</a></li>
 <li><a href="#warning-codes">Warning Codes</a></li>
@@ -211,8 +230,6 @@
 </div>
 <hr />
 <h2 id="overview">Overview</h2>
-<p>This reference manual describes the configurations, files, and commands needed to create a FHIR IG from CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage). It assumes that the CIMPL Language files (classes, value sets, and maps) have been defined (see <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for details). It also assumes that the CIMPL SHR-CLI tooling has been installed according to the directions in the <a href="../cimplInstall/">Setup and Installation Guide</a>.</p>
-<h3 id="processing-flow">Processing Flow</h3>
 <p>The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:</p>
 <p><img alt="CIMPL Tooling Overview" src="../img_cimpl/cli-overview.png" /></p>
 <p>The inputs to SHR-CLI include:</p>
@@ -682,12 +699,12 @@ Namespace: onco.core
 </code></pre>
 
 <p>The options are not order-sensitive. Here is an example of a SHR-CLI command and an explanation of its parts:</p>
-<p>$ <code>node . ../shr_spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error</code></p>
+<p>$ <code>node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error</code></p>
 <ul>
 <li><code>node</code> is the command that starts the SHR-CLI application.</li>
 <li>The dot <code>.</code> represents the current directory in Windows and macOS. In this example, the tooling directory is the current working directory.</li>
-<li><code>../shr_spec/spec</code> represents the location of the specification directory. The the double dot <code>..</code> represents the directory above the current working directory, in Windows and macOS. In this case, <code>/shr_spec</code> is parallel to the tooling directory, and <code>/spec</code> is one level below that.</li>
-<li><code>-c ig-mcode/ig-mcode-r4-config.json</code> directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is <code>../shr_spec/spec/ig-mcode/ig-mcode-r4-config.json</code></li>
+<li><code>../shr-spec/spec</code> represents the location of the specification directory. The double dot <code>..</code> represents the directory above the current working directory, in Windows and macOS. In this case, <code>/shr-spec</code> is parallel to the tooling directory, and <code>/spec</code> is one level below that.</li>
+<li><code>-c ig-mcode/ig-mcode-r4-config.json</code> directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is <code>../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json</code></li>
 <li><code>-l error</code> is an option that sets tells the system to surpress any messages that don't rise to the level of an <code>error</code>. This reduces the amount of output to the console window.</li>
 </ul>
 <h3 id="addressing-error-messages">Addressing Error Messages</h3>
@@ -761,7 +778,7 @@ Namespace: onco.core
 <p><img alt="qa.html example output" src="../img_cimpl/igpublisher_output.png" /></p>
 <h2 id="appendix-a-error-messages">Appendix A: Error Messages</h2>
 <p>In the following, <code>$</code> prefix indicates a variable that will be filled in with specific information.</p>
-<h3 id="table-of-contents">Table of Contents</h3>
+<h3 id="table-of-contents_1">Table of Contents</h3>
 <ul>
 <li><strong><a href="#error-code-structure">Error Code Structure</a></strong></li>
 <li><strong><a href="#parsing-errors">Parsing Errors</a></strong></li>
@@ -781,7 +798,7 @@ Namespace: onco.core
 <p>Parsing errors are generated when the importer cannot make sense of the contents of a CIMPL statement. <strong>Parsing error messages include the file, line, and column number, and can be linked directly to a location in a CIMPL file where parsing failed.</strong> Most other types of errors (with the exception of mapping errors) cannot be linked to a specific file location because they represent some type of a logical inconsistency.</p>
 <p>A typical parsing error looks like this:</p>
 <pre><code>extraneous input 'Entry' expecting {&lt;EOF&gt;, 'CodeSystem:', 'Abstract:', 'Element:', 'Entry:', 'Group:'}.
-ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\oncocore.txt, line=9, column=0)
+ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\oncocore.txt, line=9, column=0)
 </code></pre>
 
 <p>When a parsing error occurs, the associated error code number and subsequent errors are not meaningful, since the entire model could not be read.</p>
@@ -1416,13 +1433,13 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 </tr>
 <tr>
 <td>13028</td>
-<td>Cannot change binding strength from <code>$BINDING_STRENGTH</code> to <code>$BINDING_STRENGTH</code></td>
-<td></td>
+<td>Cannot change binding strength from <code>$FHIR_BINDING_STRENGTH</code> to <code>$CIMPL_BINDING_STRENGTH</code></td>
+<td>The value set binding strength specified in CIMPL is weaker than the binding already specified in FHIR. You must increase the binding strength in the CIMPL model to at least the same level as in FHIR. Note that this error message gives the FHIR binding strength first.</td>
 </tr>
 <tr>
 <td>13029</td>
 <td>Cannot override value set constraint from <code>$URI</code> to <code>$URI</code></td>
-<td></td>
+<td>This message is given when you try to replace a FHIR value set, which is either extensible or required, with a different value set.</td>
 </tr>
 <tr>
 <td>13030</td>
@@ -1436,13 +1453,13 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 </tr>
 <tr>
 <td>13032</td>
-<td>Can’t fix code on <code>$ELEMENT</code> because source value isn’t code-like. This should never happen and is probably a bug in the tool.</td>
-<td></td>
+<td>Can’t fix code on <code>$ELEMENT</code> because source value isn’t code-like.</td>
+<td>This should never happen and is probably a bug in the tool.</td>
 </tr>
 <tr>
 <td>13033</td>
-<td>Can’t fix code on <code>$ELEMENT</code> because source value isn’t code-like. This should never happen and is probably a bug in the tool.</td>
-<td></td>
+<td>Can’t fix code on <code>$ELEMENT</code> because source value isn’t code-like.</td>
+<td>This should never happen and is probably a bug in the tool.</td>
 </tr>
 <tr>
 <td>13034</td>
@@ -1486,8 +1503,8 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr_spec\spec\ns-onco-core\onco
 </tr>
 <tr>
 <td>13042</td>
-<td>No slice name supplied for target. This should never happen and is probably a bug in the tool.</td>
-<td></td>
+<td>No slice name supplied for target.</td>
+<td>This should never happen and is probably a bug in the tool.</td>
 </tr>
 <tr>
 <td>13043</td>
