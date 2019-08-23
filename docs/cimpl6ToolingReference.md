@@ -15,6 +15,7 @@ _This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line 
 This reference manual describes the configurations, files, and commands needed to create a FHIR IG from CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage). It assumes that the CIMPL Language files (classes, value sets, and maps) have been defined (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). It also assumes that the CIMPL SHR-CLI tooling has been installed according to the directions in the [Setup and Installation Guide](cimplInstall.md).
 
 ### Processing Flow
+
 The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
 
 ![CIMPL Tooling Overview](img_cimpl/cli-overview.png)
@@ -131,6 +132,7 @@ If your project will support more than one FHIR version, the FHIR version should
 where FHIR version is dstu2, stu3, or r4.
 
 ## Inputs to SHR-CLI
+
 ### CIMPL Files
 
 Any text editor can be used to write CIMPL grammar. However, [VSCode editor](https://code.visualstudio.com/) is recommended to take advantage of a CIMPL plug-in.
@@ -699,7 +701,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13044          | Target resolves to multiple elements but is not sliced |
 | 13045          | Unable to establish namespace for `$FIELD` | (Extensions) |
 | 13046          | Mapping to `MAP_TARGET`'s `RULE_TARGET`: slice could not be found. |
-| 13047          | Couldn't find sd to unroll | 
+| 13047          | Couldn't find sd to unroll |
 | 13048          | Cannot override code constraint from `$SYSTEM`\|`$CODE` to `$SYSTEM`\|`$CODE`' |
 | 13049          | Unexpected error processing mapping to FHIR. |
 | 13050          | Unexpected error processing mapping rule. |

@@ -56,14 +56,14 @@ Each namespace will typically have one or more class files, and if needed, a val
 
 File names must begin with lower case and typically include the namespace:
 
-* Class files: `namespace.txt` or `namespace_something.txt`
-* Value Set files: `namespace_vs.txt` or `namespace_something_vs.txt`
-* Mapping files: `namespace_map.txt` or `namespace_something_map.txt`
+* Class files: `namespace.txt` or `namespace-something.txt`
+* Value Set files: `namespace-vs.txt` or `namespace-something-vs.txt`
+* Mapping files: `namespace-map.txt` or `namespace-something-map.txt`
 
-Any periods in the `namespace` should be replaced by underscores. For example, a namespace called `odh.occupation`, the recommended value set file name is `odh_occupation_vs.txt`. The `something` is useful when you want to break up the contents of a single namespace into multiple files, for example:
+Any periods in the `namespace` should be replaced by dashes. For example, a namespace called `odh.occupation`, the recommended value set file name is `odh-occupation-vs.txt`. The `something` is useful when you want to break up the contents of a single namespace into multiple files, for example:
 
-* `obf_action.txt`
-* `obf_finding.txt`
+* `obf-action.txt`
+* `obf-finding.txt`
 
 >**Note:** `obf` stands for _Objective FHIR_, a set of classes provided with CIMPL that can help you create FHIR profiles. For more information, see [Objective FHIR Overview](cimpl6ObjectiveFHIR.md)
 
