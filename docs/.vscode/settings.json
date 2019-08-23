@@ -3,6 +3,7 @@
         "cimpl",
         "codeable",
         "concept",
+        "datatypes",
         "dstu",
         "extensibly",
         "fhir",

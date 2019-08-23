@@ -4,7 +4,7 @@ _CIMPL (and, by extension, the SHR-CLI tool) is a text-based tool that requires 
 
 ***
 
-## Table Of Contents
+## Table of Contents
 
 [TOC]
 

@@ -2,7 +2,23 @@
 
 >**Note:** This documentation is in draft form.
 
-_This is an introductory guide to CIMPL's class library: **Objective FHIR Version 1.0**. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the [CIMPL 6 Tutorial](cimpl6Tutorial_detail.md), the [CIMPL Authoring](cimpl6Authoring.md), or the [CIMPL 6 Language Reference Manual](cimpl6LanguageReference.md)._
+## Preface
+
+### Purpose of this Document
+
+This document presents an overview of the CIMPL class library (also known as Objective FHIR, or OBF), a set of pre-mapped datatypes and classes that can be used as the basis for a clinical model. Use of OBF with CIMPL is optional, but recommended. Using only the OBF datatypes with CIMPL is also possible and appropriate for some projects.
+
+### Intended Audience
+
+The CIMPL Class Library Guide is targeted to modelers with some familiarity with CIMPL. Experience with object-oriented modeling, concepts such as class inheritance, is assumed. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)
+
+### Prerequisite
+
+This guide assumes you have:
+
+* Installed the latest version of the SHR-CLI software as documented in [CIMPL SetUp and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
+* A text editor (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required)
+* Reviewed the [Hello World Tutorial](cimpl6Tutorial_helloWorld.md).
 
 ***
 

@@ -1,22 +1,34 @@
 # CIMPL 6.0 Language Reference
 
->**Note:** This documentation is a draft.
+## Preface
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
-_This is a comprehensive guide to CIMPL 6.0 syntax.  If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md). If you're looking for a more in-depth introduction, try the [Tutorial](cimpl6Tutorial_detail.md)._
+### Purpose of this Document
+
+This document is a comprehensive guide to the CIMPL language, covering the syntax used to specify clinical models, value sets, and mappings to FHIR. 
+
+### Intended Audience
+
+The CIMPL Language Reference is targeted to the users of CIMPL, involved with creating or reviewing models expressed in the CIMPL language.
+
+### Prerequisite
+
+This guide assumes you have:
+
+* Installed the latest version of the SHR-CLI software as documented in [CIMPL SetUp and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory).
+* A text editor to create your CIMPL files (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required).
+* Reviewed the [In-Depth Tutorial](cimpl6Tutorial_detail.md).
 
 ***
 
-## Table Of Contents
+## Table of Contents
 
 [TOC]
 
 ***
+## Fundamentals
 
-## Overview
-
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
-
-### CIMPL Versioning
+### Versioning
 
 CIMPL follows the [semantic versioning](https://semver.org) convention (MAJOR.MINOR.PATCH).
 
@@ -28,31 +40,27 @@ CIMPL is currently on major version 6.
 
 For a full change log, see the [Release Notes](https://github.com/standardhealth/shr-cli/releases).
 
-<!-- TODO: Find MAJOR release differences -->
-
-### Namespaces
-
-CIMPL organizes information into namespaces. A namespace is conventionally denoted by the authoring organization or project name, and the broad category of elements the namespace defines, delineated by a period. Namespaces must begin with a lowercase character. For example:
-
-```
-Namespace: onco.core
-```
-
->**Note:** The organization or project name is recommended but not required (e.g., `Namespace: lab` is also allowed).
-
-## File Types
+### File Types
 
 Model information in CIMPL is stored in the following three file types:
 
-* Class files (.txt): contain definitions of CIMPL classes, which map to FHIR profiles and extensions.
+* Class files (.txt): contain definitions of CIMPL classes.
 * Value Set files (.txt): contain definitions of value sets defined in the namespace.
-* Map files (.txt): contain information on how the CIMPL models relate to FHIR resources, profiles, and elements.
+* Map files (.txt): contain information on how the CIMPL classes relate to FHIR resources, profiles, and elements.
 
 Each namespace will typically have one or more class files, and if needed, a value set and map file.
 
-### Naming Conventions
+### Classes
 
-#### File Names
+CIMPL models consist of classes. Classes define clinical information at some granularity. Classes can be combined in various ways (composition and specialization) to create meaningful structures.
+
+### Namespaces
+
+CIMPL organizes information into namespaces. [Namespaces](https://en.wikipedia.org/wiki/Namespace) are used to organize code and classes into logical collections and to prevent name collisions.
+
+## Naming Conventions
+
+### File Names
 
 File names must begin with lower case and typically include the namespace:
 
@@ -74,7 +82,7 @@ Additional files for configuring and producing FHIR implementation guides (IGs),
 * IG examples: `ignameExampleName.json`
 * IG HTML pages: `anyName.html`
 
-#### Namespace Names
+### Namespace Names
 
 Best practice is to follow the naming convention pattern of `organization.domain` or `project.domain` (followed by subdomains if necessary).
 
@@ -84,7 +92,7 @@ Best practice is to follow the naming convention pattern of `organization.domain
 | `odh` | Occupational Data for Health |
 | `onco.core` | Core namespace for oncology-related profiles |
 
-#### Class Names
+### Class Names
 
 Elements, Groups and Entries are conventionally defined in [PascalCase](http://wiki.c2.com/?PascalCase). For example:
 
@@ -96,7 +104,7 @@ Elements, Groups and Entries are conventionally defined in [PascalCase](http://w
 
 >**Note:** Letters, numbers, and hyphens are allowed. However, it is required that an element name begins with an uppercase letter.
 
-#### Fully Qualified Names
+### Fully Qualified Names
 
 CIMPL does not support duplicate class names within a single namespace. However, the same name may occur in different namespaces. In the case of naming collisions due to an included namespace in `Uses`, you have to refer to the class by its fully qualified name (FQN). The FQN is a combination of the element's namespace and its declared name (through concatenation delimited by a period). For example, the element `CancerCondition` in the namespace `onco.core` has the following FQN:
 
@@ -106,7 +114,7 @@ onco.core.CancerCondition
 
 FQNs are only required in case of naming collisions between namespaces.
 
-#### Value Set Names
+### Value Set Names
 
 Value Sets are conventionally defined in [PascalCase](http://wiki.c2.com/?PascalCase), with an additional "VS" suffix. For example:
 
@@ -115,7 +123,7 @@ ValueSet: HomeEnvironmentRiskVS
 ```
 >**Note:** Value Set names must begin with an uppercase letter.
 
-#### Local Code Names
+### Local Code Names
 
 Within a custom value set, the individual codes (denoted by # symbol) are conventionally written in lowercase [snake_case](https://en.wikipedia.org/wiki/Snake_case). For example:
 ```
@@ -125,9 +133,7 @@ ValueSet:          HomeEnvironmentRiskVS
 #swimming_pool     "Swimming Pool"
 ```
 
-### Reserved Words
-
-CIMPL has a number of reserved words and phrases that are part of CIMPL's grammar (e.g., `boolean`, `or`, `from`, `maps to`). For a complete list of reserved words, refer to the [ANTLR4 grammar](https://github.com/standardhealth/shr-grammar/tree/master/src/main/antlr).
+## Language Basics
 
 ### Whitespace
 
@@ -159,7 +165,11 @@ These comments can take up multiple lines.
 */
 ```
 
-### Primitives 
+### Reserved Words
+
+CIMPL has a number of reserved words and phrases that are part of CIMPL's grammar (e.g., `boolean`, `or`, `from`, `maps to`). For a complete list of reserved words, refer to the [ANTLR4 grammar](https://github.com/standardhealth/shr-grammar/tree/master/src/main/antlr).
+
+### Primitives
 
 Primitives are data types, distinguished by starting with lower case letter. CIMPL defines the following primitive data types. With the exception of `concept` (a simplified representation of code, Coding, and CodeableConcept), the primitive types in CIMPL align with FHIR:
 
@@ -455,6 +465,8 @@ Value[concept] from PriorityVS (required)  // not Priority[concept]
 ### Path Example
 
 ```
+Entry:             Procedure
+Property:          Landmark
 
 Group:             Landmark
 Description:       "A point on the body that helps determine a body location."
@@ -488,15 +500,15 @@ Property:          Units 0..1
 
 ```
 
-This example assumes all paths begin at Landmark, which is a Group, but the same patterns would apply if an Entry were the start of the path.
+This example assumes all paths begin at Procedure, which is an Entry, but the same patterns would apply if the path started elsewhere, for example, at Landmark.
 
 | Path to | Path |
 |---------|---------|
-| Direction | Landmark.Direction |
-| Laterality | Landmark.Location.Laterality |
-| ClockFaceDirection | Landmark.Direction[ClockFaceDirection] |
-| Angle | Landmark.Direction[ClockFaceDirection][Angle] |
-| Units | Landmark.Distance[Quantity].Units |
+| Direction | Procedure.Landmark.Direction |
+| Laterality | Procedure.Landmark.Location.Laterality |
+| ClockFaceDirection | Procedure.Landmark.Direction[ClockFaceDirection] |
+| Angle | Procedure.Landmark.Direction[ClockFaceDirection][Angle] |
+| Units | Procedure.Landmark.Distance[Quantity].Units |
 
 A reliable method to create a CIMPL path is to first view it as a dot path, then bracket any part of the path that is a Value, and finally, remove the dot before each left (open) bracket. Here's an example of that process, for the path from Landmark to Units:
 
@@ -525,7 +537,7 @@ Here are several examples of this pattern:
 | `BodyLocation from BodyLocationVS` | `BodyLocation` | `from` | `BodyLocationVS` |
 | `LanguageUsed 0..1` | `LanguageUsed` | _(implicit)_ | `0..1`
 
-Here is a summary of constraints supported in CIMPL 6:
+Here is a summary of supported constraints:
 
 | To do this.. | Use this Keyword or Symbol | Applies to |
 |----------|---------|---------|
@@ -539,7 +551,7 @@ Here is a summary of constraints supported in CIMPL 6:
 
 ### Cardinality Constraint
 
-Cardinality defines the number of repeats that can exist for a property. Cardinality is specified using FHIR syntax, {min}..{max}, where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound on the number of repeats. To express no upper bound, a `*` is used. When constraining cardinality, you can only narrow the previously declared cardinality. The cardinality constraint only applies to properties.
+Cardinality defines the number of repeats that can exist for a Property. Cardinality is specified using FHIR syntax, {min}..{max}, where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound on the number of repeats. To express no upper bound, a `*` is used. When constraining cardinality, you can only narrow the previously declared cardinality. The cardinality constraint only applies to properties.
 
 | Declaration | Constraint | Subsequent Constraint |
 |----------|----------|----------|
@@ -551,98 +563,130 @@ Cardinality defines the number of repeats that can exist for a property. Cardina
 
 ### Fixed Value Constraint
 
-The `=` operator fixes a property to a specific value (e.g., a specific concept, boolean, string, integer, decimal, or URL). The assigned value must be consistent with the defined data type, and is always a primitive. Fixed value constraints apply to properties and value choices.
+The `=` operator fixes an Element's value to a specific concept, boolean, string, integer, decimal, or URL. The assigned value must be consistent with the defined data type, and is always a primitive. 
 
 | Example | Syntax |
 |----------|---------|
-| Fix a code to a property | `ObservationCode = LNC#82810-3` |
-| Fix a boolean value to a property | `IsPrimaryTumor = true` |
-| Fix a code to a value choice | `Value[concept] = SCT#233613009 "Pneumonia"` |
-| Fix the units associated with a Quantity value choice  | `Value[Quantity].Units = UCUM#cm` |
-| Fix a code to a value  | <del>`Value = SCT#233613009 "Pneumonia"`</del> invalid|
+| Fix a code to an Element | `ObservationCode = LNC#82810-3` |
+| Fix a boolean value to an Element | `IsPrimaryTumor = true` |
+| Fix a code to an Element's Value | `Value[concept] = SCT#233613009 "Pneumonia"` |
+| Fix the units associated with a Quantity Value Choice  | `Value[Quantity].Units = UCUM#cm` |
 
 >**Notes:**
 >
->1. [Bracket notation](#bracket-notation-for-value-choices) must always be used when applying a constraint to a value choice, _even if the value has only one choice_. This is a change from CIMPL 5.
+>1. [Bracket notation](#bracket-notation-for-value-choices) must always be used when applying a constraint to a value choice, _even if the value has only one choice_. 
 >1. CIMPL allows fixed concept values to be overridden in child classes. Although this seems to violate the notion that constraints should get progressively tighter in subclasses, it is necessary when narrowing the meaning of a class characterized by a concept code. For example, the class `Pneumonia`, with fixed code, `SCT#233604007`, may have a child, `Fungal Pneumonia`, with fixed code `SCT#233613009`, the latter overriding the former. CIMPL will assume, without checking, that the code describing the child class has more constrained semantics than the code it replaces.
 >1. Fixing numerical types and strings (including URLs) is not yet supported, although this feature is planned.
->1. If you only need to fix a value code for one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the mapping file.
+>1. If you only need to fix a code in one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the mapping file and not as a constraint.
 
 ### Append Constraint
 
-The append (`+=`) operator appends a fixed concept to a property array whose value is `concept`. You can use the `+=` operation repeatedly on the same array, limited only be the cardinality of the array. The append operator can only be applied to repeating properties.
+The append `+=` operator appends a fixed concept to a property array whose value is `concept`. You can use the `+=` operation repeatedly on the same array, limited only be the cardinality of the array. The append operator can only be applied to repeating properties.
 
-For example, you would use `+=` to insert a particular Social Security Number (SSN) or Driver's License number into an array of identifiers (in contrast, [`includes`](#includes-constraint) would be used to require the array contain one or more SSNs, without specifying a particular SSN.)
+For example, use `+=` to insert a specific Category value into an array of categories.
 
 | Example | Syntax |
 |----------|---------|
 | Insert "Behavior" into Category array |  `Category += LNC#54511-1 "Behavior"` |
 | Add "Social History" to same array | `Category += OBSCAT#social-history "Social History"` |
 
->**Note:** Appending other primitive types is not yet supported, although this feature is planned.
+>**Note:** Appending other data types is not yet supported, although this feature is planned.
 
 ### Substitute Constraint
 
-The `substitute` keyword constrains the data type of a property. The new data type that is substituted for the original must be a subclass of the original data type.
+The `substitute` keyword constrains value data type of an element. The new data type that is substituted for the original must be a subclass of the original data type.
 
 | Example | Syntax |
 |----------|---------|
-| Constrain the property `Specimen` to be a `TumorSpecimen` | `Specimen substitute TumorSpecimen` <br/> _note: TumorSpecimen must be a subclass of Specimen_ |
-| Constrain a value choice of type `Quantity` to `SimpleQuantity` | `Value[Quantity] substitute SimpleQuantity` <br/> _note: SimpleQuantity is a subclass of Quantity_ |
+| Constrain the element `Specimen` to be a `TumorSpecimen` | `Specimen substitute TumorSpecimen` <br/> _note: TumorSpecimen must be a subclass of Specimen_ |
+| Constrain a Value choice of type `Quantity` to `SimpleQuantity` | `Value[Quantity] substitute SimpleQuantity` <br/> _note: SimpleQuantity is a subclass of Quantity_ |
 
 ### Value Set Binding Constraint
 
-Binding is the process of associating a concept with a set of possible values. Binding uses the keyword `from`. The object of a binding must be an Element whose value is a concept. The value set that is being bound can be a value set defined in CIMPL or a canonical URL external to CIMPL.
+Binding is the process of associating an Element with a set of possible values.
 
-CIMPL uses the same [binding strengths as FHIR](https://www.hl7.org/fhir/valueset-binding-strength.html), namely:
+Binding uses the keyword `from`. The object of a binding must be an Element whose Value is a `concept`. The value set that is being bound can be a value set defined in a CIMPL Value Set file, or a canonical URL external to CIMPL.
+
+CIMPL uses the [binding strengths defined in FHIR](https://www.hl7.org/fhir/valueset-binding-strength.html), namely:
 
 * `required` (strongest) indicates that the code must come from the specified value set.
 * `extensible` indicates that the code must come from the specified set _if the value set contains a relevant code_; otherwise a code outside the value set may be chosen.
 * `preferred` indicates that the code should ideally come from the specified value set, but codes outside the value set may also be chosen.
 * `example` (weakest) indicates that the code may come from anywhere; the specified value set is for example purposes only.
 
-The following rules apply to binding in CIMPL 6:
+The following rules apply to binding in CIMPL:
 
 * If no binding strength is specified, the binding is assumed to be `required`.
 * When further constraining an existing binding, the binding strength can stay the same or be made tighter (e.g., replacing an `preferred` binding with an `extensible` or `required` binding), but never loosened.
-* Constraining may leave the binding strength the same and change the value set instead. However, certain changes permitted in CIMPL may violate [FHIR profiling principles](http://hl7.org/fhir/R4/profiling.html#binding-strength). In particular, FHIR will permit a required value set to be replaced by another required value set only if the codes in the new value set are a subset of the codes in the original value set. For extensible bindings, the new value set can contain codes not in the existing value set, but additional codes SHOULD NOT have the same meaning as existing codes in the base value set.
+* Constraining may leave the binding strength the same and change the value set instead. However, certain changes permitted in CIMPL may violate [FHIR profiling principles](http://hl7.org/fhir/R4/profiling.html#binding-strength). In particular, FHIR will permit a `required` value set to be replaced by another `required` value set only if the codes in the new value set are a subset of the codes in the original value set. For extensible bindings, the new value set can contain codes not in the existing value set, but additional codes SHOULD NOT have the same meaning as existing codes in the base value set.
 
-| Example | Syntax |
-|----------|---------|
-| Required binding of a Property (property is an Element with `concept` data type) | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
-| Required binding of a Property (by default) | `ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical` |
-| Extensible binding of a Property | `ReasonCode from ReasonCodeVS (extensible)` |
-| Preferred binding of a Property | `BodyLocation from BodyLocationVS (preferred)` |
-| Required binding of a Value Choice that is a concept | `Value[concept] from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
-| Required binding of a Value Choice that is an Element whose value is a concept | `Value[ClinicalStatus] from http://hl7.org/fhir/ValueSet/condition-clinical (required)` |
+The syntax for binding is different depending on whether the binding is in an Element or another class (Abstract, Entry, or Group).
 
+#### Value Set Binding in Elements
+
+The following syntax is allowable when binding inside an Element:
+
+```
+Value from <value set reference>
+
+Value from <value set reference> (binding strength)
+
+Value[choice] from <value set reference> (binding strength)
+```
+ 
+For example:
+```
+Value from TerminationReasonVS
+
+Value from http://hl7.org/fhir/ValueSet/condition-clinical (preferred)
+
+Value[AgeGroup] from AgeGroupVS (extensible)
+```
+
+**Note:** You **must explicitly specify** which value choice the binding applies to if the value has multiple choices (the third pattern, above).
+
+#### Value Set Binding in Entry, Abstract, or Group
+
+The following syntax is allowable when binding inside an Entry, Abstract, or Group:
+
+```
+<Property> from <value set reference>
+
+<Property> from <value set reference> (binding strength)
+```
+
+For example:
+
+```
+ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical
+
+ReasonCode from ReasonCodeVS (extensible)
+
+BodyLocation from BodyLocationVS (preferred)
+``` 
 ### Includes Constraint
 
-The `includes` constraint is used to specify that a repeating property (array) should contain a certain class or classes. FHIR refers to this as [slicing](https://www.hl7.org/fhir/profiling.html#slicing). In CIMPL, it is a simple matter of saying an array `includes` certain types of elements.
+The `includes` constraint is used to specify that a repeating property (array) should contain a certain class or classes. FHIR refers to this as [slicing](https://www.hl7.org/fhir/profiling.html#slicing). In CIMPL, [slicing](#slicing) is accomplished by declaring that an array `includes` certain types of components.
 
 The `includes` statement has several requirements:
 
-* The elements included in the array must conform to the data type of the array. For example, if the array is `Identifier 0..*`, the items included in the array must inherit from Identifier.
+* The classes included in the array must conform to the data type of the array. For example, if the array is `Identifier 0..*`, the classes included in the array must inherit from Identifier.
 * Cardinality of each inclusion must be specified, and must fit the cardinality of the array. For example, if the array property has a finite maximum cardinality, you cannot include an element with cardinality 0..*.
 * The keyword `includes` is repeated for each item the array should contain.
-* The `includes` constraint does not apply to Values.
+* The `includes` constraint does not apply to Element Values.
 
 Here is an example:
 
 ```
 Property: Measurement 0..*  // the array property
 ...
-Measurement includes TumorLength 1..1 includes TumorWidth 0..1 includes TumorDepth 0..1
 
-```
-TumorLength, TumorWidth, and TumorDepth all must inherit from Measurement, because Measurement is the array property being sliced. Optionally, the second statement can be written on separate lines (since CIMPL is whitespace insensitive):
-
-```
 Measurement
 includes TumorLength 1..1
 includes TumorWidth 0..1
 includes TumorDepth 0..1
 ```
+**Note:** TumorLength, TumorWidth, and TumorDepth all must inherit from Measurement, because the members of the Measurement array must be Measurements.
 
 Here is another example:
 
@@ -654,37 +698,68 @@ includes NationalProviderIdentifier 0..1
 includes TaxIdentificationNumber 0..1
 ```
 
-<!--
-  CM: The statement below is not true in the current form of the language.  We treat includes as "open", meaning that the includes do not close the set of possible values.
-  In other words, we currently would allow other identifiers aside from NPI and TaxID, so it's not true that one of them must be present.
-  If this is not the intent, we should discuss and will have to modify how we render slices based on includes constraints.
--->
-In this case, either NationalProviderIdentifier or TaxIdentificationNumber must be present, even though both are individually optional, because of the 1..* cardinality on Identifier.
+In this case, both NationalProviderIdentifier and TaxIdentificationNumber must have Identifier as their parent.
 
 >**Note:** When using `includes`, special mapping syntax is required. See [Slicing](#slicing).
 
 ### Only Constraint
-Values can have multiple data types. Use the `only` constraint in an Element to narrow the choice of data types. The `only` constraint can only be applied to a Value that has multiple choices. The grammar of `only` constraints varies depending on whether the constraint appears in an Element, or another type of Class.
+Values can have multiple data types. Use the `only` constraint in an Element to narrow the choice of data types. The `only` constraint can only be applied to a value that has multiple choices. The grammar of `only` constraints varies depending on whether the constraint appears in an Element, or another class type.
 
-Example:
+| In the class... | Use the grammar... |
+|----------|---------|--------|
+| `Element` | `Value only <datatype>`  |
+| `Element` | `Value only <datatype1> or <datatype2> or <datatype3>` etc.  |
+| `Entry` or `Group` | `<Property> only <datatype>` <br> _**note**: this is allowed only for a single datatype; to constrain to multiple choices, use the `substitute` constraint (see Example 2, below)_|
+
+
+
+**Example 1:** Multiple value choices narrowed to a single choice
 
 ```
 Element: Priority
 Value: integer or concept
+
+Element: IntegerPriority
+Parent: Priority
+Value only integer
+
+// Both of the following are legal and have the same effect:
+
+Group:  Alarm-One
+Property: Priority
+Priority only integer
+
+Group:  Alarm-Two
+Property: Priority
+Priority substitute IntegerPriority
 ```
 
-| Inside Class... | Grammar |
-|----------|---------|
-| `Element` | `Value only integer` |
-| `Entry` or `Group` | `Priority only integer` |
+**Example 2:** Multiple value choices narrowed to smaller number of choices
 
->**Note:** CIMPL currently does not support narrowing a choice to a more limited choice, for example, narrowing a choice of three types to two types. This feature is planned.
+```
+Element:  Answer
+Description:  "A potential answer with many different allowed datatypes."
+Value:  integer or date or time or string or concept or Resource
 
+Element: TemporalAnswer
+Parent:  Answer
+Description: "An answer that's either a date or time"
+Value only date or time   // legal way to reduce multiple choice!
+
+Group: QuestionAndAnswer
+Property: Question // dummy - not defined
+Property: Answer
+
+Group: QuestionWithTemporalAnswer
+Parent: QuestionAndAnswer
+Answer substitute TemporalAnswer  
+// NOT: "Answer only date or time" and NOT "Answer only TemporalAnswer"
+```
 ***
 
 ## Class File
 
-Class files contain definitions of the information model.
+Class files contain definitions of the information model. Every model defined in CIMPL must have at least one class file.
 
 ### Class File Example
 
@@ -736,41 +811,41 @@ The elements of the class file header are (in order):
 
 For a further description, see [Keywords](#keywords).
 
->**Note:** `Uses` imports namespaces whose classes can be used as if they were locally defined. However, if a class name in an imported namespace collides with a local class name, you must refer to that element by its [fully qualified name](#fully-qualified-names).
+>**Note:** [`Uses`](#Uses) imports namespaces whose classes can be used as if they were locally defined. However, if a class name in an imported namespace collides with a local class name, you must refer to that element by its [fully qualified name](#fully-qualified-names).
 
 ### Class Definitions
 
-Following the header, the class file contains a number of class definitions. The order of definitions does not matter. Each class definition has contains declarations. The first declaration must be Class type and Name. Subsequent declarations can be in any order. Follow the links for further explanation of each item:
+Following the header, the class file contains class definitions. The order of the class definitions does not matter. Each class definition consists of declarations. Follow the links for further explanation of each item:
 
-1. [Class Type and Name Declaration](#class-type-and-name-declaration) (required)
+1. [Class Type and Name Declaration](#class-type-and-name-declaration) (required, must be first)
 1. [Parent Declaration](#parent) (optional)
 1. [Concept Declaration](#concept) (optional)
 1. [Description](#description) (optional but highly recommended)
-1. [Property Declarations](#property) (for Entry, Abstract and Group) or [Value Declaration](#value) (for Element) (optional, but typically present)
+1. [Property Declarations](#property) (for Entry, Abstract and Group), or 
+1. [Value Declaration](#value) (for Element) (optional, but typically present)
 1. [Constraint statements](#constraints) (optional)
 
 ### Class Type and Name Declaration
 
-The first line of all class definitions is a keyword representing the type of building block, followed by a descriptive name you choose. Class names must be unique within a given namespace. CIMPL provides four types of building blocks:
+The first line of all class definitions is a keyword representing the type of class, followed by a descriptive name you choose. Class names must be unique within a given namespace. CIMPL provides four class types:
 
-| Building Block | Description | Has... | Analogous FHIR Type |
+| Class | Description | Has... | Analogous FHIR Type |
 |----------|---------|---------|---------|
-| `Element` | The lowest-level building block, representing a property-value pair. | Value | Property or simple extension |
-| `Group` | A building block comprised of other building blocks, specifically, other Groups, Elements, and Entries. | Properties | Backbone element or complex extension |
-| `Entry`  | A building block representing a group of related information, complete enough to support stand-alone interpretation. | Properties | Resource or Profile |
-| `Abstract` | A special type of Entry that cannot be instantiated, and will not be present in the target mapping. | Properties | none |
+| `Element` | The lowest-level class, representing a property-value pair. | Value | Element or simple extension |
+| `Group` | A class comprised of other classes, specifically, other Groups, Elements, and Entries. | Properties | Backbone element or complex extension |
+| `Entry`  | A class representing a group of related information, complete enough to support stand-alone interpretation. | Properties | Resource or Profile |
+| `Abstract` | A special type of `Entry` that cannot be instantiated, and will not be present in the target mapping. | Properties | none |
 
 ### Properties and Values
 
-When defining classes, bear in mind that an `Element` has exactly one `Value` field and no `Property` fields, whereas, a `Group`, `Entry`, or `Abstract` can have multiple `Property` fields but cannot have a `Value` field. Furthermore, a `Property` cannot have choices, but a `Value` can.
+When defining classes, bear in mind that:
+
+* An `Element` has exactly one `Value` field and no `Property` fields
+* The `Value` field may have more than one choice (using `or`)
+* A `Property` cannot have choices
+* `Group`, `Entry`, or `Abstract` may have multiple `Property` fields, but no `Value`
 
 These differences are illustrated in this example:
-
-```
-Element:           ExpectedPerformanceTime
-Description:       "When an action should be performed."
-Value:             dateTime or TimePeriod or Timing
-```
 
 ```
 Group:             Landmark
@@ -780,22 +855,27 @@ Property:          Direction 0..1
 Property:          Distance 0..1
 ```
 
+```
+Element:           Direction
+Description:       "The direction from the landmark to the body location of interest."
+Value:             concept from AnatomicalDirectionVS (preferred)  
+```
+
 Summary:
 
-| Keyword | Appears in | How Many Times? | Has Cardinality? | Has Choices? | Can be a... |
+| Keyword | Appears with | How Many Times? | Has Cardinality? | Has Choices? | Can be a... |
 |----------|---------|---------|---------|---------|---------|
 | `Value` | `Element` | Exactly Once | No | Yes (optionally) | primitive, Element, Group, or Entry |
 | `Property` | `Group`, `Entry`, or `Abstract` | Zero or more | Yes | No | Element, Group, or Entry |
 
-
 ### Naming Recommendations
 
-All classes in CIMPL, from Elements to Entries, are reusable outside of their original context. To promote reuse, try to choose names that are self-explanatory and context-independent. For example, a property named `Text` is too vague, whereas `DisplayText` and `InstructionText` are more self-explanatory and may be completely understandable when placed into a specific context. However, an overly-specific name like `AddressDisplayText` could inhibit reuse because it affixes the _context_ of an address to the _concept_ of a display text.
+All classes in CIMPL, from `Element` to `Entry`, are reusable outside of their original context. To promote reuse, try to choose names that are self-explanatory and context-independent. For example, a `Property` named `Text` is too vague, whereas `DisplayText` and `InstructionText` are more self-explanatory and may be completely understandable when placed into a specific context. However, an overly-specific name like `AddressDisplayText` could inhibit reuse because it affixes the _context_ of an address to the _concept_ of a display text.
 
 ***
 ## Value Set File
 
-The value set files are used to define custom value sets and codes when existing value set sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient, and a new value set must be defined.
+Value set files are used to define custom value sets and codes when existing value set sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient, and a new value set must be defined.
 
 ### Value Set File Example
 
@@ -828,11 +908,12 @@ ICD10CM#C7B04  "Secondary carcinoid tumors of peritoneum"
 
 ### Value Set File Header
 
-`Grammar` and `Namespace` are required keywords in a Value Set file header. One or more `CodeSystem` will be needed. For a further description, see [Keywords](#keywords).
+`Grammar` and `Namespace` are required keywords in a Value Set file header. A `CodeSystem` declaration is required for every Code System referenced in a value set defined in the Value Set file. For a further description, see [Code System Keyword](#CodeSystem).
+
 
 ### Value Set Definition
 
-Following the header, the Value Set file contains a number of value set definitions. The order of definitions does not matter. Each definition follows a set sequence of declarations. Follow the links for further explanation of each item:
+Following the header, the Value Set file contains value set definitions. The order of definitions does not matter. Each definition follows a set sequence of declarations. Follow the links for further explanation of each item:
 
 1. [Value Set Declaration](#ValueSet) (required)
 1. [Description](#description) (optional but highly recommended)
@@ -841,16 +922,27 @@ Following the header, the Value Set file contains a number of value set definiti
 
 ### Explicit Codes
 
-Explicit code declarations are used to add specific codes to a value set. Codes can either be locally-defined, or selected from external code systems, such as the `CAP#29915` example, in which `29915` is an existing code within the `CAP` code system. If the code is defined locally, the value set name serves as the code system. For the syntax of concept codes, see [Concept Codes](#concept-codes).
+Explicit code declarations are used to add specific codes to a value set. This method of defining a value set is sometimes called *extensional*. Codes can either be locally-defined, or selected from external code systems, such as `ICD10CM#C7B00`, in which `C7B00` is an existing code within the `ICD10CM` code system. If the code is defined locally, the value set name serves as the code system. For the syntax of concept codes, see [Concept Codes](#concept-codes). 
 
 | Type | Example |
 |---------|---------|
 | Locally-defined code | `#proposed "The proposal has been proposed, but not accepted or rejected."` |
-| Externally-defined code | `CAP#29915 "None/Negative"`|
+| Externally-defined code | `ICD10CM#C7B00 "Secondary carcinoid tumors, unspecified site"`|
+
+#### Locally Defined Value Set 
+
+Within a custom value set (one specific to an IG), the individual codes (denoted by # symbol) are conventionally written in lowercase [snake_case](https://en.wikipedia.org/wiki/Snake_case). For example:
+```
+ValueSet:          HomeEnvironmentRiskVS
+#smoke_detectors   "No Smoke Detectors"
+#radiation         "Radon or Other Radiation Source"
+#swimming_pool     "Swimming Pool"
+```
 
 ### Implicit Codes
 
-Implicit code declarations are used to add sets of codes to a value set, in particular, from hierarchically-defined code systems. At present, the only hierarchical system supported is SNOMED-CT. There are three variants involving the `Includes codes` phrase:
+ Implicit code declarations adds codes to a value set using an expression rather than a list. This allows you to, for example, add all codes from a code system, add all codes descending from a point in a hierarchy (currently, only supported in SNOMED-CT). This method of defining a value set is sometimes called *intensional*. There are three variants involving the `Includes codes` phrase:
+
 
 | Phrase | Example | Result|
 |----------|---------|---------|
@@ -864,9 +956,9 @@ Map files control how classes defined in CIMPL are expressed as FHIR profiles. M
 
 ### Inheritance of Mapping Rules
 
-Maps are defined in a series of mapping rules. A powerful feature of CIMPL is that mapping rules are inherited. If your class inherits from a parent class that already is mapped, you do not need to create a new map for your class. However, if you you want specify mappings for new properties, or override the inherited map, you may do so.
+Maps are defined in a series of mapping rules. A powerful feature of CIMPL is that mapping rules are inherited. If your class inherits from a parent class that already is mapped, you do not need to create a new map for your class. However, if you want to specify mappings for a new `Property`, or override the inherited map, you may do so.
 
-The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a mapping. The first mapping rule found will be applied. If no mapping rule is found for a `Property` defined in CIMPL, a FHIR extension will be created. If no mapping is found for an `Entry`, that `Entry` will be mapped to the [Basic resource](https://www.hl7.org/fhir/basic.html). In general, mapping to Basic is not recommended because it has no inherent semantic meaning for implementers. 
+The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a mapping. The first mapping rule found will be applied. If no mapping rule is found for a `Property` defined in CIMPL, a FHIR extension will be created. If no mapping is found for an `Entry`, that `Entry` will be mapped to the [Basic resource](https://www.hl7.org/fhir/basic.html). In general, mapping to Basic is not recommended because it has no inherent semantic meaning for implementers.
 
 ### Mapping CIMPL Primitives to FHIR
 
@@ -894,61 +986,61 @@ CIMPL follows somewhat flexible rules on how CIMPL primitives map to FHIR. For e
 
 ### Map File Example
 
+The following example demonstrates how the class Dosage, defined in the OBF namespace, maps to the FHIR 4.0 data type with the same name. The second example demonstrates mapping between the OBF MedicationStatement class and the FHIR 4.0 US Core MedicationStatement profile.
+
 ```
 Grammar:    Map 5.1
 Namespace:  obf
-Target:     FHIR_STU_3
+Target:     FHIR_R4
 
 Dosage maps to Dosage:
-	DoseSequenceNumber maps to sequence
-	InstructionText maps to text
-	InstructionCode maps to additionalInstruction
-	PatientInstruction maps to patientInstruction
-	Timing maps to timing
-	AsNeeded maps to asNeeded[x]
-	AdministrationSite maps to site
-	RouteIntoBody maps to route
-	Method maps to method
-	DoseAndRate.DoseAmount maps to dose[x]
-	DoseAndRate.DoseRate maps to rate[x]
-	MaxDosePerPeriod maps to maxDosePerPeriod
-	MaxDosePerAdministration maps to maxDosePerAdministration
-	MaxDosePerLifetime maps to maxDosePerLifetime
+    DoseSequenceNumber maps to sequence
+    InstructionText maps to text
+    InstructionCode maps to additionalInstruction
+    PatientInstruction maps to patientInstruction
+    Timing maps to timing
+    AsNeeded maps to asNeeded[x]
+    AdministrationSite maps to site
+    RouteIntoBody maps to route
+    Method maps to method
+    MaxDosePerPeriod maps to maxDosePerPeriod
+    MaxDosePerAdministration maps to maxDosePerAdministration
+    MaxDosePerLifetime maps to maxDosePerLifetime
+    constrain doseAndRate to 0..1
+    DoseAndRate.DoseAmount maps to doseAndRate.dose[x]
+    DoseAndRate.DoseRate maps to doseAndRate.rate[x]
 
 MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-medicationstatement:
-	Identifier maps to identifier
-	MedicationBasedOn maps to basedOn
-	MedicationStatementPartOf maps to partOf
-	CareContext maps to context
-	Status maps to status
-	StatusReason maps to extension
-	Category maps to category
-	MedicationCodeOrReference maps to medication[x]
-	OccurrenceTimeOrPeriod maps to effective[x]
-	StatementDateTime maps to dateAsserted
-	MedicationInformationSource maps to informationSource
-	SubjectOfRecord maps to subject
-	SupportingInformation maps to derivedFrom
-	fix taken to #y
-	constrain reasonNotTaken to 0..0
-	constrain dosage to 0..1
-	ReasonCode maps to reasonCode
-	MedicationReasonReference maps to reasonReference
-	Annotation maps to note
-	Dosage maps to dosage
+    Identifier maps to identifier
+    MedicationBasedOn maps to basedOn
+    MedicationStatementPartOf maps to partOf
+    Status maps to status
+    StatusReason maps to statusReason
+    Category maps to category
+    MedicationCodeOrReference maps to medication[x]
+    SubjectOfRecord maps to subject
+    CareContext maps to context
+    OccurrenceTimeOrPeriod maps to effective[x]
+    StatementDateTime maps to dateAsserted
+    MedicationInformationSource maps to informationSource
+    SupportingInformation maps to derivedFrom
+    ReasonCode maps to reasonCode
+    MedicationReasonReference maps to reasonReference
+    Annotation maps to note
+    Dosage maps to dosage
 ```
 
 ### Map File Header
 
-The header of a map file must include a `Grammar`, `Namespace`, and `Target` keywords. The Target keyword gives the version of FHIR that the CIMPL model is mapped to, either `FHIR_DSTU_2`, `FHIR_STU_3`, or `FHIR_R4`.
+The header of a map file must include the `Grammar`, `Namespace`, and `Target` keywords. The `Grammar` keyword declares the CIMPL Mapping Grammar Version. This version is currently 5.1. The `Namespace` keyword relates the maps defined in this file to the Class file in the same namespace. The `Target` keyword provides the version of FHIR that the CIMPL model is mapped to, either `FHIR_DSTU_2`, `FHIR_STU_3`, or `FHIR_R4`. 
 
 For a further description of the header keywords, see [Keywords](#keywords).
 
 ### Setting the Mapping Target
 
-Each block in a mapping file begins with a statement that establishes a resource, profile, or complex data type that is the target for the mapping. In CIMPL map files, the item to the left of `maps to` comes from your CIMPL data model and the item to the right is an element in the target output. The mapping target can be a FHIR resource or profile that is part of the target FHIR release version. The initial statement in each mapping block must end with a colon (:).
+Each section in a mapping file begins with a statement that establishes a resource, profile, or complex data type that is the target for the mapping. In CIMPL map files, the item to the left of `maps to` comes from your CIMPL data model and the item to the right is an element in the target output. The mapping target can be a FHIR resource, profile, or complex data type that is part of the target FHIR release version. The initial statement in each mapping block must end with a colon (:).
 
-| CIMPL Building Block | FHIR Target | Example |
+| CIMPL Class | FHIR Target | Example |
 |----------|---------|---------|
 | Entry | Resource | `SocialHistoryObservation maps to Observation:`|
 | Entry | Profile | `LaboratoryObservation maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-observationresults:` |
@@ -956,15 +1048,15 @@ Each block in a mapping file begins with a statement that establishes a resource
 
 ### Mapping Properties
 
-After the first line, the remainder of the block consists of statements that map CIMPL properties to FHIR elements. Each statement begins with a [CIMPL path](#cimpl-paths), followed by the phrase `maps to`, and ending with the target FHIR path.
+After the first line, which establishes the class to be mapped, the remainder of the section consists of statements that map CIMPL properties to FHIR elements. Each statement begins with a [CIMPL path](#cimpl-paths), followed by the phrase `maps to`, and ending with the target FHIR path.
 
-With FHIR as the target output, the right-hand side of the map statement can point to any field on a FHIR resource, including:
+With FHIR as the target output, the right-hand side of the map statement can point to any element of a FHIR resource, including:
 
-* Fields that are at the root of the resource (e.g., `maritalStatus`)
-* Fields that are child elements of root elements on the resource (e.g., `reaction.substance`)
-* Fields that have a [choice of data types](https://www.hl7.org/fhir/formats.html#choice) (e.g., `multipleBirth[x].boolean`)
-* Fields that have been defined in existing profiles or other `StructureDefinition` resources (e.g., `http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity`)
-* Fields that support FHIR Reference() types.
+* Elements that are at the root of the resource (e.g., `maritalStatus`)
+* Elements that are child elements of root elements on the resource (e.g., `reaction.substance`)
+* Elements that have a [choice of data types](https://www.hl7.org/fhir/formats.html#choice) (e.g., `multipleBirth[x].boolean`)
+* Elements that have been defined in existing profiles or other `StructureDefinition` resources (e.g., `http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity`)
+* Elements that support FHIR Reference() types.
 
 | CIMPL type | FHIR type | Example |
 |----------|---------|---------|
@@ -988,9 +1080,9 @@ Example:
 
 ### Placement of Extensions
 
-As mentioned above, if no mapping rule is found for a property, an extension will be automatically created. By default, the extension will be a top-level element in the FHIR profile. Sometimes you may want the extension to appear in a different place, perhaps inside a nested element. To put the extension precisely where you want it, you can map to FHIR paths that include `extension`.
+As mentioned above, if no mapping rule is found for a property, an extension to the FHIR resource or profile will be automatically created. By default, the extension will be a top-level element in the FHIR profile. Sometimes you may want the extension to appear in a different place, perhaps inside a nested element. To put the extension precisely where you want it, you can map to FHIR paths that include `extension`.
 
-Here's an example involving AdverseEvent:
+Here's an example involving the FHIR resource [AdverseEvent](https://www.hl7.org/fhir/adverseevent.html):
 
 `PotentialCause.CauseCategory maps to suspectEntity.extension`
 
@@ -998,13 +1090,13 @@ This rule will create an extension named `CauseCategory` under AdverseEvent.susp
 
 `DetectionTime maps to extension`
 
-leave the default behavior unchanged, and are not required. However, they can be used to document the intent to create an extension.
+leave the default behavior unchanged, and are not required. However, they can be used to document the _intent_ to create an extension.
 
 ### Special Mapping Statements
 
 #### fix
 
-`fix` allows FHIR fields to be assigned a value. Note that it is the FHIR resource that is getting the value, not the CIMPL class. This enables you to fix a FHIR value without having to change the class definition, which would affect all potential mappings. This also allows you to fix FHIR values for properties that have no corresponding property in the CIMPL definition.
+`fix` allows FHIR fields to be assigned a value. Note that it is the FHIR profile that is getting the value, not the CIMPL class. This enables you to fix a FHIR value without having to change the class definition, which would affect all potential mappings. This also allows you to fix FHIR values for properties that have no corresponding property in the CIMPL definition.
 
 Example:
 
@@ -1020,7 +1112,7 @@ Example:
 
 ### Slicing
 
-When fields are allowed to repeat on a target model (e.g., have cardinality with an upper bound greater than 1), it is common practice to specify which CIMPL elements are mapped to instances of that repeated field on the target model.  This process is called **slicing**. For example, the [FHIR Task resource](https://www.hl7.org/fhir/task.html) allows for an arbitrary number of `input` fields to be added.  To ensure that each `input` field is uniquely addressable by a parsing engine, those inputs need to be differentiated by a **discriminator**.
+_Slicing_ involves specifying the the type of elements that can be contained in an array. An array is a property whose upper cardinality is greater than one can potentially be sliced. In CIMPL, the [includes constraint](#includes-constraint) creates slices. This section discusses how slices in CIMPL are be mapped to FHIR.
 
 See the FHIR documentation for more detail about [slicing](https://www.hl7.org/fhir/profiling.html#slicing).
 
