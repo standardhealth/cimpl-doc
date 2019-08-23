@@ -14,7 +14,8 @@ The CIMPL Hello World Tutorial is targeted to software developers or people comf
 
 ### Prerequisite
 
-This guide assumes you have: 
+This guide assumes you have:
+
 * Installed the latest version of the SHR-CLI software as documented in [CIMPL SetUp and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
 * A text editor (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required)
 
@@ -93,7 +94,7 @@ HELLO HELLO HELLO
 
 ## 4) Create a Configuration File
 
-To point the SHR-CLI tool at the right files, and assign the right names to things, we need a configuration file. Create an `ig-hello-world-config.json` file with these contents:
+To point the SHR-CLI tool at the right files, and assign the right names to things, we need a configuration file. Create an `ig-hello-world-config.json` file and copy and paste this content:
 
 ```
 {
