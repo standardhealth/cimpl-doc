@@ -1,5 +1,6 @@
 # CIMPL 6.0 In-depth Tutorial
-_This is an extensive tutorial, meant to educate people about many different aspects of CIMPL. If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL Language Reference documentation](cimpl6LanguageReference.md). The tooling is described in the [CIMPL Tooling Reference](cimpl6ToolingReference.md)._
+
+_This is an extensive tutorial, meant to educate people about many different aspects of CIMPL. If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md).  If you're looking for detailed guidance on CIMPL syntax, try the [CIMPL Language Reference documentation](cimpl6LanguageReference.md). The SHR-CLI tool is described in the [CIMPL Tooling Reference](cimpl6ToolingReference.md)._
 
 ***
 
@@ -9,17 +10,17 @@ _This is an extensive tutorial, meant to educate people about many different asp
 
 ***
 
-# Pre-requisite
+## Pre-requisite
 
 This tutorial assumes that you already have the following software components installed:
 
-* [CIMPL SHR-CLI](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
+* [SHR-CLI](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
 * A text-editor (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required)
 
 >**Note:** _This tutorial was run using a MacOS environment.  While the content of CIMPL authoring are identical regardless of platform, the command lines run in a command line terminal will differ in file path specifications.  Namely, for a Windows command line terminal, replace all the path references of forward-slash `/` to back-slash `\`._
 
 
-## Tutorial Pre-configuration
+### Tutorial Pre-configuration
 
 To keep this tutorial more focused on how to model, we're first going to setup the environment with some supporting configuration and core data type files.
 
@@ -50,7 +51,7 @@ Copy the following files to the `myExampleC6` sub-directory.  The files contain 
 
 The first three of these files contain definitions of the basic data types used in CIMPL. The last file contains configurations related to compiling the example and generating the Implementation Guide.
 
-# Introduction
+## Introduction
 
 This tutorial will guide the user in a step by step process to build a basic clinical data model using the _"Clean Slate"_ method of CIMPL authoring. It will also illustrate the modeling practice briefly described in Appendix A of the [CIMPL Authoring Guide](cimpl6Authoring.md).
 
@@ -64,11 +65,11 @@ The steps are briefly summarized here for conciseness:
 * Generate the FHIR Implementation Guide
 * Create FHIR examples for each profile (optional)
 
-## Define Use Cases
+### Define Use Cases
 
 For our example, we'll focus on [obstructive sleep apnea (OSA)](https://www.webmd.com/sleep-disorders/guide/understanding-obstructive-sleep-apnea-syndrome#1). The goal is to measure the prevalence of patients diagnosed with OSA, stratified by age groups. A secondary goal is to further identify the population by gender. Electronic Health Records (EHRs) are the primary source for this information.
 
-## Create a High-level Conceptual Model
+### Create a High-level Conceptual Model
 
 A conceptual diagram is shown in the figure below:
 
@@ -76,7 +77,7 @@ A conceptual diagram is shown in the figure below:
 
 While this case is very simple, diagrams of this sort are valuable to the non-technical community, and to drive further design of the model.
 
-## Create a List of Data Elements
+### Create a List of Data Elements
 
 Creating a list of data elements helps to refine the contents, data types, cardinality, and clinical terminologies needed in the model. It helps at this stage to research existing standards and related models, but for this example, we won't look beyond FHIR resources for inspiration.
 
@@ -89,7 +90,7 @@ The table below is a high level summary of the elements we need in this use case
 | OSADisorder | OSADisorderCode | concept | SNOMED codes for OSA |
 | OSADisorder | OSADisorderStatus | concept | HL7 status codes |
 
-## Create the Logical Model in CIMPL
+### Create the Logical Model in CIMPL
 
 Now we can start authoring models in the CIMPL development environment.
 
@@ -167,7 +168,7 @@ Here we specify the entity called `ObstructiveSleepApneaDisorder` containing two
 
 ### Creating Custom Value Sets
 
-Create a new file called **`myExample_vs.txt`** underneath the `myExampleC6` directory.
+Create a new file called **`myExample-vs.txt`** underneath the `myExampleC6` directory.
 
 Add the CIMPL value set header information below:
 
@@ -202,18 +203,18 @@ STAT#resolved   "Resolved"
 Here we have defined the terminology coding system reference by the value set, specified using the `CodeSystem:` keyword up front.  This allows us to tag a short-hand notation of the coding system to the code for each term in the value set.  It also allows for the flexibility of specifying terms with different coding systems within a value set, if applicable.
 
 The format for specifying each term in the value set is as follows:
-`<CodeSystem Abbreviation>#<Term Code>`
+`<CodeSystem Alias>#<Code> "<Display>"`, for example: `STAT#active "Active"` where:
 
-For example: `HL7CONDSTAT#active      "Active"` Where:
-
-* HL7CONDSTAT is the value assigned to `CodeSystem:` which contains the canonical URL or urn: of the coding system.
+* `STAT` is an alias that represents the http://terminology.hl7.org/CodeSystem/condition-clinical code system, assigned in the `CodeSystem:` statement
 * `#` is a delimiter separating the coding system and the code
-* _`active`_ is the term code for the concept
+* `active` is the term code for the concept
 * `"Active"` is the display name associated with the term code.
 
-## Create Logical Model to FHIR mappings
+_**Note:** Code system aliases are required. Direct use of the URL or urn: in specifying a code (e.g., `http://terminology.hl7.org/CodeSystem/condition-clinical#active`) is NOT currently supported in CIMPL._
 
-Create a file called **`myExample_map_r4.txt`** under the `myExampleC6` sub-directory.
+### Create Logical Model to FHIR mappings
+
+Create a file called **`myExample-map-r4.txt`** under the `myExampleC6` sub-directory.
 
 Copy the following header information to the top of the file:
 
@@ -309,15 +310,13 @@ But let's review some highlights of this file.  Click **[here](./cimplTutorial/i
 | `target` | ["myExample"] | JSON array containing the namespace(s) targeted by the filtering strategy. |
 | `indexContent` | "index.html" | The file containing the IG homepage. |
 
-
 ### Running scripts to compile CIMPL and IG Generation
-
 
 Generating the FHIR IG is a 2-step process:
 
 Before executing Step 1 to compile your CIMPL code, an `examples` directory must exist. It can be empty.  
 
-Create a subdirectory called **`examples_myFhirExamplesFolder`** under the `myExampleC6` folder.
+Create a subdirectory called **`examples-myFhirExamplesFolder`** under the `myExampleC6` folder.
 
 **Step 1:**  Run the Command Line Interface (SHR-CLI) compiler.
 
@@ -328,7 +327,10 @@ Create a subdirectory called **`examples_myFhirExamplesFolder`** under the `myEx
     `node . ../myExampleC6 -l error -o myExampleC6r4 -c ig-myExampleR4-config.json`
 
 Where:
-* the first parameter after the node command, `../myExampleC6` is the path where your CIMPL modeling and configuration files are located.
+
+* `node` is the command that starts the SHR-CLI application.
+* The first dot `.` represents the path to the SHR-CLI tool, in this case, the current working directory. The dot represents the current directory.
+* `../myExampleC6` is the path where your CIMPL modeling and configuration files are located. The double dot `..` represents the directory above the current working directory.
 * the `-l` parameter and _`error`_ value specifies logging to only show errors.
 * the `-o` parameter and _`myExampleC6r4`_ value specify the name of the directory in which you want to generate the IG output.
 * the `-c` parameter and _`ig-myExampleR4-config.json`_ value specify the name of the CIMPL configuration file to reference for the output.
@@ -349,7 +351,7 @@ Navigate to the `~/cimpl/shr-cli/myExampleC6r4/fhir/guide/output` directory and 
 
 ![Tutorial 1 IG Homepage](img_cimpl/cimplTutorial1_IGHomepage.png)
 
-## Create FHIR examples
+### Create FHIR examples
 
 We're now going to add a FHIR example that conforms to our profile. This step adds an example file to the directory you created in the first step. Since the details creating FHIR examples are out of scope for this tutorial, we're going to supply one for you.
 
@@ -359,16 +361,16 @@ We're now going to add a FHIR example that conforms to our profile. This step ad
 Directory:  cimpl
             |_ shr-cli
             |_ myExampleC6
-               |_ examples_myFhirExamplesFolder
+               |_ examples-myFhirExamplesFolder
 ```
 
-Copy the file [myPatientExample1.json](./cimplTutorial/myPatientExample1.json) and its contents into the `examples_myFhirExamplesFolder`.
+Copy the file [myPatientExample1.json](./cimplTutorial/myPatientExample1.json) and its contents into the `-myFhirExamplesFolder`.
 
 >**Note:** _The FHIR example can contain additional content, and still pass validation. What matters is that the requirements of the profile are met._
 
 Add the following line to your cimpl configuration file within the `"implementationGuide":` JSON object:
 
-**`"examples": "examples_myFhirExamplesFolder"`**
+**`"examples": "examples-myFhirExamplesFolder"`**
 
 We have already added it for you so you can just check that the parameter is there.
 
@@ -384,7 +386,7 @@ Now run SHR-CLI and the IG publisher commands again:
 
 Open the index.html file from the generated IG output in your browser and navigate to the **Profiles** tab and select the MyPatient profile.
 
-You'll now find a tab called `Examples` which will contain a URL to the example within the `examples_myFhirExamplesFolder`.
+You'll now find a tab called `Examples` which will contain a URL to the example within the `examples-myFhirExamplesFolder`.
 
 ![Tutorial1 FHIR Example IG Location](img_cimpl/fhirexample1Display.png)
 

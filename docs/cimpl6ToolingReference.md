@@ -406,7 +406,7 @@ $ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 
 * `node` is the command that starts the SHR-CLI application.
 * The dot `.` represents the current directory in Windows and macOS. In this example, the tooling directory is the current working directory.
-* `../shr-spec/spec` represents the location of the specification directory. The the double dot `..` represents the directory above the current working directory, in Windows and macOS. In this case, `/shr-spec` is parallel to the tooling directory, and `/spec` is one level below that.
+* `../shr-spec/spec` represents the location of the specification directory. The double dot `..` represents the directory above the current working directory, in Windows and macOS. In this case, `/shr-spec` is parallel to the tooling directory, and `/spec` is one level below that.
 * `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is `../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json`
 * `-l error` is an option that sets tells the system to surpress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
 

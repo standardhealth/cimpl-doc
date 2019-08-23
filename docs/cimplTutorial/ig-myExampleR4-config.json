@@ -19,7 +19,7 @@
 		"includeLogicalModels": false,
 		"includeModelDoc": false,
         "indexContent": "index.html",
-        "examples": "examples_myFhirExamplesFolder",
+        "examples": "examples-myFhirExamplesFolder",
 		"primarySelectionStrategy":
 		{
             "strategy": "namespace",
