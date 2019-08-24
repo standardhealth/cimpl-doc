@@ -33,6 +33,8 @@
         
         var pageToc = [
           {title: "CIMPL Class Library (aka Objective FHIR)", url: "#_top", children: [
+              {title: "Preface", url: "#preface" },
+              {title: "Table of Contents", url: "#table-of-contents" },
               {title: "Overview", url: "#overview" },
               {title: "Key Concepts", url: "#key-concepts" },
               {title: "Class Hierarchy", url: "#class-hierarchy" },
@@ -64,20 +66,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../cimpl6Reference/" class="btn btn-xs btn-default pull-right">
+      <a href="../cimpl6LanguageReference/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../cimpl6Reference/" class="btn btn-xs btn-link">
-        CIMPL 6.0 Reference Documentation
+      <a href="../cimpl6LanguageReference/" class="btn btn-xs btn-link">
+        CIMPL 6.0 Language Reference
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../cimpl6UserGuide/" class="btn btn-xs btn-default pull-left">
+      <a href="../cimpl6Authoring/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../cimpl6UserGuide/" class="btn btn-xs btn-link">
-        CIMPL Authoring
+        Previous</a><a href="../cimpl6Authoring/" class="btn btn-xs btn-link">
+        CIMPL Authoring Guide
       </a>
     </div>
     
@@ -89,12 +91,31 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <blockquote>
 <p><strong>Note:</strong> This documentation is in draft form.</p>
 </blockquote>
-<p><em>This is an introductory guide to CIMPL's class library: <strong>Objective FHIR Version 1.0</strong>. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the <a href="../cimpl6Tutorial_detail/">CIMPL 6 Tutorial</a>, the <a href="../cimpl6UserGuide/">CIMPL 6 User Guide</a>, or the <a href="../cimpl6Reference/">CIMPL 6 Reference Manual</a>.</em></p>
+<h2 id="preface">Preface</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>This document presents an overview of the CIMPL class library (also known as Objective FHIR, or OBF), a set of pre-mapped datatypes and classes that can be used as the basis for a clinical model. Use of OBF with CIMPL is optional, but recommended. Using only the OBF datatypes with CIMPL is also possible and appropriate for some projects.</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>The CIMPL Class Library Guide is targeted to modelers with some familiarity with CIMPL. Experience with object-oriented modeling, concepts such as class inheritance, is assumed. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
+<li>A text editor (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
+<li>Reviewed the <a href="../cimpl6Tutorial_helloWorld/">Hello World Tutorial</a>.</li>
+</ul>
 <hr />
-<p><strong>Table of Contents</strong></p>
+<h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-class-library-aka-objective-fhir">CIMPL Class Library (aka Objective FHIR)</a><ul>
+<li><a href="#preface">Preface</a><ul>
+<li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
+<li><a href="#intended-audience">Intended Audience</a></li>
+<li><a href="#prerequisite">Prerequisite</a></li>
+</ul>
+</li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#overview">Overview</a><ul>
 <li><a href="#philosophy">Philosophy</a></li>
 <li><a href="#meta-model">Meta-Model</a></li>
@@ -131,7 +152,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <hr />
 <h2 id="overview">Overview</h2>
 <p>Objective FHIR ("OBF") is an <a href="https://en.wikipedia.org/wiki/Object-oriented_programming"><strong>object-oriented</strong></a> abstraction of FHIR. It provides modelers a way to define a detailed clinical information model by subclassing, extending, and constraining a pre-existing class library. These classes can then be translated automatically into FHIR profiles, FHIR Implementation Guides, data dictionaries, schemas, and other assets, using a choice of the three major FHIR versions: DSTU 2, STU 3, and R4.</p>
-<p>OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. <em>Tabula rasa</em> (blank slate) use of CIMPL is also possible and appropriate for some projects. For more information on the choice between using OBF and the <em>tabula rasa</em> approach, see <a href="../cimpl6UserGuide/">CIMPL 6 User Guide</a>.</p>
+<p>OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. "blank slate" use of CIMPL is also possible and appropriate for some projects.</p>
+<p>(<strong>TO DO: Move discussion of Blank Slate approach to here</strong>)</p>
 <h3 id="philosophy">Philosophy</h3>
 <p>OBF classes resemble FHIR R4, but differ in carefully considered ways that increase consistency and reusability of the resulting models and profiles. Objective FHIR allows data structures of all sorts to be reused. This means that individual data elements and frequently-occurring structures can be defined once and used repeatedly.</p>
 <p>Objective FHIR addresses one of the most frequent criticisms of FHIR, namely, its <a href="https://wolandscat.net/2019/05/05/a-fhir-experience-consistently-inconsistent/">lack of consistency</a>. FHIR not only uses different <em>names</em> for equivalent things in different resources, but sometimes, entirely different modeling approaches. This is almost certainly the result of having resources managed by separate HL7 work groups. OBF creates a layer that smooths over many of these differences, not for aesthetic or theoretical reasons, but to make the whole framework easier to learn, enable greater code reuse, and most importantly, to make the resulting clinical models <em>more interoperable</em>.</p>
@@ -186,7 +208,7 @@ Property:          RegionStudied 0..*
 <p>When clinical modeling projects grow to a certain size, activities increasingly revolve around repeatedly revisiting, revising, refactoring, and renaming. As a text language, CIMPL allows you to do global search and replace, which will become your new <a href="https://en.wikipedia.org/wiki/Best_friends_forever">BFF</a>. Using text also enables meaningful source code control. CIMPL files can be hosted in Github, which gives model developers the ability distribute work across multiple branches, compare changes (with meaningful diffs), and automatically merge contributions, allowing projects to scale in ways that visual editors can't support.</p>
 <h2 id="key-concepts">Key Concepts</h2>
 <h3 id="data-types">Data Types</h3>
-<p>The primitive types used in OBF are those defined in CIMPL, which correspond one-to-one with FHIR primitives, except for <a href="../cimpl6Reference/#concept-codes">the way CIMPL handles coded types</a>.</p>
+<p>The primitive types used in OBF are those defined in CIMPL, which correspond one-to-one with FHIR primitives, except for <a href="../cimpl6LanguageReference/#concept-codes">the way CIMPL handles coded types</a>.</p>
 <p>Complex data types in OBF are also the same as FHIR R4. They are found in the <code>obf.datatype</code> namespace. Since complex types like Quantity are ubiquitous, you will almost certainly need to import the <code>obf.datatype</code> into your namespace. This is done using the <code>Uses</code> keyword.</p>
 <h3 id="naming">Naming</h3>
 <p>Attribute names in OBF may differ from FHIR names. When they do so, it is usually to make the meaning of the attribute more explicit. OBF names are meant to be meaningful outside of the context of a single class.</p>
@@ -299,11 +321,13 @@ Property:          RegionStudied 0..*
 </tbody>
 </table>
 <h2 id="class-hierarchy">Class Hierarchy</h2>
-<p>In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the <a href="#model-documentation">OBF model documentation</a>.</p>
+<p>In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the <a href="http://standardhealthrecord.org/guides/obf/modeldoc.html">OBF Reference Model Specification</a>.</p>
 <p><img alt="The Objective FHIR Class Hierarchy (partial)" src="../img_cimpl/obf.png" /></p>
 <p>The purpose of the hierarchy is two-fold:</p>
-<p>1) To define properties uniformly across multiple classes. For example, almost every FHIR resource should have an author, but <a href="https://lightmyfhir.org/2019/05/03/fhir-inconsistency-data-please/">many don't, and those that do use a variety of different names</a>.  It shouldn't be left up to individual resources, managed by different work groups, to each define <code>author</code> themselves. Inevitably, they will define it differently, or forget entirely, as FHIR R4 shows. Inheriting from a common parent prevents that.
-1) To provide a set of ready-made classes that users can extend. An example is <code>QuantitativeLaboratoryObservation</code>, based on <code>Observation</code>.</p>
+<ol>
+<li>To define properties uniformly across multiple classes. For example, almost every FHIR resource should have an author, but <a href="https://lightmyfhir.org/2019/05/03/fhir-inconsistency-data-please/">many don't, and those that do use a variety of different names</a>.  It shouldn't be left up to individual resources, managed by different work groups, to each define <code>author</code> themselves. Inevitably, they will define it differently, or forget entirely, as FHIR R4 shows. Inheriting from a common parent prevents that.</li>
+<li>To provide a set of ready-made classes that users can extend. An example is <code>QuantitativeLaboratoryObservation</code>, based on <code>Observation</code>.</li>
+</ol>
 <p>FHIR's approach to uniformity is to define certain patterns, such as the <a href="https://www.hl7.org/fhir/request.html">request pattern</a>. However, FHIR stops short of actually implementing these patterns across resources. Implementations can't assume all requests have the same core properties, and can't write generic methods for processing requests. Instead, each type of request must be implemented as a one-off.</p>
 <h3 id="resource-domain-resource-metadata">Resource, Domain Resource, Metadata</h3>
 <p>At the top of the OBF hierarchy are the classes Resource and DomainResource. They involve the Metadata group. These classes align with FHIR.</p>
@@ -316,7 +340,7 @@ Property:          RegionStudied 0..*
 <li>Roles are patient, practitioner, related person, and research subject. FHIR models these resources by conflating the role with the person playing the role. Although this is not the optimal model, OBF continues that practice, just to make OBF more obvious to FHIR users. Earlier versions of OBF modeled a person separately from the role(s) that person could play.</li>
 </ul>
 <h3 id="clinical-statement">Clinical Statement</h3>
-<p><code>ClinicalStatement</code> provides properties and behaviors common to entries in a medical record. This class also allows for common representation of simple data provenance elements: <code>SubjectOfRecord</code>, <code>CareContext</code> (<code>Encounter</code> or <code>EpisodeOfCare</code>), and <code>StatementDateTime</code>. </p>
+<p><code>ClinicalStatement</code> provides properties and behaviors common to entries in a medical record. This class also allows for common representation of simple data provenance elements: <code>SubjectOfRecord</code>, <code>CareContext</code> (<code>Encounter</code> or <code>EpisodeOfCare</code>), and <code>StatementDateTime</code>.</p>
 <p>Below <code>ClinicalStatement</code> are two classes, <code>SituationStatement</code> and <code>ActionStatement</code>:</p>
 <ul>
 <li><code>SituationStatements</code> covers many types of descriptive information, including opinions, evaluations, laboratory results, genomic data, and social information.</li>
@@ -328,7 +352,7 @@ Property:          RegionStudied 0..*
 <p>Conceptually, Objective FHIR could be expressed in other modeling frameworks, besides CIMPL. Some of the potential frameworks include:</p>
 <ul>
 <li><a href="https://www.uml.org/">Unified Modeling Language (UML)</a> for structure coupled with <a href="https://www.omg.org/spec/OCL">Object Constraint Language</a> (OCL) for constraint representation. The <a href="https://www.fhims.org/">Federal Health Information Model initiative</a> (FHIM) has conducted some experiments using <a href="https://projects.eclipse.org/proposals/model-driven-health-tools">Model-Driven Health Tools</a> to try and convert UML/OCL models into FHIR profiles.</li>
-<li><a href="https://specifications.openehr.org/releases/LANG/latest/bmm.html">Basic Meta-Model</a> (BMM) for class hierarchy, coupled with <a href="https://specifications.openehr.org/releases/AM/latest/ADL2.html">Archetype Description Language</a> (ADL) for constraint representation. BMM/ADL has been used in <a href="https://www.openehr.org/">openEHR</a>. <a href="https://faculty.utah.edu/u6017542-Claude_Nanjo/contact/index.hml">Claude Nanjo of University of Utah</a> has conducted some experiments to try to convert ADL/BMM models into FHIR profiles. </li>
+<li><a href="https://specifications.openehr.org/releases/LANG/latest/bmm.html">Basic Meta-Model</a> (BMM) for class hierarchy, coupled with <a href="https://specifications.openehr.org/releases/AM/latest/ADL2.html">Archetype Description Language</a> (ADL) for constraint representation. BMM/ADL has been used in <a href="https://www.openehr.org/">openEHR</a>. <a href="https://faculty.utah.edu/u6017542-Claude_Nanjo/contact/index.hml">Claude Nanjo of University of Utah</a> has conducted some experiments to try to convert ADL/BMM models into FHIR profiles.</li>
 <li><a href="http://www.clinicalelement.com/#/">Clinical Element Models</a>. CEMs are being used to produce some <a href="http://models.opencimi.org/ig/">Clinical Information Modeling Initiative (CIMI) FHIR Implementation Guides</a>. Essential parts of CEM-related tooling are internal to Intermountain Healthcare.</li>
 </ul>
 <p>Objective FHIR is an <a href="https://github.com/standardhealth/shr-models">open source project</a>, and we welcome contributions.</p>
@@ -344,20 +368,20 @@ Property:          RegionStudied 0..*
   <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
     <div class="wm-article-nav pull-right">
-      <a href="../cimpl6Reference/" class="btn btn-xs btn-default pull-right">
+      <a href="../cimpl6LanguageReference/" class="btn btn-xs btn-default pull-right">
         Next
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
-      <a href="../cimpl6Reference/" class="btn btn-xs btn-link">
-        CIMPL 6.0 Reference Documentation
+      <a href="../cimpl6LanguageReference/" class="btn btn-xs btn-link">
+        CIMPL 6.0 Language Reference
       </a>
     </div>
     
     <div class="wm-article-nav">
-      <a href="../cimpl6UserGuide/" class="btn btn-xs btn-default pull-left">
+      <a href="../cimpl6Authoring/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../cimpl6UserGuide/" class="btn btn-xs btn-link">
-        CIMPL Authoring
+        Previous</a><a href="../cimpl6Authoring/" class="btn btn-xs btn-link">
+        CIMPL Authoring Guide
       </a>
     </div>
     
@@ -366,7 +390,7 @@ Property:          RegionStudied 0..*
     <br>
 </div>
 
-<footer class="col-md-12 wm-page-content">
+<footer class="col-md-12 wm-page-content"><p>© 2019 The MITRE Corporation. All rights reserved.<br>Approved for Public Release. Distribution Unlimited. Case Number 16-1988</p>
   <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
 </footer>
 

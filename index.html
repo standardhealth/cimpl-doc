@@ -117,9 +117,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Tutorial_helloWorld/" class="wm-article-link wm-toc-text">CIMPL 6.0 'Hello World' Tutorial</a>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Tutorial_helloWorld/" class="wm-article-link wm-toc-text">CIMPL 'Hello World' Tutorial</a>
 </li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Tutorial_detail/" class="wm-article-link wm-toc-text">CIMPL 6.0 In-depth Tutorial</a>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Tutorial_detail/" class="wm-article-link wm-toc-text">CIMPL In-depth Tutorial</a>
 </li>
   </ul>
 </li>
@@ -128,29 +128,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6UserGuide/" class="wm-article-link wm-toc-text">CIMPL Authoring</a>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Authoring/" class="wm-article-link wm-toc-text">CIMPL Authoring Guide</a>
 </li>
       <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6ObjectiveFHIR/" class="wm-article-link wm-toc-text">CIMPL Class Library (aka Objective FHIR)</a>
 </li>
   </ul>
 </li>
 
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Reference Manual</span>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Reference Manuals</span>
 </li>
 <li class="wm-toc-li-nested collapse">
   <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Reference/" class="wm-article-link wm-toc-text">CIMPL 6.0 Reference Documentation</a>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6LanguageReference/" class="wm-article-link wm-toc-text">CIMPL 6.0 Language Reference</a>
 </li>
-  </ul>
-</li>
-
-        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Archive</span>
-</li>
-<li class="wm-toc-li-nested collapse">
-  <ul class="wm-toctree">
-      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl5Reference/" class="wm-article-link wm-toc-text">CIMPL 5.0 Reference Documentation</a>
-</li>
-      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl5Tutorial/" class="wm-article-link wm-toc-text">CIMPL 5.0 Tutorial</a>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6ToolingReference/" class="wm-article-link wm-toc-text">CIMPL 6.0 Tooling Reference</a>
 </li>
   </ul>
 </li>
@@ -176,16 +167,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li><a href="cimplInstall/"><strong>Installation</strong></a> - Installing and configuring the CIMPL development environment.</li>
 <li><strong>CIMPL Tutorials</strong><ul>
-<li><a href="cimpl6Tutorial_helloWorld/">CIMPL HelloWorld Tutorial</a> - a very simple tutorial which creates a FHIR implemenation guide (IG).</li>
+<li><a href="cimpl6Tutorial_helloWorld/">CIMPL HelloWorld Tutorial</a> - a very simple tutorial which creates a FHIR Implementation Guide (IG).</li>
 <li><a href="cimpl6Tutorial_detail/">CIMPL Detailed Tutorial</a> - Walkthrough example of how to author a detailed clinical model using CIMPL 6.0 grammar.</li>
 </ul>
 </li>
 <li><strong>CIMPL User Guides</strong><ul>
-<li><a href="cimpl6UserGuide/">CIMPL Authoring</a> - A guide on authoring within the CIMPL development environment.</li>
-<li><a href="cimpl6ObjectiveFHIR">CIMPL Class Library (aka Objective FHIR)</a> - A description of the base classes provided with CIMPL</li>
+<li><a href="cimpl6Authoring/">CIMPL Authoring</a> - A guide on authoring within the CIMPL development environment.</li>
+<li><a href="cimpl6ObjectiveFHIR">CIMPL Class Library (aka Objective FHIR)</a> - An overview of the base classes provided with CIMPL.</li>
 </ul>
 </li>
-<li><a href="cimpl6Reference/"><strong>CIMPL Reference Manual</strong></a> - A detailed reference of CIMPL data primitives and syntax.  The current version of CIMPL Grammar is CIMPL 6.0.</li>
+<li><strong>CIMPL Reference Manuals</strong><ul>
+<li><a href="cimpl6LanguageReference/">CIMPL Language Reference Manual</a> - A detailed reference of CIMPL data primitives and syntax.  The current version of CIMPL Grammar is CIMPL 6.0.</li>
+<li><a href="cimpl6ToolingReference/">CIMPL Tooling Reference Manual</a> - A detailed description of the command line interface (CLI), auxiliary files, options, and configuration to produce a FHIR IG.</li>
+</ul>
+</li>
 </ul>
 
   <br>
@@ -194,7 +189,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <br>
 </div>
 
-<footer class="col-md-12 wm-page-content">
+<footer class="col-md-12 wm-page-content"><p>© 2019 The MITRE Corporation. All rights reserved.<br>Approved for Public Release. Distribution Unlimited. Case Number 16-1988</p>
   <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
 </footer>
 
@@ -202,5 +197,5 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </html>
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-08-24 01:39:07
+Build Date UTC : 2019-08-24 01:42:47
 -->
