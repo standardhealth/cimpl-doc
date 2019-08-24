@@ -16,7 +16,7 @@ The CIMPL Tooling Reference is targeted to people doing model development using 
 
 This guide assumes you have:
 
-* Installed the latest version of the SHR-CLI software as documented in [CIMPL SetUp and Installation](cimplInstall.md).
+* Installed the latest version of the SHR-CLI software as documented in [CIMPL Setup and Installation](cimplInstall.md).
 * Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). 
 * Reviewed the [In-Depth Tutorial](cimpl6Tutorial_detail.md).
 

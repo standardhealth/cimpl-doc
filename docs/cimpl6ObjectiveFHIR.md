@@ -18,7 +18,7 @@ The CIMPL Class Library Guide is targeted to modelers with some familiarity with
 
 This guide assumes you have:
 
-* Installed the latest version of the SHR-CLI software as documented in [CIMPL SetUp and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
+* Installed the latest version of the SHR-CLI software as documented in [CIMPL Setup and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
 * A text editor (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required)
 * Reviewed the [Hello World Tutorial](cimpl6Tutorial_helloWorld.md).
 

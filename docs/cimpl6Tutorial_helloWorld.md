@@ -16,7 +16,7 @@ The CIMPL Hello World Tutorial is targeted to software developers or people comf
 
 This guide assumes you have:
 
-* Installed the latest version of the SHR-CLI software as documented in [CIMPL SetUp and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
+* Installed the latest version of the SHR-CLI software as documented in [CIMPL Setup and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
 * A text editor (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required)
 
 **Note:** _This tutorial is written assuming a MacOS environment.  While the contents of CIMPL authoring are identical regardless of platform, the command lines run in a command line terminal will differ in file path specifications.  Namely, for a Windows command line terminal, replace all the path references of forward-slash `/` to back-slash `\`._

@@ -16,7 +16,7 @@ The CIMPL Language Reference is targeted to the users of CIMPL, involved with cr
 
 This guide assumes you have:
 
-* Installed the latest version of the SHR-CLI software as documented in [CIMPL SetUp and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory).
+* Installed the latest version of the SHR-CLI software as documented in [CIMPL Setup and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory).
 * A text editor to create your CIMPL files (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required).
 * Reviewed the [In-Depth Tutorial](cimpl6Tutorial_detail.md).
 

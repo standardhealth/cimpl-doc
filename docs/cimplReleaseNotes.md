@@ -1,7 +1,5 @@
 # CIMPL Release Notes
 
->**Note:** This documentation is in the process of being further expanded and is an actively updating document.
-
 See a [complete log of all releases of SHR-CLI](https://github.com/standardhealth/shr-cli/releases).
 
 [TOC]
