@@ -1,10 +1,28 @@
 # CIMPL Setup and Installation
 
-_CIMPL (and, by extension, the SHR-CLI tool) is a text-based tool that requires its users to understand and use your operating system's [command line](https://en.wikipedia.org/wiki/Command-line_interface).  If you are uncomfortable with using the command line, try [this short introduction](https://tutorial.djangogirls.org/en/intro_to_command_line/)._
+## Preface
+
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+
+### Purpose of this Document
+
+This guide will take you through the steps needed to set up the environment needed to run CIMPL and associated tools.
+
+### Intended Audience
+
+Anyone intending to use CIMPL for clinical information modeling and FHIR Implementation Guide authoring.
+
+### Prerequisite
+
+This guide assumes you have:
+
+* Windows or macOS computer with 8 GB memory and 5 GB available disk space, and internet connection
+* Ability to install software on your computer using an account that has administrator-level access. If you do not have administrator rights on your machine, some of the installations may fail or refuse to install.
+* An understanding of your operating system's [command line](https://en.wikipedia.org/wiki/Command-line_interface).  If you are uncomfortable with using the command line, try [this short introduction](https://tutorial.djangogirls.org/en/intro_to_command_line/).
 
 ***
 
-## Table Of Contents
+## Table of Contents
 
 [TOC]
 
@@ -19,10 +37,8 @@ For a successful installation, it is critical that you:
 * Read the instructions **thoroughly**.
 * Follow instructions **in order**, without skipping around.
 * Understand your organization's proxy server configuration, if running from inside a firewall
-* Pay attention to placeholders in the instructions (such as your proxy server address) that you may need to replace.
+* Pay attention to placeholders in the instructions (such proxy server addresses) that you may need to replace.
 * Allow enough time (30-60 minutes)
-
-_Note: These installation instructions assume that you are installing applications using an account that has administrator-level access.  If you do not have administrator rights on your machine, some of the installations may fail or refuse to install._
 
 ### Windows Proxy Setup
 
@@ -31,6 +47,7 @@ _Warning: Many professional organizations use proxy servers to filter incoming i
 If your organization uses a proxy server, you will need to set up environment variables before proceeding.
 
 * Copy the following code block into a text editor and replace `your.proxy.org` with your organization's proxy server and `80` with the port used by your organization's proxy server:
+
 ```
 setx HTTP_PROXY http://your.proxy.org:80
 setx HTTPS_PROXY https://your.proxy.org:80
@@ -40,7 +57,7 @@ setx proxy http://your.proxy.org:80
 setx JAVA_OPTS "-Dhttp.proxyHost=your.proxy.org -Dhttp.proxyPort=80 -Dhttps.proxyHost=your.proxy.org -Dhttps.proxyPort=80 -DsocksProxyHost=your.proxy.org -DsocksProxyPort=80"
 ```
 
-* Open a windows command prompt
+* [Open a windows command prompt](https://www.howtogeek.com/235101/10-ways-to-open-the-command-prompt-in-windows-10/)
 * Copy and paste the modified code block (with your organization's proxy server) into the command prompt; hit enter to execute.
 * **Close and re-open your command prompt** to make sure those settings take effect
 
@@ -269,7 +286,7 @@ yarn
 ```
 _**Note**: Each time you download a new version of SHR-CLI, you must re-run `yarn` command._
 
-### Install Java Runtime Environment ♦for macOS
+### Install Java Runtime Environment for macOS
 
 The [FHIR implementation guide (IG) publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation) is owned and operated by the HL7 FHIR team. The IG publisher is primarily written in java and requires JRE version 8.  To install JRE:
 

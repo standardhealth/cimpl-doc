@@ -1,20 +1,34 @@
 # CIMPL 6.0 Tooling Reference
 
-_This is a comprehensive guide to CIMPL 6.0 Tooling, including the command line interface, auxiliary files, and configurations needed to produce a FHIR Implementation Guide (IG). If you're looking for a quick introduction to CIMPL and SHR-CLI environment setup, try the [Hello World](cimpl6Tutorial_helloWorld.md) or [In-Depth Tutorials](cimpl6Tutorial_detail.md). For details of the CIMPL language itself, see the [CIMPL Language Reference Manual](cimpl6LanguageReference.md)._
+## Preface
+
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+
+### Purpose of this Document
+
+This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage).
+
+### Intended Audience
+
+The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)
+
+### Prerequisite
+
+This guide assumes you have:
+
+* Installed the latest version of the SHR-CLI software as documented in [CIMPL Setup and Installation](cimplInstall.md).
+* Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). 
+* Reviewed the [In-Depth Tutorial](cimpl6Tutorial_detail.md).
 
 ***
 
-## Table Of Contents
+## Table of Contents
 
 [TOC]
 
 ***
 
 ## Overview
-
-This reference manual describes the configurations, files, and commands needed to create a FHIR IG from CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage). It assumes that the CIMPL Language files (classes, value sets, and maps) have been defined (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). It also assumes that the CIMPL SHR-CLI tooling has been installed according to the directions in the [Setup and Installation Guide](cimplInstall.md).
-
-### Processing Flow
 
 The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
 
@@ -416,7 +430,7 @@ $ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 
 In the process of building a model, it is inevitable that you will encounter error messages from SHR-CLI. Debugging the model is an iterative process, and it could take some perseverance to arrive at a "clean" run of SHR-CLI with no errors. This is an expected part of the process.
 
-A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in **[Appendix A](#appendix-a-error-messages)**.
+A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in **[Appendix](#appendix-error-messages)**.
 
 Here are some general tips on approaching debugging your model:
 
@@ -512,7 +526,7 @@ An example QA output is shown below:
 
 ![qa.html example output](img_cimpl/igpublisher_output.png)
 
-## Appendix A: Error Messages
+## Appendix: Error Messages
 
 In the following, `$` prefix indicates a variable that will be filled in with specific information.
 

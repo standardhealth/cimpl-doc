@@ -73,11 +73,11 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Tutorial_helloWorld/">CIMPL 6.0 'Hello World' Tutorial</a>
+    <a href="../cimpl6Tutorial_helloWorld/">CIMPL 'Hello World' Tutorial</a>
 </li>
                                     
 <li >
-    <a href="../cimpl6Tutorial_detail/">CIMPL 6.0 In-depth Tutorial</a>
+    <a href="../cimpl6Tutorial_detail/">CIMPL In-depth Tutorial</a>
 </li>
                                 </ul>
                             </li>
@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring Guide</a>
 </li>
                                     
 <li class="active">
@@ -134,6 +134,8 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#cimpl-class-library-aka-objective-fhir">CIMPL Class Library (aka Objective FHIR)</a></li>
+            <li><a href="#preface">Preface</a></li>
+            <li><a href="#table-of-contents">Table of Contents</a></li>
             <li><a href="#overview">Overview</a></li>
             <li><a href="#key-concepts">Key Concepts</a></li>
             <li><a href="#class-hierarchy">Class Hierarchy</a></li>
@@ -147,12 +149,31 @@
 <blockquote>
 <p><strong>Note:</strong> This documentation is in draft form.</p>
 </blockquote>
-<p><em>This is an introductory guide to CIMPL's class library: <strong>Objective FHIR Version 1.0</strong>. The Guide assumes some knowledge of CIMPL. If you're looking for more information on CIMPL, see the <a href="../cimpl6Tutorial_detail/">CIMPL 6 Tutorial</a>, the <a href="../cimpl6Authoring/">CIMPL Authoring</a>, or the <a href="../cimpl6LanguageReference/">CIMPL 6 Language Reference Manual</a>.</em></p>
+<h2 id="preface">Preface</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>This document presents an overview of the CIMPL class library (also known as Objective FHIR, or OBF), a set of pre-mapped datatypes and classes that can be used as the basis for a clinical model. Use of OBF with CIMPL is optional, but recommended. Using only the OBF datatypes with CIMPL is also possible and appropriate for some projects.</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>The CIMPL Class Library Guide is targeted to modelers with some familiarity with CIMPL. Experience with object-oriented modeling, concepts such as class inheritance, is assumed. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL SetUp and Installation</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
+<li>A text editor (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
+<li>Reviewed the <a href="../cimpl6Tutorial_helloWorld/">Hello World Tutorial</a>.</li>
+</ul>
 <hr />
-<p><strong>Table of Contents</strong></p>
+<h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-class-library-aka-objective-fhir">CIMPL Class Library (aka Objective FHIR)</a><ul>
+<li><a href="#preface">Preface</a><ul>
+<li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
+<li><a href="#intended-audience">Intended Audience</a></li>
+<li><a href="#prerequisite">Prerequisite</a></li>
+</ul>
+</li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#overview">Overview</a><ul>
 <li><a href="#philosophy">Philosophy</a></li>
 <li><a href="#meta-model">Meta-Model</a></li>
@@ -189,7 +210,7 @@
 <hr />
 <h2 id="overview">Overview</h2>
 <p>Objective FHIR ("OBF") is an <a href="https://en.wikipedia.org/wiki/Object-oriented_programming"><strong>object-oriented</strong></a> abstraction of FHIR. It provides modelers a way to define a detailed clinical information model by subclassing, extending, and constraining a pre-existing class library. These classes can then be translated automatically into FHIR profiles, FHIR Implementation Guides, data dictionaries, schemas, and other assets, using a choice of the three major FHIR versions: DSTU 2, STU 3, and R4.</p>
-<p>OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. "blank slate" use of CIMPL is also possible and appropriate for some projects. </p>
+<p>OBF serves as the base class library for the Clinical Information Modeling and Profiling Language (CIMPL). Use of OBF with CIMPL is optional, but recommended. "blank slate" use of CIMPL is also possible and appropriate for some projects.</p>
 <p>(<strong>TO DO: Move discussion of Blank Slate approach to here</strong>)</p>
 <h3 id="philosophy">Philosophy</h3>
 <p>OBF classes resemble FHIR R4, but differ in carefully considered ways that increase consistency and reusability of the resulting models and profiles. Objective FHIR allows data structures of all sorts to be reused. This means that individual data elements and frequently-occurring structures can be defined once and used repeatedly.</p>
@@ -358,7 +379,7 @@ Property:          RegionStudied 0..*
 </tbody>
 </table>
 <h2 id="class-hierarchy">Class Hierarchy</h2>
-<p>In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the <a href="#http://standardhealthrecord.org/guides/obf/modeldoc.html">OBF Reference Model Specification</a>.</p>
+<p>In this section, we describe the overall organization and some key classes in Objective FHIR. A pared-down view of the OBF hierarchy is shown below. For full details of each class, please refer to the <a href="http://standardhealthrecord.org/guides/obf/modeldoc.html">OBF Reference Model Specification</a>.</p>
 <p><img alt="The Objective FHIR Class Hierarchy (partial)" src="../img_cimpl/obf.png" /></p>
 <p>The purpose of the hierarchy is two-fold:</p>
 <ol>
@@ -377,7 +398,7 @@ Property:          RegionStudied 0..*
 <li>Roles are patient, practitioner, related person, and research subject. FHIR models these resources by conflating the role with the person playing the role. Although this is not the optimal model, OBF continues that practice, just to make OBF more obvious to FHIR users. Earlier versions of OBF modeled a person separately from the role(s) that person could play.</li>
 </ul>
 <h3 id="clinical-statement">Clinical Statement</h3>
-<p><code>ClinicalStatement</code> provides properties and behaviors common to entries in a medical record. This class also allows for common representation of simple data provenance elements: <code>SubjectOfRecord</code>, <code>CareContext</code> (<code>Encounter</code> or <code>EpisodeOfCare</code>), and <code>StatementDateTime</code>. </p>
+<p><code>ClinicalStatement</code> provides properties and behaviors common to entries in a medical record. This class also allows for common representation of simple data provenance elements: <code>SubjectOfRecord</code>, <code>CareContext</code> (<code>Encounter</code> or <code>EpisodeOfCare</code>), and <code>StatementDateTime</code>.</p>
 <p>Below <code>ClinicalStatement</code> are two classes, <code>SituationStatement</code> and <code>ActionStatement</code>:</p>
 <ul>
 <li><code>SituationStatements</code> covers many types of descriptive information, including opinions, evaluations, laboratory results, genomic data, and social information.</li>

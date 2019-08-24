@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>CIMPL 6.0 'Hello World' Tutorial - CIMPL Project</title>
+        <title>CIMPL 'Hello World' Tutorial - CIMPL Project</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -73,11 +73,11 @@
                                 <ul class="dropdown-menu">
                                     
 <li class="active">
-    <a href="./">CIMPL 6.0 'Hello World' Tutorial</a>
+    <a href="./">CIMPL 'Hello World' Tutorial</a>
 </li>
                                     
 <li >
-    <a href="../cimpl6Tutorial_detail/">CIMPL 6.0 In-depth Tutorial</a>
+    <a href="../cimpl6Tutorial_detail/">CIMPL In-depth Tutorial</a>
 </li>
                                 </ul>
                             </li>
@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring Guide</a>
 </li>
                                     
 <li >
@@ -133,22 +133,74 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#cimpl-60-hello-world-tutorial">CIMPL 6.0 'Hello World' Tutorial</a></li>
-            <li><a href="#ig-generation">IG Generation</a></li>
+        <li class="main active"><a href="#cimpl-hello-world-tutorial">CIMPL 'Hello World' Tutorial</a></li>
+            <li><a href="#preface">Preface</a></li>
+            <li><a href="#table-of-contents">Table of Contents</a></li>
+            <li><a href="#tutorial-steps-hello-world">Tutorial Steps - Hello World!</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="cimpl-60-hello-world-tutorial">CIMPL 6.0 'Hello World' Tutorial</h1>
-<p><br />
-Let’s do a “Hello, World” using CIMPL v6!</p>
-<p><em>Note: Make sure you have completed the <a href="../cimplInstall/">CIMPL Installation instructions</a> before proceeding, and that SHR-CLI (minimum version 6.2.0) is installed in <code>~/cimpl/shr-cli</code>.</em></p>
-<p>Start by creating a folder structure for our new project.  Open up your favorite (Unix-based) command-line tool and enter the following:</p>
-<pre><code>cd ~/cimpl
-mkdir hello_world
+<h1 id="cimpl-hello-world-tutorial">CIMPL 'Hello World' Tutorial</h1>
+<h2 id="preface">Preface</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>In the tradition of "Hello, World" examples, this tutorial the the bare minimum to get you started using CIMPL. Upon completion of this tutorial, you will be able to try the <a href="../cimpl6Tutorial_detail/">CIMPL In-Depth Tutorial</a> and get started creating a FHIR Implementation Guide (IG).</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>The CIMPL Hello World Tutorial is targeted to software developers or people comfortable with programming languages. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL SetUp and Installation</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
+<li>A text editor (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
+</ul>
+<p><strong>Note:</strong> <em>This tutorial is written assuming a MacOS environment.  While the contents of CIMPL authoring are identical regardless of platform, the command lines run in a command line terminal will differ in file path specifications.  Namely, for a Windows command line terminal, replace all the path references of forward-slash <code>/</code> to back-slash <code>\</code>.</em></p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<div class="toc">
+<ul>
+<li><a href="#cimpl-hello-world-tutorial">CIMPL 'Hello World' Tutorial</a><ul>
+<li><a href="#preface">Preface</a><ul>
+<li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
+<li><a href="#intended-audience">Intended Audience</a></li>
+<li><a href="#prerequisite">Prerequisite</a></li>
+</ul>
+</li>
+<li><a href="#table-of-contents">Table of Contents</a><ul>
+<li><a href="#tutorial-pre-configuration">Tutorial Pre-configuration</a></li>
+</ul>
+</li>
+<li><a href="#tutorial-steps-hello-world">Tutorial Steps - Hello World!</a><ul>
+<li><a href="#1-define-the-cimpl-model">1) Define the CIMPL Model</a></li>
+<li><a href="#2-define-a-mapping-to-fhir">2) Define a Mapping to FHIR</a></li>
+<li><a href="#3-create-the-home-page-of-your-ig">3) Create the Home Page of your IG</a></li>
+<li><a href="#4-create-a-configuration-file">4) Create a Configuration File</a></li>
+<li><a href="#5-run-shr-cli">5) Run SHR-CLI</a></li>
+<li><a href="#6-generate-the-hello-world-implementation-guide">6) Generate the "Hello, World" Implementation Guide</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<hr />
+<h3 id="tutorial-pre-configuration">Tutorial Pre-configuration</h3>
+<p>This tutorial is focused on how to create a model that will be used as input to create an FHIR Implementation Guide. Supporting configuration and core data type files have been defined for you.</p>
+<p>The following directory structure is assumed for your configuration:</p>
+<pre><code>Directory:  cimpl
+            |_ shr-cli
+            |_ hello-world
 </code></pre>
 
-<p>Now, create a file called <code>HelloWorld.txt</code> in the <code>~/cimpl/hello_world</code> folder and add the following data definitions:</p>
+<p>The shr-cli directory should already exist as a result of installing the SHR-CLI tool.</p>
+<p>To create <code>hello-world</code> directory, use File Explorer on Windows, or open your favorite command-line tool and enter the following:</p>
+<pre><code>cd ~/cimpl
+mkdir hello-world
+</code></pre>
+
+<h2 id="tutorial-steps-hello-world">Tutorial Steps - Hello World!</h2>
+<h3 id="1-define-the-cimpl-model">1) Define the CIMPL Model</h3>
+<p>Now, create a file called <code>HelloWorld.txt</code> in the <code>~/cimpl/hello-world</code> folder and add the following data definitions:</p>
 <pre><code>Grammar:         DataElement 6.0
 Namespace:       hello
 Description:     &quot;A simple example of CIMPL.&quot;
@@ -162,7 +214,9 @@ Description:     &quot;An extension indicating whether to say hello&quot;
 Value:           boolean
 </code></pre>
 
-<p>Next, create a file called <code>HelloWorld_map.txt</code> that defines the mapping to FHIR. Since this doesn’t align with any particular resource, it will map to <a href="https://www.hl7.org/fhir/basic.html"><code>Basic</code></a>. This file is even simpler:</p>
+<p>This is a CIMPL class file.</p>
+<h3 id="2-define-a-mapping-to-fhir">2) Define a Mapping to FHIR</h3>
+<p>Next, create a file in the same directory called <code>HelloWorld_map.txt</code>. This file is even simpler:</p>
 <pre><code>Grammar:     Map 5.1
 Namespace:   hello
 Target:      FHIR_STU_3
@@ -170,19 +224,21 @@ Target:      FHIR_STU_3
 HelloWorld maps to Basic:
 </code></pre>
 
-<p>We didn’t map the <code>SayHello</code> data element to an existing element inside this resource, so it will automatically appear as an extension.</p>
+<p><a href="https://www.hl7.org/fhir/basic.html"><code>Basic</code></a> is a "blank slate" FHIR resource. We didn’t map the <code>SayHello</code> data element to an existing element inside this resource, so it will automatically appear as an extension in the profile on Basic.</p>
+<h3 id="3-create-the-home-page-of-your-ig">3) Create the Home Page of your IG</h3>
 <p>Next, we need some simple HTML for the Implementation Guide pages, so create an <code>exampleIndexContent.html</code> file with the following content:</p>
 <pre><code>HELLO HELLO HELLO
 </code></pre>
 
-<p>Finally, we need a configuration file. Create an <code>ig-hello_world-config.json</code> file with these contents:</p>
+<h3 id="4-create-a-configuration-file">4) Create a Configuration File</h3>
+<p>To point the SHR-CLI tool at the right files, and assign the right names to things, we need a configuration file. Create an <code>ig-hello-world-config.json</code> file and copy and paste this content:</p>
 <pre><code>{
     &quot;projectName&quot;: &quot;Example Project&quot;,
     &quot;projectShorthand&quot;: &quot;EXAMPLE&quot;,
     &quot;projectURL&quot;: &quot;http://example.com&quot;,
     &quot;fhirURL&quot;: &quot;http://example.com/fhir&quot;,
     &quot;implementationGuide&quot;: {
-      &quot;npmName&quot;: &quot;hello_world&quot;,
+      &quot;npmName&quot;: &quot;hello-world&quot;,
       &quot;indexContent&quot;: &quot;exampleIndexContent.html&quot;
     },
     &quot;publisher&quot;: &quot;Example Publisher&quot;,
@@ -208,25 +264,23 @@ HelloWorld maps to Basic:
 }
 </code></pre>
 
+<h3 id="5-run-shr-cli">5) Run SHR-CLI</h3>
 <p>Now, go back to your SHR-CLI installation and run the hello world:</p>
 <pre><code>cd ~/cimpl/shr-cli
-node . -c ig-hello_world-config.json ../hello_world
+node . -c ig-hello-world-config.json ../hello-world
 </code></pre>
 
-<p>When the program runs, it will output a warning message alerting you that mapping to Basic usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (a FHIR <code>StructureDefinition</code>) will be found in <code>~/cimpl/shr-cli/out/fhir/profiles/</code>.  <code>StructureDefinition</code>s are verbose, and this one clocks in at several hundred lines.</p>
-<p>A friendlier view is created when we create an implementation guide (IG). To do this, we use the <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">existing FHIR implementation guide (IG) publisher</a>.</p>
-<h2 id="ig-generation">IG Generation</h2>
-<p>_Note: If your organization uses a proxy server, you may have to run the IG publishing process from outside your organization's firewall. For more information, see FHIR's GForge tracker as issue <a href="https://gforge.hl7.org/gf/project/fhir/tracker/?action=TrackerItemEdit&amp;tracker_item_id=19815">#19815</a>.</p>
+<p>When the program runs, it will output a warning message alerting you that mapping to Basic usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (a FHIR <code>StructureDefinition</code>) will be found in <code>~/cimpl/shr-cli/out/fhir/profiles/</code>.  A <code>StructureDefinition</code> can be verbose, and this one clocks in at several hundred lines.</p>
+<h3 id="6-generate-the-hello-world-implementation-guide">6) Generate the "Hello, World" Implementation Guide</h3>
+<p><em>Note: If your organization uses a proxy server, you may have to run the IG publishing process from outside your organization's firewall.</em></p>
+<p>A friendlier view of the profile is created when we create an implementation guide (IG). To do this, we use the <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">existing FHIR implementation guide (IG) publisher</a>.</p>
 <p>To generate the IG, run:</p>
 <pre><code>cd ~/cimpl/shr-cli
 yarn run ig:publish
 </code></pre>
 
 <p>The generated profile page will be located at <code>~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html</code>.  Open this page in your favorite web browser.</p>
-<p>You should see a FHIR profile that looks like a traditional <a href="https://www.hl7.org/fhir/implementationguide.html">FHIR Implementation Guide</a>.  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the <a href="https://github.com/standardhealth/shr-cli/wiki/Tutorial">Tutorial</a>.</p>
-<blockquote>
-<p><strong>Note:</strong> the IG is automatically branded as part of the Standard Health Record (SHR). We are working on “de-branding” the IG, so please ignore the SHR references for now.</p>
-</blockquote></div>
+<p>You should see a FHIR profile that looks like a traditional <a href="https://www.hl7.org/fhir/implementationguide.html">FHIR Implementation Guide</a>.  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the <a href="">Tutorial</a>.</p></div>
         </div>
 
         <footer class="col-md-12">
