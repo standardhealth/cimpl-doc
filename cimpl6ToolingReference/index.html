@@ -77,7 +77,7 @@
 </li>
                                     
 <li >
-    <a href="../cimpl6Tutorial_detail/">CIMPL 6.0 In-depth Tutorial</a>
+    <a href="../cimpl6Tutorial_detail/">CIMPL In-depth Tutorial</a>
 </li>
                                 </ul>
                             </li>
@@ -142,13 +142,14 @@
             <li><a href="#executing-shr-cli">Executing SHR-CLI</a></li>
             <li><a href="#outputs-from-shr-cli">Outputs from SHR-CLI</a></li>
             <li><a href="#creating-the-implementation-guide">Creating the Implementation Guide</a></li>
-            <li><a href="#appendix-a-error-messages">Appendix A: Error Messages</a></li>
+            <li><a href="#appendix-error-messages">Appendix: Error Messages</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</h1>
 <h2 id="preface">Preface</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
 <h3 id="purpose-of-this-document">Purpose of this Document</h3>
 <p>This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage).</p>
 <h3 id="intended-audience">Intended Audience</h3>
@@ -215,7 +216,7 @@
 </ul>
 </li>
 <li><a href="#creating-the-implementation-guide">Creating the Implementation Guide</a></li>
-<li><a href="#appendix-a-error-messages">Appendix A: Error Messages</a><ul>
+<li><a href="#appendix-error-messages">Appendix: Error Messages</a><ul>
 <li><a href="#table-of-contents_1">Table of Contents</a></li>
 <li><a href="#error-code-structure">Error Code Structure</a></li>
 <li><a href="#parsing-errors">Parsing Errors</a></li>
@@ -709,7 +710,7 @@ Namespace: onco.core
 </ul>
 <h3 id="addressing-error-messages">Addressing Error Messages</h3>
 <p>In the process of building a model, it is inevitable that you will encounter error messages from SHR-CLI. Debugging the model is an iterative process, and it could take some perseverance to arrive at a "clean" run of SHR-CLI with no errors. This is an expected part of the process.</p>
-<p>A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in <strong><a href="#appendix-a-error-messages">Appendix A</a></strong>.</p>
+<p>A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in <strong><a href="#appendix-error-messages">Appendix</a></strong>.</p>
 <p>Here are some general tips on approaching debugging your model:</p>
 <ul>
 <li>Always eliminate <a href="#parsing-errors">parsing errors</a> first. <strong>Parsing errors can be identified because they include a file, line number, and column number.</strong> It is essential to elminate parsing errors first, because parsing errors usually trigger large cascades of other errors, so you can't truly start debugging your model until parsing errors have been eliminated.</li>
@@ -776,7 +777,7 @@ Namespace: onco.core
 <p>The FHIR IG Publisher performs numerous validation checks on the content of the IG. The output of these checks can be accessed through the "QA Report" link in the footer of the home page, or by opening the file <code>/out/fhir/guide/output/qa.html</code>.</p>
 <p>An example QA output is shown below:</p>
 <p><img alt="qa.html example output" src="../img_cimpl/igpublisher_output.png" /></p>
-<h2 id="appendix-a-error-messages">Appendix A: Error Messages</h2>
+<h2 id="appendix-error-messages">Appendix: Error Messages</h2>
 <p>In the following, <code>$</code> prefix indicates a variable that will be filled in with specific information.</p>
 <h3 id="table-of-contents_1">Table of Contents</h3>
 <ul>

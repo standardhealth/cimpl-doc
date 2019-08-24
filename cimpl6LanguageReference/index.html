@@ -77,7 +77,7 @@
 </li>
                                     
 <li >
-    <a href="../cimpl6Tutorial_detail/">CIMPL 6.0 In-depth Tutorial</a>
+    <a href="../cimpl6Tutorial_detail/">CIMPL In-depth Tutorial</a>
 </li>
                                 </ul>
                             </li>
@@ -145,7 +145,6 @@
             <li><a href="#class-file">Class File</a></li>
             <li><a href="#value-set-file">Value Set File</a></li>
             <li><a href="#map-file">Map File</a></li>
-            <li><a href="#appendix-a-changes-from-cimpl-5x">Appendix A: Changes from CIMPL 5.x</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -283,7 +282,6 @@
 </li>
 </ul>
 </li>
-<li><a href="#appendix-a-changes-from-cimpl-5x">Appendix A: Changes from CIMPL 5.x</a></li>
 </ul>
 </li>
 </ul>
@@ -359,14 +357,15 @@
 </tbody>
 </table>
 <h3 id="class-names">Class Names</h3>
-<p>Elements, Groups and Entries are conventionally defined in <a href="http://wiki.c2.com/?PascalCase">PascalCase</a>. For example:</p>
-<pre><code>* Element: DetectionTime
-* Group: Dosage
-* Entry: AdverseEvent
+<p>CIMPL classes are conventionally defined in <a href="http://wiki.c2.com/?PascalCase">PascalCase</a>. For example:</p>
+<pre><code>Dosage
+DetectionTime
+AdverseEvent
+Neutrophils100WBCNFrPtBldQnAutoCntLabObs
 </code></pre>
 
 <blockquote>
-<p><strong>Note:</strong> Letters, numbers, and hyphens are allowed. However, it is required that an element name begins with an uppercase letter.</p>
+<p><strong>Note:</strong> Letters, numbers, and hyphens are allowed. However, class names must begin with an uppercase letter.</p>
 </blockquote>
 <h3 id="fully-qualified-names">Fully Qualified Names</h3>
 <p>CIMPL does not support duplicate class names within a single namespace. However, the same name may occur in different namespaces. In the case of naming collisions due to an included namespace in <code>Uses</code>, you have to refer to the class by its fully qualified name (FQN). The FQN is a combination of the element's namespace and its declared name (through concatenation delimited by a period). For example, the element <code>CancerCondition</code> in the namespace <code>onco.core</code> has the following FQN:</p>
@@ -1762,99 +1761,6 @@ MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-c
 <tr>
 <td align="left"><code>slice on</code></td>
 <td align="left"><code>Laterality maps to qualifier (slice on = concept)</code></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="appendix-a-changes-from-cimpl-5x">Appendix A: Changes from CIMPL 5.x</h2>
-<p>For those who have created detailed models using CIMPL 5.0, there have been significant grammar changes to CIMPL 6.0. The table below summarizes these changes:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Change Type</th>
-<th align="left">Change Description</th>
-<th align="left">CIMPL 5.0 Example</th>
-<th align="left">CIMPL 6.0 Example</th>
-<th align="left">Section</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">New</td>
-<td align="left">keyword <code>only</code> eliminates all value choices except one</td>
-<td align="left">None</td>
-<td align="left"><code>FindingResult only concept</code></td>
-<td align="left"><a href="#only-constraint">Only Constraint</a></td>
-</tr>
-<tr>
-<td align="left">New</td>
-<td align="left">keyword <code>Property</code> is required to define properties for an Entry or Element.</td>
-<td align="left"><code>0..1 TreatmentIntent</code></td>
-<td align="left"><code>Property:  TreatmentIntent 0..1</code></td>
-<td align="left"><a href="#property">Property Keyword</a></td>
-</tr>
-<tr>
-<td align="left">New</td>
-<td align="left">keyword <code>Group</code> is required to a reusable collection of properties, that is not an <code>Entry</code>.</td>
-<td align="left">None</td>
-<td align="left"><code>Group: Address</code></td>
-<td align="left"><a href="#group">Group Keyword</a></td>
-</tr>
-<tr>
-<td align="left">Replace</td>
-<td align="left"><code>EntryElement</code> keyword replaced by <code>Entry</code></td>
-<td align="left"><code>EntryElement: CourseOfTreatmentPerformed</code></td>
-<td align="left"><code>Entry:  CourseOfTreatmentPerformed</code></td>
-<td align="left"><a href="#element">Element Keyword</a></td>
-</tr>
-<tr>
-<td align="left">Replace</td>
-<td align="left"><code>Based on</code> keyword replaced by <code>Parent</code></td>
-<td align="left"><code>Based on: Observation</code></td>
-<td align="left"><code>Parent:  Observation</code></td>
-<td align="left"><a href="#parent">Parent Keyword</a></td>
-</tr>
-<tr>
-<td align="left">Syntax change</td>
-<td align="left">Cardinality is specified <em>after</em> the property or class name</td>
-<td align="left"><code>0..1 TreatmentIntent</code></td>
-<td align="left"><code>Property:  TreatmentIntent 0..1</code></td>
-<td align="left"><a href="#property">Property Keyword</a>, <a href="#cardinality-constraint">Cardinality Constraint</a></td>
-</tr>
-<tr>
-<td align="left">Replace</td>
-<td align="left"><code>is</code> constraint for fixed values replaced by <code>=</code></td>
-<td align="left"><code>FindingTopicCode is LNC#48676-1</code></td>
-<td align="left"><code>FindingTopicCode = LNC#48676-1</code></td>
-<td align="left"><a href="#field-constraints">Field Constraints</a></td>
-</tr>
-<tr>
-<td align="left">Replace</td>
-<td align="left">substitution of a more specific element derived from a parent element using <code>is type</code> keyword replaced by <code>substitute</code>.</td>
-<td align="left"><code>Specimen is type BreastSpecimen</code></td>
-<td align="left"><code>Specimen substitute BreastSpecimen</code></td>
-<td align="left"><a href="#substitute">Substitute</a></td>
-</tr>
-<tr>
-<td align="left">Replace</td>
-<td align="left"><code>code</code>, <code>Coding</code>, and <code>CodeableConcept</code> are replaced by a new primitive <code>concept</code></td>
-<td align="left"><code>Value: CodeableConcept from AttributionCategoryVS</code></td>
-<td align="left"><code>Value: concept from AttributionCategoryVS</code></td>
-<td align="left"><a href="#primitives">Primitives</a></td>
-</tr>
-<tr>
-<td align="left">Replace</td>
-<td align="left"><code>must be</code>, <code>should be</code>, <code>could be</code>, and <code>if covered</code> value set constraints are obsolete and replaced by <code>(required)</code>, <code>(preferred)</code>, <code>(extensible)</code>, and <code>(example)</code></td>
-<td align="left"><code>Type from BreastSpecimenTypeVS if covered</code></td>
-<td align="left"><code>Type from BreastSpecimenTypeVS (extensible)</code></td>
-<td align="left"><a href="#value-set-binding-constraint">Value Set Binding Constraint</a></td>
-</tr>
-<tr>
-<td align="left">Replace</td>
-<td align="left"><code>ref()</code> is now obsolete. <code>value is type</code> replaced by <code>substitute</code> and bracket notation denoting value choices</td>
-<td align="left"><code>SourceSpecimen value is type ref(BreastSpecimen)</code></td>
-<td align="left"><code>SourceSpecimen[Specimen] substitute BreastSpecimen</code></td>
-<td align="left"><a href="#mapping-to-references">Mapping to References</a></td>
 </tr>
 </tbody>
 </table></div>

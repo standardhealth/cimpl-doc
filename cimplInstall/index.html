@@ -77,7 +77,7 @@
 </li>
                                     
 <li >
-    <a href="../cimpl6Tutorial_detail/">CIMPL 6.0 In-depth Tutorial</a>
+    <a href="../cimpl6Tutorial_detail/">CIMPL In-depth Tutorial</a>
 </li>
                                 </ul>
                             </li>
@@ -134,6 +134,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#cimpl-setup-and-installation">CIMPL Setup and Installation</a></li>
+            <li><a href="#preface">Preface</a></li>
             <li><a href="#table-of-contents">Table of Contents</a></li>
             <li><a href="#windows-installation-instructions">Windows Installation Instructions</a></li>
             <li><a href="#macos-installation-instructions">macOS Installation Instructions</a></li>
@@ -143,12 +144,30 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="cimpl-setup-and-installation">CIMPL Setup and Installation</h1>
-<p><em>CIMPL (and, by extension, the SHR-CLI tool) is a text-based tool that requires its users to understand and use your operating system's <a href="https://en.wikipedia.org/wiki/Command-line_interface">command line</a>.  If you are uncomfortable with using the command line, try <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this short introduction</a>.</em></p>
+<h2 id="preface">Preface</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>This guide will take you through the steps needed to set up the environment needed to run CIMPL and associated tools.</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>Anyone intending to use CIMPL for clinical information modeling and FHIR Implementation Guide authoring.</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Windows or macOS computer with 8 GB memory and 5 GB available disk space, and internet connection</li>
+<li>Ability to install software on your computer using an account that has administrator-level access. If you do not have administrator rights on your machine, some of the installations may fail or refuse to install.</li>
+<li>An understanding of your operating system's <a href="https://en.wikipedia.org/wiki/Command-line_interface">command line</a>.  If you are uncomfortable with using the command line, try <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this short introduction</a>.</li>
+</ul>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-setup-and-installation">CIMPL Setup and Installation</a><ul>
+<li><a href="#preface">Preface</a><ul>
+<li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
+<li><a href="#intended-audience">Intended Audience</a></li>
+<li><a href="#prerequisite">Prerequisite</a></li>
+</ul>
+</li>
 <li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#windows-installation-instructions">Windows Installation Instructions</a><ul>
 <li><a href="#windows-proxy-setup">Windows Proxy Setup</a></li>
@@ -178,7 +197,7 @@
 </ul>
 </li>
 <li><a href="#install-shr-cli-for-macos">Install SHR-CLI for macOS</a></li>
-<li><a href="#install-java-runtime-environment-for-macos">Install Java Runtime Environment ♦for macOS</a></li>
+<li><a href="#install-java-runtime-environment-for-macos">Install Java Runtime Environment for macOS</a></li>
 <li><a href="#install-jekyll-for-macos">Install Jekyll for macOS</a></li>
 </ul>
 </li>
@@ -205,10 +224,9 @@
 <li>Read the instructions <strong>thoroughly</strong>.</li>
 <li>Follow instructions <strong>in order</strong>, without skipping around.</li>
 <li>Understand your organization's proxy server configuration, if running from inside a firewall</li>
-<li>Pay attention to placeholders in the instructions (such as your proxy server address) that you may need to replace.</li>
+<li>Pay attention to placeholders in the instructions (such proxy server addresses) that you may need to replace.</li>
 <li>Allow enough time (30-60 minutes)</li>
 </ul>
-<p><em>Note: These installation instructions assume that you are installing applications using an account that has administrator-level access.  If you do not have administrator rights on your machine, some of the installations may fail or refuse to install.</em></p>
 <h3 id="windows-proxy-setup">Windows Proxy Setup</h3>
 <p><em>Warning: Many professional organizations use proxy servers to filter incoming internet content (e.g., antivirus checks, adult material, etc.).  Many of the applications that support CIMPL require that these proxy servers be explicitly declared before they will function properly.  If your organization does not use a proxy server, you can skip to the <a href="#install-nodejs-for-windows">next step</a>.</em></p>
 <p>If your organization uses a proxy server, you will need to set up environment variables before proceeding.</p>
@@ -224,7 +242,7 @@ setx JAVA_OPTS &quot;-Dhttp.proxyHost=your.proxy.org -Dhttp.proxyPort=80 -Dhttps
 </code></pre>
 
 <ul>
-<li>Open a windows command prompt</li>
+<li><a href="https://www.howtogeek.com/235101/10-ways-to-open-the-command-prompt-in-windows-10/">Open a windows command prompt</a></li>
 <li>Copy and paste the modified code block (with your organization's proxy server) into the command prompt; hit enter to execute.</li>
 <li><strong>Close and re-open your command prompt</strong> to make sure those settings take effect</li>
 </ul>
@@ -410,7 +428,7 @@ yarn
 </code></pre>
 
 <p><em><strong>Note</strong>: Each time you download a new version of SHR-CLI, you must re-run <code>yarn</code> command.</em></p>
-<h3 id="install-java-runtime-environment-for-macos">Install Java Runtime Environment ♦for macOS</h3>
+<h3 id="install-java-runtime-environment-for-macos">Install Java Runtime Environment for macOS</h3>
 <p>The <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR implementation guide (IG) publisher</a> is owned and operated by the HL7 FHIR team. The IG publisher is primarily written in java and requires JRE version 8.  To install JRE:</p>
 <ul>
 <li>Go to the <a href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">Java SE Runtime Environment 8 Downloads</a> page</li>
