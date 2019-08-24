@@ -4,6 +4,8 @@
 
 ## Preface
 
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+
 ### Purpose of this Document
 
 This document presents an overview of the CIMPL class library (also known as Objective FHIR, or OBF), a set of pre-mapped datatypes and classes that can be used as the basis for a clinical model. Use of OBF with CIMPL is optional, but recommended. Using only the OBF datatypes with CIMPL is also possible and appropriate for some projects.

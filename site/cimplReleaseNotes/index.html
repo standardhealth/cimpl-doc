@@ -73,11 +73,11 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Tutorial_helloWorld/">CIMPL 6.0 'Hello World' Tutorial</a>
+    <a href="../cimpl6Tutorial_helloWorld/">CIMPL 'Hello World' Tutorial</a>
 </li>
                                     
 <li >
-    <a href="../cimpl6Tutorial_detail/">CIMPL 6.0 In-depth Tutorial</a>
+    <a href="../cimpl6Tutorial_detail/">CIMPL In-depth Tutorial</a>
 </li>
                                 </ul>
                             </li>
@@ -86,7 +86,7 @@
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../cimpl6Authoring/">CIMPL Authoring</a>
+    <a href="../cimpl6Authoring/">CIMPL Authoring Guide</a>
 </li>
                                     
 <li >
@@ -136,29 +136,146 @@
         <li class="main active"><a href="#cimpl-release-notes">CIMPL Release Notes</a></li>
             <li><a href="#cimpl-60">CIMPL 6.0</a></li>
             <li><a href="#cimpl-50">CIMPL 5.0</a></li>
+            <li><a href="#cimpl-40">CIMPL 4.0</a></li>
+            <li><a href="#cimpl-30">CIMPL 3.0</a></li>
+            <li><a href="#cimpl-20">CIMPL 2.0</a></li>
+            <li><a href="#cimpl-10">CIMPL 1.0</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
 <h1 id="cimpl-release-notes">CIMPL Release Notes</h1>
 <blockquote>
-<p><strong>Note:</strong> "This documentation is in the process of being further expanded and is an actively updating document."</p>
+<p><strong>Note:</strong> This documentation is in the process of being further expanded and is an actively updating document.</p>
 </blockquote>
+<p>See a <a href="https://github.com/standardhealth/shr-cli/releases">complete log of all releases of SHR-CLI</a>.</p>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-release-notes">CIMPL Release Notes</a><ul>
 <li><a href="#cimpl-60">CIMPL 6.0</a></li>
 <li><a href="#cimpl-50">CIMPL 5.0</a></li>
+<li><a href="#cimpl-40">CIMPL 4.0</a></li>
+<li><a href="#cimpl-30">CIMPL 3.0</a></li>
+<li><a href="#cimpl-20">CIMPL 2.0</a></li>
+<li><a href="#cimpl-10">CIMPL 1.0</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <h2 id="cimpl-60">CIMPL 6.0</h2>
-<p><strong>Release Date</strong>: June 2019
-<br /></p>
-<p>CIMPL 6.0 contains a number of significant changes to both syntax and its base classes which support translation to FHIR.</p>
+<p><strong>Release Date</strong>: June 5, 2019</p>
+<p>CIMPL 6.0 contains a number of significant changes to both syntax and its base classes which support translation to FHIR. The table below summarizes these changes:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Change Type</th>
+<th align="left">Change Description</th>
+<th align="left">CIMPL 5.0 Example</th>
+<th align="left">CIMPL 6.0 Example</th>
+<th align="left">Section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">New</td>
+<td align="left">keyword <code>only</code> eliminates all value choices except one</td>
+<td align="left">None</td>
+<td align="left"><code>FindingResult only concept</code></td>
+<td align="left"><a href="#only-constraint">Only Constraint</a></td>
+</tr>
+<tr>
+<td align="left">New</td>
+<td align="left">keyword <code>Property</code> is required to define properties for an Entry or Element.</td>
+<td align="left"><code>0..1 TreatmentIntent</code></td>
+<td align="left"><code>Property:  TreatmentIntent 0..1</code></td>
+<td align="left"><a href="#property">Property Keyword</a></td>
+</tr>
+<tr>
+<td align="left">New</td>
+<td align="left">keyword <code>Group</code> is required to a reusable collection of properties, that is not an <code>Entry</code>.</td>
+<td align="left">None</td>
+<td align="left"><code>Group: Address</code></td>
+<td align="left"><a href="#group">Group Keyword</a></td>
+</tr>
+<tr>
+<td align="left">Replace</td>
+<td align="left"><code>EntryElement</code> keyword replaced by <code>Entry</code></td>
+<td align="left"><code>EntryElement: CourseOfTreatmentPerformed</code></td>
+<td align="left"><code>Entry:  CourseOfTreatmentPerformed</code></td>
+<td align="left"><a href="#element">Element Keyword</a></td>
+</tr>
+<tr>
+<td align="left">Replace</td>
+<td align="left"><code>Based on</code> keyword replaced by <code>Parent</code></td>
+<td align="left"><code>Based on: Observation</code></td>
+<td align="left"><code>Parent:  Observation</code></td>
+<td align="left"><a href="#parent">Parent Keyword</a></td>
+</tr>
+<tr>
+<td align="left">Syntax change</td>
+<td align="left">Cardinality is specified <em>after</em> the property or class name</td>
+<td align="left"><code>0..1 TreatmentIntent</code></td>
+<td align="left"><code>Property:  TreatmentIntent 0..1</code></td>
+<td align="left"><a href="#property">Property Keyword</a>, <a href="#cardinality-constraint">Cardinality Constraint</a></td>
+</tr>
+<tr>
+<td align="left">Replace</td>
+<td align="left"><code>is</code> constraint for fixed values replaced by <code>=</code></td>
+<td align="left"><code>FindingTopicCode is LNC#48676-1</code></td>
+<td align="left"><code>FindingTopicCode = LNC#48676-1</code></td>
+<td align="left"><a href="#field-constraints">Field Constraints</a></td>
+</tr>
+<tr>
+<td align="left">Replace</td>
+<td align="left">substitution of a more specific element derived from a parent element using <code>is type</code> keyword replaced by <code>substitute</code>.</td>
+<td align="left"><code>Specimen is type BreastSpecimen</code></td>
+<td align="left"><code>Specimen substitute BreastSpecimen</code></td>
+<td align="left"><a href="#substitute">Substitute</a></td>
+</tr>
+<tr>
+<td align="left">Replace</td>
+<td align="left"><code>code</code>, <code>Coding</code>, and <code>CodeableConcept</code> are replaced by a new primitive <code>concept</code></td>
+<td align="left"><code>Value: CodeableConcept from AttributionCategoryVS</code></td>
+<td align="left"><code>Value: concept from AttributionCategoryVS</code></td>
+<td align="left"><a href="#primitives">Primitives</a></td>
+</tr>
+<tr>
+<td align="left">Replace</td>
+<td align="left"><code>must be</code>, <code>should be</code>, <code>could be</code>, and <code>if covered</code> value set constraints are obsolete and replaced by <code>(required)</code>, <code>(preferred)</code>, <code>(extensible)</code>, and <code>(example)</code></td>
+<td align="left"><code>Type from BreastSpecimenTypeVS if covered</code></td>
+<td align="left"><code>Type from BreastSpecimenTypeVS (extensible)</code></td>
+<td align="left"><a href="#value-set-binding-constraint">Value Set Binding Constraint</a></td>
+</tr>
+<tr>
+<td align="left">Replace</td>
+<td align="left"><code>ref()</code> is now obsolete. <code>value is type</code> replaced by <code>substitute</code> and bracket notation denoting value choices</td>
+<td align="left"><code>SourceSpecimen value is type ref(BreastSpecimen)</code></td>
+<td align="left"><code>SourceSpecimen[Specimen] substitute BreastSpecimen</code></td>
+<td align="left"><a href="#mapping-to-references">Mapping to References</a></td>
+</tr>
+</tbody>
+</table>
 <h2 id="cimpl-50">CIMPL 5.0</h2>
-<p>Release Date: 2017</p></div>
+<p>Release Date: September 5, 2017</p>
+<ul>
+<li>support for the 5.0.0 grammar</li>
+<li>detect file types by contents rather than extensions</li>
+<li>simpler declaration of value set constraints</li>
+<li>binding strengths for value sets</li>
+<li>abstract elements</li>
+<li>includes type constraints (indicates a list should include certain sub-types)</li>
+<li>updated FHIR to 3.0.1</li>
+<li>fixed value mappings</li>
+<li>bug fixes</li>
+</ul>
+<h2 id="cimpl-40">CIMPL 4.0</h2>
+<p>Release Date: March 6, 2017</p>
+<h2 id="cimpl-30">CIMPL 3.0</h2>
+<p>Release Date: January 4, 2017</p>
+<h2 id="cimpl-20">CIMPL 2.0</h2>
+<p>Release Date: September 17, 2016</p>
+<h2 id="cimpl-10">CIMPL 1.0</h2>
+<p>Release Date: June 1, 2016</p></div>
         </div>
 
         <footer class="col-md-12">

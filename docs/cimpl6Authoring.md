@@ -2,6 +2,8 @@
 
 ## Preface
 
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+
 ### Purpose of this Document
 
 This document provides a step-by-step guide to generate an HL7 FHIR implementation guide (IG) starting with documenting a model using CIMPL. The details about how to accomplish each step are in the [CIMPL Language Reference Guide](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Guide](cimpl6LanguageReference.md). Links to these documents are provided in each section.
@@ -12,7 +14,7 @@ The CIMPL Authoring Guide is targeted to any person comfortable with using softw
 
 ### Prerequisite
 
-This guide assumes you installed the software as documented in [CIMPL SetUp and Installation](cimplInstall.md), and have at least reviewed the [Hello World](cimpl6Tutorial_helloWorld.md), and [CIMPL In-Depth](cimpl6TutorialDetail.md) tutorials. If you already have installed SHR-CLI, make sure you have the latest version installed.
+This guide assumes you installed the software as documented in [CIMPL SetUp and Installation](cimplInstall.md), and have at least reviewed the [Hello World](cimpl6Tutorial_helloWorld.md), and [CIMPL In-Depth](cimpl6Tutorial_detail.md) tutorials. If you already have installed SHR-CLI, make sure you have the latest version installed.
 
 ***
 

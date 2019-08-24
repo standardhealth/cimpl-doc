@@ -1,4 +1,4 @@
-# CIMPL 6.0 'Hello World' Tutorial
+# CIMPL 'Hello World' Tutorial
 
 ## Preface
 
@@ -29,7 +29,7 @@ This guide assumes you have:
 
 ***
 
-## Tutorial Pre-configuration
+### Tutorial Pre-configuration
 
 This tutorial is focused on how to create a model that will be used as input to create an FHIR Implementation Guide. Supporting configuration and core data type files have been defined for you.
 
@@ -50,9 +50,9 @@ mkdir hello-world
 ```
 
 
-# Tutorial Steps - Hello World!
+## Tutorial Steps - Hello World!
 
-## 1) Define the CIMPL Model
+### 1) Define the CIMPL Model
 
 Now, create a file called `HelloWorld.txt` in the `~/cimpl/hello-world` folder and add the following data definitions:
 
@@ -71,7 +71,7 @@ Value:           boolean
 ```
 This is a CIMPL class file.
 
-## 2) Define a Mapping to FHIR
+### 2) Define a Mapping to FHIR
 
 Next, create a file in the same directory called `HelloWorld_map.txt`. This file is even simpler:
 
@@ -85,14 +85,14 @@ HelloWorld maps to Basic:
 
 [`Basic`](https://www.hl7.org/fhir/basic.html) is a "blank slate" FHIR resource. We didn’t map the `SayHello` data element to an existing element inside this resource, so it will automatically appear as an extension in the profile on Basic.
 
-## 3) Create the Home Page of your IG
+### 3) Create the Home Page of your IG
 
 Next, we need some simple HTML for the Implementation Guide pages, so create an `exampleIndexContent.html` file with the following content:
 ```
 HELLO HELLO HELLO
 ```
 
-## 4) Create a Configuration File
+### 4) Create a Configuration File
 
 To point the SHR-CLI tool at the right files, and assign the right names to things, we need a configuration file. Create an `ig-hello-world-config.json` file and copy and paste this content:
 
@@ -129,7 +129,7 @@ To point the SHR-CLI tool at the right files, and assign the right names to thin
 }
 ```
 
-## 5) Run SHR-CLI
+### 5) Run SHR-CLI
 
 Now, go back to your SHR-CLI installation and run the hello world:
 
@@ -140,7 +140,7 @@ node . -c ig-hello-world-config.json ../hello-world
 
 When the program runs, it will output a warning message alerting you that mapping to Basic usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (a FHIR `StructureDefinition`) will be found in `~/cimpl/shr-cli/out/fhir/profiles/`.  A `StructureDefinition` can be verbose, and this one clocks in at several hundred lines.
 
-## 6) Generate the "Hello, World" Implementation Guide
+### 6) Generate the "Hello, World" Implementation Guide
 
 _Note: If your organization uses a proxy server, you may have to run the IG publishing process from outside your organization's firewall._
 
@@ -156,5 +156,3 @@ yarn run ig:publish
 The generated profile page will be located at `~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html`.  Open this page in your favorite web browser.
 
 You should see a FHIR profile that looks like a traditional [FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html).  For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the [Tutorial]().
-
-

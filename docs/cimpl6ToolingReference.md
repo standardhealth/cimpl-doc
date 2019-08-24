@@ -1,6 +1,8 @@
 # CIMPL 6.0 Tooling Reference
 
-## Preface 
+## Preface
+
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 ### Purpose of this Document
 
@@ -428,7 +430,7 @@ $ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 
 In the process of building a model, it is inevitable that you will encounter error messages from SHR-CLI. Debugging the model is an iterative process, and it could take some perseverance to arrive at a "clean" run of SHR-CLI with no errors. This is an expected part of the process.
 
-A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in **[Appendix A](#appendix-a-error-messages)**.
+A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in **[Appendix](#appendix-error-messages)**.
 
 Here are some general tips on approaching debugging your model:
 
@@ -524,7 +526,7 @@ An example QA output is shown below:
 
 ![qa.html example output](img_cimpl/igpublisher_output.png)
 
-## Appendix A: Error Messages
+## Appendix: Error Messages
 
 In the following, `$` prefix indicates a variable that will be filled in with specific information.
 

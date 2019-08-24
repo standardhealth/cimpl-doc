@@ -1,6 +1,7 @@
 # CIMPL 6.0 Language Reference
 
 ## Preface
+
 CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 ### Purpose of this Document
@@ -94,15 +95,16 @@ Best practice is to follow the naming convention pattern of `organization.domain
 
 ### Class Names
 
-Elements, Groups and Entries are conventionally defined in [PascalCase](http://wiki.c2.com/?PascalCase). For example:
+CIMPL classes are conventionally defined in [PascalCase](http://wiki.c2.com/?PascalCase). For example:
 
 ```
-* Element: DetectionTime
-* Group: Dosage
-* Entry: AdverseEvent
+Dosage
+DetectionTime
+AdverseEvent
+Neutrophils100WBCNFrPtBldQnAutoCntLabObs
 ```
 
->**Note:** Letters, numbers, and hyphens are allowed. However, it is required that an element name begins with an uppercase letter.
+>**Note:** Letters, numbers, and hyphens are allowed. However, class names must begin with an uppercase letter.
 
 ### Fully Qualified Names
 
@@ -1172,23 +1174,3 @@ In the above example, though the mapping is declared such that `Members.Observat
 | `slice on` / `slice strategy` | `Components.ObservationComponent maps to component (slice on = code.coding.code; slice strategy = includes)` | 
 | `slice on` / `slice strategy` | `Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)` |
 | `slice on` | `Laterality maps to qualifier (slice on = concept)` |
-
-***
-
-## Appendix A: Changes from CIMPL 5.x
-
-For those who have created detailed models using CIMPL 5.0, there have been significant grammar changes to CIMPL 6.0. The table below summarizes these changes:
-
-| Change Type | Change Description | CIMPL 5.0 Example | CIMPL 6.0 Example | Section |
-|:---- |:----------|:---------------------- |:-------------------|:----------------- |
-| New | keyword `only` eliminates all value choices except one | None | `FindingResult only concept` | [Only Constraint](#only-constraint) |
-| New |keyword `Property` is required to define properties for an Entry or Element. |`0..1 TreatmentIntent`| `Property:  TreatmentIntent 0..1` | [Property Keyword](#property) |
-| New |keyword `Group` is required to a reusable collection of properties, that is not an `Entry`. | None | `Group: Address` | [Group Keyword](#group) |
-| Replace | `EntryElement` keyword replaced by `Entry` | `EntryElement: CourseOfTreatmentPerformed`| `Entry:  CourseOfTreatmentPerformed` | [Element Keyword](#element) |
-| Replace | `Based on` keyword replaced by `Parent` | `Based on: Observation` | `Parent:  Observation` | [Parent Keyword](#parent) |
-| Syntax change | Cardinality is specified _after_ the property or class name | `0..1 TreatmentIntent` | `Property:  TreatmentIntent 0..1` | [Property Keyword](#property), [Cardinality Constraint](#cardinality-constraint) |
-| Replace | `is` constraint for fixed values replaced by `=` | `FindingTopicCode is LNC#48676-1` | `FindingTopicCode = LNC#48676-1` | [Field Constraints](#field-constraints) |
-| Replace | substitution of a more specific element derived from a parent element using `is type` keyword replaced by `substitute`. | `Specimen is type BreastSpecimen` | `Specimen substitute BreastSpecimen` | [Substitute](#substitute) |
-| Replace | `code`, `Coding`, and `CodeableConcept` are replaced by a new primitive `concept` | `Value: CodeableConcept from AttributionCategoryVS` | `Value: concept from AttributionCategoryVS` | [Primitives](#primitives) |
-| Replace | `must be`, `should be`, `could be`, and `if covered` value set constraints are obsolete and replaced by `(required)`, `(preferred)`, `(extensible)`, and `(example)` | `Type from BreastSpecimenTypeVS if covered` | `Type from BreastSpecimenTypeVS (extensible)` | [Value Set Binding Constraint](#value-set-binding-constraint) |
-| Replace | `ref()` is now obsolete. `value is type` replaced by `substitute` and bracket notation denoting value choices| `SourceSpecimen value is type ref(BreastSpecimen)` | `SourceSpecimen[Specimen] substitute BreastSpecimen` | [Mapping to References](#mapping-to-references) |

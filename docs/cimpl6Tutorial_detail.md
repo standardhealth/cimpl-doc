@@ -1,6 +1,8 @@
-# CIMPL 6.0 In-depth Tutorial
+# CIMPL In-depth Tutorial
 
 ## Preface
+
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 ### Purpose of this Document
 
@@ -61,7 +63,7 @@ Copy the following files to the `myExampleC6` sub-directory.  The files contain 
 
 ## Modeling Process
 
-This tutorial guides you in a step by step process to build a basic clinical data model that directly references FHIR resources. It also illustrates the modeling practice briefly described in Appendix A of the [CIMPL Authoring Guide](cimpl6Authoring.md).
+This tutorial guides you in a step by step process to build a basic clinical data model that directly references FHIR resources. It also illustrates the modeling practice briefly described in the [CIMPL Authoring Guide](cimpl6Authoring.md).
 
 The steps are briefly summarized here for conciseness:
 
@@ -290,7 +292,7 @@ ObstructiveSleepApneaDisorder:
 
 ```
 
-For our example, we have designated the `MyGender` and `OSADisorderCode` elements as _must-support_.  Content Profile documentation can be found in the [CIMPL Tooling Reference Guide](cimplToolingReference.md).
+For our example, we have designated the `MyGender` and `OSADisorderCode` elements as _must-support_.  Content Profile documentation can be found in the [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md).
 
 ### Create a Homepage for the IG
 
@@ -305,7 +307,7 @@ Create a new file called `index.html` under the `myExampleC6` directory. Copy th
 
 For purpose of the tutorial's focus on modeling, we have already created a configuration file called `ig-myExampleR4-config.json` and you copied this file to the `myExampleC6` directory at the start of this tutorial.
 
-Let's review some highlights of [the configuration file](cimplTutorial/ig-myExampleR4-config.json) (click link to open). The table below shows a partial listing of fields in the config file. More advanced configuration options are available in the [CIMPL Tooling Reference Guide](cimplToolingReference.md).
+Let's review some highlights of [the configuration file](cimplTutorial/ig-myExampleR4-config.json) (click link to open). The table below shows a partial listing of fields in the config file. More advanced configuration options are available in the [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md).
 
 
 | Parameter | Value | Meaning |
