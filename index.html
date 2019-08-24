@@ -1,238 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="None">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    
+    
+    <link rel="shortcut icon" href="./img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>CIMPL Project</title>
+    <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="./css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/bootstrap-3.3.7.min.js"></script>
+    <script src="./js/highlight.pack.js"></script>
+    
+      <script src="./js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '.';
+      var is_top_frame = (window === window.parent);
         
+        var pageToc = [
+          {title: "CIMPL Project", url: "#_top", children: [
+              {title: "Table of Contents", url: "#table-of-contents" },
+          ]},
+        ];
+
+    </script>
+    <script src="./js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="./search.html">
         
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <title>CIMPL Project</title>
-        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="css/font-awesome.min.css" rel="stylesheet">
-        <link href="css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit"
+          ><i class="fa fa-search" aria-hidden="true"></i></button>
 
-        <script src="js/jquery-1.10.2.min.js" defer></script>
-        <script src="js/bootstrap-3.0.3.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
-    </head>
-
-    <body class="homepage">
-
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-
-                <!-- Collapsed navigation -->
-                <div class="navbar-header">
-                    <!-- Expander button -->
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href=".">CIMPL Project</a>
-                </div>
-
-                <!-- Expanded navigation -->
-                <div class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="about/">About CIMPL</a>
-</li>
-                                    
-<li >
-    <a href="cimplReleaseNotes/">CIMPL Release Notes</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Installation <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="cimplInstall/">CIMPL Setup and Installation</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="cimpl6Tutorial_helloWorld/">CIMPL 'Hello World' Tutorial</a>
-</li>
-                                    
-<li >
-    <a href="cimpl6Tutorial_detail/">CIMPL In-depth Tutorial</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guides <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="cimpl6Authoring/">CIMPL Authoring Guide</a>
-</li>
-                                    
-<li >
-    <a href="cimpl6ObjectiveFHIR/">CIMPL Class Library (aka Objective FHIR)</a>
-</li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference Manuals <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="cimpl6LanguageReference/">CIMPL 6.0 Language Reference</a>
-</li>
-                                    
-<li >
-    <a href="cimpl6ToolingReference/">CIMPL 6.0 Tooling Reference</a>
-</li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
+          <span class="input-group-btn" role="search">
+            
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
         </div>
+      </form>
+    </div>
 
-        <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#cimpl-project">CIMPL Project</a></li>
-            <li><a href="#table-of-contents">Table of Contents</a></li>
-    </ul>
-</div></div>
-                <div class="col-md-9" role="main">
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered"><i class="fa fa-th-list" aria-hidden="true"></i></button>
+    </div>
 
-<h1 id="cimpl-project"><img alt="" src="img_cimpl/cimpl-logo.png" /> CIMPL Project</h1>
+    
+    
+
+    
+    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
+      
+      <div class="wm-top-title">
+        CIMPL Project<br>
+        
+      </div>
+    </a>
+  </div>
+</nav>
+
+  <div id="main-content" class="wm-page-top-frame">
+    
+<nav class="wm-toc-pane">
+  
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">About</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="about/" class="wm-article-link wm-toc-text">About CIMPL</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimplReleaseNotes/" class="wm-article-link wm-toc-text">CIMPL Release Notes</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Installation</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimplInstall/" class="wm-article-link wm-toc-text">CIMPL Setup and Installation</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Tutorials</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Tutorial_helloWorld/" class="wm-article-link wm-toc-text">CIMPL 6.0 'Hello World' Tutorial</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Tutorial_detail/" class="wm-article-link wm-toc-text">CIMPL 6.0 In-depth Tutorial</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">User Guides</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6UserGuide/" class="wm-article-link wm-toc-text">CIMPL Authoring</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6ObjectiveFHIR/" class="wm-article-link wm-toc-text">CIMPL Class Library (aka Objective FHIR)</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Reference Manual</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl6Reference/" class="wm-article-link wm-toc-text">CIMPL 6.0 Reference Documentation</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Archive</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl5Reference/" class="wm-article-link wm-toc-text">CIMPL 5.0 Reference Documentation</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="cimpl5Tutorial/" class="wm-article-link wm-toc-text">CIMPL 5.0 Tutorial</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</nav>
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article"></iframe>
+    </div>
+  </div>
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+
+    <h1 id="cimpl-project"><img alt="" src="img_cimpl/cimpl-logo.png" /> CIMPL Project</h1>
 <p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a domain specific language for defining clinical information models. It was designed to be simple and declarative, with tools to produce FHIR Profiles, Implementation Guides, data dictionaries, and other documentation.</p>
 <p><br /></p>
 <h3 id="table-of-contents">Table of Contents</h3>
 <ul>
 <li><a href="cimplInstall/"><strong>Installation</strong></a> - Installing and configuring the CIMPL development environment.</li>
 <li><strong>CIMPL Tutorials</strong><ul>
-<li><a href="cimpl6Tutorial_helloWorld/">CIMPL HelloWorld Tutorial</a> - a very simple tutorial which creates a FHIR Implementation Guide (IG).</li>
+<li><a href="cimpl6Tutorial_helloWorld/">CIMPL HelloWorld Tutorial</a> - a very simple tutorial which creates a FHIR implemenation guide (IG).</li>
 <li><a href="cimpl6Tutorial_detail/">CIMPL Detailed Tutorial</a> - Walkthrough example of how to author a detailed clinical model using CIMPL 6.0 grammar.</li>
 </ul>
 </li>
 <li><strong>CIMPL User Guides</strong><ul>
-<li><a href="cimpl6Authoring/">CIMPL Authoring</a> - A guide on authoring within the CIMPL development environment.</li>
-<li><a href="cimpl6ObjectiveFHIR">CIMPL Class Library (aka Objective FHIR)</a> - An overview of the base classes provided with CIMPL.</li>
+<li><a href="cimpl6UserGuide/">CIMPL Authoring</a> - A guide on authoring within the CIMPL development environment.</li>
+<li><a href="cimpl6ObjectiveFHIR">CIMPL Class Library (aka Objective FHIR)</a> - A description of the base classes provided with CIMPL</li>
 </ul>
 </li>
-<li><strong>CIMPL Reference Manuals</strong><ul>
-<li><a href="cimpl6LanguageReference/">CIMPL Language Reference Manual</a> - A detailed reference of CIMPL data primitives and syntax.  The current version of CIMPL Grammar is CIMPL 6.0.</li>
-<li><a href="cimpl6ToolingReference/">CIMPL Tooling Reference Manual</a> - A detailed description of the command line interface (CLI), auxiliary files, options, and configuration to produce a FHIR IG.</li>
+<li><a href="cimpl6Reference/"><strong>CIMPL Reference Manual</strong></a> - A detailed reference of CIMPL data primitives and syntax.  The current version of CIMPL Grammar is CIMPL 6.0.</li>
 </ul>
-</li>
-</ul></div>
-        </div>
 
-        <footer class="col-md-12">
-            <hr>
-                <p>© 2019 The MITRE Corporation. All rights reserved.<br>Approved for Public Release. Distribution Unlimited. Case Number 16-1988</p>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script>
-            var base_url = ".",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="js/base.js" defer></script>
-        <script src="search/main.js" defer></script>
+  <br>
+    
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
-                <form role="form">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+    <br>
 </div>
 
-    </body>
-</html>
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
 
+</body>
+</html>
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-08-24 01:13:58
+Build Date UTC : 2019-08-24 01:39:07
 -->

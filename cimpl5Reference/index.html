@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>CIMPL 5.0 Reference Documentation - CIMPL Project</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "CIMPL 5.0 Reference Documentation", url: "#_top", children: [
+              {title: "Table of Contents", url: "#table-of-contents" },
+              {title: "General Overview", url: "#general-overview" },
+              {title: "File Headers", url: "#file-headers" },
+              {title: "Data Element File", url: "#data-element-file" },
+              {title: "Map File", url: "#map-file" },
+              {title: "Value Set File", url: "#value-set-file" },
+              {title: "FHIR Examples File", url: "#fhir-examples-file" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cimpl5Tutorial/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cimpl5Tutorial/" class="btn btn-xs btn-link">
+        CIMPL 5.0 Tutorial
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cimpl6Reference/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cimpl6Reference/" class="btn btn-xs btn-link">
+        CIMPL 6.0 Reference Documentation
+      </a>
+    </div>
+    
+  </div>
+
+    
+
+    <h1 id="cimpl-50-reference-documentation">CIMPL 5.0 Reference Documentation</h1>
+<p><em>This is a comprehensive guide to CIMPL 5.0 syntax. The latest release is CIMPL 6.0. This documentation is provided for historical purposes. If you're looking for a quick introduction to CIMPL and <code>shr-cli</code> environment setup, try the <a href="https://github.com/standardhealth/shr-cli/wiki/Hello-World">Hello World</a>. If you're looking for a more in-depth introduction, try the <a href="https://github.com/standardhealth/shr-cli/wiki/Tutorial">Tutorial</a>.</em></p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<p><strong><a href="#general-overview">1. General Overview</a></strong>
+* <a href="#whitespace">1.1 Whitespace</a>
+* <a href="#naming-conventions">1.2 Naming Conventions</a>
+* <a href="#ordinality">1.3 Ordinality</a>
+* <a href="#naming-collisions">1.4 Naming Collisions</a>
+* <a href="#versioning">1.5 Versioning</a>
+* <a href="#comments">1.6 Comments</a></p>
+<p><strong><a href="#file-headers">2. File Headers</a></strong>
+* <a href="#sample-file-header">2.1 Sample File Header</a>
+* <a href="#grammar">2.2 Grammar</a>
+* <a href="#namespace-declaration">2.3 Namespace Declaration</a>
+* <a href="#file-description">2.4 File Description</a>
+* <a href="#uses">2.5 Uses</a>
+* <a href="#url-shorthands">2.6 Url Shorthands</a>
+* <a href="#codesystems">2.7 CodeSystems</a></p>
+<p><strong><a href="#data-element-file">3. Data Element File</a></strong>
+* <a href="#sample-data-element-file">3.1 Sample Data Element File</a>
+* <a href="#element-name-declaration">3.2 Element Name Declaration</a>
+* <a href="#concept-code">3.3 Concept Code</a>
+* <a href="#inheritance">3.4 Inheritance</a>
+* <a href="#description-1">3.5 Description</a>
+* <a href="#fields">3.6 Fields</a>
+  * <a href="#value">3.6.1 Value</a>
+  * <a href="#primitives">3.6.2 Primitives</a>
+  * <a href="#field">3.6.3 Field</a>
+  * <a href="#inherited-field">3.6.4 Inherited Field</a>
+  * <a href="#references">3.6.5 References</a>
+* <a href="#field-constraints">3.7 Field Constraints</a>
+  * <a href="#no-constraint">3.7.1 No Constraint</a>
+  * <a href="#cardinality">3.7.2 Cardinality</a>
+  * <a href="#fixed-value">3.7.3 Fixed Value</a>
+  * <a href="#type">3.7.4 Type</a>
+  * <a href="#value-set">3.7.5 Value Set</a>
+  * <a href="#includes-code">3.7.6 Includes Code</a>
+  * <a href="#includes-type">3.7.7 Includes Type</a></p>
+<p><strong><a href="#map-file">4. Map File</a></strong>
+* <a href="#sample-map-file">4.1 Sample Map File</a>
+* <a href="#element-mapping">4.2 Element Mapping</a>
+* <a href="#field-mapping">4.3 Field Mapping</a>
+* <a href="#fix">4.4 Fix</a>
+* <a href="#constrain">4.5 Constrain</a>
+* <a href="#slicing">4.6 Slicing</a>
+  * <a href="#declaring-a-discriminator">4.6.1 Declaring a Discriminator</a>
+  * <a href="#moving-the-slice-location">4.6.2 Moving the Slice Location</a>
+  * <a href="#slice-strategies">4.6.3 Slice Strategies</a></p>
+<p><strong><a href="#value-set-file">5. Value Set File</a></strong>
+* <a href="#sample-value-set-file">5.1 Sample Value Set File</a>
+* <a href="#value-set-declaration">5.2 Value Set Declaration</a>
+* <a href="#value-set-description">5.3 Value Set Description</a>
+* <a href="#code-value-declaration">5.4 Code-Value Declaration</a></p>
+<p><strong><a href="#fhir-examples-file">6. FHIR Examples File</a></strong></p>
+<p><strong><a href="#future-architectural-considerations">7. Future Architectural Considerations</a></strong></p>
+<hr />
+<h2 id="general-overview">General Overview</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a domain specific language for defining clinical information models. It was designed to be simple and declarative, with tools to produce FHIR Profiles, FHIR Implementation Guides, data dictionaries, and other assets.</p>
+<h3 id="whitespace">Whitespace</h3>
+<p>Repeated whitespace is generally not meaningful within CIMPL files. So this:</p>
+<pre><code>Grammar: DataElement 5.0
+Namespace: shr.core
+</code></pre>
+
+<p>...is equivalent to this:</p>
+<pre><code>Grammar:        DataElement 5.0
+
+  Namespace:    shr.core
+</code></pre>
+
+<h3 id="naming-conventions">Naming Conventions</h3>
+<h4 id="file-names">File names</h4>
+<ul>
+<li>Data Element files: <code>namespace.txt</code></li>
+<li>Value Set files: <code>namespace_vs.txt</code></li>
+<li>Mapping files: <code>namespace_map.txt</code></li>
+</ul>
+<p><em>Note: any periods in the <code>namespace</code> should be replaced by underscores</em></p>
+<h4 id="namespaces">Namespaces</h4>
+<p>A namespace conventionally is denominated by the authoring organization and the broad category of elements the namespace defines, delineated by a period. For example:</p>
+<pre><code>Namespace: shr.oncology
+</code></pre>
+
+<p><em>Note: The organization name is recommended but not required (e.g., <code>Namespace: oncology</code> is also allowed).</em></p>
+<h4 id="elements">Elements</h4>
+<p>Elements are conventionally defined in <a href="http://wiki.c2.com/?PascalCase">PascalCase</a>. For example:</p>
+<pre><code>Element: GeologicalLocation
+</code></pre>
+
+<p><em>Note: Letters, numbers, and hyphens are allowed. However, it is required that an element name begins with an uppercase letter.</em></p>
+<h4 id="value-sets">Value Sets</h4>
+<p>Value Sets are conventionally defined in <a href="http://wiki.c2.com/?PascalCase">PascalCase</a>, with an additional "VS" suffix. For example:</p>
+<pre><code>ValueSet: HomeEnvironmentRiskVS
+</code></pre>
+
+<p><em>Note: It is required that an Value Set name begins with an uppercase letter.</em></p>
+<h4 id="code-sets">Code Sets</h4>
+<p>Within a custom value set, the individual codes are conventionally written in lowercase <a href="https://en.wikipedia.org/wiki/Snake_case">snake_case</a>. For example:</p>
+<pre><code>ValueSet:          HomeEnvironmentRiskVS
+#smoke_detectors   &quot;No Smoke Detectors&quot;
+#radiation         &quot;Radon or other radiation source&quot;
+#swimming_pool     &quot;Swimming Pool&quot;
+</code></pre>
+
+<h3 id="ordinality">Ordinality</h3>
+<p>CIMPL does not enforce or require ordinality in any of its definitions, i.e. an element defined at the bottom of the file can be used as field on an element defined at the top.</p>
+<p>There is, however, a requirement for a file's header information to be at the top of the file, before any definitions.
+See: <a href="#file-headers">File Headers</a> for more information</p>
+<h3 id="naming-collisions">Naming Collisions</h3>
+<p>CIMPL does not support duplicate element names within a namespace. However, you are allowed to reuse an element name across different namespaces. In the case that you come across a collision due to an included namespace in <code>Uses</code>, you have to refer to the element by its <a href="#fqn">Fully Qualified Name</a>.</p>
+<h3 id="versioning">Versioning</h3>
+<p>CIMPL follows the <a href="https://semver.org">Semantic Versioning</a> convention (MAJOR.MINOR.PATCH).</p>
+<ul>
+<li>MAJOR: A breaking change. This is reserved for drastic grammar overhauls. Does not support backwards compatibility to other major version releases.</li>
+<li>MINOR: Feature updates. Allows for backwards compatability within the major version.</li>
+<li>PATCH: Minor updates and bug fixes. Allows for backwards compatability within the major version.</li>
+</ul>
+<p>CIMPL is currently on major version 5.</p>
+<p>For a full changelog, see the <a href="https://github.com/standardhealth/shr-cli/releases">Release Notes</a>.</p>
+<!-- TODO: Find MAJOR release differences -->
+
+<h3 id="comments">Comments</h3>
+<p>CIMPL follows <a href="https://www.w3schools.com/js/js_comments.asp">JavaScript syntax</a> for code comments:</p>
+<pre><code>// Use a double-slash for comments on a single line
+
+/*
+Use slash-asterisk and asterisk-slash for larger block comments.
+These comments can take up multiple lines.
+*/
+</code></pre>
+
+<hr />
+<h2 id="file-headers">File Headers</h2>
+<p>Each CIMPL file contains header information that describes the file type, its scope and inheritance, and its purpose.  It also allows developers to create aliases for urls and code systems.</p>
+<h3 id="sample-file-header">Sample File Header</h3>
+<pre><code>Grammar:        DataElement 5.0
+Namespace:      shr.environment
+Description:    &quot;The SHR Environment domain contains definitions related to surroundings experienced by the person of record.&quot;
+Uses:           shr.core, shr.base, shr.allergy, shr.observation, shr.medication
+CodeSystem:     LNC = http://loinc.org
+</code></pre>
+
+<h3 id="grammar">Grammar</h3>
+<p>The <code>Grammar</code> keyword is used to define the file type and the version of CIMPL used in development/parsing.  This is required for all CIMPL files.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Grammar</code></td>
+<td><code>Grammar: DataElement 5.0</code></td>
+</tr>
+<tr>
+<td><code>Grammar</code></td>
+<td><code>Grammar: ValueSet 5.0</code></td>
+</tr>
+<tr>
+<td><code>Grammar</code></td>
+<td><code>Grammar: Map 5.0</code></td>
+</tr>
+</tbody>
+</table>
+<p>There are three possible options for file type:
+1. <code>DataElement</code>
+2. <code>ValueSet</code>
+3. <code>Mapping</code></p>
+<p>The version details the MAJOR and MINOR version the file was written for. The language is backwards compatibile within the MAJOR version number, i.e. <code>DataElement 5.0</code> files will compile without problems on the <code>5.9.0</code> tooling. For more information, see <a href="#versioning">Versioning</a>.</p>
+<h3 id="namespace-declaration">Namespace Declaration</h3>
+<p>The <code>Namespace</code> keyword defines the scope of the file and serves as a broad grouping of <code>DataElement</code>, <code>ValueSet</code> and <code>Map</code> files within a domain.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Namespace</code></td>
+<td><code>Namespace: shr.environment</code></td>
+</tr>
+</tbody>
+</table>
+<p>The namespace can be any number of lowercase period delimited words.</p>
+<p>Best practice is to follow the naming convention pattern of <code>organization</code>.<code>domain</code> (followed by subdomains if necessary).</p>
+<p>The tooling will not allow for duplicate namespaces.</p>
+<p><em>(Note: While it is best practice to use only lower case letters, the strict requirements only require the word to begin with a lowercase letter. The rest of the namespace allows for mixed casing and hyphens)</em></p>
+<h4 id="file-description">File Description</h4>
+<p>The <code>Description</code> keyword provides the user the ability to define the purpose of the file, within the confines of a project.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Description</code></td>
+<td><code>Description: "The SHR Environment domain contains definitions related to surroundings experienced by the person of record."</code></td>
+</tr>
+</tbody>
+</table>
+<p>The namespace description is optional, but recommended.</p>
+<p>Best practice is to write human readable text using the <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a> standard.</p>
+<p>There is no strict requirement for unique descriptions, and as such you will not run into description collisions.</p>
+<p><em>(NOTE: While the CIMPL tooling will allow for any pattern of <a href="http://unicode.org/standard/WhatIsUnicode.html">Unicode</a> characters within enclosed double quotation marks (<code>"</code>), certain exporters such as the FHIR exporter will object to non-<a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a> text.)</em></p>
+<h3 id="uses">Uses</h3>
+<p>The <code>Uses</code> keyword provides a list of the namespaces used within the current namespace. Namespace inclusion allows you to use <code>DataElement</code>s and <code>ValueSet</code>s defined in other namespaces.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Uses</code></td>
+<td><code>Uses: shr.core, shr.base, shr.allergy, shr.observation, shr.medication</code></td>
+</tr>
+</tbody>
+</table>
+<p>In CIMPL version 5 and below, it is <em>required</em> that you import <code>shr.core</code> and <code>shr.base</code> for the tooling to run.</p>
+<p><em>(In the case of name collisions, you will have to indicidate <code>DataElement</code>s by their <a href="#fqn">Fully Qualified Name</a>).</em></p>
+<p>The order of inclusion has no effect.</p>
+<h3 id="url-shorthands">Url Shorthands</h3>
+<p>The <code>Path</code> keyword allows for abbreviations of long urls.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Path</code></td>
+<td><code>Path: FHIR = http://hl7.org/fhir/ValueSet</code></td>
+</tr>
+</tbody>
+</table>
+<p>This functionality is completely optional, but it is provided to make authoring easier.</p>
+<p>The abbreviation by convention should be be an all UPPER CASE word. <em>(Although, the tooling does allow for numbers and hyphens after the first letter).</em></p>
+<h3 id="codesystems">CodeSystems</h3>
+<p>The <code>CodeSystem</code> keyword allows for abbrevations of codesystems. In order to use code systems in a DataElement definition or constraint, it is necessary to first define them in the file header (this is largely due to the complexity of codesystems' direct code references).</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CodeSystem</code></td>
+<td><code>CodeSystem: LNC = http://loinc.org</code></td>
+</tr>
+</tbody>
+</table>
+<p>You must define each codesystem you use in separate definitions across multiple lines, e.g.</p>
+<pre><code>CodeSystem: LNC = http://loinc.org
+CodeSystem: SCT = http://sct.org
+</code></pre>
+
+<p>The abbreviation by convention should be be an all UPPER CASE word. <em>(Although, the tooling does allow for numbers and hyphens after the first letter)</em>.</p>
+<h2 id="data-element-file">Data Element File</h2>
+<h3 id="sample-data-element-file">Sample Data Element File</h3>
+<pre><code>Grammar:        DataElement 5.0
+Namespace:      shr.environment
+Description:    &quot;The SHR Environment domain contains definitions related to
+                surroundings experienced by the person of record.&quot;
+Uses:           shr.core, shr.base, shr.allergy, shr.observation, shr.medication
+CodeSystem:     LNC = http://loinc.org
+
+EntryElement:   FinancialSituation
+Concept:        MTH#C0516918
+Based on:       Panel
+Description:    &quot;Measures of the ability of the subject to obtain and pay for the
+                necessities of life.&quot;
+Value:          CodeableConcept is MTH#C0516918
+0..1            AnnualIncome
+0..*            IncomeSource
+                PanelCode is LNC#83335-0
+</code></pre>
+
+<h3 id="element-name-declaration">Element Name Declaration</h3>
+<p>The <code>Element</code> keyword allows users to define the name of the element and the lines following the <code>Element</code> keyword comprise the definition of that element.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Element</code></td>
+<td><code>Element: Observation</code></td>
+</tr>
+<tr>
+<td><code>EntryElement</code></td>
+<td><code>EntryElement: FinancialSituation</code></td>
+</tr>
+<tr>
+<td><code>Abstract Element</code></td>
+<td><code>Abstract Element: Any</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note the spacing discrepancy between <code>EntryElement</code> and <code>Abstract Element</code>.  This has no semantic meaning but is inherent to the syntax.</em></p>
+<p>These keywords are used to define data elements with three different levels of expression in the target output:
+* <code>EntryElement</code> is used to define elements that will be used directly by the target output, i.e., data will be <em>entered</em> directly into this item by and end user once it has been mapped.  For FHIR exports, these items will be created as 'Primary Profiles'
+* <code>Element</code> is used to define supporting data elements for <code>EntryElement</code>s.  These data elements will be present in the target output as, but they are not the top-level items that are exported. For FHIR exports, these items will be created as 'Supporting Profiles'.
+* <code>Abstract Element</code> is used to define elements that are used only within the CIMPL mapping to create basic objects that will be leveraged by other data elements.  They will not be present in the target mapping.</p>
+<h4 id="fully-qualified-names">Fully Qualified Names</h4>
+<p>In addition to its declared name, all elements also have a unique identifying <code>Fully Qualified Name</code> (<code>FQN</code>).</p>
+<p>The FQN is a combination of the element's namespace and its declared name (through concatention delimited by a period). For example, the element <code>Observation</code> in the namespace <code>shr.finding</code> has the following FQN:</p>
+<pre><code>shr.finding.Observation
+</code></pre>
+
+<p><em>Note: While rare and considered bad practice, naming collisions between elements across multiple namespaces is possible. In the case of a naming collision (such as when a namespace <code>Uses</code> multiple namespaces that define an element with the same declared name), you would have to refer to the specific unique FQN instead of the declared name in element, field, and value definitions.</em></p>
+<h3 id="concept-code">Concept Code</h3>
+<p>The <code>Concept</code> keyword is used to define the concept code for the element.  These are numerical codes that identify clinical terms, primitive or defined, organized in hierarchies.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Concept</code></td>
+<td><code>Concept: MTH#C0516918</code></td>
+</tr>
+</tbody>
+</table>
+<p>Concept codes for the meaning of the defined structure (SNOMED CT and LOINC codes, as an example). While optional, it is recommended you define the concept of an element.</p>
+<p>To see how it relates to FHIR output, see <a href="http://hl7.org/fhir/structuredefinition-definitions.html#StructureDefinition.keyword">StructureDefinition.keyword</a>.</p>
+<h3 id="inheritance">Inheritance</h3>
+<p>Provides the parent element from which the properties are inherited. This works similar to class inheritance in object orientated programming. Additionally, mappings are inherited alongside properties.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Based on</code></td>
+<td><code>Based on: Panel</code></td>
+</tr>
+</tbody>
+</table>
+<p>Multiple inheritance is currently removed from CIMPL support.</p>
+<p>Selective inheritance is achievable through 'zeroing out' inherited properties. See <a href="#cardinality">Cardinality</a></p>
+<h3 id="description">Description</h3>
+<p>The textual description of the element.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Description</code></td>
+<td><code>Description: "Measures of the ability of the..."</code></td>
+</tr>
+</tbody>
+</table>
+<p>The element description is optional, but recommended.</p>
+<p>Best practice is to write human readable text using the <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a> standard.</p>
+<p>There is no strict requirement for unique descriptions, and as such you will not run into description collisions.</p>
+<p>To see how it relates to FHIR output, see <a href="http://hl7.org/fhir/structuredefinition-definitions.html#StructureDefinition.description">StructureDefinition.description</a>.</p>
+<p><em>(NOTE: While the CIMPL tooling will allow for any pattern of <a href="http://unicode.org/standard/WhatIsUnicode.html">Unicode</a> characters within enclosed double quotation marks (<code>"</code>), certain exporters such as the FHIR exporter will object to non-<a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a> text.)</em></p>
+<h3 id="fields">Fields</h3>
+<h4 id="value">Value</h4>
+<p>Defines what the element is. You are allowed to declare a value to be either a <a href="#primitives">primitive</a> or a DataElement.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Value</code></td>
+<td><code>Value: CodeableConcept</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>Value: string</code></td>
+</tr>
+</tbody>
+</table>
+<p>Value is an optional special field on an element that correspond more heavily to what the element <em>is</em>.</p>
+<p>You are also allowed to <a href="#field-constraints">constrain the value</a> similar to other fields.</p>
+<p>On the mapping side, you are able to map the value like any other field.</p>
+<p>Value defaults to a <a href="#cardinality">cardinality</a> of <code>1..1</code>, but this can be changed, e.g.:</p>
+<pre><code>Value: 0..1 Quantity
+</code></pre>
+
+<h4 id="primitives">Primitives</h4>
+<p>CIMPL allows users to define fields as the following primitive data types:
+* <a href="https://www.hl7.org/fhir/datatypes.html#boolean">boolean</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#integer">integer</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#string">string</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#decimal">decimal</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#uri">uri</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#base64Binary">base64Binary</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#instant">instant</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#date">date</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#dateTime">dateTime</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#time">time</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#code">code</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#oid">oid</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#id">id</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#markdown">markdown</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#unsignedInt">unsignedInt</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#positiveInt">positiveInt</a>
+* <a href="https://www.hl7.org/fhir/datatypes.html#xhtml">xhtml</a></p>
+<h4 id="field">Field</h4>
+<p>Object properties on the element.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><code>0..1  AnnualIncome</code></td>
+</tr>
+</tbody>
+</table>
+<p>In most cases, you refer to an element by its name. In the rare case of a naming collision, you must refer to it by its <a href="#fully-qualified-name">Fully Qualified Name</a>.</p>
+<h4 id="inherited-field">Inherited Field</h4>
+<p>Object properties on the element inherited from the parent or other elements.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><code>PanelCode is LNC#83335-0</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="inherited-value">Inherited Value</h4>
+<p>Object value on the element inherited from the parent or other elements.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Value</code></td>
+<td><code>Value is MTH#C0516918</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>Value</code> keyword can be used identically to an <a href="#inherited-field">Inherited Field</a>.</p>
+<h4 id="references">References</h4>
+<p>In order to refer to an element as a class (i.e. a pointer as opposed to an instance), you can encapsulate the element name using <code>ref()</code>.  This is helpful for defining complex objects with child elements that are already defined as parts of existing data elements.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ref()</code></td>
+<td><code>1..1  ref(Role)</code></td>
+</tr>
+<tr>
+<td><code>ref()</code></td>
+<td><code>0..1  PartOf value is type ref(Organization)</code></td>
+</tr>
+<tr>
+<td><code>ref()</code></td>
+<td><code>Value: ref(Finding)</code></td>
+</tr>
+<tr>
+<td><code>ref()</code></td>
+<td><code>Value: 0..* ref(Observation)</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>ref(...)</code> syntax should only encapsulate the element name. All other fields should be applied normally to the group.</p>
+<p><code>ref()</code> can be used to specify that a reference is either the child element of a data element (e.g., <code>1..1  ref(Role)</code>) or the <code>Value</code> of an existing child element (e.g., <code>0..1  PartOf value is type ref(Organization)</code>).</p>
+<h3 id="field-constraints">Field Constraints</h3>
+<p>Fields can be constrained to further specify their acceptable values using <a href="#cardinality">cardinalities</a> and keywords, e.g.:
+* <a href="#fixed-value"><code>is</code></a>
+* <a href="#type"><code>is type</code></a>
+* <a href="#value-set"><code>from</code></a>
+* <a href="#includes-code"><code>includes</code></a></p>
+<h4 id="no-constraint">No Constraint</h4>
+<p>Fields can exist without any constraints.  They can also be constrained to a data type (or set of data types) without further constraining the possible values within that data type.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><code>0..1 GeopoliticalLocation</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>Value: CodeableConcept</code></td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td><code>Value: unsignedInt or positiveInt</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="cardinality">Cardinality</h4>
+<p>Cardinality defines the number of instances should exist for a value.</p>
+<p>The first digit indicates the minimum quantity, and additionally by setting it to <code>0</code> or to <code>1</code>, has the effect of making a field optional or required.</p>
+<p>The second digit expresses the upper bound. To express no upper bound, a <code>*</code> can be used in place of a number.</p>
+<p>When constraining an inherited field, you can only retain the previous cardinality, or constrain it to be narrower.</p>
+<p><em>Note: By constraining it to 0..0, you can remove an inherited field from an element.</em></p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><code>0..* LanguageUsed</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>1..2 GovernmentIssuedID</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="fixed-value">Fixed Value</h4>
+<p>The <code>is</code> keyword limits the field to a specifc value (e.g., a <code>code</code>, a specific <code>string</code>, or a <code>boolean</code> value).</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is</code></td>
+<td><code>ObservationCode is LNC#82810-3</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note: The <code>is</code> keyword locks the code for all instances of the data element.  If you only need to lock the code for one particular mapping, do so using the <a href="#fix"><code>fix</code></a> keyword in the mapping file.</em></p>
+<h4 id="type">Type</h4>
+<p>The <code>is type</code> keywords limits the data type of a field to a previously defined element.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>is type</code></td>
+<td><code>Quantity is type DollarAmount</code></td>
+</tr>
+</tbody>
+</table>
+<p>Use case: If we have an abstract element, and we are making a more specific version of that element, we also want to make its fields more specific. For instance, if we have a DataElement <code>Person</code> which has a field <code>Pet</code>, and we making a more specific person <code>DogOwner</code> and we want to further specify its pet. In this case, we could constrain <code>Pet is type Dog</code>.</p>
+<h4 id="value-set">Value Set</h4>
+<p>The <code>from</code> keyword limits the value of a field to be from a specific value set, with different levels of requirement.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+<th>Binding Strength</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>from</code></td>
+<td><code>Substance from SubstanceOfAbuseVS</code></td>
+<td>Required</td>
+</tr>
+<tr>
+<td><code>must be</code></td>
+<td><code>Priority must be from http://hl7.org/fhir/ValueSet/request-priority</code></td>
+<td>Required</td>
+</tr>
+<tr>
+<td><code>should be</code></td>
+<td><code>1..1 Status should be from http://hl7.org/fhir/ValueSet/event-status</code></td>
+<td>Preferred</td>
+</tr>
+<tr>
+<td><code>could be</code></td>
+<td><code>CodeableConcept could be from http://hl7.org/fhir/ValueSet/medication-as-needed-reason</code></td>
+<td>Example</td>
+</tr>
+<tr>
+<td><code>if covered</code></td>
+<td><code>Category from http://hl7.org/fhir/ValueSet/goal-category if covered</code></td>
+<td>Extensible</td>
+</tr>
+</tbody>
+</table>
+<p>The binding strengths correspond to <a href="https://www.hl7.org/fhir/valueset-binding-strength.html">FHIR binding strengths</a> and have the same meaning:
+* Required: To be conformant, the concept in this element SHALL be from the specified value set
+* Preferred: Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant.
+* Example: Instances are not expected or even encouraged to draw from the specified value set. The value set merely provides examples of the types of concepts intended to be included.
+* Extensible: To be conformant, the concept in this element SHALL be from the specified value set if any of the codes within the value set can apply to the concept being communicated. If the value set does not cover the concept (based on human review), alternate codings (or, data type allowing, text) may be included instead.</p>
+<h4 id="includes-code">Includes Code</h4>
+<p>For fields that are already defined with a data type of <code>code</code>, the <code>includes</code> keyword expands the allowable entries for that field.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includes</code></td>
+<td><code>Category includes LNC#54511-1 "Behavior"</code></td>
+</tr>
+<tr>
+<td><code>includes</code></td>
+<td><code>ProblemCategory includes #adverse_reaction</code></td>
+</tr>
+</tbody>
+</table>
+<!-- * TODO: confirm the functionality of this constraint. Chris? -->
+
+<p>The first example above expands <code>Category</code> to include <code>54511-1</code> from the LOINC codesystem. Additionally, it is given a brief textual description of <code>"Behavior"</code>.</p>
+<p>The second example above expands the allowable codes in <code>ProblemCategory</code> to include <code>#adverse_reaction</code>. Unlike the first example, the value set does not precede the code, because it has defined on <code>ProblemCategory</code>'s parent using a <a href="#value-set"><code>from</code></a> statement. Additionally, there is no textual description, as that is optional.</p>
+<h4 id="includes-type">Includes Type</h4>
+<p>Specifies the quantity of particular types of objects within the value.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>includes</code></td>
+<td><code>Foo includes 1..1   PhysicalActivityLevel</code></td>
+</tr>
+</tbody>
+</table>
+<p>This is useful in further specifying fields that are analagous to lists.</p>
+<p>In the above example, the field <code>Foo</code> is <em>required</em> to include <code>1</code> <code>PhysicalActivityLevel</code>.</p>
+<p>To add more inclusions, simply add more <code>includes</code> statements on <code>Foo</code>.  For example, a blood pressure panel can include any number of tests, but we assume that at least one of those tests will be systolic pressure and another will be diastolic pressure:</p>
+<pre><code>Element: VitalSign
+1..* BloodPressurePanel
+    includes 1..1 SystolicPressure
+    includes 1..1 DiastolicPressure
+</code></pre>
+
+<p><em>Note: The collective cardinality of all inclusions must fit within the field, i.e. if you are including 3 distinct elements, then the field must have a maximum cardinality greater than <code>3</code> (like <code>*</code>).</em></p>
+<hr />
+<h2 id="map-file">Map File</h2>
+<p>By default, new elements will appear as FHIR extensions unless the element is mapped to an existing FHIR element. These mapping allow for simpler slicing and fixed values.</p>
+<h3 id="sample-map-file">Sample Map File</h3>
+<pre><code>Grammar:    Map 5.0
+Namespace:  shr.allergy
+Target:     FHIR_STU_3
+
+
+Condition maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-condition:
+    RelatedEncounter maps to context
+    Informant maps to asserter
+    Subject maps to subject
+    Entry.CreationTime maps to assertedDate
+    Value maps to code
+    Category maps to category
+    ClinicalStatus maps to clinicalStatus
+    Onset maps to onset[x]
+    Abatement maps to abatement[x]
+    BodySiteOrCode[CodeableConcept] maps to bodySite
+    BodySiteOrCode[BodySite] maps to http://hl7.org/fhir/StructureDefinition/body-structure
+    Severity maps to severity
+    Stage maps to stage
+    Stage.Value maps to stage.summary
+    Evidence maps to evidence
+</code></pre>
+
+<h3 id="element-mapping">Element Mapping</h3>
+<p>Maps a CIMPL element to a target element.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>maps to</code></td>
+<td><code>FinancialSituation maps to DiagnosticResult:</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>FinancialSituation:</code></td>
+</tr>
+</tbody>
+</table>
+<p>In CIMPL map files, the item to the left of <code>maps to</code> comes from your CIMPL data model and the item to the right is an element in your target output.</p>
+<p>If no FHIR mapping is defined for an element and it inherits no mappings from its parents, it defaults to a mapping to the <a href="https://www.hl7.org/fhir/basic.html">Basic resource</a>.  In general, this is not recommended because it has no inherent semantic meaning for implementers.  To promote interoperability and reuse, CIMPL modelers are encouraged to find target models that already exist and use constraints or extensions to modify them according to project needs.</p>
+<h3 id="field-mapping">Field Mapping</h3>
+<p>Maps a CIMPL element field to a target field.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>maps to</code></td>
+<td><code>MaritalStatus maps to maritalStatus</code></td>
+</tr>
+<tr>
+<td><code>maps to</code></td>
+<td><code>Ethnicity maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity</code></td>
+</tr>
+<tr>
+<td><code>maps to</code></td>
+<td><code>MultipleBirth maps to multipleBirth[x].boolean</code></td>
+</tr>
+<tr>
+<td><code>maps to</code></td>
+<td><code>Value.ActiveFlag maps to active</code></td>
+</tr>
+<tr>
+<td><code>maps to</code></td>
+<td><code>AdverseReaction.AllergenIrritant maps to reaction.substance</code></td>
+</tr>
+<tr>
+<td><code>maps to</code></td>
+<td><code>BodySiteOrCode[CodeableConcept] maps to bodySite</code></td>
+</tr>
+</tbody>
+</table>
+<p>In CIMPL map files, the item to the left of <code>maps to</code> comes from your CIMPL data model and the item to the right is an element in your target output.</p>
+<p>With FHIR as the target output, the right-hand side of the map statement can point to any field on a FHIR resource, including:
+* Fields that are at the root of the resource (e.g., <code>maritalStatus</code>)
+* Fields that are child elements of root elements on the resource (e.g., <code>reaction.substance</code>)
+* Fields that have a <a href="https://www.hl7.org/fhir/formats.html#choice">choice of data types</a> (e.g., <code>multipleBirth[x].boolean</code>)
+* Fields that have been defined in existing profiles or other <code>StructureDefinition</code> resources (e.g., <code>http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity</code>)</p>
+<h3 id="fix">Fix</h3>
+<p>Similar to the <a href="#fixed-value"><code>is</code></a> keyword, the <code>fix</code> keyword allows for FHIR fields to be locked to a certain value.  It is helpful for locking field values in specific mappings (instead of in the <code>DataElement</code> definition, which would be locked for all potential mappings).</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fix</code></td>
+<td><code>fix status to #completed</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note about syntax: The element being fixed on left hand side of this syntax is a FHIR element, not a CIMPL element. The right hand syntax allows for any code or primitive value to be fixed.</em></p>
+<h3 id="constrain">Constrain</h3>
+<p>The <code>constrain</code> keyword allows users to constrain the cardinality of elements in output files.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>constrain</code></td>
+<td><code>constrain explanation to 0..1</code></td>
+</tr>
+</tbody>
+</table>
+<p><em>Note about syntax: The element being fixed on the left hand side of this syntax is a FHIR element, not a CIMPL element. The right hand syntax allows for any <a href="#cardinality">cardinality</a>.</em></p>
+<h3 id="slicing">Slicing</h3>
+<p>When fields are allowed to repeat on a target model (e.g., have cardinality with an upper bound greater than 1), it is common practice to specify which CIMPL elements are mapped to instances of that repeated field on the target model.  This process is called <strong>slicing</strong>. For example, the <a href="https://www.hl7.org/fhir/task.html">FHIR Task resource</a> allows for an arbitrary number of <code>input</code> fields to be added.  To ensure that all each of the <code>input</code> fields is uniquely addressable by a parsing engine, those inputs need to be differentiated by a <strong>discriminator</strong>.</p>
+<p>See the FHIR documentation for more detail about <a href="https://www.hl7.org/fhir/profiling.html#slicing">slicing</a> and <a href="https://www.hl7.org/fhir/profiling.html#discriminator">discriminators</a></p>
+<ul>
+<li>TODO: Add a slicing example to the sample map file</li>
+</ul>
+<h4 id="declaring-a-discriminator">Declaring a Discriminator</h4>
+<p>To perform any slicing, a discriminator needs to be declared, using <code>slice on</code> followed by the discriminator.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>slice on</code></td>
+<td><code>Laterality maps to qualifier (slice on = coding.code)</code></td>
+</tr>
+<tr>
+<td><code>slice on type</code></td>
+<td>TODO</td>
+</tr>
+</tbody>
+</table>
+<p>CIMPL supports the FHIR processing types for discriminators:
+| Discriminator | Definition |
+| ------------- | ---------- |
+| value | The slices have different values in the nominated element|
+| exists |  The slices are differentiated by the presence or absence of the nominated element|
+| pattern | The slices have different values in the nominated element, as determined by testing them against the applicable ElementDefinition.pattern[x]|
+| type |The slices are differentiated by type of the nominated element to a specifed profile|
+| profile | The slices are differentiated by conformance of the nominated element to a specifed profile|</p>
+<h4 id="moving-the-slice-location">Moving the Slice Location</h4>
+<p>If the discriminator used for slicing is not the actual field that is being mapped to, <code>slice at</code> can allow you to explicitly define the location of the slice.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>slice at</code></td>
+<td><code>Members.Observation maps to related.target (slice at = related; slice on type)</code></td>
+</tr>
+</tbody>
+</table>
+<p>In the above example, though the mapping is declared such that <code>Members.Observation maps to related.target</code>, the slicing is not occuring at <code>related.target</code>.  Instead, the <code>slice at = related</code> ensures that the slicing is occuring at the <code>related</code> element.</p>
+<h4 id="slicing-strategies">Slicing Strategies</h4>
+<ul>
+<li>TODO: What does this do and when should it be used?</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>slice strategy</code></td>
+<td><code>Members.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)</code></td>
+</tr>
+<tr>
+<td>* TODO: What is the syntax?  What are the allowable options?</td>
+<td></td>
+</tr>
+<tr>
+<td>* TODO: find or create a less complex example</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="value-set-file">Value Set File</h2>
+<p>The value set files are used to define custom value sets and codes when existing sources like <a href="https://www.hl7.org/fhir/terminologies-v3.html">HL7 v3</a>, <a href="https://www.hl7.org/fhir/terminologies-systems.html">FHIR</a>, <a href="https://vsac.nlm.nih.gov/">VSAC</a>, or <a href="https://phinvads.cdc.gov/">PHIN VADS</a> are insufficient.</p>
+<h3 id="sample-value-set-file">Sample Value Set File</h3>
+<pre><code>Grammar:        ValueSet 5.0
+Namespace:      shr.base
+
+ValueSet:               ValueAbsentReasonVS
+Description:            &quot;Reasons that a value associated with a test or other finding is missing.&quot;
+Includes codes from DAR
+#missing_refused        &quot;Human source was asked but declined to respond to the question, or an applicable question was left unanswered.&quot;
+#missing_noexplanation  &quot;The reason the information is not present is not known.&quot;
+#missing_nonesuch       &quot;The answer is missing because nothing of a type of thing is known to exists, e.g., the siblings of an only child. Also use this code to represent a 'none of the above' answer&quot;
+#missing_collection     &quot;Missing due to a problem collecting, identifying, or locating the specimen, including patient refusal or unable to provide specimen&quot;
+#missing_specimen       &quot;Missing due to a problem with the specimen, e.g. contamination, clotting, improper tube type, improper storage, too small, etc.&quot;
+#missing_malfunction    &quot;Missing due to instrument malfunction.&quot;
+</code></pre>
+
+<h4 id="value-set-declaration">Value Set Declaration</h4>
+<p>Defines the name of the value set.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ValueSet</code></td>
+<td><code>ValueSet: ProposedStatusVS</code></td>
+</tr>
+</tbody>
+</table>
+<p>By convention, all value sets should be Pascal case and end with <code>VS</code>.</p>
+<h4 id="value-set-description">Value Set Description</h4>
+<p>Defines the name of the value set.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Description</code></td>
+<td><code>Description: "The status of a proposal."</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="code-value-declaration">Code-Value Declaration</h4>
+<p>Define the code or value.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><code>#proposed "The proposal has been proposed, but not accepted or rejected."</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>CAP#29915       "None/Negative"</code></td>
+</tr>
+</tbody>
+</table>
+<p>Each value is prefaced by a hash symbol (<code>#</code>) and followed by a description enclosed in quotation marks. By convention, each value should use lowercase <a href="https://en.wikipedia.org/wiki/Snake_case">snake_case formatting</a>.</p>
+<p>This can either be a new user defined <code>code</code>, or it can be individual codes from separate codesystems, such as the <code>CAP#29915</code> example, in which <code>29915</code> is an existing code within the <code>CAP</code> codesystem.</p>
+<h4 id="includes">Includes</h4>
+<p>Extends a custom defined <code>ValueSet</code> to include codes from other codesystems.</p>
+<table>
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Includes</code></td>
+<td><code>Includes codes from MDR</code></td>
+</tr>
+<tr>
+<td><code>Includes</code> and <code>descending from</code></td>
+<td><code>Includes codes descending from SCT#105590001</code></td>
+</tr>
+<tr>
+<td><code>Includes</code> and <code>descending from</code> and <code>and not descending from</code></td>
+<td><code>Includes codes descending from SCT#105590001 "Substance" and not descending from SCT#410942007 "Drug or medicament"</code></td>
+</tr>
+</tbody>
+</table>
+<p>You are allowed to include from either a <code>codesystem</code> or a specific <code>code</code> from a codesystem.</p>
+<ul>
+<li>TODO: explain what <code>descending from</code> and <code>and not descending from</code> actually do with some kind of example.</li>
+</ul>
+<h2 id="fhir-examples-file">FHIR Examples File</h2>
+<p>To include examples in an IG, you must do the following:</p>
+<ul>
+<li>Create a <code>fhir_examples</code> folder in the same folder as your CIMPL text files</li>
+<li>Put the JSON examples inside the <code>fhir_examples</code> folder. For each file:
+name the file as you wish, but we recommend <em>my_example_id.json</em> (e.g., <em>bc-presence.json</em>
+in the example, ensure there is a value for the id (e.g., <code>"id": "PatientExample01"</code>)</li>
+<li>Within the example, ensure the meta.profile is set to the profile for the example (e.g., <code>"meta": { "profile": [ "http://hl7.org/fhir/us/shr/StructureDefinition/shr-core-Patient" ] }</code>)</li>
+</ul>
+
+  <br>
+    
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../cimpl5Tutorial/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../cimpl5Tutorial/" class="btn btn-xs btn-link">
+        CIMPL 5.0 Tutorial
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../cimpl6Reference/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../cimpl6Reference/" class="btn btn-xs btn-link">
+        CIMPL 6.0 Reference Documentation
+      </a>
+    </div>
+    
+  </div>
+
+    <br>
+</div>
+
+<footer class="col-md-12 wm-page-content">
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
