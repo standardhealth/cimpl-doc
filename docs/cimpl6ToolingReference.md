@@ -439,6 +439,15 @@ Here are some general tips on approaching debugging your model:
 * Don't be discouraged by the number of errors, since a single correction can silence multiple logged errors.
 * Read the error messages carefully. Although the messages might be cryptic, especially at first, the names of classes and paths are often excellent clues.
 
+### Advanced Logging
+
+SHR-CLI uses the [Bunyan](https://www.npmjs.com/package/bunyan) structured logging framework, and stores a full log file in the output folder (note: it will be appended to on subsequent runs).  You can use the Bunyan CLI tool to perform advanced filtering of the log file.  For example:
+```
+node_modules/.bin/bunyan -c 'this.shrId=="shr.vital.BloodPressure"'  -o short out/out.log
+```
+
+For more information on Bunyan and Bunyan CLI, see the Bunyan documentation.
+
 ## Outputs from SHR-CLI
 
 The output of running SHR-CLI appear in a directory named "out". By default, the /out directory is created in the tooling directory. A different location can be designated using the `-o` [command line option](#executing-shr-cli).

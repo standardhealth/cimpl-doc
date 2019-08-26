@@ -1,10 +1,14 @@
-# CIMPL Release Notes
+# Release Notes
 
-See a [complete log of all releases of SHR-CLI](https://github.com/standardhealth/shr-cli/releases).
+CIMPL consists of two parts:
+
+Models written in CIMPL, include base classes and models for certain Implementation Guides, maintained in Github in the [shr-spec repository](https://github.com/standardhealth/shr-spec) and SHR-CLI tools (primarily in the [shr-cli repository](https://github.com/standardhealth/shr-cli)).
+
+Please refer to the Github repository for [complete log of all releases of SHR-CLI](https://github.com/standardhealth/shr-cli/releases).
 
 [TOC]
 
-## CIMPL 6.0
+## SHR-CLI 6.0
 
 **Release Date**: June 5, 2019
 
@@ -24,7 +28,7 @@ CIMPL 6.0 contains a number of significant changes to both syntax and its base c
 | Replace | `must be`, `should be`, `could be`, and `if covered` value set constraints are obsolete and replaced by `(required)`, `(preferred)`, `(extensible)`, and `(example)` | `Type from BreastSpecimenTypeVS if covered` | `Type from BreastSpecimenTypeVS (extensible)` | [Value Set Binding Constraint](#value-set-binding-constraint) |
 | Replace | `ref()` is now obsolete. `value is type` replaced by `substitute` and bracket notation denoting value choices| `SourceSpecimen value is type ref(BreastSpecimen)` | `SourceSpecimen[Specimen] substitute BreastSpecimen` | [Mapping to References](#mapping-to-references) |
 
-## CIMPL 5.0
+## SHR-CLI 5.0
 
 Release Date: September 5, 2017
 
@@ -38,18 +42,18 @@ Release Date: September 5, 2017
 * fixed value mappings
 * bug fixes
 
-## CIMPL 4.0
+## SHR-CLI 4.0
 
 Release Date: March 6, 2017
 
-## CIMPL 3.0
+## SHR-CLI 3.0
 
 Release Date: January 4, 2017
 
-## CIMPL 2.0
+## SHR-CLI 2.0
 
 Release Date: September 17, 2016
 
-## CIMPL 1.0
+## SHR-CLI 1.0
 
 Release Date: June 1, 2016

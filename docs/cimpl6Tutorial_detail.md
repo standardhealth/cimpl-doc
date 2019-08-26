@@ -6,7 +6,7 @@ CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is 
 
 ### Purpose of this Document
 
-This is an extensive tutorial, meant to expose the reader to many aspects of CIMPL without going into full depth on any particular topic.
+This is an extensive tutorial, meant to expose the reader to many aspects of CIMPL and its tooling (SHR-CLI) without going into full depth on any particular topic.
 
 ### Intended Audience
 
@@ -29,8 +29,6 @@ This guide assumes you have:
 ***
 
 ## Initial Setup
-
->**Note:** _This tutorial was run using a MacOS environment.  While CIMPL is platform independent, the command lines run in a command line terminal will differ in file path specifications. For a Windows command line terminal, replace all the path references of forward-slash `/` to back-slash `\`._
 
 To keep this tutorial more focused on how to model, we're first going to setup the environment with some supporting configuration and core data type files.
 
@@ -100,6 +98,8 @@ The table below is a high level summary of the elements we need in this use case
 | OSADisorder | OSADisorderCode | 1..1 | concept | SNOMED codes for OSA |
 | OSADisorder | OSADisorderStatus | 0..1 | concept | HL7 status codes |
 
+[CIMPL's "concept" datatype](cimpl6LanguageReference.md#concept-codes) encompasses any enumerated or terminology-coded data types. FHIR's CodeableConcept, Coding, and code are all "concept" in CIMPL.
+
 ### Create the Logical Model in CIMPL
 
 Now we can start authoring models in the CIMPL development environment. In this example, the only part of the [CIMPL Class Library](cimpl6ObjectiveFHIR.md) we are using are the datatypes.
@@ -149,7 +149,7 @@ Description:   "Either of the two sexes (male and female), especially when consi
 Value:         concept from http://hl7.org/fhir/ValueSet/administrative-gender
 ```
 
-What we just represented here is that there is a `Patient` entity called `MyPatient` which has 2 properties: `MyBirthdate` and `MyGender`. The FHIR Patient resource has these attributes; for purposes of this tutorial we will not consider that information -- your logical model won't always have the same attributes as a FHIR resource.
+What we just represented here is that there is an entity called `MyPatient` which has 2 properties: `MyBirthdate` and `MyGender`. The FHIR Patient resource has these attributes; for purposes of this tutorial we will not consider that information -- your logical model won't always have the same attributes as a FHIR resource.
 
 We determined from our clinical requirements that `MyBirthDate` has a data type of _date_, which is one of the primitive data types supported in CIMPL. The `Value` keyword expresses the desired datatype.
 
@@ -213,10 +213,10 @@ Here the `CodeSystem` keyword defines which terminologies (such as SNOMED-CT, IC
 The format for specifying each term in the value set is as follows:
 `<CodeSystem Alias>#<Code> "<Display>"`, for example: `STAT#active "Active"` where:
 
-* `STAT` is an alias that represents the http://terminology.hl7.org/CodeSystem/condition-clinical code system, assigned in the `CodeSystem:` statement
+* `STAT` is an alias that represents the http://terminology.hl7.org/CodeSystem/condition-clinical code system, assigned in the `CodeSystem` statement
 * `#` is a delimiter separating the coding system and the code
-* `active` is the term code for the concept
-* `"Active"` is the display name associated with the term code.
+* `active` is the code for the concept
+* `"Active"` is the display name associated with the code.
 
 _**Note:** Code system aliases are required. Direct use of a URL or urn (e.g., `http://terminology.hl7.org/CodeSystem/condition-clinical#active`) is NOT currently supported in CIMPL._
 
@@ -232,10 +232,9 @@ Target:     FHIR_R4
 
 Where:
 
-* `Grammar:` is the version supported for the mapping grammar
-* `Namespace:` is the name of the namespace for your logical model (same as used before)
-* `Target:` is the FHIR release version targeted for mapping elements in your logical model, one of the following values: FHIR_DSTU2, FHIR_STU_3, or FHIR_R4. Our mapping will be to FHIR_R4. 
-Specifying the target also configures the CIMPL tool chain to generate R4 structure definitions.
+* `Grammar` is the version supported for the mapping grammar
+* `Namespace` is the name of the namespace for your logical model (same as used before)
+* `Target` is the FHIR release version targeted for mapping elements in your logical model, one of the following values: FHIR_DSTU2, FHIR_STU_3, or FHIR_R4. Our mapping will be to FHIR_R4. Specifying the target also configures the CIMPL tool chain to generate R4 structure definitions.
 
 During mapping, we ask the following questions:
 
@@ -265,7 +264,7 @@ In this section, we cover some of the extra CIMPL configuration steps that might
 
 ### Specify the FHIR "Must-Support" elements
 
-The CIMPL toolchain provides a separate configuration file called a _Content Profile_ which serves two purposes:
+The CIMPL toolchain provides a separate configuration file called a _Content Profile_, which serves two purposes:
 
 * Specifies which elements in your logical model that you want to designate in FHIR as ["must-support" (MS)](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) in FHIR.
 * Instructs the CIMPL toolchain which elements you want auto-generated in a data dictionary output.
@@ -289,7 +288,6 @@ MyPatient:
 
 ObstructiveSleepApneaDisorder:
     OSADisorderCode MS
-
 ```
 
 For our example, we have designated the `MyGender` and `OSADisorderCode` elements as _must-support_.  Content Profile documentation can be found in the [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md).
@@ -333,9 +331,9 @@ Where:
 * `node` is the command that starts the SHR-CLI application.
 * The first dot `.` represents the path to the SHR-CLI tool, in this case, the current working directory. The dot represents the current directory.
 * `../myExampleC6` is the path where your CIMPL modeling and configuration files are located. The double dot `..` represents the directory above the current working directory.
-* the `-l` parameter and _`error`_ value specifies logging to only show errors.
-* the `-o` parameter and _`myExampleC6r4`_ value specify the name of the directory in which you want to generate the IG output.
-* the `-c` parameter and _`ig-myExampleR4-config.json`_ value specify the name of the CIMPL configuration file to reference for the output.
+* the `-l` parameter and `error` value specifies logging to only show errors.
+* the `-o` parameter and `myExampleC6r4` value specify the name of the directory in which you want to generate the IG output.
+* the `-c` parameter and `ig-myExampleR4-config.json` value specify the name of the CIMPL configuration file to reference for the output.
 
 After you run this first command, as an interim check, navigate to the `~/cimpl/shr-cli` folder.  You should see a new subdirectory created called `myExampleC6r4` which will eventually contain the StructureDefinition and html output of the generated IG. This is the value that was specified in the `-o` parameter in the above command.
 
@@ -370,9 +368,9 @@ Copy the file [myPatientExample1.json](cimplTutorial/myPatientExample1.json) and
 
 >**Note:** _The FHIR example can contain additional content, and still pass validation. What matters is that the requirements of the profile are met._
 
-Add the following line to your cimpl configuration file within the `"implementationGuide":` JSON object:
+Add the following line to your cimpl configuration file within the `implementationGuide` JSON object:
 
-**`"examples": "examples-myFhirExamplesFolder"`**
+`"examples": "examples-myFhirExamplesFolder"`
 
 The following screenshot shows where to put this parameter within the CIMPL configuration file `ig-myExampleR4-config.json`:
 
@@ -380,8 +378,10 @@ The following screenshot shows where to put this parameter within the CIMPL conf
 
 Now run SHR-CLI and the IG publisher commands again:
 
-* `node . ../myExampleC6 -l error -o myExampleC6r4 -c ig-myExampleR4-config.json`
-* `yarn run ig:publish`
+```
+node . ../myExampleC6 -l error -o myExampleC6r4 -c ig-myExampleR4-config.json
+yarn run ig:publish
+```
 
 Open the index.html file from the generated IG output in your browser and navigate to the **Profiles** tab and select the MyPatient profile.
 
