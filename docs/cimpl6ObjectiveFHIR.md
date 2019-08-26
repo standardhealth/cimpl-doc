@@ -42,19 +42,19 @@ OBF serves as the base class library for the Clinical Information Modeling and P
 
 OBF classes resemble FHIR R4, but differ in carefully considered ways that increase consistency and reusability of the resulting models and profiles. Objective FHIR allows data structures of all sorts to be reused. This means that individual data elements and frequently-occurring structures can be defined once and used repeatedly.
 
-Objective FHIR addresses one of the most frequent criticisms of FHIR, namely, its [lack of consistency](https://wolandscat.net/2019/05/05/a-fhir-experience-consistently-inconsistent/). FHIR not only uses different _names_ for equivalent things in different resources, but sometimes, entirely different modeling approaches. This is almost certainly the result of having resources managed by separate HL7 work groups. OBF creates a layer that smooths over many of these differences, not for aesthetic or theoretical reasons, but to make the whole framework easier to learn, enable greater code reuse, and most importantly, to make the resulting clinical models _more interoperable_.
+Objective FHIR addresses one of the most frequent criticisms of FHIR, namely, its [lack of consistency](https://wolandscat.net/2019/05/05/a-fhir-experience-consistently-inconsistent/). FHIR not only uses different _names_ for equivalent things in different resources, but sometimes, entirely different modeling approaches. This is the result of having resources managed by separate HL7 work groups. OBF creates a layer that smooths over many of these differences, not for aesthetic or theoretical reasons, but to make the whole framework easier to learn, enable greater code reuse, and most importantly, to make the resulting clinical models _more interoperable_.
 
 OBF also insulates modelers from differences between FHIR versions. The OBF classes are based on FHIR R4, but the same content is mapped to DSTU 2 and STU 3. This means you can model once and publish the same content across multiple FHIR versions.
 
 ### Meta-Model
 
-Objective FHIR has been developed using the Clinical Information Modeling and Profiling Language (CIMPL). CIMPL is a powerful, FHIR-aware, high-level language for creating clinical models. Expressing the model in CIMPL means that Objective FHIR models can automatically be turned into FHIR Profiles, Implementation Guides, data dictionaries, and other useful artifacts, across multiple FHIR versions.
+Objective FHIR has been developed using the Clinical Information Modeling and Profiling Language (CIMPL). CIMPL is a powerful, FHIR-aware, high-level language for creating clinical models. Expressing the model in CIMPL means that Objective FHIR models can be automatically turned into FHIR Profiles, Implementation Guides, data dictionaries, and other useful artifacts, across multiple FHIR versions.
 
-Conceptually, there is nothing that prevents the same model from be expressed in other formalisms, some of which are mentioned in the [Appendix](#Appendix:-Relationship-to-Other-Initiatives). However, OBF with CIMPL is a complete, proven, ready-made solution that has created rich FHIR content, such as the [mCODE Implementation Guide](http://build.fhir.org/ig/HL7/fhir-mCODE-ig/branches/master/index.html).
+Conceptually, nothing prevents the same model from be expressed in other formalisms, some of which are mentioned in the [Appendix](#Appendix:-Relationship-to-Other-Initiatives). However, OBF with CIMPL is a complete, proven, ready-made solution that has created rich FHIR content, such as the [mCODE Implementation Guide](http://build.fhir.org/ig/HL7/fhir-mCODE-ig/branches/master/index.html).
 
 ### Mapping to FHIR
 
-One of the significant benefits of the OBF framework, compared to using CIMPL _tabula rasa_, is that mapping to FHIR has already been done for you. In most cases, any model you create will be mapped to FHIR without additional effort. The only exceptions are when you create a new class that doesn't inherit from a pre-mapped OBF class (rare), override a previous mapping (very rare), or add an extension to a pre-mapped class that requires mapping to a nested extension (even more rare).
+One of the significant benefits of the OBF framework, compared with starting from scratch, is that mapping to FHIR has already been done for you. In most cases, any model you create will be mapped to FHIR without additional effort. The only exceptions are when you create a new class that doesn't inherit from a pre-mapped OBF class (rare), override a previous mapping (very rare), or add an extension to a pre-mapped class that requires mapping to a nested extension (even more rare).
 
 ### Coverage
 
@@ -69,6 +69,7 @@ Element:  SurgicalProcedureOccurrencePeriod
 Parent:  OccurrencePeriod
 Description: The period of time for a surgery, from the first incision time to the last incision close time, as defined by https://manual.jointcommission.org/releases/archive/TJC2010B/DataElem0127.html.
 ```
+
 The structure and content of `OccurrenceTime` is inherited by the new class (cardinalities, data type, the fact that the start time must be less than the end time, etc.), so repeating that information is unnecessary. [Don't repeat yourself (DRY)](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) is a major benefit of inheritance. The DRY principle is stated as "Every piece of knowledge must have a single, unambiguous, authoritative representation within a system".
 
 ### Subclassing, Part 2
@@ -92,13 +93,13 @@ Property:          RegionStudied 0..*
 
 Although the purpose of this guide is not to teach CIMPL, this is worth pulling apart:
 
-* The first two lines create the class `GenomicsReport`, based on `DiagnosticReport`. `Entry` is a CIMPL building block that roughly corresponds to a FHIR resource, and `Parent` obviously identifies the parent class.
-* Following the `Description`, two new properties (with cardinalities) are introduced: `SpecimenType` and `RegionStudied`. Using CIMPL, you don't fuss with extensions -- that will happen automatically when the class is mapped to FHIR.
+* The first two lines create the class `GenomicsReport`, based on `DiagnosticReport`. `Entry` is a CIMPL building block that roughly corresponds to a FHIR resource, and `Parent` identifies the parent class.
+* Following the `Description`, two new properties (with cardinalities) are introduced: `SpecimenType` and `RegionStudied`. Using CIMPL, you don't fuss with extensions -- if needed, they will be generated automatically when the class is mapped to FHIR.
 
 After the keyword section, there is a series of constraint statements. Without delving into details, these statements say:
 
-* The Code identifying the report should preferably come from the [Genetic Test Registry](https://www.ncbi.nlm.nih.gov/gtr).
-* The Category will occur exactly once, and will be fixed to the code `GE` (Genetics) drawn from a code system aliased to `DS` (mapped elsewhere to <http://terminology.hl7.org/CodeSystem/v2-0074>).
+* The code identifying the report should preferably come from the [Genetic Test Registry](https://www.ncbi.nlm.nih.gov/gtr).
+* Category will occur exactly once, and will be fixed to the code `GE` (Genetics) drawn from a code system aliased to `DS` (mapped elsewhere to <http://terminology.hl7.org/CodeSystem/v2-0074>).
 * The `Observation` attribute should include zero or more GeneticVariantFound observations and zero or more GeneticVariantTested observations. The `includes` statement is the way CIMPL slices arrays.
 * Finally, the SpecimenType, which we've just added as a new class property, is extensibly bound to the value set `GeneticSpecimenTypeVS`.
 
@@ -116,7 +117,7 @@ When clinical modeling projects grow to a certain size, activities increasingly 
 
 ### Data Types
 
-The primitive types used in OBF are those defined in CIMPL, which correspond one-to-one with FHIR primitives, except for [the way CIMPL handles coded types](cimpl6LanguageReference.md#concept-codes).
+The primitive types used in OBF are [those defined in CIMPL](cimpl6LanguageReference.md#primitives), which correspond one-to-one with FHIR primitives, except for [the way CIMPL handles coded types](cimpl6LanguageReference.md#concept-codes).
 
 Complex data types in OBF are also the same as FHIR R4. They are found in the `obf.datatype` namespace. Since complex types like Quantity are ubiquitous, you will almost certainly need to import the `obf.datatype` into your namespace. This is done using the `Uses` keyword.
 
@@ -168,7 +169,7 @@ In this section, we describe the overall organization and some key classes in Ob
 
 The purpose of the hierarchy is two-fold:
 
-1. To define properties uniformly across multiple classes. For example, almost every FHIR resource should have an author, but [many don't, and those that do use a variety of different names](https://lightmyfhir.org/2019/05/03/fhir-inconsistency-data-please/).  It shouldn't be left up to individual resources, managed by different work groups, to each define `author` themselves. Inevitably, they will define it differently, or forget entirely, as FHIR R4 shows. Inheriting from a common parent prevents that.
+1. To define properties uniformly across multiple classes. For example, almost every FHIR resource should have an author, but [many don't, and those that do use a variety of different names](https://lightmyfhir.org/2019/05/03/fhir-inconsistency-data-please/). It shouldn't be left up to individual resources, managed by different work groups, to each define their own versions of "author". Inevitably, they will define it differently, or forget entirely, as FHIR R4 shows. Inheriting from a common parent prevents that.
 2. To provide a set of ready-made classes that users can extend. An example is `QuantitativeLaboratoryObservation`, based on `Observation`.
 
 FHIR's approach to uniformity is to define certain patterns, such as the [request pattern](https://www.hl7.org/fhir/request.html). However, FHIR stops short of actually implementing these patterns across resources. Implementations can't assume all requests have the same core properties, and can't write generic methods for processing requests. Instead, each type of request must be implemented as a one-off.
@@ -203,7 +204,7 @@ Current work is focused on using the classes defined in Objective FHIR directly 
 
 ## Appendix: Relationship to Other Initiatives
 
-Conceptually, Objective FHIR could be expressed in other modeling frameworks, besides CIMPL. Some of the potential frameworks include:
+Conceptually, the models in Objective FHIR could be expressed in modeling frameworks other than CIMPL. Some of the potential frameworks include:
 
 * [Unified Modeling Language (UML)](https://www.uml.org/) for structure coupled with [Object Constraint Language](https://www.omg.org/spec/OCL) (OCL) for constraint representation. The [Federal Health Information Model initiative](https://www.fhims.org/) (FHIM) has conducted some experiments using [Model-Driven Health Tools](https://projects.eclipse.org/proposals/model-driven-health-tools) to try and convert UML/OCL models into FHIR profiles.
 * [Basic Meta-Model](https://specifications.openehr.org/releases/LANG/latest/bmm.html) (BMM) for class hierarchy, coupled with [Archetype Description Language](https://specifications.openehr.org/releases/AM/latest/ADL2.html) (ADL) for constraint representation. BMM/ADL has been used in [openEHR](https://www.openehr.org/). [Claude Nanjo of University of Utah](https://faculty.utah.edu/u6017542-Claude_Nanjo/contact/index.hml) has conducted some experiments to try to convert ADL/BMM models into FHIR profiles.

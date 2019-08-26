@@ -211,8 +211,6 @@ The SYSTEM is an alias for a canonical URI that represents a controlled vocabula
 
 Unlike FHIR, CIMPL does not differentiate between code, Coding, and CodeableConcept. See [Mapping Concept Codes](#mapping-concept-codes) for information on how CIMPL maps `concept` to these FHIR types.
 
->**Note:** Future versions of CIMPL will expand `concept` to include the code system version.
-
 ***
 
 ## Keywords
@@ -708,7 +706,7 @@ In this case, both NationalProviderIdentifier and TaxIdentificationNumber must h
 Values can have multiple data types. Use the `only` constraint in an Element to narrow the choice of data types. The `only` constraint can only be applied to a value that has multiple choices. The grammar of `only` constraints varies depending on whether the constraint appears in an Element, or another class type.
 
 | In the class... | Use the grammar... |
-|----------|---------|--------|
+|----------|---------|
 | `Element` | `Value only <datatype>`  |
 | `Element` | `Value only <datatype1> or <datatype2> or <datatype3>` etc.  |
 | `Entry` or `Group` | `<Property> only <datatype>` <br> _**note**: this is allowed only for a single datatype; to constrain to multiple choices, use the `substitute` constraint (see Example 2, below)_|
@@ -736,17 +734,17 @@ Property: Priority
 Priority substitute IntegerPriority
 ```
 
-**Example 2:** Multiple value choices narrowed to smaller number of choices
+**Example 2:** Multiple value choices narrowed to a smaller number of choices
 
 ```
 Element:  Answer
 Description:  "A potential answer with many different allowed datatypes."
-Value:  integer or date or time or string or concept or Resource
+Value:  integer or date or time or string or concept // many choices
 
 Element: TemporalAnswer
 Parent:  Answer
 Description: "An answer that's either a date or time"
-Value only date or time   // legal way to reduce multiple choice!
+Value only date or time   // OK
 
 Group: QuestionAndAnswer
 Property: Question // dummy - not defined
@@ -754,6 +752,7 @@ Property: Answer
 
 Group: QuestionWithTemporalAnswer
 Parent: QuestionAndAnswer
+Description: "A question whose answer is a date or a time"
 Answer substitute TemporalAnswer  
 // NOT: "Answer only date or time" and NOT "Answer only TemporalAnswer"
 ```

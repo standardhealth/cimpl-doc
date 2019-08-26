@@ -17,7 +17,7 @@ nav:
               - cimpl6ToolingReference.md
        
 theme: 
-       name: mkdocs
+       name: windmill
        custom_dir: custom_theme/
        static_templates:
               - footer.html
