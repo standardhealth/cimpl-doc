@@ -392,9 +392,6 @@ ICD10CM#C004  &quot;Malignant neoplasm of lower lip, inner aspect&quot;
 
 <p>The SYSTEM is an alias for a canonical URI that represents a controlled vocabulary. Aliases must be declared in the file header using the <a href="#codesystem">CodeSystem keyword</a>. You cannot use the canonical URI directly in the concept grammar.</p>
 <p>Unlike FHIR, CIMPL does not differentiate between code, Coding, and CodeableConcept. See <a href="#mapping-concept-codes">Mapping Concept Codes</a> for information on how CIMPL maps <code>concept</code> to these FHIR types.</p>
-<blockquote>
-<p><strong>Note:</strong> Future versions of CIMPL will expand <code>concept</code> to include the code system version.</p>
-</blockquote>
 <hr />
 <h2 id="keywords">Keywords</h2>
 <p>Keywords are used to make various declarations. Keywords always appear at the beginning of a line and are followed by a colon.</p>
@@ -1056,11 +1053,28 @@ includes TaxIdentificationNumber 0..1
 </blockquote>
 <h3 id="only-constraint">Only Constraint</h3>
 <p>Values can have multiple data types. Use the <code>only</code> constraint in an Element to narrow the choice of data types. The <code>only</code> constraint can only be applied to a value that has multiple choices. The grammar of <code>only</code> constraints varies depending on whether the constraint appears in an Element, or another class type.</p>
-<p>| In the class... | Use the grammar... |
-|----------|---------|--------|
-| <code>Element</code> | <code>Value only &lt;datatype&gt;</code>  |
-| <code>Element</code> | <code>Value only &lt;datatype1&gt; or &lt;datatype2&gt; or &lt;datatype3&gt;</code> etc.  |
-| <code>Entry</code> or <code>Group</code> | <code>&lt;Property&gt; only &lt;datatype&gt;</code> <br> <em><strong>note</strong>: this is allowed only for a single datatype; to constrain to multiple choices, use the <code>substitute</code> constraint (see Example 2, below)</em>|</p>
+<table>
+<thead>
+<tr>
+<th>In the class...</th>
+<th>Use the grammar...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Element</code></td>
+<td><code>Value only &lt;datatype&gt;</code></td>
+</tr>
+<tr>
+<td><code>Element</code></td>
+<td><code>Value only &lt;datatype1&gt; or &lt;datatype2&gt; or &lt;datatype3&gt;</code> etc.</td>
+</tr>
+<tr>
+<td><code>Entry</code> or <code>Group</code></td>
+<td><code>&lt;Property&gt; only &lt;datatype&gt;</code> <br> <em><strong>note</strong>: this is allowed only for a single datatype; to constrain to multiple choices, use the <code>substitute</code> constraint (see Example 2, below)</em></td>
+</tr>
+</tbody>
+</table>
 <p><strong>Example 1:</strong> Multiple value choices narrowed to a single choice</p>
 <pre><code>Element: Priority
 Value: integer or concept
@@ -1080,15 +1094,15 @@ Property: Priority
 Priority substitute IntegerPriority
 </code></pre>
 
-<p><strong>Example 2:</strong> Multiple value choices narrowed to smaller number of choices</p>
+<p><strong>Example 2:</strong> Multiple value choices narrowed to a smaller number of choices</p>
 <pre><code>Element:  Answer
 Description:  &quot;A potential answer with many different allowed datatypes.&quot;
-Value:  integer or date or time or string or concept or Resource
+Value:  integer or date or time or string or concept // many choices
 
 Element: TemporalAnswer
 Parent:  Answer
 Description: &quot;An answer that's either a date or time&quot;
-Value only date or time   // legal way to reduce multiple choice!
+Value only date or time   // OK
 
 Group: QuestionAndAnswer
 Property: Question // dummy - not defined
@@ -1096,6 +1110,7 @@ Property: Answer
 
 Group: QuestionWithTemporalAnswer
 Parent: QuestionAndAnswer
+Description: &quot;A question whose answer is a date or a time&quot;
 Answer substitute TemporalAnswer  
 // NOT: &quot;Answer only date or time&quot; and NOT &quot;Answer only TemporalAnswer&quot;
 </code></pre>

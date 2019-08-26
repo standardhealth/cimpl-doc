@@ -135,6 +135,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#executing-shr-cli">Executing SHR-CLI</a><ul>
 <li><a href="#command-line">Command Line</a></li>
 <li><a href="#addressing-error-messages">Addressing Error Messages</a></li>
+<li><a href="#advanced-logging">Advanced Logging</a></li>
 </ul>
 </li>
 <li><a href="#outputs-from-shr-cli">Outputs from SHR-CLI</a><ul>
@@ -650,6 +651,12 @@ Namespace: onco.core
 <li>Don't be discouraged by the number of errors, since a single correction can silence multiple logged errors.</li>
 <li>Read the error messages carefully. Although the messages might be cryptic, especially at first, the names of classes and paths are often excellent clues.</li>
 </ul>
+<h3 id="advanced-logging">Advanced Logging</h3>
+<p>SHR-CLI uses the <a href="https://www.npmjs.com/package/bunyan">Bunyan</a> structured logging framework, and stores a full log file in the output folder (note: it will be appended to on subsequent runs).  You can use the Bunyan CLI tool to perform advanced filtering of the log file.  For example:</p>
+<pre><code>node_modules/.bin/bunyan -c 'this.shrId==&quot;shr.vital.BloodPressure&quot;'  -o short out/out.log
+</code></pre>
+
+<p>For more information on Bunyan and Bunyan CLI, see the Bunyan documentation.</p>
 <h2 id="outputs-from-shr-cli">Outputs from SHR-CLI</h2>
 <p>The output of running SHR-CLI appear in a directory named "out". By default, the /out directory is created in the tooling directory. A different location can be designated using the <code>-o</code> <a href="#executing-shr-cli">command line option</a>.</p>
 <p>The content of the /out directory depends on which exporters were selected to run, which is controlled using the <code>-s</code> command line option. By default, the /out will contain five exports, as shown below, each corresponding to a separate export process:</p>
