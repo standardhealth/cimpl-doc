@@ -75,13 +75,13 @@ In CIMPL, data models are independent of IGs. IGs are _consumers_ of models, rat
 <a id="data-model-ig-relationship"></a>
 ![Data model IG relationship](img_cimpl/Data-model-use-case-model.png)
 
-Much of what is discussed subsequently reflects defining the relationship between CIMPL models and IGs, and defining the parameters that affect the IG presentation. In particular, the [Content Profile file](#content-profile-file) is key to defining how the IG relates to the models available in various namespaces.
+Much of what follows deals with configuring the relationship between CIMPL models and IGs, and defining the parameters that affect the IG presentation. In particular, the [Content Profile file](#content-profile-file) is key to defining how the IG relates to the models available in various namespaces.
 
 ## Conventions
 
 ### Suggested Directory Structure
 
-The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG can be produced under FHIR STU3 and R4:
+The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under FHIR STU3 and R4:
 
 ```
 ├── shr-cli-6.5.0                   // Tooling location
@@ -187,8 +187,8 @@ SHR-CLI requires a configuration file to run. The name of this file is typically
 
 The configuration file is a [JSON file](https://www.json.org/) with the following parameters:
 
-|Parameter            |Type    |Description                                                    |
-|:--------------------|:-------|:--------------------------------------------------------------|
+|Parameter            |Type    |Description  |
+|--------------------|-------|------------|
 |`projectName`        |`string`|The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"  |
 |`projectShorthand`   |`string`|A shorthand name for the project, such as "mcode".                              |
 |`projectURL`         |`string`|The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"                             |
@@ -205,9 +205,11 @@ The configuration file is a [JSON file](https://www.json.org/) with the followin
 
 #### Filter Strategy Configuration Parameters
 
-Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when [specification directory](#suggested-directory-structure) contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.
+***
+**NOTE:** The `filterStrategy` parameter is being deprecated. The functionality is being migrated to the [Content Profile file](#content-profile-file). It is recommended to upgrade to SHR-CLI 6.6 or higher, and do not implement the `filterStrategy`.
+***
 
-**NOTE:** The `filterStrategy` parameter is being deprecated. Filtering functionality is being migrated to the [Content Profile file](#content-profile-file). It is recommended to upgrade to SHR-CLI 6.6 or higher, and do not implement the `filterStrategy`.
+Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when [specification directory](#suggested-directory-structure) contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.
 
 The contents of the `filterStrategy` object are as follows:
 
@@ -242,9 +244,11 @@ These configurations are used to control the production of the IG. The contents 
 |`changesLink`             |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     |The strategy for selection of what is primary in the IG ([see below])(#primary-selection-strategy). |
 
-##### Primary Selection Strategy
+#### Primary Selection Strategy Configuration Parameters
 
-**NOTE:** The `primarySelectionStrategy` parameter is being deprecated. Selection functionality is being migrated to the [Content Profile file](#content-profile-file). It is recommended to upgrade to SHR-CLI 6.6 or higher, and do not implement the `primarySelectionStrategy`.
+***
+**NOTE:** The `primarySelectionStrategy` parameter is being deprecated. The functionality is being migrated to the [Content Profile file](#content-profile-file). It is recommended to upgrade to SHR-CLI 6.6 or higher, and do not implement the `primarySelectionStrategy`.
+***
 
 The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the `primarySelectionStrategy` object are as follows:
 
@@ -334,15 +338,15 @@ Here is an example of a package list file:
 
 ### Content Profile File
 
-The Content Profile (CP) provides information about the content of the IG, with respect to the models defined in CIMPL. Returning to the diagram [presented earlier](#data-model-ig-relationship), showing the relationship between model namespaces and IGs, and show what types of information are defined at which level:
-
-![Content profile scope](img_cimpl/Content-profile-scope.png)
-
-Of the types of information specified at the IG level, the CP provides:
+The Content Profile (CP) provides information about the content of the IG, relative to the models defined in CIMPL. Returning to the diagram [presented earlier](#data-model-ig-relationship), different information is specified at each level. Of the types of information specified at the IG level, the CP provides:
 
 * The list of classes (profiles) to be included in the IG,
 * The elements in these classes to be marked as "Must-Support", designated with the `MS` tag, and
-* Which classes are _not_ to be profiled, designated with `NP` tag.
+* A list of classes _not_ to be profiled, designated with the `NP` tag.
+
+The all classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as No-Profile (`NP`).
+
+![Content profile scope](img_cimpl/Content-profile-scope.png)
 
 The syntax of a Content Profile file is:
 
@@ -364,8 +368,6 @@ Namespace:  <namespace-2>
     <Entry-2>: NP
     ...
 ```
-
-The profiles for all classes listed in the CP are included in the IG, with the exception of those classes marked as No-Profile (`NP`).
 
 For example:
 
@@ -397,19 +399,17 @@ In FHIR, [Must-Support](https://www.hl7.org/fhir/conformance-rules.html#mustSupp
 
 Must-Support elements are designated with the `MS` tag after the property name.
 
-The Must-Support elements are designated at the level of the IG, because different elements are important for different use cases. For example, one use case may require a patient's date of death, but another might not.
+Must-Support elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
 
 #### Specifying No-Profile Elements
 
-The No-Profile (`NP`) tag is a specific instruction to NOT profile a certain class, and therefore, not include a profile of the class in the IG.
+The No-Profile (`NP`) tag instructs SHR-CLI to NOT profile a class, and therefore, exclude it from the list of profiles.
 
-In clinical modeling, classes frequently reference other classes. For example, a laboratory result may reference the patient, the specimen, and the organization, and the performer. The dependencies can branch out until there is a large network of indirectly-required classes that may extend beyond the intended scope of the IG.
+> In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen could reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have models, then by default, SHR-CLI will create profiles for them, and bring those profiles into the IG. The `NP` flag is a way to put boundaries around your IG.
 
-By default, CIMPL will bring all indirectly-required classes into the IG. 
+Because dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class.
 
-Some of these indirectly-required classes may have CIMPL models that would cause profiles to be created for them. 
-
-Namespaces in CIMPL may have modeled this "indirect" classes. 
+The `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
 
 ***
 **NOTE:** The "No Profile" feature is available in SHR-CLI 6.6.0 and higher
