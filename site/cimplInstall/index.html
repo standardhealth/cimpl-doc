@@ -77,7 +77,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <a href="../cimplReleaseNotes/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         Previous</a><a href="../cimplReleaseNotes/" class="btn btn-xs btn-link">
-        CIMPL Release Notes
+        Release Notes
       </a>
     </div>
     
@@ -91,13 +91,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h3 id="purpose-of-this-document">Purpose of this Document</h3>
 <p>This guide will take you through the steps needed to set up the environment needed to run CIMPL and associated tools.</p>
 <h3 id="intended-audience">Intended Audience</h3>
-<p>Anyone intending to use CIMPL for clinical information modeling and FHIR Implementation Guide authoring.</p>
+<p>Anyone intending to use CIMPL for modeling clinical information and authoring FHIR Implementation Guides.</p>
 <h3 id="prerequisite">Prerequisite</h3>
 <p>This guide assumes you have:</p>
 <ul>
-<li>Windows or macOS computer with 8 GB memory and 5 GB available disk space, and internet connection</li>
+<li>Windows or macOS computer with 8 GB memory and 5 GB available disk space, and internet connection.</li>
 <li>Ability to install software on your computer using an account that has administrator-level access. If you do not have administrator rights on your machine, some of the installations may fail or refuse to install.</li>
-<li>An understanding of your operating system's <a href="https://en.wikipedia.org/wiki/Command-line_interface">command line</a>.  If you are uncomfortable with using the command line, try <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this short introduction</a>.</li>
+<li>A basic understanding of your operating system's <a href="https://en.wikipedia.org/wiki/Command-line_interface">command line</a>. If you are uncomfortable with using the command line, try <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this short introduction</a>.</li>
 </ul>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
@@ -186,7 +186,7 @@ setx JAVA_OPTS &quot;-Dhttp.proxyHost=your.proxy.org -Dhttp.proxyPort=80 -Dhttps
 <ul>
 <li><a href="https://www.howtogeek.com/235101/10-ways-to-open-the-command-prompt-in-windows-10/">Open a windows command prompt</a></li>
 <li>Copy and paste the modified code block (with your organization's proxy server) into the command prompt; hit enter to execute.</li>
-<li><strong>Close and re-open your command prompt</strong> to make sure those settings take effect</li>
+<li><strong>Close and re-open your command prompt</strong> to make sure those settings take effect.</li>
 </ul>
 <p>Some of the following installation steps will also include specific setups for running the CIMPL tooling and HL7 FHIR IG Publisher from behind a proxy server.</p>
 <h3 id="install-nodejs-for-windows">Install Node.js for Windows</h3>
@@ -216,7 +216,7 @@ yarn config set strict-ssl false
 <li>Open Visual Studio Code</li>
 <li>Open the User Settings menu (File -&gt; Preferences -&gt; Settings)</li>
 <li>Search the settings for "proxy", or open Application -&gt; Proxy.</li>
-<li>Insert your proxy in the <strong>Proxy</strong> text box (in the form http://your.proxy.org).</li>
+<li>Insert your proxy in the <strong>Proxy</strong> text box (in the form <code>http://your.proxy.org</code>).</li>
 <li>Make sure "Proxy Strict SSL" is checked.</li>
 <li>Save, exit, and re-open Visual Studio Code to make sure the settings take effect</li>
 </ul>
@@ -225,7 +225,7 @@ yarn config set strict-ssl false
 <ul>
 <li>Open the extensions menu (Using View -&gt; Extensions) or the icon on the bottom of the left toolbar that looks like boxes)</li>
 <li>In the search box, type "cimpl"</li>
-<li>Look for the <code>vscode-language-cimpl</code> extension and click the <code>Install</code> button</li>
+<li>Look for the <em>vscode-language-cimpl</em> extension and click the <code>Install</code> button</li>
 <li>When the installation has completed, click the <code>Reload</code> button</li>
 </ul>
 <h3 id="install-shr-cli-for-windows">Install SHR-CLI for Windows</h3>
@@ -248,7 +248,7 @@ yarn
 </code></pre>
 
 <h3 id="install-java-runtime-for-windows">Install Java Runtime for Windows</h3>
-<p>The <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR implementation guide (IG) publisher</a> is owned and operated by the HL7 FHIR team. The IG publisher is primarily written in java and requires JRE version 8.  To install JRE:</p>
+<p>The <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR implementation guide (IG) publisher</a> is owned and operated by the HL7 FHIR team. The IG publisher is primarily written in Java and requires JRE version 8. To install JRE:</p>
 <ul>
 <li>Go to the <a href="https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">Java SE Runtime Environment 8 Downloads</a> page</li>
 <li>Click the 'Accept License Agreement' radio button</li>
@@ -256,7 +256,7 @@ yarn
 </ul>
 <p><strong>Note:</strong> You may need to create an Oracle account to download JRE 8</p>
 <h3 id="install-jekyll-for-windows">Install Jekyll for Windows</h3>
-<p>The FHIR IG Publisher also requires Jekyll be installed in order to run properly. Jekyll is a Ruby library ("gem") that takes code and turns it into webpages.  That is especially helpful for generating static websites like the FHIR Implementation Guides.</p>
+<p>The FHIR IG Publisher also requires Jekyll be installed in order to run properly. Jekyll is a Ruby library (a "gem" in Ruby parlance) that takes code and turns it into webpages.  That is especially helpful for generating static websites like the FHIR Implementation Guides.</p>
 <p>Use the <a href="http://jekyllrb.com/docs/windows">Windows Installation Instructions for Jekyll</a>:</p>
 <ul>
 <li><a href="https://github.com/oneclick/rubyinstaller2/releases">Download RubyInstaller</a> and run it, using the default options in the installer file (i.e., just keep clicking 'Next' until the installation is complete)</li>
@@ -277,7 +277,8 @@ yarn
 </code></pre>
 
 <p>...where <code>X.X.X</code> is the latest Jekyll version number.</p>
-<p>That's it!  To test whether your CIMPL environment has been properly set up, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a> example. For detailed information on using SHR-CLI and the IG Publisher, see the <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference</a>.</p>
+<p><em><strong>That's it!</strong></em></p>
+<p>To test whether your CIMPL environment has been properly set up, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a> example. For detailed information on using SHR-CLI and the IG Publisher, see the <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference</a>.</p>
 <h2 id="macos-installation-instructions">macOS Installation Instructions</h2>
 <p>Unlike most applications that include a standalone installation file that you can click on to install, CIMPL is dependent on the installation of other applications, like <a href="#install-nodejs-for-macos">Node.js</a> and <a href="#install-yarn-for-macos">Yarn</a>, and optionally, <a href="#install-git-for-macos">Git</a> and <a href="#install-visual-studio-code-for-macos">Visual Studio Code</a>.</p>
 <p>For a successful installation, it is <strong>critical</strong> that you:</p>
@@ -288,7 +289,6 @@ yarn
 <li>Pay attention to placeholders in the instructions (such as your proxy server address) that you may need to replace.</li>
 <li>Allow enough time (30-60 minutes)</li>
 </ul>
-<p><em>Note: These installation instructions assume that you are installing applications using an account that has administrator-level access.  If you do not have administrator rights on your machine, some of the installations will fail or the applications will refuse to install.</em></p>
 <h3 id="terminal-proxy-setup-for-macos">Terminal Proxy Setup for macOS</h3>
 <p><em>Warning: Many professional organizations use proxy servers to filter incoming internet content (e.g., antivirus checks, adult material, etc.).  Many of the applications that support CIMPL require that these proxy servers be explicitly declared before they will function properly.  If your organization does not use a proxy server, you can skip ahead to the <a href="#install-nodejs-for-macos">next step</a>.</em></p>
 <p>If your organization uses a proxy server and you use the standard <a href="https://en.wikipedia.org/wiki/Terminal_(macOS)">Terminal app for macOS</a>, you will need to set up environment variables before proceeding.</p>
@@ -395,14 +395,15 @@ yarn
 <pre><code>sudo -E gem install bundler jekyll
 </code></pre>
 
-<p>That's it!  To test whether your CIMPL environment has been properly set up, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a> example. For detailed information on using SHR-CLI and the IG Publisher, see the <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference</a>.</p>
+<p><em><strong>That's it!</strong></em></p>
+<p>To test whether your CIMPL environment has been properly set up, try the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a> example. For detailed information on using SHR-CLI and the IG Publisher, see the <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference</a>.</p>
 <h2 id="appendix-installing-git-for-team-projects">Appendix: Installing Git for Team Projects</h2>
-<p>Git is a free and open source distributed version control system that allows developers working simultaneously on a single project to manage various updates to their code. If you're new to Git, github has a great introduction where you can learn by reading or playing with some helpful visualizations: http://try.github.io/</p>
+<p>Git is a free and open source distributed version control system that allows developers working simultaneously on a single project to manage various updates to their code. If you're new to Git, github has a <a href="http://try.github.io/">great introduction</a> where you can learn by reading or playing with some helpful visualizations. </p>
 <p>Git is not a strict dependency (i.e., you can run the SHR-CLI tool without git), but for team projects, it is recommended for CIMPL model developers to use git, along with a hosted git solution like <a href="https://github.com/">GitHub</a> or <a href="https://gitlab.com/explore">GitLab</a>.</p>
-<p><a href="https://desktop.github.com/">Github Desktop</a> is a client interface that simplifies working with Github. It is available for both Windows and macOS. </p>
+<p><a href="https://desktop.github.com/">Github Desktop</a> is a client interface that simplifies working with Github. It is available for both Windows and macOS.</p>
 <h3 id="install-git-for-windows">Install Git for Windows</h3>
 <p>Download the <a href="https://git-scm.com/download/win">installation package for Git for Windows</a> and run it, using the default options in the installer file (i.e., just keep clicking 'Next' until the installation is complete).</p>
-<p>This will install a few applications, but the most useful for CIMPL development will be the 'Git Bash' application.  This opens a command-line prompt which emulates the use of git on a Unix-based system (e.g., Linux or macOS).  Most CIMPL developers use Unix-based systems, so you may want to use 'Git Bash' for working with CIMPL instead of the standard Windows command line.  There are many tutorials online about the use of git.  Users that are new to Unix or bash may find this <a href="https://www.youtube.com/watch?v=oQc-2gsjgDg">video introduction to Git Bash</a> helpful.</p>
+<p>This will install a few applications, but the most useful (if you do not opt for <a href="https://desktop.github.com/">Github Desktop</a>) will be the 'Git Bash' application. This opens a command-line prompt which emulates the use of git on a Unix-based system (e.g., Linux or macOS). Most CIMPL developers use Unix-based systems, so you may want to use 'Git Bash' for working with CIMPL instead of the standard Windows command line. There are many tutorials online about the use of git. Users that are new to Unix or bash may find this <a href="https://www.youtube.com/watch?v=oQc-2gsjgDg">video introduction to Git Bash</a> helpful.</p>
 <p>You should also set up git so that any changes you make to the codebase are properly identified (replacing the name and email placeholders with your name and email):</p>
 <pre><code>git config --global user.name &quot;Your Name Here&quot;
 git config --global user.email &quot;your_email@work.org&quot;
@@ -471,7 +472,7 @@ git config --global url.&quot;https://&quot;.insteadOf git://
       <a href="../cimplReleaseNotes/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         Previous</a><a href="../cimplReleaseNotes/" class="btn btn-xs btn-link">
-        CIMPL Release Notes
+        Release Notes
       </a>
     </div>
     
