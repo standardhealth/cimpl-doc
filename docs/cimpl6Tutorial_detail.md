@@ -98,7 +98,7 @@ The table below is a high level summary of the elements we need in this use case
 | OSADisorder | OSADisorderCode | 1..1 | concept | SNOMED codes for OSA |
 | OSADisorder | OSADisorderStatus | 0..1 | concept | HL7 status codes |
 
-[CIMPL's `concept` data type](cimpl6LanguageReference.md#Concept-Codes) encompasses any enumerated or terminology-coded data types. FHIR's CodeableConcept, Coding, and code are all `concept` in CIMPL.
+[CIMPL's `concept` data type](cimpl6LanguageReference.md#concept-codes) encompasses any enumerated or terminology-coded data types. FHIR's CodeableConcept, Coding, and code are all `concept` in CIMPL.
 
 ### Create the Logical Model in CIMPL
 
@@ -211,9 +211,9 @@ STAT#resolved   "Resolved"
 The `CodeSystem` keyword defines the code systems (e.g. SNOMED-CT, ICD-10, etc.) the concepts in value sets are drawn from. The code systems are referred to by URLs. To learn more about code systems and the relationship to value sets, see https://www.hl7.org/fhir/codesystem.html.
 
 The format for specifying each concept in the value set is as follows:
-`<CodeSystem Alias>#<Code> "<Display>"`, for example: `"STAT"#active "Active"` where:
+`<CodeSystem Alias>#<Code> "<Display>"`, for example: `STAT#active "Active"` where:
 
-* `"STAT"` is an alias that represents the http://terminology.hl7.org/CodeSystem/condition-clinical code system, assigned in the `CodeSystem` statement
+* `STAT` is an alias that represents the http://terminology.hl7.org/CodeSystem/condition-clinical code system, assigned in the `CodeSystem` statement
 * `#` is a delimiter separating the code system and the code
 * `active` is the code for the concept
 * `"Active"` is the display name associated with the concept.
@@ -265,9 +265,9 @@ The logical model properties (defined in the Class file) also match to equivalen
 
 In this section, we cover some of the extra CIMPL configuration steps that might be needed to customize the output of your FHIR IG.
 
-### Specify FHIR _mustSupport_ Elements
+### Specify FHIR _MustSupport_ Elements
 
-The CIMPL toolchain provides a separate configuration file called a _Content Profile_ that allows you to define IG specific parameters. This tutorial uses the _mustSupport_ feature that specifies elements in your logical model as **[_mustSupport_ (`MS`)](https://www.hl7.org/fhir/conformance-rules.html#mustSupport)** in FHIR.
+The CIMPL toolchain provides a separate configuration file called a _Content Profile_ that allows you to define IG-specific parameters. This tutorial uses the feature that specifies elements in your logical model to be **[_MustSupport_](https://www.hl7.org/fhir/conformance-rules.html#mustSupport)** in FHIR.
 
 Together with specified cardinality, the _MS_ declaration can be [interpreted as follows](http://wiki.hl7.org/index.php?title=Conformance_Implementation_Manual):
 
@@ -290,11 +290,11 @@ ObstructiveSleepApneaDisorder:
     OSADisorderCode MS
 ```
 
-For our example, we have designated the `MyGender` and `OSADisorderCode` elements as _mustSupport_.  
+For our example, we have designated the `MyGender` and `OSADisorderCode` elements as _MustSupport_.  
 
 More information about Content Profile settings is provided in the [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md).
 
-_**Note:** `MS` renders as an `S` in a red box in FHIR._
+_**Note:** MustSupport renders as an `S` in a red box in FHIR IGs._
 
 ### Create a Homepage for the IG
 
