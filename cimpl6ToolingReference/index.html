@@ -83,7 +83,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="preface">Preface</h2>
 <p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
 <h3 id="purpose-of-this-document">Purpose of this Document</h3>
-<p>This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage).</p>
+<p>This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL.</p>
 <h3 id="intended-audience">Intended Audience</h3>
 <p>The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
 <h3 id="prerequisite">Prerequisite</h3>
@@ -123,13 +123,18 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#configuration-file">Configuration File</a><ul>
 <li><a href="#filter-strategy-configuration-parameters">Filter Strategy Configuration Parameters</a></li>
 <li><a href="#implementation-guide-configuration-parameters">Implementation Guide Configuration Parameters</a></li>
+<li><a href="#primary-selection-strategy-configuration-parameters">Primary Selection Strategy Configuration Parameters</a></li>
 <li><a href="#provenance-information-configuration-parameters">Provenance Information Configuration Parameters</a></li>
 </ul>
 </li>
 <li><a href="#front-matter-files">Front Matter Files</a></li>
 <li><a href="#fhir-examples">FHIR Examples</a></li>
 <li><a href="#package-list-file">Package List File</a></li>
-<li><a href="#content-profile-file">Content Profile File</a></li>
+<li><a href="#content-profile-file">Content Profile File</a><ul>
+<li><a href="#specifying-must-support-elements">Specifying Must-Support Elements</a></li>
+<li><a href="#specifying-no-profile-elements">Specifying No-Profile Elements</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#executing-shr-cli">Executing SHR-CLI</a><ul>
@@ -197,11 +202,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><img alt="Typical data model IG relationship" src="../img_cimpl/typical-data-model-ig-relationship.png" /></p>
 <p>The drawback of this approach is that different IGs can require very similar data models. If different data models are developed by different teams, interoperability will suffer.</p>
 <p>In CIMPL, data models are independent of IGs. IGs are <em>consumers</em> of models, rather than <em>owners</em> of models (although new models can certainly be created in the context of IG development). Each IG uses a different subset of models, reflecting the different use cases they address, but the commonality of data models assures interoperability between the use cases. This idea is illustrated below:</p>
-<p><img alt="Data model IG relationship" src="../img_cimpl/Data-model-use-case-model.png" /></p>
-<p>Much of what is discussed subsequently reflects this conceptual picture of the relationship between CIMPL models and IGs.</p>
+<p><a id="data-model-ig-relationship"></a>
+<img alt="Data model IG relationship" src="../img_cimpl/Data-model-use-case-model.png" /></p>
+<p>Much of what follows deals with configuring the relationship between CIMPL models and IGs, and defining the parameters that affect the IG presentation. In particular, the <a href="#content-profile-file">Content Profile file</a> is key to defining how the IG relates to the models available in various namespaces.</p>
 <h2 id="conventions">Conventions</h2>
 <h3 id="suggested-directory-structure">Suggested Directory Structure</h3>
-<p>The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG can be produced under FHIR STU3 and R4:</p>
+<p>The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under FHIR STU3 and R4:</p>
 <pre><code>├── shr-cli-6.5.0                   // Tooling location
 |
 ...
@@ -292,80 +298,83 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <table>
 <thead>
 <tr>
-<th align="left">Parameter</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left"><code>projectName</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"</td>
+<td><code>projectName</code></td>
+<td><code>string</code></td>
+<td>The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"</td>
 </tr>
 <tr>
-<td align="left"><code>projectShorthand</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">A shorthand name for the project, such as "mcode".</td>
+<td><code>projectShorthand</code></td>
+<td><code>string</code></td>
+<td>A shorthand name for the project, such as "mcode".</td>
 </tr>
 <tr>
-<td align="left"><code>projectURL</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"</td>
+<td><code>projectURL</code></td>
+<td><code>string</code></td>
+<td>The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"</td>
 </tr>
 <tr>
-<td align="left"><code>fhirURL</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">The FHIR IG URL for the project, often the same as the projectURL. <strong>(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)</strong></td>
+<td><code>fhirURL</code></td>
+<td><code>string</code></td>
+<td>The FHIR IG URL for the project, often the same as the projectURL. <strong>(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)</strong></td>
 </tr>
 <tr>
-<td align="left"><code>fhirTarget</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">The FHIR version this IG will be based on, currently a choice of <code>"FHIR_R4"</code>, <code>"FHIR_STU_3"</code>, or <code>"FHIR_DSTU_2"</code></td>
+<td><code>fhirTarget</code></td>
+<td><code>string</code></td>
+<td>The FHIR version this IG will be based on, currently a choice of <code>"FHIR_R4"</code>, <code>"FHIR_STU_3"</code>, or <code>"FHIR_DSTU_2"</code></td>
 </tr>
 <tr>
-<td align="left"><code>entryTypeURL</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">The root URL for the JSON schema <code>EntryType</code> field. <strong>(TO DO: clarify where and how this is used)</strong></td>
+<td><code>entryTypeURL</code></td>
+<td><code>string</code></td>
+<td>The root URL for the JSON schema <code>EntryType</code> field. <strong>(TO DO: clarify where and how this is used)</strong></td>
 </tr>
 <tr>
-<td align="left"><code>filterStrategy</code></td>
-<td align="left"><code>{}</code></td>
-<td align="left">A JSON object containing configuration for filtering (<a href="#filter-strategy-configuration-parameters">see below</a>).</td>
+<td><code>filterStrategy</code></td>
+<td><code>{}</code></td>
+<td>A JSON object containing configuration for filtering (<a href="#filter-strategy-configuration-parameters">see below</a>).</td>
 </tr>
 <tr>
-<td align="left"><code>contentProfile</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">The file name of the content profile for the project.</td>
+<td><code>contentProfile</code></td>
+<td><code>string</code></td>
+<td>The file name of the content profile for the project.</td>
 </tr>
 <tr>
-<td align="left"><code>implementationGuide</code></td>
-<td align="left"><code>{}</code></td>
-<td align="left">A JSON object containing configuration for IG publishing (<a href="#implementation-guide-configuration-parameters">see below</a>).</td>
+<td><code>implementationGuide</code></td>
+<td><code>{}</code></td>
+<td>A JSON object containing configuration for IG publishing (<a href="#implementation-guide-configuration-parameters">see below</a>).</td>
 </tr>
 <tr>
-<td align="left"><code>copyrightYear</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">The copyright year to include in the documentation.</td>
+<td><code>copyrightYear</code></td>
+<td><code>string</code></td>
+<td>The copyright year to include in the documentation.</td>
 </tr>
 <tr>
-<td align="left"><code>publisher</code></td>
-<td align="left"><code>string</code></td>
-<td align="left">The name of the publisher for the project, which for HL7 projects, should be the sponsoring workgroup, for example, "HL7 International Clinical Interoperability Council".</td>
+<td><code>publisher</code></td>
+<td><code>string</code></td>
+<td>The name of the publisher for the project, which for HL7 projects, should be the sponsoring workgroup, for example, "HL7 International Clinical Interoperability Council".</td>
 </tr>
 <tr>
-<td align="left"><code>contact</code></td>
-<td align="left"><code>[]</code></td>
-<td align="left">A JSON array containing HL7 FHIR R4 <a href="http://hl7.org/fhir/R4/datatypes.html#ContactPoint">ContactPoint objects</a>.</td>
+<td><code>contact</code></td>
+<td><code>[]</code></td>
+<td>A JSON array containing HL7 FHIR R4 <a href="http://hl7.org/fhir/R4/datatypes.html#ContactPoint">ContactPoint objects</a>.</td>
 </tr>
 <tr>
-<td align="left"><code>provenanceInfo</code></td>
-<td align="left"><code>{}</code></td>
-<td align="left">A JSON object specifying author and other information (<a href="#provenance-information-configuration-parameters">see below</a>)</td>
+<td><code>provenanceInfo</code></td>
+<td><code>{}</code></td>
+<td>A JSON object specifying author and other information (<a href="#provenance-information-configuration-parameters">see below</a>)</td>
 </tr>
 </tbody>
 </table>
 <h4 id="filter-strategy-configuration-parameters">Filter Strategy Configuration Parameters</h4>
+<hr />
+<p><strong>NOTE:</strong> The <code>filterStrategy</code> parameter is deprecated as of SHR-CLI 6.6.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.6 or higher, and do not implement the <code>filterStrategy</code>.</p>
+<hr />
 <p>Between the import stage and the export stage, there is a filtering stage (see  <a href="#cimpl-tooling-overview">CIMPL Tooling Overview</a>). Filtering is useful when <a href="#suggested-directory-structure">specification directory</a> contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.</p>
 <p>The contents of the <code>filterStrategy</code> object are as follows:</p>
 <table>
@@ -469,10 +478,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tr>
 <td align="left"><code>primarySelectionStrategy</code></td>
 <td align="left"><code>{}</code></td>
-<td align="left">The strategy for selection of what is primary in the IG (see below).</td>
+<td align="left">The strategy for selection of what is primary in the IG ([see below])(#primary-selection-strategy).</td>
 </tr>
 </tbody>
 </table>
+<h4 id="primary-selection-strategy-configuration-parameters">Primary Selection Strategy Configuration Parameters</h4>
+<hr />
+<p><strong>NOTE:</strong> The <code>primarySelectionStrategy</code> parameter is deprecated as of SHR-CLI 6.6.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.6 or higher, and do not implement the <code>primarySelectionStrategy</code>.</p>
+<hr />
 <p>The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the <code>primarySelectionStrategy</code> object are as follows:</p>
 <table>
 <thead>
@@ -558,9 +571,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <h3 id="content-profile-file">Content Profile File</h3>
-<p>In FHIR, <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">Must-Support</a> is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. The Content Profile is where Must-Support elements are declared.</p>
-<p>Note that the Must-Supports are designated at the level of the IG, not the data model. This is because different elements are important for different use cases. For example, one use case may not require date of death to be supported, but another might.</p>
-<p><strong>Note:</strong> <a href="#filter-strategy-configuration-parameters">Filtering</a> is the mechanism by which entries (profiles) and namespaces are selected for an IG, and content profiles are the mechanism for declaring Must-Support.</p>
+<p>The Content Profile (CP) specifies the profiles to be included in the IG. As explained <a href="#data-model-ig-relationship">earlier</a>, IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models across more than one one namespace:</p>
+<p><img alt="Content profile scope" src="../img_cimpl/Content-profile-scope.png" /></p>
+<p>The CP provides several different types of information about the IG:</p>
+<ul>
+<li>The list of classes (profiles) to be included in the IG,</li>
+<li>The elements in these classes to be marked as <a href="#Specifying-must-support-elements">Must-Support</a>, designated with the <code>MS</code> tag, and</li>
+<li>A list of classes <em>not</em> to be profiled, designated with the <a href="#specifying-no-profile-elements">No-Profile</a> <code>NP</code> tag.</li>
+</ul>
+<p>The CP file is interpreted as follows:</p>
+<ul>
+<li>The classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (<code>NP</code>).</li>
+<li>A class <em>not</em> explicitly listed in the CP <em>may be included</em> in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is not tagged as a No-Profile class, and (3) has a <a href="https://www.hl7.org/fhir/structuredefinition-definitions.html">differential</a>, relative to the resource it is mapped to.</li>
+</ul>
 <p>The syntax of a Content Profile file is:</p>
 <pre><code>Grammar:  ContentProfile 1.0
 
@@ -569,33 +592,27 @@ Namespace:  &lt;namespace-1&gt;
         &lt;Element-1&gt; MS
         &lt;Element-2&gt; MS
         ...
-    &lt;Entry-2&gt;:
+    &lt;Entry-2&gt;: NP
     ...
 Namespace:  &lt;namespace-2&gt;
     &lt;Entry-1&gt;:
         &lt;Element-1&gt; MS
         &lt;Element-2&gt; MS
         ...
-    &lt;Entry-2&gt;:
+    &lt;Entry-2&gt;: NP
     ...
 </code></pre>
 
-<p>Here is an excerpt from a Content Profile file:</p>
-<pre><code>Grammar:        ContentProfile 1.0
+<p>For example:</p>
+<pre><code>    Grammar: ContentProfile 1.0
 
-Namespace: obf
-    ComorbidCondition:
-        Code MS
-        ClinicalStatus MS
-    MedicationStatement:
-        MedicationCodeOrReference  MS
-        OccurrenceTimeOrPeriod  MS
-        TerminationReason  MS
-        TreatmentIntent  MS
-    ECOGPerformanceStatus:  
-        DataValue MS
+    Namespace: obf
+        Patient:
+            BirthDate MS
+        Encounter: NP
+        EpisodeOfCare: NP
 
-Namespace: vital
+    Namespace: vital
     BloodPressure:
         Components.ObservationComponent MS
         RelevantTime MS
@@ -605,17 +622,23 @@ Namespace: vital
     BodyWeight:
         DataValue MS
         RelevantTime MS
-
-Namespace: onco.core
-    PrimaryCancerCondition:
-        Code MS
-        ClinicalStatus MS
-        BodyLocation.Code MS
-        HistologyMorphologyBehavior MS
-        DateOfDiagnosis MS
+        ...
 </code></pre>
 
-<p><strong>Note:</strong> The grammar of the Content Profile file is still evolving and may include additional information in the future.</p>
+<h4 id="specifying-must-support-elements">Specifying Must-Support Elements</h4>
+<p>In FHIR, <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">Must-Support</a> is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.</p>
+<p>Must-Support elements are designated with the <code>MS</code> tag after the property name.</p>
+<p>Must-Support elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.</p>
+<h4 id="specifying-no-profile-elements">Specifying No-Profile Elements</h4>
+<p>The No-Profile (<code>NP</code>) tag instructs SHR-CLI to NOT profile a class, and therefore, exclude it from the list of profiles.</p>
+<blockquote>
+<p>In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen could reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of directly- and indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have differentials with respect to the resources they are mapped to, then by default, SHR-CLI will create profiles for them, and bring those profiles into the IG. The <code>NP</code> flag is a way to put boundaries around your IG.</p>
+</blockquote>
+<p>Because dependencies can be hard to predict, a good way to determine which classes should be designated with an <code>NP</code> flag is to generate the IG, then go to the <code>out/fhir/profiles</code> directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the <code>NP</code> flag to the corresponding class.</p>
+<p>The <code>NP</code> flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.</p>
+<hr />
+<p><strong>NOTE:</strong> The "No Profile" feature is available in SHR-CLI 6.6.0 and higher</p>
+<hr />
 <h2 id="executing-shr-cli">Executing SHR-CLI</h2>
 <h3 id="command-line">Command Line</h3>
 <p>The general form of the SHR-CLI execution command is as follows (where $ stands for the command prompt, which could be different on your system):</p>
@@ -662,7 +685,7 @@ Namespace: onco.core
 <p>The content of the /out directory depends on which exporters were selected to run, which is controlled using the <code>-s</code> command line option. By default, the /out will contain five exports, as shown below, each corresponding to a separate export process:</p>
 <p><img alt="Typical Contents of the /out Directory" src="../img_cimpl/typical-out-directory.png" /></p>
 <ul>
-<li>cimcore - this directory is used in the process of building the "modeldoc" export, and is not discussed further</li>
+<li>cimcore - this directory is only used in the process of building the <code>modeldoc</code> export, and may not appear in the future releases.</li>
 <li><a href="#data-dictionary-export">data-dictionary</a> - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets</li>
 <li><a href="#fhir-export">fhir</a> - this directory contains all the definitions and assets necessary to produce the IG</li>
 <li><a href="#json-schema-export">json-schema</a> - this directory contains schemas for the (<strong>TO DO -- need to define the JSON schema export</strong>)</li>

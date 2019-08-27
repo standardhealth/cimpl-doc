@@ -88,7 +88,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <a href="../cimpl6Tutorial_detail/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         Previous</a><a href="../cimpl6Tutorial_detail/" class="btn btn-xs btn-link">
-        CIMPL In-depth Tutorial
+        CIMPL In-Depth Tutorial
       </a>
     </div>
     
@@ -144,8 +144,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><img alt="CIMPL Modularity" src="../img_cimpl/CIMPLBuildingBlocks.png" /></p>
 <p>Model key:</p>
 <ul>
-<li>Gray: CIMPL data types <code>Primitives</code> </li>
-<li>Light blue: <a href="../cimpl6ObjectiveFHIR/">ObjectiveFHIR (OBF)</a> models </li>
+<li>Gray: CIMPL data types <code>Primitives</code></li>
+<li>Light blue: <a href="../cimpl6ObjectiveFHIR/">ObjectiveFHIR (OBF)</a> models</li>
 <li>Dark green: models created using CIMPL, leveraging OBF</li>
 <li>Light yellow: mCode model, <em>constrains</em> and <em>extends</em> oncoCore, leverages OBF</li>
 <li>Tan: models that <em>constrain</em> and <em>extend</em> mCode</li>
@@ -170,48 +170,48 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li>Define the use cases behind the creation of a model.</li>
 <li>Create a high-level conceptual model which addresses your defined use case and can be easily understood by both technical and clinical communities.</li>
-<li>Create a data dictionary listing the data elements, cardinality, and potential value sets involved if the data type is a coded element. This provides a convenient summary for implmenters presented in a way that can be understood by non-technical subject matter experts involved in defining the use cases. </li>
-<li>Start documenting your model with CIMPL. </li>
+<li>Create a data dictionary listing the data elements, cardinality, and potential value sets involved if the data type is a coded element. This provides a convenient summary for implementers presented in a way that can be understood by non-technical subject matter experts involved in defining the use cases.</li>
+<li>Start documenting your model with CIMPL.</li>
 </ul>
 <h2 id="model-folder-structure-and-source-control">Model Folder Structure and Source Control</h2>
-<p>Create a folder/directory to contain all files you create for the model. If you are modeling with a distributed team, you should consider using a source control system for you CIMPL files. </p>
+<p>Create a folder/directory to contain all files you create for the model. If you are modeling with a distributed team, you should consider using a source control system for you CIMPL files.</p>
 <p><a href="#cimpl6Tutorial_detail.md">CIMPL In-Depth Tutorial</a></p>
 <h2 id="configuration-file">Configuration File</h2>
 <p>A configuration file sets parameters to drive IG creation.</p>
-<p>By declaring optional parameters, your IG may include model documentation, a graphical view of the model, examples, or a data dictionary. These sections are automatically generated, are not required to include in the IG, but provide valuable information to IG consumers. </p>
+<p>By declaring optional parameters, your IG may include model documentation, a graphical view of the model, examples, or a data dictionary. These sections are automatically generated, are not required to include in the IG, but provide valuable information to IG consumers.</p>
 <p>The data dictionary export might require manual adjustments before the IG is published. Review this document to make sure it meets your needs.</p>
 <p><a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Guide</a></p>
 <h2 id="namespace">Namespace</h2>
-<p>Each model must define a namespace - this differentiates your model artifacts from others. </p>
+<p>Each model must define a namespace - this differentiates your model artifacts from others.</p>
 <p><a href="../cimpl6LanguageReference/">CIMPL Language Reference Guide</a></p>
 <h2 id="class-file">Class File</h2>
-<p>The Class file documents your model. </p>
-<p>Decide if you need to import any namespaces (e.g. OBF). </p>
-<p>Create your Class file with namespaces to import, and <code>Entry</code>, <code>Property</code>, <code>Abstract</code> and <code>Element</code> declarations. </p>
+<p>The Class file documents your model.</p>
+<p>Decide if you need to import any namespaces (e.g. OBF).</p>
+<p>Create your Class file with namespaces to import, and <code>Entry</code>, <code>Property</code>, <code>Abstract</code> and <code>Element</code> declarations.</p>
 <p><a href="../cimpl6LanguageReference/">CIMPL Language Reference Guide</a></p>
 <h2 id="map-file">Map File</h2>
-<p>Create a Map file if your model added properties beyond any inherited models. </p>
-<p>Map the model specific properties to either FHIR resource/profile elements, or OBF. </p>
+<p>Create a Map file if your model added properties beyond any inherited models.</p>
+<p>Map the model specific properties to either FHIR resource/profile elements, or OBF.</p>
 <p><a href="../cimpl6LanguageReference/">CIMPL Language Reference Guide</a></p>
 <h2 id="value-set-file">Value Set File</h2>
 <p>Create this file when you need to constrain an <code>Element Value</code> of <code>concept</code> in the Class file and there is not an existing value set to reference.  </p>
-<p>To avoid redundant value sets, try to find an existing value set that fits your use case. </p>
+<p>To avoid redundant value sets, try to find an existing value set that fits your use case.</p>
 <p><a href="../cimpl6LanguageReference/">CIMPL Language Reference Guide</a></p>
 <h2 id="content-profile-file">Content Profile File</h2>
-<p>Create a <em>Content Profile</em> file if there are properties in your model that are critical to IG compliance and <em>must</em> be supported. Any inerited model properties that are not already defined as <a href="https://www.hl7.org/fhir/conformance-rules.html"><em>MustSupport</em></a> are listed in the same file.   </p>
+<p>Create a <em>Content Profile</em> file if there are properties in your model that are critical to IG compliance and <em>must</em> be supported. Any inherited model properties that are not already defined as <a href="https://www.hl7.org/fhir/conformance-rules.html"><em>MustSupport</em></a> are listed in the same file.</p>
 <p><a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Guide</a></p>
 <h2 id="front-matter">Front Matter</h2>
 <p>Introductory text and possibly detailed text is required for IG readers and implementers to understand the background and intended use of your IG.</p>
-<p>Create this information and declare the location in the Configuration file. </p>
-<p>Reviewing a <a href="http://www.fhir.org/guides/registry/">published IG</a> might help you structure this material. </p>
+<p>Create this information and declare the location in the Configuration file.</p>
+<p>Reviewing a <a href="http://www.fhir.org/guides/registry/">published IG</a> might help you structure this material.</p>
 <p><a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Guide</a></p>
 <h2 id="fhir-examples">FHIR Examples</h2>
-<p>A FHIR IG can be generated without examples, however it is recommended to include examples. </p>
+<p>A FHIR IG can be generated without examples, however it is recommended to include examples.</p>
 <p>The FHIR IG generation process requires that an examples folder/directory be defined in the Configuration file. The folder may be empty.</p>
 <p><a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Guide</a></p>
 <h2 id="compile-the-cimpl-model">Compile the CIMPL Model</h2>
-<p>This step runs a syntax check on the Class, Map and Value Set files and prepares files for IG generation. </p>
-<p>Errors may be issued from this step. </p>
+<p>This step runs a syntax check on the Class, Map and Value Set files and prepares files for IG generation.</p>
+<p>Errors may be issued from this step.</p>
 <p><a href="../cimpl6LanguageReference/">CIMPL Language Reference Guide</a></p>
 <h2 id="publish-the-fhir-ig">Publish the FHIR IG</h2>
 <p>The final step in the IG creation process is to run the <strong><a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR IG Publisher</a></strong>. This tool is maintained and owned by HL7 FHIR.</p>
@@ -249,7 +249,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <a href="../cimpl6Tutorial_detail/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         Previous</a><a href="../cimpl6Tutorial_detail/" class="btn btn-xs btn-link">
-        CIMPL In-depth Tutorial
+        CIMPL In-Depth Tutorial
       </a>
     </div>
     
