@@ -206,7 +206,7 @@ The configuration file is a [JSON file](https://www.json.org/) with the followin
 #### Filter Strategy Configuration Parameters
 
 ***
-**NOTE:** The `filterStrategy` parameter is being deprecated. The functionality is being migrated to the [Content Profile file](#content-profile-file). It is recommended to upgrade to SHR-CLI 6.6 or higher, and do not implement the `filterStrategy`.
+**NOTE:** The `filterStrategy` parameter is deprecated as of SHR-CLI 6.6.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.6 or higher, and do not implement the `filterStrategy`.
 ***
 
 Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when [specification directory](#suggested-directory-structure) contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.
@@ -247,7 +247,7 @@ These configurations are used to control the production of the IG. The contents 
 #### Primary Selection Strategy Configuration Parameters
 
 ***
-**NOTE:** The `primarySelectionStrategy` parameter is being deprecated. The functionality is being migrated to the [Content Profile file](#content-profile-file). It is recommended to upgrade to SHR-CLI 6.6 or higher, and do not implement the `primarySelectionStrategy`.
+**NOTE:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.6.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.6 or higher, and do not implement the `primarySelectionStrategy`.
 ***
 
 The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the `primarySelectionStrategy` object are as follows:
@@ -338,15 +338,20 @@ Here is an example of a package list file:
 
 ### Content Profile File
 
-The Content Profile (CP) provides information about the content of the IG, relative to the models defined in CIMPL. Returning to the diagram [presented earlier](#data-model-ig-relationship), different information is specified at each level. Of the types of information specified at the IG level, the CP provides:
-
-* The list of classes (profiles) to be included in the IG,
-* The elements in these classes to be marked as "Must-Support", designated with the `MS` tag, and
-* A list of classes _not_ to be profiled, designated with the `NP` tag.
-
-The all classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as No-Profile (`NP`).
+The Content Profile (CP) specifies the profiles to be included in the IG. As explained [earlier](#data-model-ig-relationship), IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models across more than one one namespace:
 
 ![Content profile scope](img_cimpl/Content-profile-scope.png)
+
+The CP provides several different types of information about the IG:
+
+* The list of classes (profiles) to be included in the IG,
+* The elements in these classes to be marked as [Must-Support](#Specifying-must-support-elements), designated with the `MS` tag, and
+* A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
+
+The CP file is interpreted as follows:
+
+* The classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (`NP`).
+* A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is not tagged as a No-Profile class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
 
 The syntax of a Content Profile file is:
 
@@ -405,7 +410,7 @@ Must-Support elements are not part of the data model, because different elements
 
 The No-Profile (`NP`) tag instructs SHR-CLI to NOT profile a class, and therefore, exclude it from the list of profiles.
 
-> In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen could reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have models, then by default, SHR-CLI will create profiles for them, and bring those profiles into the IG. The `NP` flag is a way to put boundaries around your IG.
+> In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen could reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of directly- and indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have differentials with respect to the resources they are mapped to, then by default, SHR-CLI will create profiles for them, and bring those profiles into the IG. The `NP` flag is a way to put boundaries around your IG.
 
 Because dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class.
 
@@ -477,7 +482,7 @@ The content of the /out directory depends on which exporters were selected to ru
 
 ![Typical Contents of the /out Directory](img_cimpl/typical-out-directory.png)
 
-* cimcore - this directory is only used in the process of building the "modeldoc" export, and may not appear in the future releases.
+* cimcore - this directory is only used in the process of building the `modeldoc` export, and may not appear in the future releases.
 * [data-dictionary](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets
 * [fhir](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
 * [json-schema](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
