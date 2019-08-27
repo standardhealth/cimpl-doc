@@ -321,19 +321,6 @@ Let's review some highlights of [the configuration file](cimplTutorial/ig-myExam
 | `target` | ["myExample"] | JSON array containing the namespace(s) targeted by the filtering strategy. |
 | `indexContent` | "index.html" | The file containing the IG homepage. |
 
-### Create Examples Directory
-
-The CIMPL compile step requires a placeholder for FHIR examples.
-
-Create a subdirectory called **`examples-myFhirExamplesFolder`** under the `myExampleC6` folder.
-
-```
-Directory:  cimpl
-            |_ shr-cli
-            |_ myExampleC6
-               |_ examples-myFhirExamplesFolder
-```
-
 ### Compile CIMPL
 
 To create profiles, extensions, and other FHIR assets used in the IG, run the SHR-CLI tool.
@@ -371,6 +358,15 @@ Navigate to the `~/cimpl/shr-cli/myExampleC6r4/fhir/guide/output` directory and 
 ### Add FHIR Examples
 
 We're now going to add a FHIR example that conforms to our model. This step adds an example file to the directory you created in the first step. Since the details creating FHIR examples are out of scope for this tutorial, an example has been provided.
+
+Create a subdirectory called **`examples-myFhirExamplesFolder`** under the `myExampleC6` folder.
+
+```
+Directory:  cimpl
+            |_ shr-cli
+            |_ myExampleC6
+               |_ examples-myFhirExamplesFolder
+```
 
 Copy the file [myPatientExample1.json](cimplTutorial/myPatientExample1.json) and its contents into the `examples-myFhirExamplesFolder` you created in the [Compile CIMPL](#compile-cimpl) step.
 
