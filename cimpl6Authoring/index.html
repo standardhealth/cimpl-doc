@@ -33,8 +33,8 @@
         
         var pageToc = [
           {title: "CIMPL Authoring Guide", url: "#_top", children: [
-              {title: "Preface", url: "#preface" },
               {title: "Table of Contents", url: "#table-of-contents" },
+              {title: "Introduction", url: "#introduction" },
               {title: "Using CIMPL to Create FHIR-based Models", url: "#using-cimpl-to-create-fhir-based-models" },
               {title: "Logical Model", url: "#logical-model" },
               {title: "Model Folder Structure and Source Control", url: "#model-folder-structure-and-source-control" },
@@ -100,26 +100,18 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <blockquote>
 <p><strong>Note:</strong> This documentation is in the process of being further expanded and is an actively updating document.</p>
 </blockquote>
-<h2 id="preface">Preface</h2>
-<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
-<h3 id="purpose-of-this-document">Purpose of this Document</h3>
-<p>This document provides a step-by-step guide to generate an HL7 FHIR implementation guide (IG) starting with documenting a model using CIMPL. The details about how to accomplish each step are in the <a href="../cimpl6LanguageReference/">CIMPL Language Reference Guide</a> and <a href="../cimpl6LanguageReference/">CIMPL Tooling Reference Guide</a>. Links to these documents are provided in each section.</p>
-<h3 id="intended-audience">Intended Audience</h3>
-<p>The CIMPL Authoring Guide is targeted to any person comfortable with using software developers or people comfortable with programming languages. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
-<h3 id="prerequisite">Prerequisite</h3>
-<p>This guide assumes you installed the software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a>, and have at least reviewed the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>, and <a href="../cimpl6Tutorial_detail/">CIMPL In-Depth</a> tutorials. If you already have installed SHR-CLI, make sure you have the latest version installed.</p>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-authoring-guide">CIMPL Authoring Guide</a><ul>
-<li><a href="#preface">Preface</a><ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#introduction">Introduction</a><ul>
 <li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
 <li><a href="#intended-audience">Intended Audience</a></li>
 <li><a href="#prerequisite">Prerequisite</a></li>
 </ul>
 </li>
-<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#using-cimpl-to-create-fhir-based-models">Using CIMPL to Create FHIR-based Models</a></li>
 <li><a href="#logical-model">Logical Model</a></li>
 <li><a href="#model-folder-structure-and-source-control">Model Folder Structure and Source Control</a></li>
@@ -139,6 +131,14 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </div>
 <hr />
+<h2 id="introduction">Introduction</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>This document provides a step-by-step guide to generate an HL7 FHIR implementation guide (IG) starting with documenting a model using CIMPL. The details about how to accomplish each step are in the <a href="../cimpl6LanguageReference/">CIMPL Language Reference Guide</a> and <a href="../cimpl6LanguageReference/">CIMPL Tooling Reference Guide</a>. Links to these documents are provided in each section.</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>The CIMPL Authoring Guide is targeted to any person comfortable with using software developers or people comfortable with programming languages. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you installed the software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a>, and have at least reviewed the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>, and <a href="../cimpl6Tutorial_detail/">CIMPL In-Depth</a> tutorials. If you already have installed SHR-CLI, make sure you have the latest version installed.</p>
 <h2 id="using-cimpl-to-create-fhir-based-models">Using CIMPL to Create FHIR-based Models</h2>
 <p>CIMPL is designed to be modular and extensible, allowing for the reuse of other logical models, and inheritance from those models. The figure below illustrates this notion.</p>
 <p><img alt="CIMPL Modularity" src="../img_cimpl/CIMPLBuildingBlocks.png" /></p>
@@ -198,7 +198,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>To avoid redundant value sets, try to find an existing value set that fits your use case.</p>
 <p><a href="../cimpl6LanguageReference/">CIMPL Language Reference Guide</a></p>
 <h2 id="content-profile-file">Content Profile File</h2>
-<p>Create a <em>Content Profile</em> file if there are properties in your model that are critical to IG compliance and <em>must</em> be supported. Any inherited model properties that are not already defined as <a href="https://www.hl7.org/fhir/conformance-rules.html"><em>MustSupport</em></a> are listed in the same file.</p>
+<p>Create a <em>Content Profile</em> file if there are properties in your model that are critical to IG compliance and <em>must</em> be supported. Any inherited model properties that are not already defined as <a href="https://www.hl7.org/fhir/conformance-rules.html">MustSupport</a> are listed in the same file.</p>
 <p><a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Guide</a></p>
 <h2 id="front-matter">Front Matter</h2>
 <p>Introductory text and possibly detailed text is required for IG readers and implementers to understand the background and intended use of your IG.</p>

@@ -33,8 +33,8 @@
         
         var pageToc = [
           {title: "CIMPL 6.0 Tooling Reference", url: "#_top", children: [
-              {title: "Preface", url: "#preface" },
               {title: "Table of Contents", url: "#table-of-contents" },
+              {title: "Introduction", url: "#introduction" },
               {title: "Overview", url: "#overview" },
               {title: "Conventions", url: "#conventions" },
               {title: "Inputs to SHR-CLI", url: "#inputs-to-shr-cli" },
@@ -80,31 +80,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</h1>
-<h2 id="preface">Preface</h2>
-<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
-<h3 id="purpose-of-this-document">Purpose of this Document</h3>
-<p>This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL.</p>
-<h3 id="intended-audience">Intended Audience</h3>
-<p>The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
-<h3 id="prerequisite">Prerequisite</h3>
-<p>This guide assumes you have:</p>
-<ul>
-<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a>.</li>
-<li>Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for details). </li>
-<li>Reviewed the <a href="../cimpl6Tutorial_detail/">In-Depth Tutorial</a>.</li>
-</ul>
-<hr />
 <h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</a><ul>
-<li><a href="#preface">Preface</a><ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#introduction">Introduction</a><ul>
 <li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
 <li><a href="#intended-audience">Intended Audience</a></li>
 <li><a href="#prerequisite">Prerequisite</a></li>
 </ul>
 </li>
-<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#overview">Overview</a><ul>
 <li><a href="#relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</a></li>
 </ul>
@@ -131,7 +117,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#fhir-examples">FHIR Examples</a></li>
 <li><a href="#package-list-file">Package List File</a></li>
 <li><a href="#content-profile-file">Content Profile File</a><ul>
-<li><a href="#specifying-must-support-elements">Specifying Must-Support Elements</a></li>
+<li><a href="#specifying-mustsupport-elements">Specifying MustSupport Elements</a></li>
 <li><a href="#specifying-no-profile-elements">Specifying No-Profile Elements</a></li>
 </ul>
 </li>
@@ -168,6 +154,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </div>
 <hr />
+<h2 id="introduction">Introduction</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL.</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a>.</li>
+<li>Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for details). </li>
+<li>Reviewed the <a href="../cimpl6Tutorial_detail/">In-Depth Tutorial</a>.</li>
+</ul>
 <h2 id="overview">Overview</h2>
 <p>The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:</p>
 <p><img alt="CIMPL Tooling Overview" src="../img_cimpl/cli-overview.png" /></p>
@@ -175,7 +174,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li><a href="../cimpl6LanguageReference/">CIMPL Language files</a>, including class files, value set files, and mapping files that define your clinical information model,</li>
 <li>A <a href="#configuration-file">Configuration file</a> that contains directives to the tooling, and points to other resources,</li>
-<li>An optional <a href="#content-profile-file">Content Profile</a> file, which specifies Must-Support elements and profiling options specific to an IG,</li>
+<li>An optional <a href="#content-profile-file">Content Profile</a> file, which specifies <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> elements and profiling options specific to an IG,</li>
 <li>One or more <a href="#front-matter-files">Front Matter</a> files, which are the narratives and graphics that introduce the IG,</li>
 <li><a href="#fhir-examples">FHIR Examples</a> that are to be included in the IG, and</li>
 <li>A <a href="#package-list-file">Package List</a> that has information required for building the IG.</li>
@@ -193,7 +192,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#fhir-export">FHIR Profiles, Extensions, Value Sets</a> that form the core content of the IG,</li>
 <li>A <a href="#logical-model-export">Logical Model</a> corresponding to the CIMPL class definitions, expressed as FHIR StructureDefinitions,</li>
 <li><a href="#json-schema-export">JSON Schema</a> for the profiles defined by the IG,</li>
-<li>A <a href="#data-dictionary-export">Data Dictionary</a> that lists the Must-Support data elements in the IG, as well as value sets and value set members,</li>
+<li>A <a href="#data-dictionary-export">Data Dictionary</a> that lists the <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> data elements in the IG, as well as value sets and value set members,</li>
 <li><a href="#model-documentation-export">Model Documentation</a> in the form of a <a href="https://docs.oracle.com/javase/7/docs/api/">Javadoc-like</a> browser that allows one to see the hierarchical class relationships in the logical model.</li>
 </ul>
 <h3 id="relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</h3>
@@ -576,7 +575,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The CP provides several different types of information about the IG:</p>
 <ul>
 <li>The list of classes (profiles) to be included in the IG,</li>
-<li>The elements in these classes to be marked as <a href="#Specifying-must-support-elements">Must-Support</a>, designated with the <code>MS</code> tag, and</li>
+<li>The elements in these classes to be marked as <a href="#Specifying-must-support-elements">MustSupport</a>, designated with the <code>MS</code> tag, and</li>
 <li>A list of classes <em>not</em> to be profiled, designated with the <a href="#specifying-no-profile-elements">No-Profile</a> <code>NP</code> tag.</li>
 </ul>
 <p>The CP file is interpreted as follows:</p>
@@ -625,10 +624,10 @@ Namespace:  &lt;namespace-2&gt;
         ...
 </code></pre>
 
-<h4 id="specifying-must-support-elements">Specifying Must-Support Elements</h4>
-<p>In FHIR, <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">Must-Support</a> is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.</p>
-<p>Must-Support elements are designated with the <code>MS</code> tag after the property name.</p>
-<p>Must-Support elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.</p>
+<h4 id="specifying-mustsupport-elements">Specifying MustSupport Elements</h4>
+<p>In FHIR, <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.</p>
+<p>MustSupport elements are designated with the <code>MS</code> tag after the property name.</p>
+<p>MustSupport elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.</p>
 <h4 id="specifying-no-profile-elements">Specifying No-Profile Elements</h4>
 <p>The No-Profile (<code>NP</code>) tag instructs SHR-CLI to NOT profile a class, and therefore, exclude it from the list of profiles.</p>
 <blockquote>
@@ -708,7 +707,7 @@ Namespace:  &lt;namespace-2&gt;
 <ul>
 <li>The "Key" tab contains a key to the columns in the other tabs;</li>
 <li>The "Profiles" tab contains a list of the primary profiles and their descriptions;</li>
-<li>The "Data Elements" tab contains a list of Must-support and required elements associated with those profiles;</li>
+<li>The "Data Elements" tab contains a list of <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> and required elements associated with those profiles;</li>
 <li>The "Value Sets" tab contains a list of value sets used in the IG, and their descriptions;</li>
 <li>The "Value Set Details" tab contains a list of the codes and/or implicit definitions in those value sets.</li>
 </ul>
