@@ -33,8 +33,8 @@
         
         var pageToc = [
           {title: "CIMPL In-Depth Tutorial", url: "#_top", children: [
-              {title: "Preface", url: "#preface" },
               {title: "Table of Contents", url: "#table-of-contents" },
+              {title: "Introduction", url: "#introduction" },
               {title: "Initial Setup", url: "#initial-setup" },
               {title: "Modeling Process", url: "#modeling-process" },
               {title: "Generate the FHIR IG", url: "#generate-the-fhir-ig" },
@@ -86,31 +86,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="cimpl-in-depth-tutorial">CIMPL In-Depth Tutorial</h1>
-<h2 id="preface">Preface</h2>
-<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
-<h3 id="purpose">Purpose</h3>
-<p>This is an extensive tutorial, meant to expose the reader to many aspects of CIMPL and its tooling (SHR-CLI).  </p>
-<h3 id="intended-audience">Intended Audience</h3>
-<p>The CIMPL In-Depth Tutorial is targeted to any person who wants to create a FHIR IG, wants to learn how to leverage CIMPL to accomplish that goal, and is comfortable with programming languages. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.).</p>
-<h3 id="prerequisite">Prerequisite</h3>
-<p>This guide assumes you have:</p>
-<ul>
-<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
-<li>A text editor to edit you CIMPL files (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
-<li>Reviewed the <a href="../cimpl6Tutorial_helloWorld/">Hello World Tutorial</a>.</li>
-</ul>
-<hr />
 <h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-in-depth-tutorial">CIMPL In-Depth Tutorial</a><ul>
-<li><a href="#preface">Preface</a><ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#introduction">Introduction</a><ul>
 <li><a href="#purpose">Purpose</a></li>
 <li><a href="#intended-audience">Intended Audience</a></li>
 <li><a href="#prerequisite">Prerequisite</a></li>
 </ul>
 </li>
-<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#initial-setup">Initial Setup</a></li>
 <li><a href="#modeling-process">Modeling Process</a><ul>
 <li><a href="#define-use-cases">Define Use Cases</a></li>
@@ -122,7 +108,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </li>
 <li><a href="#generate-the-fhir-ig">Generate the FHIR IG</a><ul>
-<li><a href="#specify-fhir-mustsupport-elements">Specify FHIR MustSupport Elements</a></li>
+<li><a href="#specify-fhir-mustsupport-elements">Specify FHIR "MustSupport" Elements</a></li>
 <li><a href="#create-a-homepage-for-the-ig">Create a Homepage for the IG</a></li>
 <li><a href="#configure-the-output">Configure the Output</a></li>
 <li><a href="#compile-cimpl">Compile CIMPL</a></li>
@@ -136,6 +122,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </div>
 <hr />
+<h2 id="introduction">Introduction</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose">Purpose</h3>
+<p>This is an extensive tutorial, meant to expose the reader to many aspects of CIMPL and its tooling (SHR-CLI).  </p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>The CIMPL In-Depth Tutorial is targeted to any person who wants to create a FHIR IG, wants to learn how to leverage CIMPL to accomplish that goal, and is comfortable with programming languages. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.).</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
+<li>A text editor to edit you CIMPL files (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
+<li>Reviewed the <a href="../cimpl6Tutorial_helloWorld/">Hello World Tutorial</a>.</li>
+</ul>
 <h2 id="initial-setup">Initial Setup</h2>
 <p>This tutorial is focused on how to create a model that will be used as input to a FHIR IG. Supporting configuration and core data type files have been defined for you.</p>
 <p>The following directory structure is assumed:</p>
@@ -376,14 +375,14 @@ ObstructiveSleepApneaDisorder maps to Condition:
 <p>The logical model properties (defined in the Class file) also match to equivalent FHIR attributes for each resource we've chosen to build our profiles. Because FHIR profiling allows further constraining and not loosening cardinality constraints and binding strengths, we can confirm that our elements also satisfy those requirements.</p>
 <h2 id="generate-the-fhir-ig">Generate the FHIR IG</h2>
 <p>In this section, we cover some of the extra CIMPL configuration steps that might be needed to customize the output of your FHIR IG.</p>
-<h3 id="specify-fhir-mustsupport-elements">Specify FHIR <em>MustSupport</em> Elements</h3>
-<p>The CIMPL toolchain provides a separate configuration file called a <em>Content Profile</em> that allows you to define IG-specific parameters. This tutorial uses the feature that specifies elements in your logical model to be <strong><a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport"><em>MustSupport</em></a></strong> in FHIR.</p>
+<h3 id="specify-fhir-mustsupport-elements">Specify FHIR "MustSupport" Elements</h3>
+<p>The CIMPL toolchain provides a separate configuration file called a <em>Content Profile</em> that allows you to define IG-specific parameters. This tutorial uses the feature that specifies elements in your logical model to be <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> in FHIR.</p>
 <p>Together with specified cardinality, the <em>MS</em> declaration can be <a href="http://wiki.hl7.org/index.php?title=Conformance_Implementation_Manual">interpreted as follows</a>:</p>
 <table>
 <thead>
 <tr>
 <th>Cardinality</th>
-<th>Must Support</th>
+<th>MustSupport</th>
 <th>Interpretation</th>
 </tr>
 </thead>
@@ -416,7 +415,7 @@ ObstructiveSleepApneaDisorder:
     OSADisorderCode MS
 </code></pre>
 
-<p>For our example, we have designated the <code>MyGender</code> and <code>OSADisorderCode</code> elements as <em>MustSupport</em>.  </p>
+<p>For our example, we have designated the <code>MyGender</code> and <code>OSADisorderCode</code> elements as MustSupport.  </p>
 <p>More information about Content Profile settings is provided in the <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Guide</a>.</p>
 <p><em><strong>Note:</strong> MustSupport renders as an <code>S</code> in a red box in FHIR IGs.</em></p>
 <h3 id="create-a-homepage-for-the-ig">Create a Homepage for the IG</h3>
@@ -450,7 +449,7 @@ ObstructiveSleepApneaDisorder:
 <tr>
 <td><code>contentProfile</code></td>
 <td>"ig-myExample-cp.txt"</td>
-<td>The name of the file which sets FHIR <em>must-support</em> flags.</td>
+<td>The name of the file which sets FHIR MustSupport flags.</td>
 </tr>
 <tr>
 <td><code>filterStrategy</code></td>
