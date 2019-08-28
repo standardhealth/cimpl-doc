@@ -1,6 +1,12 @@
 # CIMPL In-Depth Tutorial
 
-## Preface
+## Table of Contents
+
+[TOC]
+
+***
+
+## Introduction
 
 CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
@@ -19,14 +25,6 @@ This guide assumes you have:
 * Installed the latest version of the SHR-CLI software as documented in [CIMPL Setup and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
 * A text editor to edit you CIMPL files (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required)
 * Reviewed the [Hello World Tutorial](cimpl6Tutorial_helloWorld.md).
-
-***
-
-## Table of Contents
-
-[TOC]
-
-***
 
 ## Initial Setup
 
@@ -265,13 +263,13 @@ The logical model properties (defined in the Class file) also match to equivalen
 
 In this section, we cover some of the extra CIMPL configuration steps that might be needed to customize the output of your FHIR IG.
 
-### Specify FHIR _MustSupport_ Elements
+### Specify FHIR "MustSupport" Elements
 
-The CIMPL toolchain provides a separate configuration file called a _Content Profile_ that allows you to define IG-specific parameters. This tutorial uses the feature that specifies elements in your logical model to be **[_MustSupport_](https://www.hl7.org/fhir/conformance-rules.html#mustSupport)** in FHIR.
+The CIMPL toolchain provides a separate configuration file called a _Content Profile_ that allows you to define IG-specific parameters. This tutorial uses the feature that specifies elements in your logical model to be [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) in FHIR.
 
 Together with specified cardinality, the _MS_ declaration can be [interpreted as follows](http://wiki.hl7.org/index.php?title=Conformance_Implementation_Manual):
 
-| Cardinality |  Must Support  | Interpretation |
+| Cardinality |  MustSupport  | Interpretation |
 |------------|------------|-------------|
 | 1..1 |  any | required |
 | 0..1 | yes | required if known |
@@ -290,7 +288,7 @@ ObstructiveSleepApneaDisorder:
     OSADisorderCode MS
 ```
 
-For our example, we have designated the `MyGender` and `OSADisorderCode` elements as _MustSupport_.  
+For our example, we have designated the `MyGender` and `OSADisorderCode` elements as MustSupport.  
 
 More information about Content Profile settings is provided in the [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md).
 
@@ -316,7 +314,7 @@ Let's review some highlights of [the configuration file](cimplTutorial/ig-myExam
 |-------|-------|-------|
 | `ProjectName` | "My Example Project" | This will appear on the home page title of your generated IG. |
 | `fhirURL` | "http://example.com/fhir" | The URL  pre-pended to your StructureDefinition canonical URLs. |
-| `contentProfile` | "ig-myExample-cp.txt" | The name of the file which sets FHIR _must-support_ flags. |
+| `contentProfile` | "ig-myExample-cp.txt" | The name of the file which sets FHIR MustSupport flags. |
 | `filterStrategy` | "true" | Indicates that not all _Entries_ in the logical model should be included in the IG. |
 | `target` | ["myExample"] | JSON array containing the namespace(s) targeted by the filtering strategy. |
 | `indexContent` | "index.html" | The file containing the IG homepage. |

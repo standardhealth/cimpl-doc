@@ -2,7 +2,15 @@
 
 >**Note:** This documentation is in the process of being further expanded and is an actively updating document.
 
-## Preface
+***
+
+## Table of Contents
+
+[TOC]
+
+***
+
+## Introduction
 
 CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
@@ -17,14 +25,6 @@ The CIMPL Authoring Guide is targeted to any person comfortable with using softw
 ### Prerequisite
 
 This guide assumes you installed the software as documented in [CIMPL Setup and Installation](cimplInstall.md), and have at least reviewed the [Hello World](cimpl6Tutorial_helloWorld.md), and [CIMPL In-Depth](cimpl6Tutorial_detail.md) tutorials. If you already have installed SHR-CLI, make sure you have the latest version installed.
-
-***
-
-## Table of Contents
-
-[TOC]
-
-***
 
 ## Using CIMPL to Create FHIR-based Models
 
@@ -118,7 +118,7 @@ To avoid redundant value sets, try to find an existing value set that fits your 
 
 ## Content Profile File
 
-Create a *Content Profile* file if there are properties in your model that are critical to IG compliance and _must_ be supported. Any inherited model properties that are not already defined as [_MustSupport_](https://www.hl7.org/fhir/conformance-rules.html) are listed in the same file.
+Create a *Content Profile* file if there are properties in your model that are critical to IG compliance and _must_ be supported. Any inherited model properties that are not already defined as [MustSupport](https://www.hl7.org/fhir/conformance-rules.html) are listed in the same file.
 
 [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
 

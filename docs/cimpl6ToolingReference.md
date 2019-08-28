@@ -1,6 +1,13 @@
 # CIMPL 6.0 Tooling Reference
 
-## Preface
+## Table of Contents
+
+[TOC]
+
+***
+
+
+## Introduction
 
 CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
@@ -20,14 +27,6 @@ This guide assumes you have:
 * Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). 
 * Reviewed the [In-Depth Tutorial](cimpl6Tutorial_detail.md).
 
-***
-
-## Table of Contents
-
-[TOC]
-
-***
-
 ## Overview
 
 The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
@@ -38,7 +37,7 @@ The inputs to SHR-CLI include:
 
 * [CIMPL Language files](cimpl6LanguageReference.md), including class files, value set files, and mapping files that define your clinical information model,
 * A [Configuration file](#configuration-file) that contains directives to the tooling, and points to other resources,
-* An optional [Content Profile](#content-profile-file) file, which specifies Must-Support elements and profiling options specific to an IG,
+* An optional [Content Profile](#content-profile-file) file, which specifies [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements and profiling options specific to an IG,
 * One or more [Front Matter](#front-matter-files) files, which are the narratives and graphics that introduce the IG,
 * [FHIR Examples](#fhir-examples) that are to be included in the IG, and
 * A [Package List](#package-list-file) that has information required for building the IG.
@@ -56,7 +55,7 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 * [FHIR Profiles, Extensions, Value Sets](#fhir-export) that form the core content of the IG,
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR StructureDefinitions,
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
-* A [Data Dictionary](#data-dictionary-export) that lists the Must-Support data elements in the IG, as well as value sets and value set members,
+* A [Data Dictionary](#data-dictionary-export) that lists the [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) data elements in the IG, as well as value sets and value set members,
 * [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
 
 
@@ -345,7 +344,7 @@ The Content Profile (CP) specifies the profiles to be included in the IG. As exp
 The CP provides several different types of information about the IG:
 
 * The list of classes (profiles) to be included in the IG,
-* The elements in these classes to be marked as [Must-Support](#Specifying-must-support-elements), designated with the `MS` tag, and
+* The elements in these classes to be marked as [MustSupport](#Specifying-must-support-elements), designated with the `MS` tag, and
 * A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
 
 The CP file is interpreted as follows:
@@ -398,13 +397,13 @@ For example:
         ...
 ```
 
-#### Specifying Must-Support Elements
+#### Specifying MustSupport Elements
 
-In FHIR, [Must-Support](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.
+In FHIR, [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.
 
-Must-Support elements are designated with the `MS` tag after the property name.
+MustSupport elements are designated with the `MS` tag after the property name.
 
-Must-Support elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
+MustSupport elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
 
 #### Specifying No-Profile Elements
 
@@ -519,7 +518,7 @@ The Data Dictionary is an Microsoft Excel file containing a simplified, flattene
 
 * The "Key" tab contains a key to the columns in the other tabs;
 * The "Profiles" tab contains a list of the primary profiles and their descriptions;
-* The "Data Elements" tab contains a list of Must-support and required elements associated with those profiles;
+* The "Data Elements" tab contains a list of [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required elements associated with those profiles;
 * The "Value Sets" tab contains a list of value sets used in the IG, and their descriptions;
 * The "Value Set Details" tab contains a list of the codes and/or implicit definitions in those value sets.
 
