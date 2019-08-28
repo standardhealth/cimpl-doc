@@ -1,7 +1,5 @@
 # Release Notes
 
-***
-
 ## Table of Contents
 
 [TOC]

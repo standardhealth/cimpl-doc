@@ -1,7 +1,5 @@
 # CIMPL 'Hello World' Tutorial
 
-***
-
 ## Table of Contents
 
 [TOC]

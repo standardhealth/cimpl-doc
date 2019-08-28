@@ -1,7 +1,5 @@
 # CIMPL 6.0 Tooling Reference
 
-***
-
 ## Table of Contents
 
 [TOC]

@@ -1,7 +1,5 @@
 # CIMPL Setup and Installation
 
-***
-
 ## Table of Contents
 
 [TOC]

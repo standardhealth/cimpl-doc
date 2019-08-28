@@ -1,7 +1,5 @@
 # CIMPL In-Depth Tutorial
 
-***
-
 ## Table of Contents
 
 [TOC]
