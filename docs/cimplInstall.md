@@ -1,5 +1,13 @@
 # CIMPL Setup and Installation
 
+***
+
+## Table of Contents
+
+[TOC]
+
+***
+
 ## Preface
 
 CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
@@ -19,14 +27,6 @@ This guide assumes you have:
 * Windows or macOS computer with 8 GB memory and 5 GB available disk space, and internet connection.
 * Ability to install software on your computer using an account that has administrator-level access. If you do not have administrator rights on your machine, some of the installations may fail or refuse to install.
 * A basic understanding of your operating system's [command line](https://en.wikipedia.org/wiki/Command-line_interface). If you are uncomfortable with using the command line, try [this short introduction](https://tutorial.djangogirls.org/en/intro_to_command_line/).
-
-***
-
-## Table of Contents
-
-[TOC]
-
-***
 
 ## Windows Installation Instructions
 

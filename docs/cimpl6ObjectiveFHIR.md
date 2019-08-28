@@ -2,6 +2,14 @@
 
 >**Note:** This documentation is in draft form.
 
+***
+
+## Table of Contents
+
+[TOC]
+
+***
+
 ## Preface
 
 CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
@@ -21,14 +29,6 @@ This guide assumes you have:
 * Installed the latest version of the SHR-CLI software as documented in [CIMPL Setup and Installation](cimplInstall.md) (preferably installed in the `~/cimpl/shr-cli` directory)
 * A text editor (preferably VSCode with the _vs-code-language-cimpl_ extension, but not required)
 * Reviewed the [Hello World Tutorial](cimpl6Tutorial_helloWorld.md).
-
-***
-
-## Table of Contents
-
-[TOC]
-
-***
 
 ## Overview
 

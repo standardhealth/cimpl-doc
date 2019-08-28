@@ -1,12 +1,20 @@
 # Release Notes
 
+***
+
+## Table of Contents
+
+[TOC]
+
+***
+
+## Introduction
+
 CIMPL consists of two parts:
 
 Models written in CIMPL, include base classes and models for certain Implementation Guides, maintained in Github in the [shr-spec repository](https://github.com/standardhealth/shr-spec) and SHR-CLI tools (primarily in the [shr-cli repository](https://github.com/standardhealth/shr-cli)).
 
 Please refer to the Github repository for [complete log of all releases of SHR-CLI](https://github.com/standardhealth/shr-cli/releases).
-
-[TOC]
 
 ## SHR-CLI 6.0
 
