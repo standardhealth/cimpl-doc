@@ -37,7 +37,7 @@ The inputs to SHR-CLI include:
 
 * [CIMPL Language files](cimpl6LanguageReference.md), including class files, value set files, and mapping files that define your clinical information model,
 * A [Configuration file](#configuration-file) that contains directives to the tooling, and points to other resources,
-* An optional [Content Profile](#content-profile-file) file, which specifies MustSupport elements and profiling options specific to an IG,
+* An optional [Content Profile](#content-profile-file) file, which specifies [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements and profiling options specific to an IG,
 * One or more [Front Matter](#front-matter-files) files, which are the narratives and graphics that introduce the IG,
 * [FHIR Examples](#fhir-examples) that are to be included in the IG, and
 * A [Package List](#package-list-file) that has information required for building the IG.
@@ -55,7 +55,7 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 * [FHIR Profiles, Extensions, Value Sets](#fhir-export) that form the core content of the IG,
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR StructureDefinitions,
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
-* A [Data Dictionary](#data-dictionary-export) that lists the MustSupport data elements in the IG, as well as value sets and value set members,
+* A [Data Dictionary](#data-dictionary-export) that lists the [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) data elements in the IG, as well as value sets and value set members,
 * [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
 
 
@@ -518,7 +518,7 @@ The Data Dictionary is an Microsoft Excel file containing a simplified, flattene
 
 * The "Key" tab contains a key to the columns in the other tabs;
 * The "Profiles" tab contains a list of the primary profiles and their descriptions;
-* The "Data Elements" tab contains a list of Must-support and required elements associated with those profiles;
+* The "Data Elements" tab contains a list of [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required elements associated with those profiles;
 * The "Value Sets" tab contains a list of value sets used in the IG, and their descriptions;
 * The "Value Set Details" tab contains a list of the codes and/or implicit definitions in those value sets.
 

@@ -118,7 +118,7 @@ To avoid redundant value sets, try to find an existing value set that fits your 
 
 ## Content Profile File
 
-Create a *Content Profile* file if there are properties in your model that are critical to IG compliance and _must_ be supported. Any inherited model properties that are not already defined as [_MustSupport_](https://www.hl7.org/fhir/conformance-rules.html) are listed in the same file.
+Create a *Content Profile* file if there are properties in your model that are critical to IG compliance and _must_ be supported. Any inherited model properties that are not already defined as [MustSupport](https://www.hl7.org/fhir/conformance-rules.html) are listed in the same file.
 
 [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
 
