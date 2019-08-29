@@ -1,12 +1,19 @@
 # CIMPL 6.0 Tooling Reference
 
-## Preface
+## Table of Contents
+
+[TOC]
+
+***
+
+
+## Introduction
 
 CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 ### Purpose of this Document
 
-This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage).
+This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL.
 
 ### Intended Audience
 
@@ -20,15 +27,9 @@ This guide assumes you have:
 * Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). 
 * Reviewed the [In-Depth Tutorial](cimpl6Tutorial_detail.md).
 
-***
-
-## Table of Contents
-
-[TOC]
-
-***
-
 ## Overview
+
+### Inputs and Outputs
 
 The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
 
@@ -38,7 +39,7 @@ The inputs to SHR-CLI include:
 
 * [CIMPL Language files](cimpl6LanguageReference.md), including class files, value set files, and mapping files that define your clinical information model,
 * A [Configuration file](#configuration-file) that contains directives to the tooling, and points to other resources,
-* An optional [Content Profile](#content-profile-file) file, which specifies Must-Support elements and profiling options specific to an IG,
+* An optional [Content Profile](#content-profile-file) file, which specifies [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements and profiling options specific to an IG,
 * One or more [Front Matter](#front-matter-files) files, which are the narratives and graphics that introduce the IG,
 * [FHIR Examples](#fhir-examples) that are to be included in the IG, and
 * A [Package List](#package-list-file) that has information required for building the IG.
@@ -56,9 +57,8 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 * [FHIR Profiles, Extensions, Value Sets](#fhir-export) that form the core content of the IG,
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR StructureDefinitions,
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
-* A [Data Dictionary](#data-dictionary-export) that lists the Must-Support data elements in the IG, as well as value sets and value set members,
+* A [Data Dictionary](#data-dictionary-export) that lists the [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) data elements in the IG, as well as value sets and value set members,
 * [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
-
 
 ### Relationship of CIMPL Models and Implementation Guides
 
@@ -72,16 +72,16 @@ The drawback of this approach is that different IGs can require very similar dat
 
 In CIMPL, data models are independent of IGs. IGs are _consumers_ of models, rather than _owners_ of models (although new models can certainly be created in the context of IG development). Each IG uses a different subset of models, reflecting the different use cases they address, but the commonality of data models assures interoperability between the use cases. This idea is illustrated below:
 
-
+<a id="data-model-ig-relationship"></a>
 ![Data model IG relationship](img_cimpl/Data-model-use-case-model.png)
 
-Much of what is discussed subsequently reflects this conceptual picture of the relationship between CIMPL models and IGs.
+Much of what follows deals with configuring the relationship between CIMPL models and IGs, and defining the parameters that affect the IG presentation. In particular, the [Content Profile file](#content-profile-file) is key to defining how the IG relates to the models available in various namespaces.
 
 ## Conventions
 
 ### Suggested Directory Structure
 
-The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG can be produced under FHIR STU3 and R4:
+The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under FHIR STU3 and R4:
 
 ```
 ├── shr-cli-6.5.0                   // Tooling location
@@ -187,8 +187,8 @@ SHR-CLI requires a configuration file to run. The name of this file is typically
 
 The configuration file is a [JSON file](https://www.json.org/) with the following parameters:
 
-|Parameter            |Type    |Description                                                    |
-|:--------------------|:-------|:--------------------------------------------------------------|
+|Parameter            |Type    |Description  |
+|--------------------|-------|------------|
 |`projectName`        |`string`|The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"  |
 |`projectShorthand`   |`string`|A shorthand name for the project, such as "mcode".                              |
 |`projectURL`         |`string`|The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"                             |
@@ -204,6 +204,10 @@ The configuration file is a [JSON file](https://www.json.org/) with the followin
 |`provenanceInfo`     |`{}`    | A JSON object specifying author and other information ([see below](#provenance-information-configuration-parameters)) |
 
 #### Filter Strategy Configuration Parameters
+
+***
+**NOTE:** The `filterStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `filterStrategy`.
+***
 
 Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when [specification directory](#suggested-directory-structure) contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.
 
@@ -238,7 +242,13 @@ These configurations are used to control the production of the IG. The contents 
 |`examples` |`string` |The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` must match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no `examples` folder is specified, and a folder named "fhir-examples" exists in the specification directory, it will be used as the examples folder. | 
 |`historyLink`             |`string` |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
 |`changesLink`             |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
-|`primarySelectionStrategy`|`{}`     |The strategy for selection of what is primary in the IG (see below). |
+|`primarySelectionStrategy`|`{}`     |The strategy for selection of what is primary in the IG ([see below])(#primary-selection-strategy). |
+
+#### Primary Selection Strategy Configuration Parameters
+
+***
+**NOTE:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
+***
 
 The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the `primarySelectionStrategy` object are as follows:
 
@@ -328,11 +338,20 @@ Here is an example of a package list file:
 
 ### Content Profile File
 
-In FHIR, [Must-Support](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. The Content Profile is where Must-Support elements are declared.
+The Content Profile (CP) specifies the profiles to be included in the IG. As explained [earlier](#data-model-ig-relationship), IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models across more than one one namespace:
 
-Note that the Must-Supports are designated at the level of the IG, not the data model. This is because different elements are important for different use cases. For example, one use case may not require date of death to be supported, but another might.
+![Content profile scope](img_cimpl/Content-profile-scope.png)
 
-**Note:** [Filtering](#filter-strategy-configuration-parameters) is the mechanism by which entries (profiles) and namespaces are selected for an IG, and content profiles are the mechanism for declaring Must-Support.
+The CP provides several different types of information about the IG:
+
+* The list of classes (profiles) to be included in the IG,
+* The elements in these classes to be marked as [MustSupport](#Specifying-must-support-elements), designated with the `MS` tag, and
+* A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
+
+The CP file is interpreted as follows:
+
+* The classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (`NP`).
+* A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is not tagged as a No-Profile class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
 
 The syntax of a Content Profile file is:
 
@@ -344,35 +363,29 @@ Namespace:  <namespace-1>
         <Element-1> MS
         <Element-2> MS
         ...
-    <Entry-2>:
+    <Entry-2>: NP
     ...
 Namespace:  <namespace-2>
     <Entry-1>:
         <Element-1> MS
         <Element-2> MS
         ...
-    <Entry-2>:
+    <Entry-2>: NP
     ...
 ```
 
-Here is an excerpt from a Content Profile file:
+For example:
 
 ```
-Grammar:        ContentProfile 1.0
+    Grammar: ContentProfile 1.0
 
-Namespace: obf
-    ComorbidCondition:
-        Code MS
-        ClinicalStatus MS
-    MedicationStatement:
-        MedicationCodeOrReference  MS
-        OccurrenceTimeOrPeriod  MS
-        TerminationReason  MS
-        TreatmentIntent  MS
-    ECOGPerformanceStatus:  
-        DataValue MS
+    Namespace: obf
+        Patient:
+            BirthDate MS
+        Encounter: NP
+        EpisodeOfCare: NP
 
-Namespace: vital
+    Namespace: vital
     BloodPressure:
         Components.ObservationComponent MS
         RelevantTime MS
@@ -382,17 +395,30 @@ Namespace: vital
     BodyWeight:
         DataValue MS
         RelevantTime MS
-
-Namespace: onco.core
-    PrimaryCancerCondition:
-        Code MS
-        ClinicalStatus MS
-        BodyLocation.Code MS
-        HistologyMorphologyBehavior MS
-        DateOfDiagnosis MS
+        ...
 ```
 
-**Note:** The grammar of the Content Profile file is still evolving and may include additional information in the future.
+#### Specifying MustSupport Elements
+
+In FHIR, [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.
+
+MustSupport elements are designated with the `MS` tag after the property name.
+
+MustSupport elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
+
+#### Specifying No-Profile Elements
+
+The No-Profile (`NP`) tag instructs SHR-CLI to NOT profile a class, and therefore, exclude it from the list of profiles.
+
+> In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen could reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of directly- and indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have differentials with respect to the resources they are mapped to, then by default, SHR-CLI will create profiles for them, and bring those profiles into the IG. The `NP` flag is a way to put boundaries around your IG.
+
+Because dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class.
+
+The `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
+
+***
+**NOTE:** The "No Profile" feature is available in SHR-CLI 6.6.0 and higher
+***
 
 ## Executing SHR-CLI
 
@@ -456,7 +482,7 @@ The content of the /out directory depends on which exporters were selected to ru
 
 ![Typical Contents of the /out Directory](img_cimpl/typical-out-directory.png)
 
-* cimcore - this directory is used in the process of building the "modeldoc" export, and is not discussed further
+* cimcore - this directory is only used in the process of building the `modeldoc` export, and may not appear in the future releases.
 * [data-dictionary](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets
 * [fhir](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
 * [json-schema](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
@@ -493,7 +519,7 @@ The Data Dictionary is an Microsoft Excel file containing a simplified, flattene
 
 * The "Key" tab contains a key to the columns in the other tabs;
 * The "Profiles" tab contains a list of the primary profiles and their descriptions;
-* The "Data Elements" tab contains a list of Must-support and required elements associated with those profiles;
+* The "Data Elements" tab contains a list of [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required elements associated with those profiles;
 * The "Value Sets" tab contains a list of value sets used in the IG, and their descriptions;
 * The "Value Set Details" tab contains a list of the codes and/or implicit definitions in those value sets.
 

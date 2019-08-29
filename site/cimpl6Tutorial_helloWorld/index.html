@@ -33,8 +33,8 @@
         
         var pageToc = [
           {title: "CIMPL 'Hello World' Tutorial", url: "#_top", children: [
-              {title: "Preface", url: "#preface" },
               {title: "Table of Contents", url: "#table-of-contents" },
+              {title: "Introduction", url: "#introduction" },
               {title: "Tutorial Steps - Hello World!", url: "#tutorial-steps-hello-world" },
           ]},
         ];
@@ -67,7 +67,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../cimpl6Tutorial_detail/" class="btn btn-xs btn-link">
-        CIMPL In-depth Tutorial
+        CIMPL In-Depth Tutorial
       </a>
     </div>
     
@@ -84,30 +84,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="cimpl-hello-world-tutorial">CIMPL 'Hello World' Tutorial</h1>
-<h2 id="preface">Preface</h2>
-<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
-<h3 id="purpose-of-this-document">Purpose of this Document</h3>
-<p>In <a href="https://en.wikipedia.org/wiki/&quot;Hello,_World!&quot;_program">the tradition of "Hello, World" examples</a>, this tutorial presents a very simple example to get you started using CIMPL. Upon completion of this tutorial, you will be able to try the <a href="../cimpl6Tutorial_detail/">CIMPL In-Depth Tutorial</a> and get started creating a FHIR Implementation Guide (IG).</p>
-<h3 id="intended-audience">Intended Audience</h3>
-<p>The CIMPL Hello World Tutorial is targeted to people with some programming experience. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
-<h3 id="prerequisite">Prerequisite</h3>
-<p>This guide assumes you have:</p>
-<ul>
-<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
-<li>A text editor (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
-</ul>
-<hr />
 <h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-hello-world-tutorial">CIMPL 'Hello World' Tutorial</a><ul>
-<li><a href="#preface">Preface</a><ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#introduction">Introduction</a><ul>
 <li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
 <li><a href="#intended-audience">Intended Audience</a></li>
 <li><a href="#prerequisite">Prerequisite</a></li>
-</ul>
-</li>
-<li><a href="#table-of-contents">Table of Contents</a><ul>
 <li><a href="#tutorial-pre-configuration">Tutorial Pre-configuration</a></li>
 </ul>
 </li>
@@ -125,6 +110,18 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </div>
 <hr />
+<h2 id="introduction">Introduction</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>In <a href="https://en.wikipedia.org/wiki/&quot;Hello,_World!&quot;_program">the tradition of "Hello, World" examples</a>, this tutorial presents a very simple example to get you started using CIMPL. Upon completion of this tutorial, you will be able to try the <a href="../cimpl6Tutorial_detail/">CIMPL In-Depth Tutorial</a> and get started creating a FHIR Implementation Guide (IG).</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>The CIMPL Hello World Tutorial is targeted to people with some programming experience. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
+<li>A text editor (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
+</ul>
 <h3 id="tutorial-pre-configuration">Tutorial Pre-configuration</h3>
 <p>This tutorial is focused on how to create a model that will be used as input to create an FHIR Implementation Guide. Supporting configuration and core data type files have been defined for you.</p>
 <p>The following directory structure is assumed for your configuration:</p>
@@ -241,7 +238,7 @@ yarn run ig:publish
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../cimpl6Tutorial_detail/" class="btn btn-xs btn-link">
-        CIMPL In-depth Tutorial
+        CIMPL In-Depth Tutorial
       </a>
     </div>
     

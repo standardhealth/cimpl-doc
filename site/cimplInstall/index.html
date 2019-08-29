@@ -33,8 +33,8 @@
         
         var pageToc = [
           {title: "CIMPL Setup and Installation", url: "#_top", children: [
-              {title: "Preface", url: "#preface" },
               {title: "Table of Contents", url: "#table-of-contents" },
+              {title: "Introduction", url: "#introduction" },
               {title: "Windows Installation Instructions", url: "#windows-installation-instructions" },
               {title: "macOS Installation Instructions", url: "#macos-installation-instructions" },
               {title: "Appendix: Installing Git for Team Projects", url: "#appendix-installing-git-for-team-projects" },
@@ -86,31 +86,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     
 
     <h1 id="cimpl-setup-and-installation">CIMPL Setup and Installation</h1>
-<h2 id="preface">Preface</h2>
-<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
-<h3 id="purpose-of-this-document">Purpose of this Document</h3>
-<p>This guide will take you through the steps needed to set up the environment needed to run CIMPL and associated tools.</p>
-<h3 id="intended-audience">Intended Audience</h3>
-<p>Anyone intending to use CIMPL for modeling clinical information and authoring FHIR Implementation Guides.</p>
-<h3 id="prerequisite">Prerequisite</h3>
-<p>This guide assumes you have:</p>
-<ul>
-<li>Windows or macOS computer with 8 GB memory and 5 GB available disk space, and internet connection.</li>
-<li>Ability to install software on your computer using an account that has administrator-level access. If you do not have administrator rights on your machine, some of the installations may fail or refuse to install.</li>
-<li>A basic understanding of your operating system's <a href="https://en.wikipedia.org/wiki/Command-line_interface">command line</a>. If you are uncomfortable with using the command line, try <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this short introduction</a>.</li>
-</ul>
-<hr />
 <h2 id="table-of-contents">Table of Contents</h2>
 <div class="toc">
 <ul>
 <li><a href="#cimpl-setup-and-installation">CIMPL Setup and Installation</a><ul>
-<li><a href="#preface">Preface</a><ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#introduction">Introduction</a><ul>
 <li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
 <li><a href="#intended-audience">Intended Audience</a></li>
 <li><a href="#prerequisite">Prerequisite</a></li>
 </ul>
 </li>
-<li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#windows-installation-instructions">Windows Installation Instructions</a><ul>
 <li><a href="#windows-proxy-setup">Windows Proxy Setup</a></li>
 <li><a href="#install-nodejs-for-windows">Install Node.js for Windows</a></li>
@@ -159,6 +145,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </div>
 <hr />
+<h2 id="introduction">Introduction</h2>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<h3 id="purpose-of-this-document">Purpose of this Document</h3>
+<p>This guide will take you through the steps needed to set up the environment needed to run CIMPL and associated tools.</p>
+<h3 id="intended-audience">Intended Audience</h3>
+<p>Anyone intending to use CIMPL for modeling clinical information and authoring FHIR Implementation Guides.</p>
+<h3 id="prerequisite">Prerequisite</h3>
+<p>This guide assumes you have:</p>
+<ul>
+<li>Windows or macOS computer with 8 GB memory and 5 GB available disk space, and internet connection.</li>
+<li>Ability to install software on your computer using an account that has administrator-level access. If you do not have administrator rights on your machine, some of the installations may fail or refuse to install.</li>
+<li>A basic understanding of your operating system's <a href="https://en.wikipedia.org/wiki/Command-line_interface">command line</a>. If you are uncomfortable with using the command line, try <a href="https://tutorial.djangogirls.org/en/intro_to_command_line/">this short introduction</a>.</li>
+</ul>
 <h2 id="windows-installation-instructions">Windows Installation Instructions</h2>
 <p>Unlike most applications that include a standalone installation file that you can click on to install, CIMPL is dependent on the installation of other applications, like <a href="#install-nodejs-for-windows">Node.js</a> and <a href="#install-yarn-for-windows">Yarn</a>, and optionally, <a href="#install-git-for-windows">Git</a> and <a href="#install-visual-studio-code-for-windows">Visual Studio Code</a></p>
 <p>For a successful installation, it is critical that you:</p>
