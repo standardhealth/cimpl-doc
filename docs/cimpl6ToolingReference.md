@@ -29,6 +29,8 @@ This guide assumes you have:
 
 ## Overview
 
+### Inputs and Outputs
+
 The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
 
 ![CIMPL Tooling Overview](img_cimpl/cli-overview.png)
@@ -57,7 +59,6 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
 * A [Data Dictionary](#data-dictionary-export) that lists the [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) data elements in the IG, as well as value sets and value set members,
 * [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
-
 
 ### Relationship of CIMPL Models and Implementation Guides
 
@@ -205,7 +206,7 @@ The configuration file is a [JSON file](https://www.json.org/) with the followin
 #### Filter Strategy Configuration Parameters
 
 ***
-**NOTE:** The `filterStrategy` parameter is deprecated as of SHR-CLI 6.6.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.6 or higher, and do not implement the `filterStrategy`.
+**NOTE:** The `filterStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `filterStrategy`.
 ***
 
 Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when [specification directory](#suggested-directory-structure) contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.
@@ -246,7 +247,7 @@ These configurations are used to control the production of the IG. The contents 
 #### Primary Selection Strategy Configuration Parameters
 
 ***
-**NOTE:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.6.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.6 or higher, and do not implement the `primarySelectionStrategy`.
+**NOTE:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
 ***
 
 The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the `primarySelectionStrategy` object are as follows:
