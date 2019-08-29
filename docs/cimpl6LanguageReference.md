@@ -244,7 +244,7 @@ Examples:
 
 The `Concept` keyword (not to be confused with the [concept primitive](#concept-codes)) establishes the meaning of a class in terms of a code (or codes) from controlled vocabularies. Assigning a concept allows the meaning of the class to be understood without inferring it from the class name. If multiple concept codes are used, they should appear as a comma-separated list. This keyword is optional.
 
-Examples:
+Example:
 
 `Concept: MTH#C3858779 "Security classification"`
 
@@ -290,7 +290,7 @@ The version details the _major_ and _minor_ version of the grammar the file conf
 
 ### Group
 
-The `Group` keyword is used to declare a referenceable collection of one or more properties, similar to the [complex data types](https://www.hl7.org/fhir/datatypes.html#complex) in FHIR. For details on using the `Group` keyword, see [Class File](#class-file).
+The `Group` keyword is used to declare a reusable collection of one or more properties, similar to the [complex data types](https://www.hl7.org/fhir/datatypes.html#complex) in FHIR. For details on using the `Group` keyword, see [Class File](#class-file).
 
 Example:
 
@@ -298,7 +298,7 @@ Example:
 
 ### Namespace
 
-The `Namespace` keyword defines the association of the file with a namespace, and is required in `Class`, `ValueSet` and `Map` files. The namespace name should follow [naming conventions](#namespace-names).
+The `Namespace` keyword defines the association of the file with a namespace, and is required in `Class`, `ValueSet` and `Map` files. The namespace name should follow [naming conventions](#namespace-names) discussed earlier.
 
 Examples:
 
@@ -308,7 +308,7 @@ Examples:
 
 ### Parent
 
-Through the `Parent` keyword, CIMPL provides a mechanism for basing a class on another class. The child class inherits all properties and constraints from the parent. The child class can then add additional properties and constraints. Additionally, maps are inherited alongside properties. At most one parent class can be specified. The `Parent` declaration is optional.
+Through the `Parent` keyword, CIMPL provides a mechanism for deriving a class from another class. The child class inherits all properties and constraints from the parent. The child class can then add additional properties and constraints. Additionally, maps are inherited alongside properties. At most one parent class can be specified. The `Parent` declaration is optional.
 
 There are restrictions on which classes can inherit from other classes. The rules can be summarized as _like inherits from like_:
 
@@ -590,7 +590,7 @@ The `substitute` keyword constrains the data type of an `Element`. The new data 
 
 | Example | Syntax |
 |----------|---------|
-| Constrain the `Element` `Specimen` to be a `TumorSpecimen` | `Specimen substitute TumorSpecimen` |
+| Constrain t`Specimen` to be a `TumorSpecimen` | `Specimen substitute TumorSpecimen` |
 | Constrain a `Value`'s `Quantity` data type to `SimpleQuantity` | `Value[Quantity] substitute SimpleQuantity`|
 
 ### Value Set Binding Constraint
@@ -647,7 +647,6 @@ The following syntax is allowable when binding a value set to Entry, Abstract, o
 <i>Property</i> from <i>valueset</i>
 
 <i>Property</i> from <i>valueset</i> (<i>binding strength</i>)
-
 </pre>
 
 For example:
@@ -658,7 +657,7 @@ ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical
 ReasonCode from ReasonCodeVS (extensible)
 ```
 
-To be valid, the `Property` must be an `Element` whose `Value` includes a `concept` data type. 
+For binding to be valid, the `Property` must be an `Element` whose `Value` includes a `concept` data type.
 
 ### Includes Constraint
 
@@ -695,7 +694,9 @@ includes TumorDepth 0..1
 |----------|---------|
 | `Element` | `Value only` <datatype>  |
 | `Element` | `Value only` <datatype1> or <datatype2> or <datatype3> etc.  |
-| `Entry` or `Group` | `<Property> only <datatype>` <br> >**Note**: this is allowed only for a single data type; to constrain to multiple choices, use the `substitute` constraint (see Example 2, below)|
+| `Entry` or `Group` | `<Property> only <datatype>` |
+
+>**Note**: `<Property> only <datatype>` is allowed only for a single data type; to constrain to multiple choices, use the `substitute` constraint (see Example 2, below)
 
 **Example 1:** Multiple `Value Choice` narrowed to a single choice
 
@@ -864,9 +865,31 @@ All classes in CIMPL, from `Element` to `Entry`, are reusable outside of their o
 
 Value Set files are used to define custom value sets and codes when existing value set sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient, and a new value set must be defined.
 
+### Value Set File Header
+
+`Grammar` and `Namespace` are required keywords in a Value Set file header. A `CodeSystem` declaration is required for every Code System referenced in a value set defined in the Value Set file. For a further description, see [Code System Keyword](#CodeSystem).
+
+### Value Set Definition
+
+Following the header, the Value Set file contains value set definitions. The order of definitions does not matter. Each definition follows a required sequence of declarations. Follow the links for further explanation of each item:
+
+1. [`ValueSet`](#ValueSet) declaration (required)
+1. [`Description`](#description) (optional but highly recommended)
+1. [Explicit code declarations](#explicit-code-declarations) (optional)
+1. [Implicit code declarations ](#implicit-code-declarations) (optional)
+
+### Explicit Code Declarations
+
+Explicit code declarations are used to add specific codes to a value set. This method of defining a value set is sometimes called _extensional_. Codes can either be locally-defined, or selected from external code systems, such as `ICD10CM#C7B00`, where `C7B00` is a code in the `ICD10CM` code system. If the code is defined locally, the value set name serves as the code system. For the syntax of concept codes, see [Concept Codes](#concept-codes).
+
+| Type | Example |
+|---------|---------|
+| Locally-defined code | `#proposed "The proposal has been proposed, but not accepted or rejected."`|
+| Externally-defined code | `ICD10CM#C7B00 "Secondary carcinoid tumors, unspecified site"`|
+
 ### Value Set File Example
 
-A (truncated) example Value Set file is shown below:
+An example Value Set file is shown below:
 
 ```
 Grammar:      ValueSet 5.1
@@ -891,53 +914,15 @@ ICD10CM#C7B01  "Secondary carcinoid tumors of distant lymph nodes"
 ICD10CM#C7B02  "Secondary carcinoid tumors of liver"
 ICD10CM#C7B03  "Secondary carcinoid tumors of bone"
 ICD10CM#C7B04  "Secondary carcinoid tumors of peritoneum"
+
+ValueSet:            HomeEnvironmentRiskVS
+Description          "Risks present in the home environment"
+#no_smoke_detectors  "No Smoke Detectors"
+#radiation           "Radon or Other Radiation Source"
+#swimming_pool       "Swimming Pool"
 ```
 
-### Value Set File Header
-
-`Grammar` and `Namespace` are required keywords in a Value Set file header. A `CodeSystem` declaration is required for every Code System referenced in a value set defined in the Value Set file. For a further description, see [Code System Keyword](#CodeSystem).
-
-### Value Set Definition
-
-Following the header, the Value Set file contains value set definitions. The order of definitions does not matter. Each definition follows a required sequence of declarations. Follow the links for further explanation of each item:
-
-1. [`ValueSet` Declaration](#ValueSet) (required)
-1. [`Description`](#description) (optional but highly recommended)
-1. [Code Declarations](#explicit-codes) (optional)
-1. [`Includes Codes` ](#implicit-codes) (optional)
-
-### Explicit Codes
-
-Explicit code declarations are used to add specific codes to a value set. This method of defining a value set is sometimes called _extensional_. Codes can either be locally-defined, or selected from external code systems, such as `ICD10CM#C7B00`, where `C7B00` is a code in the `ICD10CM` code system. If the code is defined locally, the value set name serves as the code system. For the syntax of concept codes, see [Concept Codes](#concept-codes).
-
-| Type | Example |
-|---------|---------|
-| Locally-defined code | `#proposed "The proposal has been proposed, but not accepted or rejected."`|
-| Externally-defined code | `ICD10CM#C7B00 "Secondary carcinoid tumors, unspecified site"`|
-
-#### Locally-Defined Value Sets
-
-Value sets consisting of local codes or externally-defined codes can be defined using the `ValueSet` keyword.
-
-Example (using local codes):
-```
-ValueSet:             HomeEnvironmentRiskVS
-Description           "Risks present in the home environment"
-#no_smoke_detectors   "No Smoke Detectors"
-#radiation            "Radon or Other Radiation Source"
-#swimming_pool        "Swimming Pool"
-```
-
-Example (using external codes):
-
-```
-ValueSet:        YesNoVS
-Description:     "Value set indicating yes or no (values drawn from Snomed CT)."
-SCT#373066001    "Yes"
-SCT#373067005    "No"
-```
-
-### Implicit Codes
+### Implicit Code Declarations
 
  Implicit code declarations add codes to a value set using an expression rather than a list. This allows you to, for example, add all codes from a code system, add all codes descending from a point in a hierarchy (currently only supported for SNOMED-CT). This method of defining a value set is sometimes called _intensional_. There are three variants involving the `Includes codes` phrase:
 
@@ -946,6 +931,7 @@ SCT#373067005    "No"
 | `Includes codes from` | `Includes codes from MDR`| Value set contains all codes from MDR code system (the MDR alias must be defined by the `CodeSystem` keyword) |
 | `Includes codes descending from` | `Includes codes descending from SCT#105590001` | Value set contains SCT#1055900001 and all codes below it in the SNOMED-CT hierarchy |
 |  `and not descending from` | `Includes codes descending from SCT#363346000 "Malignant neoplastic disease" and not descending from SCT#128462008 "Secondary malignant neoplastic disease"` | Value set contains SCT#363346000 and all codes below it in the SNOMED-CT hierarchy, _except_ code SCT#128462008 and all codes below it  |
+
 
 ## Map File
 
