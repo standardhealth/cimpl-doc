@@ -92,6 +92,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </li>
 <li><a href="#overview">Overview</a><ul>
+<li><a href="#inputs-and-outputs">Inputs and Outputs</a></li>
 <li><a href="#relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</a></li>
 </ul>
 </li>
@@ -168,6 +169,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>Reviewed the <a href="../cimpl6Tutorial_detail/">In-Depth Tutorial</a>.</li>
 </ul>
 <h2 id="overview">Overview</h2>
+<h3 id="inputs-and-outputs">Inputs and Outputs</h3>
 <p>The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:</p>
 <p><img alt="CIMPL Tooling Overview" src="../img_cimpl/cli-overview.png" /></p>
 <p>The inputs to SHR-CLI include:</p>
@@ -372,7 +374,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </table>
 <h4 id="filter-strategy-configuration-parameters">Filter Strategy Configuration Parameters</h4>
 <hr />
-<p><strong>NOTE:</strong> The <code>filterStrategy</code> parameter is deprecated as of SHR-CLI 6.6.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.6 or higher, and do not implement the <code>filterStrategy</code>.</p>
+<p><strong>NOTE:</strong> The <code>filterStrategy</code> parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the <code>filterStrategy</code>.</p>
 <hr />
 <p>Between the import stage and the export stage, there is a filtering stage (see  <a href="#cimpl-tooling-overview">CIMPL Tooling Overview</a>). Filtering is useful when <a href="#suggested-directory-structure">specification directory</a> contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.</p>
 <p>The contents of the <code>filterStrategy</code> object are as follows:</p>
@@ -483,7 +485,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </table>
 <h4 id="primary-selection-strategy-configuration-parameters">Primary Selection Strategy Configuration Parameters</h4>
 <hr />
-<p><strong>NOTE:</strong> The <code>primarySelectionStrategy</code> parameter is deprecated as of SHR-CLI 6.6.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.6 or higher, and do not implement the <code>primarySelectionStrategy</code>.</p>
+<p><strong>NOTE:</strong> The <code>primarySelectionStrategy</code> parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the <code>primarySelectionStrategy</code>.</p>
 <hr />
 <p>The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the <code>primarySelectionStrategy</code> object are as follows:</p>
 <table>
