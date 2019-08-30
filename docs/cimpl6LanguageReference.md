@@ -78,10 +78,10 @@ Any periods in the _namespace_ should be replaced by dashes. For example, for a 
 
 Additional files for configuring and producing FHIR implementation guides (IGs), and their naming conventions include:
 
-* Configuration files: _ig-myigname-config.json_
-* Content profile files: _ig-myigname-cp.json_
-* IG examples: _igname-myExampleName.json_
-* IG HTML pages: _anyName.html_
+* Configuration files: _ig-**myigname**-config.json_
+* Content profile files: _ig-**myigname**-cp.json_
+* IG examples: _igname-**myexamplename**.json_
+* IG HTML pages: _**anyName**.html_
 
 Detail about these files and how they are used to compile CIMPL models and create FHIR IGs can be found in the [CIMPL Tooling Reference Manual](#cimpl6ToolingReference.md).
 
@@ -310,7 +310,7 @@ Examples:
 
 Through the `Parent` keyword, CIMPL provides a mechanism for deriving a class from another class. The child class inherits all properties and constraints from the parent. The child class can then add additional properties and constraints. Additionally, maps are inherited alongside properties. At most one parent class can be specified. The `Parent` declaration is optional.
 
-There are restrictions on which classes can inherit from other classes. The rules can be summarized as _like inherits from like_:
+There are restrictions on which classes can inherit from other classes. The rules can be summarized as _like inherits from like_ (noting that `Abstract` is an `Entry` that is non-instantiable):
 
 | Building Block| Can Inherit From |
 |----------|---------|
@@ -432,23 +432,23 @@ For example, if `Patient` is an `Entry` and `Procedure` has a `Patient` property
 
 ### Bracket Notation for Value Choices
 
-`Value` can offer a [choice of data types](#value). Bracket notation is used to refer to a particular value choice. Bracket notation must always be used when an `Element` is part of a CIMPL path. How `Value` choices appear in paths depends on whether the path appears with an `Element` definition or not.
+The `Value` in an `Element` can offer a [choice of data types](#value). Bracket notation is used to refer to a particular value choice. Bracket notation must always be used when an `Element` is part of a CIMPL path. How `Value` choices appear in paths depends on whether the path appears with an `Element` definition or not.
 
 | Inside an: | Refer to the data type choices as: |
 |----------|---------|
 | `Element` | <code>Value[<i>datatype</i>]</code> |
-| `Entry` or `Group` | <code>ElementName[<i>datatype</i>]</code> |
+| `Entry` or `Group` | <code><i>ElementName</i>[<i>datatype</i>]</code> |
 
 Example:
 
 ```
-Entry: Procedure
-Property: Priority 0..1
-Priority[concept] = SCT#394849002 "High Priority" // not Value[concept]
-
 Element: Priority
 Value: integer or concept
 Value[concept] from PriorityVS (required)  // not Priority[concept]
+
+Entry: Procedure
+Property: Priority 0..1
+Priority[concept] = SCT#394849002 "High Priority" // not Value[concept]
 ```
 
 ### Path Example
@@ -644,20 +644,21 @@ Value[AgeGroup] from AgeGroupVS (extensible)
 The following syntax is allowable when binding a value set to Entry, Abstract, or Group:
 
 <pre>
-<i>Property</i> from <i>valueset</i>
+<i>Path</i> from <i>valueset</i>
 
-<i>Property</i> from <i>valueset</i> (<i>binding strength</i>)
+<i>Path</i> from <i>valueset</i> (<i>binding strength</i>)
 </pre>
 
+where the _Path_ must end at an `Element` whose `Value` includes a `concept` data type.
 For example:
 
 ```
 ClinicalStatus from http://hl7.org/fhir/ValueSet/condition-clinical
 
 ReasonCode from ReasonCodeVS (extensible)
-```
 
-For binding to be valid, the `Property` must be an `Element` whose `Value` includes a `concept` data type.
+BodyLocation.Code from BloodPressureBodyLocationVS (extensible)
+```
 
 ### Includes Constraint
 
@@ -696,7 +697,7 @@ includes TumorDepth 0..1
 | `Element` | `Value only` datatype1 `or` datatype2 `or` datatype3 etc.  |
 | `Entry` or `Group` | Property `only` datatype |
 
->**Note**: `<Property> only <datatype>` is allowed only for a single data type; to constrain to multiple choices, use the `substitute` constraint (see Example 2, below)
+>**Note**: `<Property> only <datatype>` syntaxis allowed only for a single data type; to constrain to multiple choices, use the `substitute` constraint (see Example 2, below)
 
 **Example 1:** Multiple data types narrowed to a single data type
 
@@ -865,6 +866,41 @@ All classes in CIMPL, from `Element` to `Entry`, are reusable outside of their o
 
 Value Set files are used to define custom value sets and codes when existing value set sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient, and a new value set must be defined.
 
+### Value Set File Example
+
+An example Value Set file is shown below:
+
+```
+Grammar:           ValueSet 5.1
+Namespace:         onco.core
+CodeSystem:        SCT = http://snomed.info/sct
+CodeSystem:        ICD10CM = http://hl7.org/fhir/sid/icd-10-cm
+
+ValueSet:          CancerDiseaseStatusEvidenceTypeVS
+Description:       "The type of evidence backing up the clinical determination of cancer progression."
+SCT#363679005      "Imaging (procedure)"
+SCT#252416005      "Histopathology test (procedure)"
+SCT#711015009      "Assessment of symptom control (procedure)"
+SCT#5880005        "Physical examination procedure (procedure)"
+SCT#250724005      "Tumor marker measurement (procedure)"
+SCT#386344002      "Laboratory data interpretation (procedure)"
+
+ValueSet:           SecondaryCancerDisorderVS
+Description:       "Types of secondary malignant neoplastic disease"
+Includes codes descending from SCT#128462008  "Secondary malignant neoplastic disease (disorder)"
+ICD10CM#C7B00       "Secondary carcinoid tumors, unspecified site"
+ICD10CM#C7B01       "Secondary carcinoid tumors of distant lymph nodes"
+ICD10CM#C7B02       "Secondary carcinoid tumors of liver"
+ICD10CM#C7B03       "Secondary carcinoid tumors of bone"
+ICD10CM#C7B04       "Secondary carcinoid tumors of peritoneum"
+
+ValueSet:           HomeEnvironmentRiskVS
+Description         "Risks present in the home environment"
+#no_smoke_detectors "No Smoke Detectors"
+#radiation          "Radon or Other Radiation Source"
+#swimming_pool      "Swimming Pool"
+```
+
 ### Value Set File Header
 
 `Grammar` and `Namespace` are required keywords in a Value Set file header. A `CodeSystem` declaration is required for every Code System referenced in a value set defined in the Value Set file. For a further description, see [Code System Keyword](#CodeSystem).
@@ -887,41 +923,6 @@ Explicit code declarations are used to add specific codes to a value set. This m
 | Locally-defined code | `#proposed "The proposal has been proposed, but not accepted or rejected."`|
 | Externally-defined code | `ICD10CM#C7B00 "Secondary carcinoid tumors, unspecified site"`|
 
-### Value Set File Example
-
-An example Value Set file is shown below:
-
-```
-Grammar:      ValueSet 5.1
-Namespace:    onco.core
-CodeSystem:   SCT = http://snomed.info/sct
-CodeSystem:   ICD10CM = http://hl7.org/fhir/sid/icd-10-cm
-
-ValueSet:     CancerDiseaseStatusEvidenceTypeVS
-Description:  "The type of evidence backing up the clinical determination of cancer progression."
-SCT#363679005 "Imaging (procedure)"
-SCT#252416005 "Histopathology test (procedure)"
-SCT#711015009 "Assessment of symptom control (procedure)"
-SCT#5880005   "Physical examination procedure (procedure)"
-SCT#250724005 "Tumor marker measurement (procedure)"
-SCT#386344002 "Laboratory data interpretation (procedure)"
-
-ValueSet:      SecondaryCancerDisorderVS
-Description:  "Types of secondary malignant neoplastic disease"
-Includes codes descending from SCT#128462008  "Secondary malignant neoplastic disease (disorder)"
-ICD10CM#C7B00  "Secondary carcinoid tumors, unspecified site"
-ICD10CM#C7B01  "Secondary carcinoid tumors of distant lymph nodes"
-ICD10CM#C7B02  "Secondary carcinoid tumors of liver"
-ICD10CM#C7B03  "Secondary carcinoid tumors of bone"
-ICD10CM#C7B04  "Secondary carcinoid tumors of peritoneum"
-
-ValueSet:            HomeEnvironmentRiskVS
-Description          "Risks present in the home environment"
-#no_smoke_detectors  "No Smoke Detectors"
-#radiation           "Radon or Other Radiation Source"
-#swimming_pool       "Swimming Pool"
-```
-
 ### Implicit Code Declarations
 
  Implicit code declarations add codes to a value set using an expression rather than a list. This allows you to, for example, add all codes from a code system, add all codes descending from a point in a hierarchy (currently only supported for SNOMED-CT). This method of defining a value set is sometimes called _intensional_. There are three variants involving the `Includes codes` phrase:
@@ -936,36 +937,6 @@ Description          "Risks present in the home environment"
 ## Map File
 
 Map files control how classes defined in CIMPL are expressed as FHIR **profiles**. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the [Objective FHIR base classes](cimpl6ObjectiveFHIR.md), you many not need to create a map file.
-
-### Inheritance of Mapping Rules
-
-Maps are defined in a series of mapping rules. A powerful feature of CIMPL is that mapping rules are inherited. If your class inherits from a parent class that is already mapped, you do not need to create a new map for your class. However, if you want to specify mappings for a new `Property`, or override the inherited map, you may do so.
-
-The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a map. The first mapping rule found will be applied. If no mapping rule is found for a `Property` defined in CIMPL, a FHIR **extension** will be created. If a map is not found for an `Entry`, that `Entry` will be mapped to the [**Basic**](https://www.hl7.org/fhir/basic.html) resource. In general, mapping to **Basic** is not recommended because it has no inherent semantic meaning for implementers.
-
-### Mapping CIMPL Primitives to FHIR
-
-CIMPL follows somewhat flexible rules on how CIMPL `primitive` data types map to FHIR. For example, an `unsignedInt` in CIMPL can map to an **integer** data type in FHIR (since every `unsignedInt` is an **integer**, there is no loss of information). However, maps that lose information, such as `integer` in CIMPL mapped to **unsignedInt** in FHIR, generally will trigger mapping errors. An exception is that CIMPL `concept` is allowed to map to FHIR **code**. The following table shows the acceptable mappings between CIMPL and FHIR:
-
-| CIMPL Primitive | Can map to FHIR... |
-|----------|---------|
-| `concept` | **code, Coding, CodableConcept** |
-| `boolean` |**boolean**, **code** |
-| `integer` | **integer**, **Quantity** |
-| `string` | **string** |
-| `decimal` | **decimal** |
-| `uri` | **uri** |
-| `base64Binary` | **base64Binary** |
-| `instant` | **instant** |
-| `date` | **date** |
-| `dateTime`| **dateTime, date, instant** |
-| `time` | **time** |
-| `oid` | **oid** |
-| `id` | **id** |
-| `markdown` | **markdown, string** |
-| `unsignedInt` | **unsignedInt, integer, Quantity** |
-| `positiveInt` | **positiveInt, unsignedInt, integer, Quantity** |
-| `xtml` | **xtml** |
 
 ### Map File Example
 
@@ -1012,6 +983,36 @@ MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-c
     Annotation maps to note
     Dosage maps to dosage
 ```
+
+### Inheritance of Mapping Rules
+
+Maps are defined in a series of mapping rules. A powerful feature of CIMPL is that mapping rules are inherited. If your class inherits from a parent class that is already mapped, you do not need to create a new map for your class. However, if you want to specify mappings for a new `Property`, or override the inherited map, you may do so.
+
+The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a map. The first mapping rule found will be applied. If no mapping rule is found for a `Property` defined in CIMPL, a FHIR **extension** will be created. If a map is not found for an `Entry`, that `Entry` will be mapped to the [**Basic**](https://www.hl7.org/fhir/basic.html) resource. In general, mapping to **Basic** is not recommended because it has no inherent semantic meaning for implementers.
+
+### Mapping CIMPL Primitives to FHIR
+
+CIMPL follows somewhat flexible rules on how CIMPL `primitive` data types map to FHIR. For example, an `unsignedInt` in CIMPL can map to an **integer** data type in FHIR (since every `unsignedInt` is an **integer**, there is no loss of information). However, maps that lose information, such as `integer` in CIMPL mapped to **unsignedInt** in FHIR, generally will trigger mapping errors. An exception is that CIMPL `concept` is allowed to map to FHIR **code**. The following table shows the acceptable mappings between CIMPL and FHIR:
+
+| CIMPL Primitive | Can map to FHIR... |
+|----------|---------|
+| `concept` | **code, Coding, CodableConcept** |
+| `boolean` |**boolean**, **code** |
+| `integer` | **integer**, **Quantity** |
+| `string` | **string** |
+| `decimal` | **decimal** |
+| `uri` | **uri** |
+| `base64Binary` | **base64Binary** |
+| `instant` | **instant** |
+| `date` | **date** |
+| `dateTime`| **dateTime, date, instant** |
+| `time` | **time** |
+| `oid` | **oid** |
+| `id` | **id** |
+| `markdown` | **markdown, string** |
+| `unsignedInt` | **unsignedInt, integer, Quantity** |
+| `positiveInt` | **positiveInt, unsignedInt, integer, Quantity** |
+| `xtml` | **xtml** |
 
 ### Map File Header
 
@@ -1151,19 +1152,19 @@ In the above example, each included `ObservationComponent` mentioned in the `inc
 
 `Components.ObservationComponent maps to component (slice on = code.coding.code; slice strategy = includes)`
 
-(TO DO: Add interpretation)
+**(TO DO: Add interpretation)**
 
 #### Example 4
 
 `Members.Observation maps to related.target (slice at = related; slice on  target.reference.resolve(); slice on type = profile; slice strategy = includes)`
 
-(TO DO: Add interpretation)
+**(TO DO: Add interpretation)**
 
 #### Example 5
 
 `Laterality maps to qualifier (slice on = concept)`
 
-(TO DO: Add interpretation)
+**(TO DO: Add interpretation)**
 
 # Appendix A - Document Conventions
 
