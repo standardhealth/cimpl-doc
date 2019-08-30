@@ -588,10 +588,10 @@ Category += OBSCAT#social-history "Social History"
 
 The `substitute` keyword constrains the data type of an `Element`. The new data type that is substituted for the original _must_ be a subclass of the original data type.
 
-| Example | Syntax |
+| Example | Interpretation |
 |----------|---------|
-| Constrain t`Specimen` to be a `TumorSpecimen` | `Specimen substitute TumorSpecimen` |
-| Constrain a `Value`'s `Quantity` data type to `SimpleQuantity` | `Value[Quantity] substitute SimpleQuantity`|
+| `Specimen substitute TumorSpecimen` | Constrain `Specimen` to be a `TumorSpecimen` |
+| `Value[Quantity] substitute SimpleQuantity`| Constrain a `Value`'s `Quantity` data type to `SimpleQuantity` |
 
 ### Value Set Binding Constraint
 
@@ -692,13 +692,13 @@ includes TumorDepth 0..1
 <!-- Carmela - figure out what happened to the <datatype> info -->
 | In the class... | Use the grammar... |
 |----------|---------|
-| `Element` | `Value only` <datatype>  |
-| `Element` | `Value only` <datatype1> or <datatype2> or <datatype3> etc.  |
-| `Entry` or `Group` | `<Property> only <datatype>` |
+| `Element` | `Value only` datatype  |
+| `Element` | `Value only` datatype1 `or` datatype2 `or` datatype3 etc.  |
+| `Entry` or `Group` | Property `only` datatype |
 
 >**Note**: `<Property> only <datatype>` is allowed only for a single data type; to constrain to multiple choices, use the `substitute` constraint (see Example 2, below)
 
-**Example 1:** Multiple `Value Choice` narrowed to a single choice
+**Example 1:** Multiple data types narrowed to a single data type
 
 ```
 Element: Priority
@@ -719,7 +719,7 @@ Property: Priority
 Priority substitute IntegerPriority
 ```
 
-**Example 2:** Multiple value choices narrowed to a smaller number of choices
+**Example 2:** Multiple data types narrowed to a smaller number of choices
 <!-- Carmela fix the last comment -->
 ```
 Element:  Answer
