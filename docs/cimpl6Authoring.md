@@ -14,7 +14,7 @@ CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is 
 
 ### Purpose
 
-This document provides a step-by-step guide to generate an HL7 FHIR IG starting with documenting a model using CIMPL. The details about how to accomplish each step are in the [CIMPL Language Reference Guide](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md). Links to these documents are provided in each section.
+This document provides a step-by-step guide to generate an HL7 FHIR IG starting with using CIMPL to document a model. The details about how to accomplish each step are in the [CIMPL Language Reference Manual](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Manual](cimpl6ToolingReference.md). Links to these documents are provided in each section.
 
 ### Intended Audience
 
@@ -37,27 +37,27 @@ Model key:
 * Dark green: models created using CIMPL, leveraging OBF
 * Light yellow: mCode model, _constrains_ and _extends_ oncoCore, leverages OBF
 * Tan: models that _constrain_ and _extend_ mCode
-* Dark blue: FHIR resources and profiles
+* Dark blue: FHIR **resource**s and **profile**s
 
-CIMPL allows the modeling author to represent  FHIR **profiles** in one of two ways:
+CIMPL allows the modeling author to represent  FHIR **profile**s in one of two ways:
 
-* Define the model specific resource attributes you need using FHIR **resources** or **profiles** as a base (_clean slate_). In this approach, the modeling author already knows the FHIR **resources** or **profiles** to customize, and defines the **element** constraints or **extensions** in the FHIR **profile** to be created by the new model.
+* Define the model specific `Element`s you need using FHIR **resource**s or **profile**s as a base (_clean slate_). In this approach, the modeling author already knows the FHIR **resource**s or **profile**s to customize, and defines the **element** constraints or **extension**s in the FHIR **profile** to be created by the new model.
 * Leverage CIMPL's _OBF_ FHIR models. In this approach, the modeling author defines their FHIR **profile** and specifies a `Parent` class from [OBF User Guide](cimpl6ObjectiveFHIR.md).
 
 Each modeling approach has advantages and disadvantages.
 
-The _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new **profiles** with minimal changes from base FHIR. However, as the number of customizations increases, maintenance may become more cumbersome and difficult.
+The _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new **profile**s with minimal changes from base FHIR. However, as the number of customizations increases, maintenance may become more cumbersome and difficult.
 
 On the other hand, using OBF FHIR models has significant benefits which include but are not limited to:
 
 * saving the modeling author time in mapping common `Element`s to the equivalent FHIR **element**,
-* ensuring consistency in the representation of commonly used **elements** in different FHIR **resources**.
+* ensuring consistency in the representation of commonly used **element**s in different FHIR **resource**s.
 
-The user must however invest time to understand the OBF logical model. Also, OBF does not comprehensively support all FHIR **resources**, especially the ones introduced in FHIR R4 with a low maturity level.
+The user must however invest time to understand the OBF logical model. Also, OBF does not comprehensively support all FHIR **resource**s, especially the ones introduced in FHIR R4 with a low maturity level.
 
 ## Logical Model
 
-Start by understanding the model you want to document in CIMPL, and its relationship to either base FHIR **resources** and **profiles**, to OBF, or to a combination.
+Start by understanding the model you want to document in CIMPL, and its relationship to either base FHIR **resource**s and **profile**s, to OBF, or to a combination.
 
 Keeping in mind that CIMPL is primarily a way to create logical models with the capability to _model-once, translate-to-many_, the modeling author should consider requirements gathering and high level modeling steps.  While one approach is proposed below, the modeling author is not limited to following these steps and might find better approaches to creating detailed clinical models.
 
@@ -70,23 +70,23 @@ Keeping in mind that CIMPL is primarily a way to create logical models with the 
 
 Create a folder/directory to contain all files you create for the model. If you are modeling with a distributed team, you should consider using a source control system for your CIMPL files.
 
-[CIMPL Tooling Reference](#cimpl6ToolingReference.md#Suggested-Directory-Structure)
+[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#suggested-directory-structure)
 
 ## Configuration File
 
-A configuration file sets parameters to drive IG creation.
+A Configuration file sets parameters to drive IG creation.
 
 By declaring optional parameters, your IG may include model documentation, a graphical view of the model, examples, and a data dictionary. These sections are automatically generated, are not required to include in the IG, but provide valuable information to IG consumers.
 
 The data dictionary export might require manual adjustments before the IG is published. Review this document to make sure the data dictionary export meets your needs.
 
-[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md#Configuration-File)
+[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#configuration-file)
 
 ## Namespace
 
 Each model _must_ define a namespace - this differentiates your model artifacts from those in another namespace.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md#Namespaces)
+[CIMPL Language Reference Manual](cimpl6LanguageReference.md#namespaces)
 
 ## Class File
 
@@ -96,55 +96,57 @@ Decide if you need to import any namespaces (e.g. OBF).
 
 Create your Class file with namespaces to import, and `Entry`, `Property`, `Abstract` and `Element` declarations.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md#Class-File)
+[CIMPL Language Reference Manual](cimpl6LanguageReference.md#class-file)
 
 ## Map File
 
 Create a Map file if your model includes `Property` declarations beyond any inherited models, and you want to map the `Property` to a FHIR **element**.
 
-Map the model specific `Property` to either FHIR **resource/profile elements**, or OBF.
+Map the model specific `Property` to either FHIR **resource/profile element**s, or OBF.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md#Map-File)
+[CIMPL Language Reference Manual](cimpl6LanguageReference.md#map-file)
 
 ## Value Set File
 
-Create this file when you need to constrain an `Element` with data type `concept` in the Class file, and there is not an existing value set to reference.  
+Create a ValueSet file when you need to constrain an `Element` with data type `concept` in the Class file, and there is not an existing value set to reference.  
 
 To avoid redundant value sets, try to find an existing value set that fits your use case rather than creating a custom, IG specific value set.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md#Value-Set-File)
+[CIMPL Language Reference Manual](cimpl6LanguageReference.md#value-set-file)
 
 ## Content Profile File
 
-Create a _Content Profile_ file if there are properties in your model that are critical to IG compliance and _must_ be supported. Any inherited model properties that are not already defined as [MustSupport](https://www.hl7.org/fhir/conformance-rules.html) are listed in the same file.
+Create a Content Profile file if there are properties in your model that are critical to IG compliance and _must_ be supported. Any inherited model properties that are not already defined as [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html) are listed in the same file.
 
-[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md#Content-Profile-File)
+A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
+
+[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#content-profile-file)
 
 ## Front Matter
 
 Introductory text is required, and detailed text is optional for IG readers and implementers to understand the background and intended use of your IG.
 
-Create this information and declare the location in the _Configuration_ file.
+Create this information and declare the location in the Configuration file.
 
 Reviewing a [published IG](http://www.fhir.org/guides/registry/) might help you structure this material.
 
-[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
+[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#front-matter-files)
 
 ## FHIR Examples
 
 A FHIR IG can be generated without examples, however it is recommended to include examples.
 
-The examples file location is declared in the _Configuration_ file.
+The examples file location is declared in the Configuration file.
 
-[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
+[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#fhir-examples)
 
 ## Compile the CIMPL Model
 
 This step runs a syntax check on the Class, Map and ValueSet files and prepares files for IG generation.
 
-Errors may be issued from this step.  Carmela - tooling or language reference??
+Errors may be issued from this step.  
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md)
+[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#executing-shr-cli)
 
 ## Publish the FHIR IG
 
@@ -152,7 +154,7 @@ The final step in the IG creation process is to run the **[FHIR IG Publisher](ht
 
 By default, the FHIR IG Publisher performs validation checks on the **StructureDefinition** of specified FHIR **profiles**, **value sets**, and **examples** which reference any FHIR **resources** or **profiles**.  Output of these checks are found in the CIMPL output, _qa.html_.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md)
+[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#creating-the-implementation-guide)
 
 ## Support
 
