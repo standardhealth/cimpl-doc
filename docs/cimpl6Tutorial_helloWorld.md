@@ -161,7 +161,7 @@ For a more comprehensive understanding of the CIMPL grammar and how to use it fo
 
 | What you see | Explanation |
 |:----------|:---------|
-| Bolded Text  | FHIR reference
+| Bolded Text  | FHIR reference, first letter in what will become an acronym
 | Italics | Code substitution text, emphasis to call attention to a word in a sentence or heading, example file or folder names|
 | `Code Block` | CIMPL reserved word or phrase, CIMPL code block or partial code block example |
 |Capitalization|CIMPL reserved words or references that are capitalized, specific instances of FHIR artifacts|
