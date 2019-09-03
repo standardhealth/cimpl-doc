@@ -1122,30 +1122,28 @@ The values for these parameters refer to the FHIR structure that is being sliced
 
 #### Set the Discriminator Path with `slice on`
 
-FHIR requires discriminators to uniquely identify the slice to which an element or resource belongs. The path to the discriminator is specified by the CIMPL `slice on` parameter. The value is a [FHIRPath expression](https://www.hl7.org/fhir/fhirpath.html) that indicates what distinguishes the slices.
+FHIR requires [**discriminators**](https://www.hl7.org/fhir/profiling.html#discriminator) to uniquely identify the slice to which an element or resource belongs. The path to the **discriminator** is specified by the CIMPL `slice on` parameter. The value is a [FHIRPath expression](https://www.hl7.org/fhir/fhirpath.html) that indicates what distinguishes the slices.
 
-The discriminator path is not necessarily the array where the slicing takes place. For example, in slicing **Observation.component**, if `slice on = code.coding.code`, then **component.code.coding.code** will be examined to determine which slice the component belongs to. Each defined slice must have unique, fixed value at **component.code.coding.code**.
+The **discriminator** path is not necessarily the array where the slicing takes place. For example, in slicing **Observation.component**, if `slice on = code.coding.code`, then **component.code.coding.code** will be examined to determine which slice the component belongs to. Each defined slice must have unique, fixed value at **component.code.coding.code**.
 
-When the sliced array contains references to other FHIR resources (e.g., **DiagnosticReport.result**), the discriminator must involve referenced resource. In this case, the `slice on` will include `reference.resolve()`, a FHIRPath notation that refers to a referenced resource. There are two options:
+When the sliced array contains references to other FHIR resources (e.g., **DiagnosticReport.result**), the **discriminator** must involve referenced resource. In this case, the `slice on` will include `reference.resolve()`, a FHIRPath notation that refers to a referenced resource. There are two options:
 
-1. The discriminator is referenced resource itself, and the mapping to a slice will be determined by conformance to a profile.
-1. The discriminator is a property in the referenced resource, e.g., **reference.resolve().code.coding.code**
-
-For more explanation of how discriminators are defined in FHIR, see [discriminators](https://www.hl7.org/fhir/profiling.html#discriminator).
+1. The **discriminator** is referenced resource itself, and the mapping to a slice will be determined by conformance to a profile.
+1. The **discriminator** is a property in the referenced resource, e.g., **reference.resolve().code.coding.code**
 
 >**Note:** The `slice on` parameter is required except when the `slice #` parameter is present.
 
 #### Set the Discriminator Type with `slice on type`
 
-The discriminator type defines how the discriminator is used to differentiate instances from one another. By default, CIMPL uses the FHIR **value** discriminator type. However, a different discriminator type can be declared using `slice on type` followed by one of the following FHIR-defined discriminator types:
+The **discriminator** type defines how the **discriminator** is used to differentiate instances from one another. By default, CIMPL uses the FHIR **value** **discriminator** type. However, a different **discriminator** type can be declared using `slice on type` followed by one of the following FHIR-defined **discriminator** types:
 
 | `slice on type` | Interpretation |
 | ------------- | ---------- |
-| `value`| The slices have different values in the discriminator (default) |
-| `exists` | The slices are differentiated by the presence or absence of the discriminator |
-| `pattern` |The slices have different values in the discriminator, as determined by testing them against the applicable **ElementDefinition.pattern[x]** |
-| `type` |The slices are differentiated by the data type of the discriminator |
-| `profile` | The slices are differentiated by conformance of the discriminator to a specified **profile**. This can only be used when the discriminator is a reference to a resource. |
+| `value`| The slices have different values in the **discriminator** (default) |
+| `exists` | The slices are differentiated by the presence or absence of the **discriminator** |
+| `pattern` |The slices have different values in the **discriminator**, as determined by testing them against the applicable **ElementDefinition.pattern[x]** |
+| `type` |The slices are differentiated by the data type of the **discriminator** |
+| `profile` | The slices are differentiated by conformance of the **discriminator** to a specified **profile**. This can only be used when the **discriminator** is a reference to a resource. |
 
 #### Slice Strategy
 <!-- Carmela - confirm underscore with slice strategy check the code -->
@@ -1153,8 +1151,6 @@ The discriminator type defines how the discriminator is used to differentiate in
 The `slice strategy` indicates how the CIMPL to create slices. To map a CIMPL `includes` constraint, always specify `slice strategy = includes`. Each included CIMPL data type becomes a separate slice in the target FHIR array.
 
 If `slice strategy` is omitted, CIMPL adds a single slice, corresponding to the CIMPL data type, in the target FHIR array.
-
-**TO DO: what are the permitted values of `slice strategy`?**
 
 #### Set the Slice Location using `slice at`
 
@@ -1180,7 +1176,7 @@ In the above example, each `ObservationComponent` mentioned in the CIMPL `includ
 
 > **Note:** This example is based on the FHIR STU 3 Observation resource.
 
-Each `Entry` included in the `PanelMembers.Observation` CIMPL model will create a slice in the **Observation.related** array because of the `slice at` parameter, and appear in the **related.target** element because of the `maps to` statement. The `slice on` parameter indicates the discriminator is the resource in the **related.target** array. The `target.reference.resolve()` is the FHIRPath that points to the referenced resource. The `slice on type = profile` indicates the slices are differentiated through the conformance of the referenced resource to the profile that define the slices.
+Each `Entry` included in the `PanelMembers.Observation` CIMPL model will create a slice in the **Observation.related** array because of the `slice at` parameter, and appear in the **related.target** element because of the `maps to` statement. The `slice on` parameter indicates the **discriminator** is the resource in the **related.target** array. The `target.reference.resolve()` is the FHIRPath that points to the referenced resource. The `slice on type = profile` indicates the slices are differentiated through the conformance of the referenced resource to the profile that define the slices.
 
 #### Example 3
 
@@ -1190,7 +1186,7 @@ BloodPressure maps to http://hl7.org/fhir/StructureDefinition/bp:
   Components.DiastolicPressure maps to component (slice # = 2)
 ```
 
-This example shows how to map to existing slices in the mapping target. The numbers refer to the order of the slices as they are defined in http://hl7.org/fhir/StructureDefinition/bp. This type of mapping allows new constraints and extensions in the CIMPL model to be added to an existing profile. When mapping to an existing profile, the discriminator and other slicing properties cannot be changed.
+This example shows how to map to existing slices in the mapping target. The numbers refer to the order of the slices as they are defined in http://hl7.org/fhir/StructureDefinition/bp. This type of mapping allows new constraints and extensions in the CIMPL model to be added to an existing profile. When mapping to an existing profile, the **discriminator** and other slicing properties cannot be changed.
 
 <!--
 #### Example 4
