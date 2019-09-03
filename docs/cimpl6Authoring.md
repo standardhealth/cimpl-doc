@@ -70,7 +70,7 @@ Keeping in mind that CIMPL is primarily a way to create logical models with the 
 
 Create a folder/directory to contain all files you create for the model. If you are modeling with a distributed team, you should consider using a source control system for your CIMPL files.
 
-[CIMPL In-Depth Tutorial](#cimpl6Tutorial_detail.md)
+[CIMPL Tooling Reference](#cimpl6ToolingReference.md#Suggested-Directory-Structure)
 
 ## Configuration File
 
@@ -80,13 +80,13 @@ By declaring optional parameters, your IG may include model documentation, a gra
 
 The data dictionary export might require manual adjustments before the IG is published. Review this document to make sure the data dictionary export meets your needs.
 
-[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
+[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md#Configuration-File)
 
 ## Namespace
 
-Each model must define a namespace - this differentiates your model artifacts from others.
+Each model _must_ define a namespace - this differentiates your model artifacts from those in another namespace.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md)
+[CIMPL Language Reference Guide](cimpl6LanguageReference.md#Namespaces)
 
 ## Class File
 
@@ -96,15 +96,15 @@ Decide if you need to import any namespaces (e.g. OBF).
 
 Create your Class file with namespaces to import, and `Entry`, `Property`, `Abstract` and `Element` declarations.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md)
+[CIMPL Language Reference Guide](cimpl6LanguageReference.md#Class-File)
 
 ## Map File
 
-Create a Map file if your model includes `Property` declarations beyond any inherited models.
+Create a Map file if your model includes `Property` declarations beyond any inherited models, and you want to map the `Property` to a FHIR **element**.
 
 Map the model specific `Property` to either FHIR **resource/profile elements**, or OBF.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md)
+[CIMPL Language Reference Guide](cimpl6LanguageReference.md#Map-File)
 
 ## Value Set File
 
@@ -112,13 +112,13 @@ Create this file when you need to constrain an `Element` with data type `concept
 
 To avoid redundant value sets, try to find an existing value set that fits your use case rather than creating a custom, IG specific value set.
 
-[CIMPL Language Reference Guide](cimpl6LanguageReference.md)
+[CIMPL Language Reference Guide](cimpl6LanguageReference.md#Value-Set-File)
 
 ## Content Profile File
 
 Create a _Content Profile_ file if there are properties in your model that are critical to IG compliance and _must_ be supported. Any inherited model properties that are not already defined as [MustSupport](https://www.hl7.org/fhir/conformance-rules.html) are listed in the same file.
 
-[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md)
+[CIMPL Tooling Reference Guide](cimpl6ToolingReference.md#Content-Profile-File)
 
 ## Front Matter
 
@@ -162,3 +162,12 @@ If you find an issue you can't resolve, or have a question, report it on one of 
 
 * Issues related to running the CIMPL SHR-CLI compiler, configuration files, or generating the FHIR IG: https://standardhealthrecord.atlassian.net/projects/CIMPL/issues
 * Issues related to CIMPL base classes (OBF): https://standardhealthrecord.atlassian.net/projects/SHRM/issues
+
+# Appendix A - Document Conventions
+
+| What you see | Explanation |
+|:----------|:---------|
+| Bolded Text  | FHIR reference, first letter in what will become an acronym
+| Italics | Code substitution text, emphasis to call attention to a word in a sentence or heading, example file or folder names|
+| `Code Block` | CIMPL reserved word or phrase, CIMPL code block or partial code block example |
+|Capitalization|CIMPL reserved words or references that are capitalized, specific instances of FHIR artifacts|
