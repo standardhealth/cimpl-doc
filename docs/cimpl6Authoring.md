@@ -1,5 +1,7 @@
 # CIMPL User Guide
 
+>**Note**: This document is a work-in-progress. Updates to expand the content are on-going.
+
 ***
 
 ## Table of Contents
@@ -14,7 +16,7 @@ CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is 
 
 ### Purpose
 
-This document provides a step-by-step guide to generate an HL7 FHIR IG starting with using CIMPL to document a model. The details about how to accomplish each step are in the [CIMPL Language Reference Manual](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Manual](cimpl6ToolingReference.md). Links to these documents are provided in each section.
+This document provides a step-by-step guide to generate an HL7 FHIR IG starting with using CIMPL to document a model. The details about how to accomplish each step are in the [CIMPL Language Reference Manual](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Manual](cimpl6ToolingReference.md). Links to specific sections of these documents are provided in each section.
 
 ### Intended Audience
 
@@ -41,7 +43,7 @@ Model key:
 
 CIMPL allows the modeling author to represent  FHIR **profile**s in one of two ways:
 
-* Define the model specific `Element`s you need using FHIR **resource**s or **profile**s as a base (_clean slate_). In this approach, the modeling author already knows the FHIR **resource**s or **profile**s to customize, and defines the **element** constraints or **extension**s in the FHIR **profile** to be created by the new model.
+* Define the model specific classes you need using FHIR **resource**s or **profile**s as a base (_clean slate_). In this approach, the modeling author already knows the FHIR **resource**s or **profile**s to customize, and defines the **element** constraints or **extension**s in the FHIR **profile** to be created by the new model.
 * Leverage CIMPL's _OBF_ FHIR models. In this approach, the modeling author defines their FHIR **profile** and specifies a `Parent` class from [OBF User Guide](cimpl6ObjectiveFHIR.md).
 
 Each modeling approach has advantages and disadvantages.
@@ -70,7 +72,7 @@ Keeping in mind that CIMPL is primarily a way to create logical models with the 
 
 Create a folder/directory to contain all files you create for the model. If you are modeling with a distributed team, you should consider using a source control system for your CIMPL files.
 
-[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#suggested-directory-structure)
+[Suggested Directory Structure](cimpl6ToolingReference.md#suggested-directory-structure)
 
 ## Configuration File
 
@@ -80,13 +82,13 @@ By declaring optional parameters, your IG may include model documentation, a gra
 
 The data dictionary export might require manual adjustments before the IG is published. Review this document to make sure the data dictionary export meets your needs.
 
-[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#configuration-file)
+[Configuration File Details](cimpl6ToolingReference.md#configuration-file)
 
 ## Namespace
 
 Each model _must_ define a namespace - this differentiates your model artifacts from those in another namespace.
 
-[CIMPL Language Reference Manual](cimpl6LanguageReference.md#namespaces)
+[Namespace Guidance](cimpl6LanguageReference.md#namespaces)
 
 ## Class File
 
@@ -96,7 +98,7 @@ Decide if you need to import any namespaces (e.g. OBF).
 
 Create your Class file with namespaces to import, and `Entry`, `Property`, `Abstract` and `Element` declarations.
 
-[CIMPL Language Reference Manual](cimpl6LanguageReference.md#class-file)
+[Learn how to create a Class file](cimpl6LanguageReference.md#class-file)
 
 ## Map File
 
@@ -104,7 +106,7 @@ Create a Map file if your model includes `Property` declarations beyond any inhe
 
 Map the model specific `Property` to either FHIR **resource/profile element**s, or OBF.
 
-[CIMPL Language Reference Manual](cimpl6LanguageReference.md#map-file)
+[Learn how to create a Map file](cimpl6LanguageReference.md#map-file)
 
 ## Value Set File
 
@@ -112,7 +114,7 @@ Create a ValueSet file when you need to constrain an `Element` with data type `c
 
 To avoid redundant value sets, try to find an existing value set that fits your use case rather than creating a custom, IG specific value set.
 
-[CIMPL Language Reference Manual](cimpl6LanguageReference.md#value-set-file)
+[Learn how to create a Value Set file](cimpl6LanguageReference.md#value-set-file)
 
 ## Content Profile File
 
@@ -120,7 +122,7 @@ Create a Content Profile file if there are properties in your model that are cri
 
 A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
 
-[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#content-profile-file)
+[Learn how to create a Content Profile file](cimpl6ToolingReference.md#content-profile-file)
 
 ## Front Matter
 
@@ -130,15 +132,15 @@ Create this information and declare the location in the Configuration file.
 
 Reviewing a [published IG](http://www.fhir.org/guides/registry/) might help you structure this material.
 
-[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#front-matter-files)
+[Front Matter Guidance](cimpl6ToolingReference.md#front-matter-files)
 
 ## FHIR Examples
 
 A FHIR IG can be generated without examples, however it is recommended to include examples.
 
-The examples file location is declared in the Configuration file.
+The location of the examples is declared in the Configuration file.
 
-[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#fhir-examples)
+[Learn how to create FHIR Examples](cimpl6ToolingReference.md#fhir-examples)
 
 ## Compile the CIMPL Model
 
@@ -146,7 +148,7 @@ This step runs a syntax check on the Class, Map and ValueSet files and prepares 
 
 Errors may be issued from this step.  
 
-[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#executing-shr-cli)
+[Compile your model](cimpl6ToolingReference.md#executing-shr-cli)
 
 ## Publish the FHIR IG
 
@@ -154,7 +156,7 @@ The final step in the IG creation process is to run the **[FHIR IG Publisher](ht
 
 By default, the FHIR IG Publisher performs validation checks on the **StructureDefinition** of specified FHIR **profiles**, **value sets**, and **examples** which reference any FHIR **resources** or **profiles**.  Output of these checks are found in the CIMPL output, _qa.html_.
 
-[CIMPL Tooling Reference Manual](cimpl6ToolingReference.md#creating-the-implementation-guide)
+[Run the FHIR publisher and create an IG](cimpl6ToolingReference.md#creating-the-implementation-guide)
 
 ## Support
 
@@ -165,11 +167,16 @@ If you find an issue you can't resolve, or have a question, report it on one of 
 * Issues related to running the CIMPL SHR-CLI compiler, configuration files, or generating the FHIR IG: https://standardhealthrecord.atlassian.net/projects/CIMPL/issues
 * Issues related to CIMPL base classes (OBF): https://standardhealthrecord.atlassian.net/projects/SHRM/issues
 
-# Appendix A - Document Conventions
+# Appendix - Document Conventions
 
-| What you see | Explanation |
-|:----------|:---------|
-| Bolded Text  | FHIR reference, first letter in what will become an acronym
-| Italics | Code substitution text, emphasis to call attention to a word in a sentence or heading, example file or folder names|
-| `Code Block` | CIMPL reserved word or phrase, CIMPL code block or partial code block example |
-|Capitalization|CIMPL reserved words or references that are capitalized, specific instances of FHIR artifacts|
+# Appendix - Document Conventions
+
+| Style | Explanation | Example |
+|:----------|:---------|:---------|
+| **Bold**  | A FHIR term or resource | **Profile** |
+| `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
+| <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
+| _Italics_ | A file name, or general emphasis in text | _obf-action.txt_ |
+| _Italics with **bold** highlight_ | Indicates a substring in the file name that should be substituted | _ig-**myigname**-config.json_ |
+| Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of FHIR artifacts | The `Grammar` keyword |
+| **Note:** | Something to keep in mind about the current topic | **Note:** Value Set names must begin with an uppercase letter. |
