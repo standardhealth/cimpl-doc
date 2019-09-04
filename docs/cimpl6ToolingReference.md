@@ -330,7 +330,7 @@ Here is an example of a package list file:
       "path": "http://hl7.org/fhir/us/mcode/2019Sep",
       "status": "draft",
       "sequence": "STU 1",
-      "fhir-version": "4.0.0"
+      "fhirversion": "4.0.0"
     }
   ]
 }
