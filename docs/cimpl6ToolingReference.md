@@ -437,7 +437,9 @@ $ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 * The dot `.` represents the current directory in Windows and macOS. In this example, the tooling directory is the current working directory.
 * `../shr-spec/spec` represents the location of the specification directory. The double dot `..` represents the directory above the current working directory, in Windows and macOS. In this case, `/shr-spec` is parallel to the tooling directory, and `/spec` is one level below that.
 * `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is `../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json`
-* `-l error` is an option that sets tells the system to surpress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
+* `-l error` is an option that sets tells the system to suppress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
+
+>**Note:** SHR-CLI will abort if the `--clean`(`-n`) option is selected and the output folder is locked by another application (e.g., the folder is open in File Explorer).
 
 ### Addressing Error Messages
 
@@ -451,6 +453,7 @@ Here are some general tips on approaching debugging your model:
 * Once all parsing errors have been eliminated, start working top down on the first (or first few) errors. Often, subsequent errors are a consequence of the first error.
 * Don't be discouraged by the number of errors, since a single correction can silence multiple logged errors.
 * Read the error messages carefully. Although the messages might be cryptic, especially at first, the names of classes and paths are often excellent clues.
+* SHR-CLI _should_ run to completion, but sometimes the SHR-CLI process can crash if there is an unanticipated error. Usually this is not a cause for concern, and fixing any reported errors will eliminate the crash.
 
 ### Advanced Logging
 
