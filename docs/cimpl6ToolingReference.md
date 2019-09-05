@@ -133,15 +133,15 @@ In this reference guide, we will refer to several directories:
 
 The naming of configuration, content profiles, and package list files is arbitrary, but it is useful for different teams to follow similar conventions. The suggested approach to naming uses variations on the same shortened IG name, as follows:
 
-* Configuration file: `ig-<guide-name>-config.json`
-* Content Profile file: `ig-<guide-name>-cp.txt`
-* Package List file: `ig-<guide-name>-plist.json`
+* Configuration file: <code>ig-<i>guidename</i>-config.json</code>
+* Content Profile file: <code>ig-<i>guidename</i>-cp.txt</code>
+* Package List file: <code>ig-<i>guidename</i>-plist.json</code>
 
 If your project will support more than one FHIR version, the FHIR version should be included:
 
-* Configuration file: `ig-<guide-name>-<FHIR Version>-config.json`
-* Content Profile file: `ig-<guide-name>-<FHIR Version>-cp.txt`
-* Package List file: `ig-<guide-name>-<FHIR Version>-plist.json`
+* Configuration file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-config.json</code>
+* Content Profile file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-cp.txt</code>
+* Package List file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-plist.json</code>
 
 where FHIR version is dstu2, stu3, or r4.
 
@@ -241,7 +241,7 @@ These configurations are used to control the production of the IG. The contents 
 |`extraResources`  |`string` |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: `SearchParameter`, `OperationDefinition`, `CapabilityStatement` (STU3+), `Conformance` (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
 |`examples` |`string` |The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` must match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no `examples` folder is specified, and a folder named "fhir-examples" exists in the specification directory, it will be used as the examples folder. |
 |`historyLink` |`string` |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
-| `showPrimaryOnly`  | `boolean` | Determines if the Profiles page in the IG should list only those profiles explicitly selected in the Content Profile (the primary profiles). If `showPrimaryOnly` is false, then secondary profiles (i.e., classes _referenced by_ the primary classes) will also be listed. |
+| `showPrimaryOnly`  | `boolean` | Determines if the Profiles page in the IG should list only those profiles explicitly selected in the Content Profile (the primary profiles). If `showPrimaryOnly` is false, then supporting profiles (i.e., classes _referenced by_ the primary classes) will also be listed on the Profiles page. |
 |`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     | _Deprecated after SHR-CLI 6.7.0_. The strategy for selection of what is primary in the IG ([see below](#primary-selection-strategy-configuration-paramters)). |
 
@@ -359,11 +359,11 @@ To include the profile of an `Entry` in the IG, list the class name in the CP. T
 
 #### Specifying No-Profile Classes
 
-When you specify an `Entry` to be included in an IG, it may indirectly pull in other `Entries`. For example, an Observation references other classes including Patient, Specimen, Device, and Practitioner. In turn, Specimen could reference a Procedure, Device an Organization, etc, until a large number of classes are involved. By default, if there is a CIMPL model for a referenced class, SHR-CLI will create a profile for that class, and include it in the IG. We refer to these dependent profiles as "secondary" profiles.
+When you specify an `Entry` to be included in an IG, it may indirectly pull in other `Entries`. For example, an Observation references other classes including Patient, Specimen, Device, and Practitioner. In turn, Specimen could reference a Procedure, Device an Organization, etc, until a large number of classes are involved. By default, if there is a CIMPL model for a referenced class, SHR-CLI will create a profile for that class, and include it in the IG. We refer to these dependent profiles as _supporting_ profiles.
 
-The No-Profile (`NP`) flag is a way to put boundaries around your IG, and eliminate some or all secondary profiles. The No-Profile (`NP`) tag after a class instructs SHR-CLI to _not_ profile a class, and therefore, exclude it from the list of profiles in the IG. To exclude all classes in a namespace, put the `NP` tag after the namespace name.
+The No-Profile (`NP`) flag is a way to put boundaries around your IG, and eliminate some or all supporting profiles. The No-Profile (`NP`) flag after a class instructs SHR-CLI to _not_ profile a class, and therefore, exclude it from the list of profiles in the IG. To exclude all classes in a namespace, put the `NP` flag after the namespace name.
 
-The `NP` tag can be applied to both `Entries` and `Groups`. An example of applying `NP` to a `Group`, if there is a model of Address that is different than FHIR's Address data type, then specifying `Address: NP` will use FHIR's Address rather than a profiled version of Address.
+The `NP` flag can be applied to both `Entries` and `Groups`. An example of applying `NP` to a `Group`, if there is a model of Address that is different than FHIR's Address data type, then specifying `Address: NP` will use FHIR's Address rather than a profiled version of Address.
 
 Because the web of dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class. However,the `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
 
@@ -373,7 +373,7 @@ Because the web of dependencies can be hard to predict, a good way to determine 
 
 #### Specifying MustSupport Elements
 
-In FHIR, [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. In the CP file, MustSupport elements are designated with the `MS` tag after the property name.
+In FHIR, [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. In the CP file, MustSupport elements are designated with the `MS` flag after the property name.
 
 MustSupport elements are not included in the data model because different use cases may require support for different elements. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
 
@@ -406,7 +406,6 @@ Here is an example of a CP file:
 
 ```
 In this example, no classes from `obf.datatype` are to be profiled. In the `obf` namespace, only `Patient` is to be included in the IG. `Patient.BirthDate` is to be marked **MustSupport**. `Encounter` and `EpisodeOfCare` are not be profiled. All `Entries` in the namespace `vital` are to be be included, except for `HeadCircumference`. `BloodPressure`, `BodyHeight`, and `BodyWeight` have `MustSupport` elements specified.
-
 
 ## Executing SHR-CLI
 
