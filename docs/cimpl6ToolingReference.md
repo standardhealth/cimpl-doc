@@ -6,14 +6,13 @@
 
 ***
 
-
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) **profile**s, **extension**s and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
-### Purpose of this Document
+### Purpose
 
-This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL.
+This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR IG using CIMPL.
 
 ### Intended Audience
 
@@ -24,22 +23,22 @@ The CIMPL Tooling Reference is targeted to people doing model development using 
 This guide assumes you have:
 
 * Installed the latest version of the SHR-CLI software as documented in [CIMPL Setup and Installation](cimplInstall.md).
-* Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). 
+* Created set of CIMPL Language files (Class, Value Set, and Map) representing your clinical model (see [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for details). 
 * Reviewed the [In-Depth Tutorial](cimpl6Tutorial_detail.md).
 
 ## Overview
 
 ### Inputs and Outputs
 
-The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
+The CIMPL Tooling, also called Standard Health Record Command Line Interface (SHR-CLI), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
 
 ![CIMPL Tooling Overview](img_cimpl/cli-overview.png)
 
 The inputs to SHR-CLI include:
 
-* [CIMPL Language files](cimpl6LanguageReference.md), including class files, value set files, and mapping files that define your clinical information model,
+* [CIMPL Language files](cimpl6LanguageReference.md), including Class, Value Set, and Map files that define your clinical information model,
 * A [Configuration file](#configuration-file) that contains directives to the tooling, and points to other resources,
-* An optional [Content Profile](#content-profile-file) file, which specifies [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements and profiling options specific to an IG,
+* An optional [Content Profile](#content-profile-file) file, which specifies [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) **element**s and profiling options specific to an IG,
 * One or more [Front Matter](#front-matter-files) files, which are the narratives and graphics that introduce the IG,
 * [FHIR Examples](#fhir-examples) that are to be included in the IG, and
 * A [Package List](#package-list-file) that has information required for building the IG.
@@ -47,30 +46,30 @@ The inputs to SHR-CLI include:
 The inputs are processed in the following sequence:
 
 * The user [issues a build command](#executing-shr-cli) through the command-line interface (CLI) to launch SHR-CLI.
-* The CIMPL tooling imports definitions from CIMPL files (class, value set, and map files). SHR-CLI [reports any errors](#addressing-error-messages) in the CIMPL definitions.
-* Continuing the build process, SHR-CLI selects a subset of the data models to include in the IG, according to the [filter strategy](#filter-strategy-configuration-parameters).
-* To complete the build process, SHR-CLI exports the selected CIMPL definitions into desired formats, such as FHIR profiles, data dictionaries, etc. The exports can be selected through [command line options](#executing-shr-cli). 
+* The CIMPL tooling imports definitions from CIMPL files (Class, Value Set, and Map files). SHR-CLI [reports any errors](#addressing-error-messages) in the CIMPL definitions.
+* SHR-CLI selects a subset of the data models to include in the IG, according to the [filter strategy](#filter-strategy-configuration-parameters).
+* SHR-CLI exports the selected CIMPL definitions into desired formats, such as FHIR **profile**s, data dictionaries, etc. The exports can be selected through [command line options](#executing-shr-cli).
 * The user [issues a separate command](#creating-the-implementation-guide) to produce the IG.
 
 SHR-CLI produces one or all of the following outputs, depending on configuration parameters:
 
-* [FHIR Profiles, Extensions, Value Sets](#fhir-export) that form the core content of the IG,
-* A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR StructureDefinitions,
-* [JSON Schema](#json-schema-export) for the profiles defined by the IG,
-* A [Data Dictionary](#data-dictionary-export) that lists the [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) data elements in the IG, as well as value sets and value set members,
-* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the hierarchical class relationships in the logical model.
+* [FHIR **profile**s, **extension**s, **value set**s](#fhir-export) that form the core content of the IG,
+* A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR **StructureDefinition**s,
+* [JSON Schema](#json-schema-export) for the **profile**s defined by the IG,
+* A [Data Dictionary](#data-dictionary-export) that lists the [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) **element**s in the IG, as well as value sets and value set members,
+* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the class relationships in the logical model.
 
 ### Relationship of CIMPL Models and Implementation Guides
 
-It is important to understand the relationship between models defined in CIMPL and implementation guide(s) created from those models.
+It is important to understand the relationship between models defined in CIMPL and IGs created from those models.
 
-The state-of-practice for FHIR IGs is still evolving, but currently, most IGs are developed by separate groups and define their own data models, as follows:
+The state-of-practice for FHIR IGs is still evolving,but currently, most IGs are developed by separate groups and define their own data models, as follows:
 
 ![Typical data model IG relationship](img_cimpl/typical-data-model-ig-relationship.png)
 
-The drawback of this approach is that different IGs can require very similar data models. If different data models are developed by different teams, interoperability will suffer.
+The drawback of this approach is that different IGs may require very similar data models. If different data models for similar use cases are developed by different teams, interoperability will suffer.
 
-In CIMPL, data models are independent of IGs. IGs are _consumers_ of models, rather than _owners_ of models (although new models can certainly be created in the context of IG development). Each IG uses a different subset of models, reflecting the different use cases they address, but the commonality of data models assures interoperability between the use cases. This idea is illustrated below:
+In CIMPL, data models are independent of IGs. IGs are _consumers_ of models, rather than _owners_ of models (although new models can certainly be created in the context of IG development). Each IG uses a different subset of models, reflecting the different use cases they address. The commonality of data models assures interoperability between the use cases. This idea is illustrated below:
 
 <a id="data-model-ig-relationship"></a>
 ![Data model IG relationship](img_cimpl/Data-model-use-case-model.png)
@@ -81,7 +80,7 @@ Much of what follows deals with configuring the relationship between CIMPL model
 
 ### Suggested Directory Structure
 
-The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under FHIR STU3 and R4:
+The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under FHIR `STU3` and `R4`:
 
 ```
 ├── shr-cli-6.5.0                   // Tooling location
@@ -120,30 +119,31 @@ The SHR-CLI tooling does not require a particular directory structure. However, 
 |   ├── ig-myguide2
 |   |  ...
 ```
-In this reference guide, we will refer to several directories:
+In this reference manual, we refer to several directories:
 
 * **Tooling Directory** - this the directory where the SHR-CLI tooling has been installed. Any convenient directory can be used. For easy identification, we recommend the tooling version number be included in the directory name.
-* **Specification Directory** - this is the top level directory where the input files and are located, usually arranged in sub-folders. Any convenient directory can be used. If you are using a source code control system such as Github to manage your development, this could be where the repository is checked out to your local machine.
-* **Namespace Directories** - these directories, located under the Specification Directory, contains CIMPL language files for a single namespace. The name of the directory should be prefixed with `ns-` followed by the shortname or acronym of the namespace followed .
-* **IG Directories** - these directories, under the specification directory contain files specific to a given implementation guide. There are subdirectories containing the front matter and examples, and individual configuration, content profile, and package list files. These files can be specific to a FHIR release, since the same IG could be created using different versions of FHIR.
+* **Specification Directory** - this is the top level directory where the input files are located, usually arranged in sub-folders. Any convenient directory can be used. If you are using a source code control system such as Github to manage your development, this could be where the repository is checked out to your local machine.
+* **Namespace Directories** - each directory, located under the _specification directory,_ contains CIMPL language files for a single namespace. The name of the directory should be prefixed with _ns-_ followed by the short name or acronym of the namespace.
+* **IG Directories** - each directory, under the _specification directory_ contains files specific to an IG. There are subdirectories containing the front matter and examples, and individual Configuration, Content Profile, and Package List files. These files can be specific to a FHIR release, since the same IG could be created using different versions of FHIR.
 
-**Note:** There is currently no way to combine profiles for multiple FHIR versions in single IG.
+>Note: There is currently no way to combine **profile**s for multiple FHIR versions in single IG.
 
 ### Suggested File Naming
 
-The naming of configuration, content profiles, and package list files is arbitrary, but it is useful for different teams to follow similar conventions. The suggested approach to naming uses variations on the same shortened IG name, as follows:
+The naming of Configuration, Content Profiles, and Package List files is arbitrary, but it is useful for teams to follow similar conventions. The suggested approach to naming uses variations on the same shortened IG name, as follows:
 
-* Configuration file: `ig-<guide-name>-config.json`
-* Content Profile file: `ig-<guide-name>-cp.txt`
-* Package List file: `ig-<guide-name>-plist.json`
+* Configuration file: <code>ig-<i>guide-name</i>-config.json</code>
+* Content Profile file: <code>ig-<i>guide-name</i>-cp.txt</code>
+* Package List file: <code>ig-<i>guide-name</i>-plist.json</code>
 
 If your project will support more than one FHIR version, the FHIR version should be included:
 
-* Configuration file: `ig-<guide-name>-<FHIR Version>-config.json`
-* Content Profile file: `ig-<guide-name>-<FHIR Version>-cp.txt`
-* Package List file: `ig-<guide-name>-<FHIR Version>-plist.json`
+* Configuration file: <code>ig-<i>guide-name-FHIR Version</i>-config.json</code>
+* Content Profile file: <code>ig-<i>guide-name-FHIR Version</i>-cp.txt</code>
+* Package List file: <code>ig-<i>guide-name-FHIR Version</i>-plist.json</code>
 
-where FHIR version is dstu2, stu3, or r4.
+where FHIR version is _dstu2, stu3_, or _r4_.
+<!-- MK: why not use the same values as listed in the configuration file section?  consistency?-->
 
 ## Inputs to SHR-CLI
 
@@ -153,53 +153,53 @@ Any text editor can be used to write CIMPL grammar. However, [VSCode editor](htt
 
 #### Setting up the VSCode Authoring
 
->**Note:** VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.
+>*Note: VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.
 
-* Download the [VSCode editor](https://code.visualstudio.com/). 
-* Open VSCode, open the extensions panel, and search for the extension **vscode-lang-cimpl**. The figure below shows where to find VSCode extensions on MacOS (on Windows, navigate _View -> Extensions_). Alternatively, select the extension icon (the squarish icon on the far left).
+* Download the [VSCode editor](https://code.visualstudio.com/).
+* Open VSCode, open the extensions panel, and search for the extension _vscode-lang-cimpl_. The figure below shows where to find VSCode extensions on MacOS (on Windows, navigate _View -> Extensions_). Alternatively, select the extension icon (the squarish icon on the far left).
 
 ![CIMPL VSCode Extension](img_cimpl/VSCodeLangCimplExtension.png)
 
 #### Navigating a CIMPL Model within VSCode
 
-The inherited properties of Groups and Entries can be previewed in the following ways:
+Any inherited `Property` of `Group` and `Entry` can be previewed in the following ways:
 
-1. **Hovering over the element**: This provides a drop-down list of all properties and cardinality of a Group or Entry (including inherited properties).
-2. **Placing the cursor on the class declaration, right-click and select _Peek Definition_**: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.
-3. **Placing the cursor on a property declaration and right-clicking option _Go to Definition_**: This will redirect the editor to location of the definition, opening the file if necessary.
+1. _Hover over the element_: This provides a drop-down list of all `Properties` and cardinality of a `Group` or `Entry` (including inherited `Properties`).
+2. _Place the cursor on the class declaration, right-click and select Peek Definition_: This displays a drop-down window with a preview of the definition. The name and location of the file displays although the entire file is not opened.
+3. _Place the cursor on a property declaration and right-click and select Go to Definition_: This redirects the editor to the location of the definition, opening the file if necessary.
 
-Hovering over the element:
+Hover over the element:
 
 ![Hovering over the element](img_cimpl/VSCode_Peek01.png)
 
-Using _Peek Definition_:
+Use _Peek Definition_:
 
 ![Using Peek](img_cimpl/VSCode_Peek02.png)
 
-Using _Go to Definition_:
+Use _Go to Definition_:
 
 ![Using Go to Definition](img_cimpl/VSCode_GotoDef.png)
 
 
 ### Configuration File
 
-SHR-CLI requires a configuration file to run. The name of this file is typically specified on the command line [using the -c command line option](#executing-shr-cli). If the name is not specified, the tooling looks for a file named `config.json` in the working directory. If that cannot be found, or the contents of the configuration file are invalid, an error message is returned.
+SHR-CLI requires a Configuration file to run. The name of this file is typically specified on the command line [using the `-c` command line option](#executing-shr-cli). If the name is not specified, the tooling looks for a file named _config.json_ in the working directory. If that cannot be found, or the contents of the Configuration file are invalid, an error message is returned.
 
-The configuration file is a [JSON file](https://www.json.org/) with the following parameters:
+The Configuration file is a [JSON file](https://www.json.org/) with the following parameters:
 
 |Parameter            |Type    |Description  |
 |--------------------|-------|------------|
-|`projectName`        |`string`|The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"  |
-|`projectShorthand`   |`string`|A shorthand name for the project, such as "mcode".                              |
-|`projectURL`         |`string`|The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"                             |
-|`fhirURL`            |`string`|The FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |
-|`fhirTarget`         |`string`|The FHIR version this IG will be based on, currently a choice of `"FHIR_R4"`, `"FHIR_STU_3"`, or `"FHIR_DSTU_2"`|
-|`entryTypeURL`       |`string`|The root URL for the JSON schema `EntryType` field. **(TO DO: clarify where and how this is used)**   |
+|`projectName`        |<code><i>string</i></code>|The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"  |
+|`projectShorthand`   |<code><i>string</i></code>|A shorthand name for the project, such as "mcode".                              |
+|`projectURL`         |<code><i>string</i></code>|The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"                             |
+|`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |
+|`fhirTarget`         |<code><i>string</i></code>|The FHIR version this IG will be based on, currently a choice of `"FHIR_R4"`, `"FHIR_STU_3"`, or `"FHIR_DSTU_2"`|
+|`entryTypeURL`       |<code><i>string</i></code>|The root URL for the JSON schema `EntryType` field. **(TO DO: clarify where and how this is used)**   |
 |`filterStrategy`     |`{}` |A JSON object containing configuration for filtering ([see below](#filter-strategy-configuration-parameters)).              |
-|`contentProfile`     |`string`| The file name of the content profile for the project.    |
+|`contentProfile`     |<code><i>string</i></code>| The file name of the content profile for the project.    |
 |`implementationGuide`|`{}`    |A JSON object containing configuration for IG publishing ([see below](#implementation-guide-configuration-parameters)).          |
-|`copyrightYear`      |`string`|The copyright year to include in the documentation.            |
-|`publisher`          |`string`|The name of the publisher for the project, which for HL7 projects, should be the sponsoring workgroup, for example, "HL7 International Clinical Interoperability Council".  |
+|`copyrightYear`      |<code><i>string</i></code>|The copyright year to include in the documentation.            |
+|`publisher`          |<code><i>string</i></code>|The name of the publisher for the project, which for HL7 projects, should be the sponsoring work group, for example, _HL7 International Clinical Interoperability Council_.  |
 |`contact`            |`[]`    |A JSON array containing HL7 FHIR R4 [ContactPoint objects](http://hl7.org/fhir/R4/datatypes.html#ContactPoint).  |
 |`provenanceInfo`     |`{}`    | A JSON object specifying author and other information ([see below](#provenance-information-configuration-parameters)) |
 
@@ -209,21 +209,21 @@ The configuration file is a [JSON file](https://www.json.org/) with the followin
 **NOTE:** The `filterStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `filterStrategy`.
 ***
 
-Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when [specification directory](#suggested-directory-structure) contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.
+Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when the [_specification directory_](#suggested-directory-structure) contains namespaces or `Entries` that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and `Entries` to limit the scope of the exports, and subsequently, the IG.
 
 The contents of the `filterStrategy` object are as follows:
 
 |Parameter |Type |Description |
 |---------|------|------------|
-|`filter`  |`boolean`|A value indicating whether to enable filtering. If `filter` is `true`, then the filtering operation will occur. Otherwise, no filtering will occur. (Also, if the `filterStrategy` parameter is entirely omitted, no filtering will occur.) |
-|`strategy`|`string` | The strategy for specification filtering, either "namespace", "element", or "hybrid".|
-|`target`  |`[]`     |An array of strings containing the names of Entries, Namespaces, or both. |
+|`filter`  |`boolean`|A value indicating whether to enable filtering. If `filter` is `true`, then the filtering operation occurs. Otherwise, no filtering occurs. (Also, if the `filterStrategy` parameter is entirely omitted, no filtering occurs.) |
+|`strategy`|<code><i>string</i></code> | The strategy for specification filtering, either "namespace", "element", or "hybrid".|
+|`target`  |`[]`     |An array of strings containing the names of `Entries`, namespaces, or both. |
 
-* The "element" strategy filters the imported classes to include each Entry listed in the `target` array, and their recursive dependencies.
-* The "namespace" strategy filters the imported classes to include only Entries in the namespaces listed in the `target` array, and their recursive dependencies.
-* The "hybrid" strategy filters the imported classes to include each Entry listed in the `target` array and all Entries in every namespace listed in the `target` array, and their recursive dependencies.
+* The `element` strategy filters the imported classes to include each `Entry` listed in the `target` array, and their recursive dependencies.
+* The `namespace` strategy filters the imported classes to include only `Entries` in the namespaces listed in the `target` array, and their recursive dependencies.
+* The `hybrid` strategy filters the imported classes to include each `Entry` listed in the `target` array,and all `Entries` in every namespace listed in the `target` array with their recursive dependencies.
 
-When specifying an Entry in the `target` array, use the [fully qualified name (FQN)](cimpl6LanguageReference.md#fully-qualified-names) format.
+When specifying an `Entry` in the `target` array, use the [fully qualified name (FQN)](cimpl6LanguageReference.md#fully-qualified-names) format.
 
 #### Implementation Guide Configuration Parameters
 
@@ -231,18 +231,20 @@ These configurations are used to control the production of the IG. The contents 
 
 |Parameter                 |Type     |Description                                                          |
 |:-------------------------|:--------|:--------------------------------------------------------------------|
-|`npmName`                 |`string` |The assigned node package manager name for this IG, for example "hl7.fhir.us.mcode". The npm name is usually assigned by HL7.   |
-|`version` |`string` |The version of this IG (not necessarily the version of FHIR), usually in the form _major.minor.revision_, for example, "3.0.1"  |
-|`ballotStatus`            |`string` |The HL7 ballot status of the IG (e.g., STU1 Ballot, Continuous Integration Build, etc.)      |
-|`packageList` |`string` |The name of the file to use as the [IG's package list](#package-list-file), relative to the Specification Directory. |
-|`includeLogicalModels`    |`boolean`|A "true" or "false" value indicating whether to include logical models in the IG.     |
-|`includeModelDoc`         |`boolean`|A "true" or "false" value indicating whether to include the model documentation in the IG. |
-|`indexContent` |`string` |The name of the file or folder containing the [front matter](#front-matter-files), relative to the Specification Directory, for example, "ig-mcode/IndexFolder-Oncocore". If the `indexContent` is a folder, then it must contain an `index.html` file whose contents will be used as the body of the IG home page.  |
-|`extraResources`          |`string` |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: `SearchParameter`, `OperationDefinition`, `CapabilityStatement` (STU3+), `Conformance` (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
-|`examples` |`string` |The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` must match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no `examples` folder is specified, and a folder named "fhir-examples" exists in the specification directory, it will be used as the examples folder. | 
-|`historyLink`             |`string` |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
-|`changesLink`             |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
+|`npmName`                 |<code><i>string</i></code> |The assigned node package manager (NPM) name for this IG, for example "hl7.fhir.us.mcode". The NPM name is usually assigned by HL7.   |
+|`version` |<code><i>string</i></code> |The version of this IG (not necessarily the version of FHIR), usually in the form _major.minor.revision_, for example, "3.0.1"  |
+|`ballotStatus`            |<code><i>string</i></code> |The HL7 ballot status of the IG (e.g., STU1 Ballot, Continuous Integration Build, etc.)      |
+|`packageList` |<code><i>string</i></code> |The name of the [IG's Package List file](#package-list-file), relative to the _specification directory_. |
+|`includeLogicalModels`    |`boolean`|A `true` or `false` value indicating whether to include logical models in the IG.     |
+|`includeModelDoc`         |`boolean`|A `true` or `false` value indicating whether to include the model documentation in the IG. |
+|`indexContent` |<code><i>string</i></code> |The name of the file or folder containing the [front matter](#front-matter-files), relative to the _specification directory_, for example, _ig-mcode/IndexFolder-Oncocore_. If the `indexContent` is a folder, then it _must_ contain an _index.html_ file whose contents will be used as the body of the IG home page.  |
+|`extraResources`          |<code><i>string</i></code> |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: **SearchParameter**, **OperationDefinition**, **CapabilityStatement** (STU3+), **Conformance** (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
+|`examples` |<code><i>string</i></code> |The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` _must_ match the canonical URL for the **profile** it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no _examples_ folder is specified, and a folder named **fhir-examples** exists in the specification directory, it will be used as the examples folder. | 
+|`historyLink`             |<code><i>string</i></code> |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
+|`changesLink`             |<code><i>string</i></code> |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     |The strategy for selection of what is primary in the IG ([see below])(#primary-selection-strategy). |
+
+CARMELA - START HERE & resolve issue with filter strategy section
 
 #### Primary Selection Strategy Configuration Parameters
 
