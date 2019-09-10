@@ -133,15 +133,15 @@ In this reference guide, we will refer to several directories:
 
 The naming of configuration, content profiles, and package list files is arbitrary, but it is useful for different teams to follow similar conventions. The suggested approach to naming uses variations on the same shortened IG name, as follows:
 
-* Configuration file: `ig-<guide-name>-config.json`
-* Content Profile file: `ig-<guide-name>-cp.txt`
-* Package List file: `ig-<guide-name>-plist.json`
+* Configuration file: <code>ig-<i>guidename</i>-config.json</code>
+* Content Profile file: <code>ig-<i>guidename</i>-cp.txt</code>
+* Package List file: <code>ig-<i>guidename</i>-plist.json</code>
 
 If your project will support more than one FHIR version, the FHIR version should be included:
 
-* Configuration file: `ig-<guide-name>-<FHIR Version>-config.json`
-* Content Profile file: `ig-<guide-name>-<FHIR Version>-cp.txt`
-* Package List file: `ig-<guide-name>-<FHIR Version>-plist.json`
+* Configuration file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-config.json</code>
+* Content Profile file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-cp.txt</code>
+* Package List file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-plist.json</code>
 
 where FHIR version is dstu2, stu3, or r4.
 
@@ -206,7 +206,7 @@ The configuration file is a [JSON file](https://www.json.org/) with the followin
 #### Filter Strategy Configuration Parameters
 
 ***
-**NOTE:** The `filterStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `filterStrategy`.
+**Note:** The `filterStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `filterStrategy`.
 ***
 
 Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when [specification directory](#suggested-directory-structure) contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.
@@ -229,25 +229,26 @@ When specifying an Entry in the `target` array, use the [fully qualified name (F
 
 These configurations are used to control the production of the IG. The contents of the `implementationGuide` object are as follows:
 
-|Parameter                 |Type     |Description                                                          |
-|:-------------------------|:--------|:--------------------------------------------------------------------|
-|`npmName`                 |`string` |The assigned node package manager name for this IG, for example "hl7.fhir.us.mcode". The npm name is usually assigned by HL7.   |
+|Parameter                 |Type     |Description     |
+|--------------------|--------|-----------------|
+|`npmName`|`string` |The assigned node package manager name for this IG, for example "hl7.fhir.us.mcode". The npm name is usually assigned by HL7.   |
 |`version` |`string` |The version of this IG (not necessarily the version of FHIR), usually in the form _major.minor.revision_, for example, "3.0.1"  |
-|`ballotStatus`            |`string` |The HL7 ballot status of the IG (e.g., STU1 Ballot, Continuous Integration Build, etc.)      |
+|`ballotStatus`  |`string` |The HL7 ballot status of the IG (e.g., STU1 Ballot, Continuous Integration Build, etc.)      |
 |`packageList` |`string` |The name of the file to use as the [IG's package list](#package-list-file), relative to the Specification Directory. |
-|`includeLogicalModels`    |`boolean`|A "true" or "false" value indicating whether to include logical models in the IG.     |
-|`includeModelDoc`         |`boolean`|A "true" or "false" value indicating whether to include the model documentation in the IG. |
+|`includeLogicalModels`   |`boolean`|A _true_ or _false_ value indicating whether to include logical models in the IG.     |
+|`includeModelDoc`  |`boolean`|A _true_ or _false_ value indicating whether to include the model documentation in the IG. |
 |`indexContent` |`string` |The name of the file or folder containing the [front matter](#front-matter-files), relative to the Specification Directory, for example, "ig-mcode/IndexFolder-Oncocore". If the `indexContent` is a folder, then it must contain an `index.html` file whose contents will be used as the body of the IG home page.  |
-|`extraResources`          |`string` |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: `SearchParameter`, `OperationDefinition`, `CapabilityStatement` (STU3+), `Conformance` (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
-|`examples` |`string` |The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` must match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no `examples` folder is specified, and a folder named "fhir-examples" exists in the specification directory, it will be used as the examples folder. | 
-|`historyLink`             |`string` |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
-|`changesLink`             |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
-|`primarySelectionStrategy`|`{}`     |The strategy for selection of what is primary in the IG ([see below])(#primary-selection-strategy). |
+|`extraResources`  |`string` |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: `SearchParameter`, `OperationDefinition`, `CapabilityStatement` (STU3+), `Conformance` (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
+|`examples` |`string` |The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` must match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no `examples` folder is specified, and a folder named "fhir-examples" exists in the specification directory, it will be used as the examples folder. |
+|`historyLink` |`string` |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
+| `showPrimaryOnly`  | `boolean` | If `showPrimaryOnly` is true, then only those profiles listed in the Content Profile (i.e., the primary profiles) will be shown on the Profiles page of the IG, and supporting profiles (i.e., the profiles _referenced by_ the primary profiles) will not be shown. Otherwise, all profiles (primary and supporting) will be listed. |
+|`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
+|`primarySelectionStrategy`|`{}`     | _Deprecated after SHR-CLI 6.7.0_. The strategy for selection of what is primary in the IG ([see below](#primary-selection-strategy-configuration-paramters)). |
 
 #### Primary Selection Strategy Configuration Parameters
 
 ***
-**NOTE:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
+**Note:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
 ***
 
 The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the `primarySelectionStrategy` object are as follows:
@@ -330,7 +331,7 @@ Here is an example of a package list file:
       "path": "http://hl7.org/fhir/us/mcode/2019Sep",
       "status": "draft",
       "sequence": "STU 1",
-      "fhir-version": "4.0.0"
+      "fhirversion": "4.0.0"
     }
   ]
 }
@@ -342,42 +343,48 @@ The Content Profile (CP) specifies the profiles to be included in the IG. As exp
 
 ![Content profile scope](img_cimpl/Content-profile-scope.png)
 
-The CP provides several different types of information about the IG:
+The CP provides several types of information about the IG:
 
-* The list of classes (profiles) to be included in the IG,
-* The elements in these classes to be marked as [MustSupport](#Specifying-must-support-elements), designated with the `MS` tag, and
-* A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
+* The list of `Entries` (or entire namespaces) whose **profiles** are to be included in the IG,
+* A list of classes (or entire namespaces) _not_ to be profiled, and
+* Elements in the profiled classes to be marked as [MustSupport](#Specifying-must-support-elements).
 
-The CP file is interpreted as follows:
+#### Specifying Profiles to Include in the IG
 
-* The classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (`NP`).
-* A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is not tagged as a No-Profile class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
+As illustrated above, the FHIR IG may include models from multiple namespaces. The first job of the CP is to specify the profiles that should be presented in the IG, out of the available `Entry` models in class files in the _spec_ directory.
 
-The syntax of a Content Profile file is:
+To include the profile of an `Entry` in the IG, list the class name in the CP. The list must be arranged by namespace, as shown in [the example below](#content-profile-example). To include all `Entries` in a namespace, mark the namespace with a wildcard `*`. We refer to any `Entry` explicitly listed for inclusion as "primary" profiles.
 
-```
-Grammar:  ContentProfile 1.0
+> **Note**: Only `Entries` result in FHIR profiles. `Groups` and `Elements` result in **extensions**. Inclusion of **extensions** in the IG is automatic, and cannot be specified in the CP.
 
-Namespace:  <namespace-1>
-    <Entry-1>:
-        <Element-1> MS
-        <Element-2> MS
-        ...
-    <Entry-2>: NP
-    ...
-Namespace:  <namespace-2>
-    <Entry-1>:
-        <Element-1> MS
-        <Element-2> MS
-        ...
-    <Entry-2>: NP
-    ...
-```
+#### Specifying No-Profile Classes
 
-For example:
+When you specify an `Entry` to be included in an IG, it may indirectly pull in other `Entries`. For example, an **Observation** references other classes including **Patient**, **Specimen**, **Device**, and **Practitioner**. In turn, **Specimen** could reference a **Procedure**, **Device** and **Organization**, etc, until a large number of classes are involved. By default, if there is a CIMPL model for a referenced class, SHR-CLI will create a profile for that class, and include it in the IG. We refer to these dependent profiles as _supporting_ profiles.
+
+The No-Profile (`NP`) flag is a way to put boundaries around your IG, and eliminate some or all supporting profiles. The No-Profile (`NP`) flag after a class instructs SHR-CLI to _not_ profile a class, and therefore, exclude it from the list of profiles in the IG. To exclude all classes in a namespace, put the `NP` flag after the namespace name.
+
+The `NP` flag can be applied to both `Entries` and `Groups`. As an example of applying `NP` to a `Group`, if there is a model of Address that is different than FHIR's **Address** data type, then specifying `Address: NP` will use FHIR's **Address** rather than a profiled version of Address.
+
+Because the web of dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class. However,the `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
+
+***
+**Note:** The _No Profile_ feature is available in SHR-CLI 6.6.0 and higher
+***
+
+#### Specifying MustSupport Elements
+
+In FHIR, [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. In the CP file, **MustSupport** elements are designated with the `MS` flag after the property name.
+
+**MustSupport**s  are specified in the CP file rather than in the data model because different use cases may require different **MustSupport**s. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
+
+#### Content Profile Example
+
+Here is an example of a CP file:
 
 ```
     Grammar: ContentProfile 1.0
+
+    Namespace: obf.datatype NP
 
     Namespace: obf
         Patient:
@@ -385,40 +392,20 @@ For example:
         Encounter: NP
         EpisodeOfCare: NP
 
-    Namespace: vital
-    BloodPressure:
-        Components.ObservationComponent MS
-        RelevantTime MS
-    BodyHeight:
-        DataValue MS
-        RelevantTime MS
-    BodyWeight:
-        DataValue MS
-        RelevantTime MS
-        ...
+    Namespace: vital *
+        BloodPressure:
+            Components.ObservationComponent MS
+            RelevantTime MS
+        BodyHeight:
+            DataValue MS
+            RelevantTime MS
+        BodyWeight:
+            DataValue MS
+            RelevantTime MS
+        HeadCircumference: NP
+
 ```
-
-#### Specifying MustSupport Elements
-
-In FHIR, [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.
-
-MustSupport elements are designated with the `MS` tag after the property name.
-
-MustSupport elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
-
-#### Specifying No-Profile Elements
-
-The No-Profile (`NP`) tag instructs SHR-CLI to NOT profile a class, and therefore, exclude it from the list of profiles.
-
-> In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen could reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of directly- and indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have differentials with respect to the resources they are mapped to, then by default, SHR-CLI will create profiles for them, and bring those profiles into the IG. The `NP` flag is a way to put boundaries around your IG.
-
-Because dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class.
-
-The `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
-
-***
-**NOTE:** The "No Profile" feature is available in SHR-CLI 6.6.0 and higher
-***
+In this example,classes from `obf.datatype` are _not_ to be profiled. In the `obf` namespace, only `Patient` is to be included in the IG. `Patient.BirthDate` is to be marked **MustSupport**. `Encounter` and `EpisodeOfCare` are not to be profiled. All `Entries` in the namespace `vital` are to be be included in the IG, except for `HeadCircumference`. **MustSupport** elements on `BloodPressure`, `BodyHeight`, and `BodyWeight` are specified.
 
 ## Executing SHR-CLI
 
@@ -450,7 +437,9 @@ $ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 * The dot `.` represents the current directory in Windows and macOS. In this example, the tooling directory is the current working directory.
 * `../shr-spec/spec` represents the location of the specification directory. The double dot `..` represents the directory above the current working directory, in Windows and macOS. In this case, `/shr-spec` is parallel to the tooling directory, and `/spec` is one level below that.
 * `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is `../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json`
-* `-l error` is an option that sets tells the system to surpress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
+* `-l error` is an option that sets tells the system to suppress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
+
+>**Note:** SHR-CLI will abort if the `--clean`(`-n`) option is selected and the output folder is locked by another application (e.g., the folder is open in File Explorer).
 
 ### Addressing Error Messages
 
@@ -464,6 +453,7 @@ Here are some general tips on approaching debugging your model:
 * Once all parsing errors have been eliminated, start working top down on the first (or first few) errors. Often, subsequent errors are a consequence of the first error.
 * Don't be discouraged by the number of errors, since a single correction can silence multiple logged errors.
 * Read the error messages carefully. Although the messages might be cryptic, especially at first, the names of classes and paths are often excellent clues.
+* SHR-CLI _should_ run to completion, but sometimes the SHR-CLI process can crash if there is an unanticipated error. Usually this is not a cause for concern, and fixing any reported errors will eliminate the crash.
 
 ### Advanced Logging
 
