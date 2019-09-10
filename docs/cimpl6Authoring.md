@@ -30,16 +30,9 @@ This guide assumes you installed the software as documented in [CIMPL Setup and 
 
 CIMPL is designed to be modular and extensible, allowing for the reuse of other logical models, and inheritance from those models. The figure below illustrates this notion.
 
-![CIMPL Modularity](img_cimpl/CIMPLBuildingBlocks.png)
-
-Model key:
-
-* Gray: CIMPL data types `Primitives`
-* Light blue: [ObjectiveFHIR (OBF)](cimpl6ObjectiveFHIR.md) models
-* Dark green: models created using CIMPL, leveraging OBF
-* Light yellow: mCode model, _constrains_ and _extends_ oncoCore, leverages OBF
-* Tan: models that _constrain_ and _extend_ mCode
-* Dark blue: FHIR **resource**s and **profile**s
+<a id="data-model-ig-relationship"></a>
+![Data model IG relationship](img_cimpl/Data-model-use-case-model.png)
+<!-- ![CIMPL Modularity](img_cimpl/CIMPLBuildingBlocks.png) -->
 
 CIMPL allows the modeling author to represent  FHIR **profile**s in one of two ways:
 
@@ -105,6 +98,8 @@ Create your Class file with namespaces to import, and `Entry`, `Property`, `Abst
 Create a Map file if your model includes `Property` declarations beyond any inherited models, and you want to map the `Property` to a FHIR **element**.
 
 Map the model specific `Property` to either FHIR **resource/profile element**s, or OBF.
+
+> Note: A Map file is necessary if OBF is _not_ used. If OBF _is_ used, a Map file may not be necessary.
 
 [Learn how to create a Map file](cimpl6LanguageReference.md#map-file)
 
