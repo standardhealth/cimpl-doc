@@ -244,28 +244,28 @@ These configurations are used to control the production of the IG. The contents 
 |`changesLink`             |<code><i>string</i></code> |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     |The strategy for selection of what is primary in the IG ([see below])(#primary-selection-strategy). |
 
-CARMELA - START HERE & resolve issue with filter strategy section
+CARMELA - START HERE & resolve issue with filter strategy section same with primary selection
 
 #### Primary Selection Strategy Configuration Parameters
 
-***
-**NOTE:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
-***
 
-The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the `primarySelectionStrategy` object are as follows:
+> NOTE: The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
+
+
+The primary selection strategy causes certain **profile**s to be displayed in a _Primary_ section at the top list of **profile**s. All other exported **profile**s are listed in a _Supporting_ section below the _Primary_ section. The contents of the `primarySelectionStrategy` object are as follows:
 
 |Parameter |Type    |Description |
 |--------|------|-----------|
-|`strategy`|`string`|The strategy to follow for primary selection, either "namespace", "hybrid", or "entry" (default). |
-|`primary` |`[]`|An array of strings containing the namespaces and entries (only used for "namespace" and "hybrid" strategy). |
+|`strategy`|<code><i>string</i></code>|The strategy to follow for primary selection, either `namespace`, `hybrid`, or `entry` (default). |
+|`primary` |`[]`|An array of strings containing the namespaces and entries (only used for `namespace` and `hybrid` strategies). |
 
 The `strategy` options are as follows:
 
-* "entry" selects every exported profile as primary.
-* "namespace" selects every profile found in the namespaces of the `primary` array as primary.
-* "hybrid" selects every entry listed in the `primary` array or found in the namespaces in the `primary` array as primary.
+* `entry` selects every exported **profile** as primary.
+* `namespace` selects every **profile** found in the namespaces of the `primary` array as primary.
+* `hybrid` selects every entry listed in the `primary` array or found in the namespaces in the `primary` array as primary.
 
-When specifying an Entry in the target array, use the fully qualified name (FQN) format.
+When specifying an `Entry` in the target array, use the fully qualified name (FQN).
 
 #### Provenance Information Configuration Parameters
 
@@ -287,18 +287,18 @@ Here is an example of provenanceInformation:
 
 ### Front Matter Files
 
-Every IG contains some amount of narrative content, which we refer to as the "[front matter](https://www.scribendi.com/advice/front_matter.en.html)". The front matter is typically a set of hyperlinked HTML files, graphics, and sometimes, downloads. These files are manually authored using any convenient tool; there are no special facilities in CIMPL to author the front matter.
+Every IG contains some amount of narrative content, which we refer to as [front matter](https://www.scribendi.com/advice/front_matter.en.html). The front matter is typically a set of hyperlinked HTML files, graphics, and sometimes, downloads. These files are manually authored using any convenient tool; there are no special facilities in CIMPL to author the front matter.
 
-If multiple files are involved, they must be placed into a single folder, named in the `indexContent` parameter of the [configuration file](#configuration-file). This folder must contain a file named `index.html` whose contents will be used as the body of the IG home page (the header and footer of the pages are automatically generated).
+If multiple files are involved, they must be placed into a single folder, named in the `indexContent` parameter of the [Configuration file](#configuration-file). This folder must contain a file named _index.html_ whose contents will be used as the body of the IG home page (the header and footer of the pages are automatically generated).
 
-If a single file is used, the file should be named in the `indexContent` parameter of the configuration file, and a folder is not required.
+If a single file is used, the file should be named in the `indexContent` parameter of the Configuration file, and a folder is not required.
 
 ### FHIR Examples
 
 Configuring FHIR examples to appear in the generated IG involves the following steps:
 
-* Create a folder which will contain your FHIR examples
-* Modify the CIMPL configuration file to specify the folder containing your examples
+* Create a folder to contain your FHIR examples.
+* Modify the CIMPL Configuration file to specify the folder containing your examples.
 
 The name of the folder is arbitrary, however, following [directory structure](#suggested-directory-structure) and [naming conventions](#suggested-file-naming) is recommended.
 
@@ -308,7 +308,7 @@ The folder location is specified using the `"examples:"` parameter in the CIMPL 
 
 ### Package List File
 
-The format and content of this file follows the [FHIR specification for package lists](http://wiki.hl7.org/index.php?title=FHIR_IG_PackageList_doco). The package list is required for IGs published by HL7. The file containing the package list is named by the `packageList` parameter of the [configuration file](#configuration-file). If the `packageList` parameter is not supplied and no file is found at the default location (packageList.json), and `fhirURL` is an hl7.org or fhir.org URL (indicating it is an HL7 publication), then a basic package list file will be created. In this case, the IG author should review and modify the file as needed.
+The format and content of this file follows the [FHIR specification for package lists](http://wiki.hl7.org/index.php?title=FHIR_IG_PackageList_doco). The package list is required for IGs published by HL7. The file containing the package list is named by the `"packageList"` parameter of the [Configuration file](#configuration-file). If the `"packageList"` parameter is not supplied and no file is found at the default location (_packageList.json_), and the `"path"` parameter is an hl7.org or fhir.org URL (indicating it is an HL7 publication), then a basic package list file will be created. In this case, the IG author should review and modify the file as needed.
 
 Here is an example of a package list file:
 
@@ -340,23 +340,24 @@ Here is an example of a package list file:
 
 ### Content Profile File
 
-The Content Profile (CP) specifies the profiles to be included in the IG. As explained [earlier](#data-model-ig-relationship), IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models across more than one one namespace:
+The Content Profile (CP) specifies the **profile**s to be included in the IG. As explained [earlier](#data-model-ig-relationship), IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models from more than one one namespace:
 
 ![Content profile scope](img_cimpl/Content-profile-scope.png)
 
 The CP provides several different types of information about the IG:
 
-* The list of classes (profiles) to be included in the IG,
-* The elements in these classes to be marked as [MustSupport](#Specifying-must-support-elements), designated with the `MS` tag, and
+* The list of **profile**s to be included in the IG,
+* The **element**s in these classes to be marked as [**MustSupport**](#Specifying-must-support-elements), designated with the `MS` tag, and
 * A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
 
 The CP file is interpreted as follows:
+<!-- MK re: use of the more generic word classes - only an `Entry` may become a **profile** - true? if so, why not call these Entry? -->
 
 * The classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (`NP`).
-* A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is not tagged as a No-Profile class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
+* A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is _not_ tagged as a No-Profile class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
 
 The syntax of a Content Profile file is:
-
+<!-- suggest documenting filter strategy and primary selection here - waiting for input on previous comment -->
 ```
 Grammar:  ContentProfile 1.0
 
@@ -402,25 +403,23 @@ For example:
 
 #### Specifying MustSupport Elements
 
-In FHIR, [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.
+In FHIR, [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag that allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.
 
-MustSupport elements are designated with the `MS` tag after the property name.
+A **MustSupport** **Element** is designated with the `MS` tag after the `Property` name.
 
-MustSupport elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
+**MustSupport** **Elements** are not part of the data model, because different **Elements** are important for different use cases. For example, one use case may require a _patient's date of death_ to be recognized, and another might not. The data model for _date of death_ should be the same wherever it is used.
 
 #### Specifying No-Profile Elements
+<!-- MK - similar question about specific vs: general reference to class - first para only -->
+The _no profile_ (`NP`) tag instructs SHR-CLI to _not_ profile a class, and therefore, exclude it from the list of profiles.
 
-The No-Profile (`NP`) tag instructs SHR-CLI to NOT profile a class, and therefore, exclude it from the list of profiles.
+> Note: In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen may reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of directly and indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have differentials with respect to the resources they are mapped to, then by default, SHR-CLI will create **profile**s for them, and bring those **profile**s into the IG. The `NP` flag is a way to put boundaries around your IG.
 
-> In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen could reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of directly- and indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have differentials with respect to the resources they are mapped to, then by default, SHR-CLI will create profiles for them, and bring those profiles into the IG. The `NP` flag is a way to put boundaries around your IG.
-
-Because dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class.
+Because dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the _out/fhir/profiles_ directory to see the complete list of **profile**s generated. If any **profile**s in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class.
 
 The `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
 
-***
-**NOTE:** The "No Profile" feature is available in SHR-CLI 6.6.0 and higher
-***
+> NOTE: The _no profile_ feature is available in SHR-CLI 6.6.0 and higher
 
 ## Executing SHR-CLI
 
@@ -428,15 +427,15 @@ The `NP` flag should not be applied to any class that is a parent class of one o
 
 The general form of the SHR-CLI execution command is as follows (where $ stands for the command prompt, which could be different on your system):
 
-$ `node <tooling-directory> <specification-directory> [options]`
+$ <code>node <i>tooling-directory  <specification-directory [options]</i></code>
 
 where options include:
 
 ```
--c, --config <config>    the name of the config file (default: config.json)
+-c, --config <config>    the name of the Configuration file (default: _config.json_)
 -l, --log-level <level>  the console log level <fatal, error, warn, info, debug, trace> (default: info)
 -s, --skip <feature>     skip an export feature <fhir, json-schema, model-doc, data-dict, all> (default: <none>)
--o, --out <out>          the path to the output folder (default: out)
+-o, --out <out>          the path to the output folder (default: _out_)
 -m, --log-mode <mode>    the console log mode <short,long,json,off> (default: short)
 -d, --duplicate          show duplicate error messages (default: false)
 -j, --export-es6         export ES6 JavaScript classes (experimental, default: false)
@@ -450,82 +449,81 @@ $ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 
 * `node` is the command that starts the SHR-CLI application.
 * The dot `.` represents the current directory in Windows and macOS. In this example, the tooling directory is the current working directory.
-* `../shr-spec/spec` represents the location of the specification directory. The double dot `..` represents the directory above the current working directory, in Windows and macOS. In this case, `/shr-spec` is parallel to the tooling directory, and `/spec` is one level below that.
-* `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is `../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json`
-* `-l error` is an option that sets tells the system to surpress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
+* `../shr-spec/spec` represents the location of the _specification_ directory. The double dot `..` represents the directory above the current _working directory_ in Windows and macOS. In this case, `/shr-spec` is parallel to the _tooling directory_, and `/spec` is one level below that.
+* `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the Configuration file. Note that the Configuration file location is relative to the _specification_ directory, implying the full path to the configuration is `../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json`
+* `-l error` is an option that sets tells the system to suppress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
 
 ### Addressing Error Messages
 
-In the process of building a model, it is inevitable that you will encounter error messages from SHR-CLI. Debugging the model is an iterative process, and it could take some perseverance to arrive at a "clean" run of SHR-CLI with no errors. This is an expected part of the process.
+In the process of building a model, it is inevitable that you will encounter error messages from SHR-CLI. Debugging the model is an iterative process, and it could take some perseverance to arrive at a _clean_ run of SHR-CLI with no errors. This is an expected part of the process.
 
-A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in **[Appendix](#appendix-error-messages)**.
+A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in **[Appendix: Error Messages](#appendix-error-messages)**.
 
 Here are some general tips on approaching debugging your model:
 
-* Always eliminate [parsing errors](#parsing-errors) first. **Parsing errors can be identified because they include a file, line number, and column number.** It is essential to elminate parsing errors first, because parsing errors usually trigger large cascades of other errors, so you can't truly start debugging your model until parsing errors have been eliminated.
+* Always eliminate [parsing errors](#parsing-errors) first. Parsing errors can be identified because they include a file, line number, and column number. It is essential to eliminate parsing errors first, because parsing errors usually trigger large cascades of other errors. You can't start debugging your model until parsing errors have been eliminated.
 * Once all parsing errors have been eliminated, start working top down on the first (or first few) errors. Often, subsequent errors are a consequence of the first error.
 * Don't be discouraged by the number of errors, since a single correction can silence multiple logged errors.
 * Read the error messages carefully. Although the messages might be cryptic, especially at first, the names of classes and paths are often excellent clues.
 
 ### Advanced Logging
 
-SHR-CLI uses the [Bunyan](https://www.npmjs.com/package/bunyan) structured logging framework, and stores a full log file in the output folder (note: it will be appended to on subsequent runs).  You can use the Bunyan CLI tool to perform advanced filtering of the log file.  For example:
+SHR-CLI uses the [Bunyan](https://www.npmjs.com/package/bunyan) structured logging framework, and stores a full log file in the output folder. Each subsequent execution appends messages to the log file. You can use the Bunyan CLI tool to perform advanced filtering of the log file.  For example:
 ```
 node_modules/.bin/bunyan -c 'this.shrId=="shr.vital.BloodPressure"'  -o short out/out.log
 ```
 
-For more information on Bunyan and Bunyan CLI, see the Bunyan documentation.
+For more information on Bunyan and Bunyan CLI, see the [Bunyan documentation](https://www.npmjs.com/package/bunyan).
 
 ## Outputs from SHR-CLI
 
-The output of running SHR-CLI appear in a directory named "out". By default, the /out directory is created in the tooling directory. A different location can be designated using the `-o` [command line option](#executing-shr-cli).
+The output of running SHR-CLI appears in a directory named _out_. By default, the _/out_ directory is created in the _tooling directory_. A different location can be designated using the `-o` [command line option](#executing-shr-cli).
 
-The content of the /out directory depends on which exporters were selected to run, which is controlled using the `-s` command line option. By default, the /out will contain five exports, as shown below, each corresponding to a separate export process:
+The content of the _/out_ directory depends on which exporters were selected to run, which is controlled using the `-s` command line option. By default, the /_out_ will contain five exports, as shown below, each corresponding to a separate export process:
 
 ![Typical Contents of the /out Directory](img_cimpl/typical-out-directory.png)
 
-* cimcore - this directory is only used in the process of building the `modeldoc` export, and may not appear in the future releases.
-* [data-dictionary](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets
-* [fhir](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
-* [json-schema](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
-* [modeldoc](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
+* _cimcore_ - this directory is only used in the process of building the `modeldoc` export, and may not appear in future releases.
+* [_data-dictionary_](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model `Element`s and value sets
+* [_fhir_](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
+* [_json-schema_](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
+* [_modeldoc_](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
 
 ### FHIR Export
 
-The FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create a FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [IG publisher](#creating-the-implementation-guide) to create the IG itself.
+The FHIR export consists of **profiles**, **extensions**, **value sets**, **code systems**, **examples**, and other artifacts needed to create a FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [IG publisher](#creating-the-implementation-guide) to create the IG.
 
-The FHIR export appears in the /fhir subdirectory under the designated "out" directory. The directory contains further subdirectories for code systems, extensions, the IG (guide), the logical model (logical), profiles, and value sets.
+The FHIR export appears in the _/fhir_ subdirectory under the designated _out_ directory. The directory contains further subdirectories for **code systems**,**extensions**, the IG (_guide_), the logical model (_logical_), **profiles**, and **value sets**.
 
 #### Logical Model Export
 
-The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model _prior to_ mapping to FHIR resources. Each entry is presented as if it were a new FHIR resource, rather than a profile. The logical model is formally expressed as a set of FHIR `StructureDefinitions`. These definitions are distinguished from profiles because the names generated by the tooling end in `-model`.
+An optional part of the FHIR export, the logical model can be turned on or off using the `includeLogicalModels` flag in the Configuration file.
 
-Because the logical model does not entail the additional complication of mapping, it is useful for review purposes. The logical model can be checked for clinical relevance and sufficiency before making mapping decisions.
+The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model _prior to_ mapping to FHIR **resources**. Each `Entry` is presented as if it were a new FHIR **resource**, rather than a **profile**. The logical model is formally expressed as a set of FHIR **StructureDefinitions**. These definitions are distinguished from **profiles** because the names generated by the tooling end in `-model`.
 
-An optional part of the FHIR export, the logical model can be turned on or off using the `includeLogicalModels` flag in the configuration file.
+Because the logical model does not include maps, it is useful for review purposes. The logical model can be checked for clinical relevance and sufficiency before making mapping decisions.
 
 ![Logical Model Example](img_cimpl/logical-model-sw-example.png)
 
 ### Model Documentation Export
 
-The model documentation provides another way to view the logical model. This view emphasizes the class hierarchy defined in CIMPL, the datatypes, associated constraints, and relationships between the classes (references). The panel in the upper left allows the user to filter on the namespace and (in SHR-CLI 6.6 and higher) the class type (Entry, Group, or Element). The right-hand panel shows details for the selected class, include the full set of properties and constraints. 
+The model documentation provides another way to view the logical model. This view emphasizes the class hierarchy defined in CIMPL, the data types, associated constraints, and relationships between the classes (references). The panel in the upper left allows the user to filter on the namespace and (in SHR-CLI 6.6 and higher) the class type (`Entry`, `Group`, or `Element`). The right-hand panel shows details for the selected class, include the full set of properties and constraints.
 
 For many users, especially those with experience in object-oriented modeling, the model documentation is the quickest way to navigate around the model.
-
 
 ![Model Documentation Example](img_cimpl/model-documentation-example.png)
 
 ### Data Dictionary Export
 
-The Data Dictionary is an Microsoft Excel file containing a simplified, flattened list of model elements and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
+The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR **profile**s. The spreadsheet has five tabs:
 
-* The "Key" tab contains a key to the columns in the other tabs;
-* The "Profiles" tab contains a list of the primary profiles and their descriptions;
-* The "Data Elements" tab contains a list of [MustSupport](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required elements associated with those profiles;
-* The "Value Sets" tab contains a list of value sets used in the IG, and their descriptions;
-* The "Value Set Details" tab contains a list of the codes and/or implicit definitions in those value sets.
+* The _Key_ tab contains a key to the columns in the other tabs,
+* The _Profiles_ tab contains a list of the primary profiles and their descriptions,
+* The _Data Elements_ tab contains a list of [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required **elements** associated with those **profiles**,
+* The _Value Sets_ tab contains a list of value sets used in the IG, and their descriptions,
+* The _Value Set Details_ tab contains a list of the codes and/or implicit definitions in those value sets.
 
-The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR profiles, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
+The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR **profiles**, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
 
 ### JSON Schema Export
 
@@ -535,7 +533,7 @@ The Data Dictionary can be useful both to clinicians and implementers who don't 
 
 The final step in the IG creation process is to run the [FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation). This tool is maintained and owned by HL7 FHIR.
 
-Open a command prompt, change directories to the tooling directory, and use one of these two options:
+Open a command prompt, change directories to the _tooling directory_, and use one of these two options:
 
 * If you used the default "out" directory when running SHR-CLI:
 
@@ -545,19 +543,19 @@ Open a command prompt, change directories to the tooling directory, and use one 
 
   $  `java -Xms4g -Xmx8g -jar mypath/out/fhir/guide/org.hl7.fhir.publisher.jar -ig mypath/out/fhir/guide/ig.json`
 
-**Note:** The IG publisher can take 15-30 minutes or even longer to run, depending on the size of the IG, and it takes _lots_ of memory. The yarn script above will allocate up to 8GB of RAM. A minimum of 4GB of RAM is recommended to run the IG Publisher tool.
+> Note: The IG publisher can take 15-30 minutes or longer to run, depending on the size of the IG, and it takes _lots_ of memory. The yarn script above will allocate up to 8GB of RAM. A minimum of 4GB of RAM is recommended to run the IG Publisher tool.
 
 When the publisher finishes, the IG can be opened by running the following commands.
 
-* If you used default "out" directory:
+* If you used default _out_ directory:
 
   $  `yarn run ig:open`
 
-* If you used a different "out" directory, by manually opening the file  `mypath/out/fhir/guide/output/index.html`
+* If you used a different _out_ directory, by manually opening the file  `mypath/out/fhir/guide/output/index.html`
 
 You now have your completed IG.
 
-The FHIR IG Publisher performs numerous validation checks on the content of the IG. The output of these checks can be accessed through the "QA Report" link in the footer of the home page, or by opening the file `/out/fhir/guide/output/qa.html`.
+The FHIR IG Publisher performs numerous validation checks on the content of the IG. The output of these checks can be accessed through the _QA Report_ link in the footer of the home page, or by opening the file _/out/fhir/guide/output/qa.html_.
 
 An example QA output is shown below:
 
@@ -590,7 +588,10 @@ CIMPL Compilation Errors are structured in the following format:
 
 ### Parsing Errors
 
-Parsing errors are generated when the importer cannot make sense of the contents of a CIMPL statement. **Parsing error messages include the file, line, and column number, and can be linked directly to a location in a CIMPL file where parsing failed.** Most other types of errors (with the exception of mapping errors) cannot be linked to a specific file location because they represent some type of a logical inconsistency.
+Parsing errors are generated when the importer cannot make sense of the contents of a CIMPL statement.
+> Note: Parsing error messages include the file, line, and column number, and can be linked directly to a location in a CIMPL file where parsing failed.
+
+Most other types of errors (with the exception of mapping errors) cannot be linked to a specific file location because they represent some type of  logical inconsistency.
 
 A typical parsing error looks like this:
 
@@ -604,13 +605,13 @@ When a parsing error occurs, the associated error code number and subsequent err
 
 | Warning Code | Warning Message | Potential Solution |
 | ------------ | --------------- | -------- |
-| 01001 | No project configuration file found, currently using default EXAMPLE identifiers. Auto-generating a proper 'config.json' in your specifications folder | Open the 'config.json' file and customize it for your project. |
-| 01002 | Config file missing key: `$KEY`, using default key: `$DEFAULT VALUE` instead.   | Open the 'config.json' file and add your project specific details for that key.
+| 01001 | No project configuration file found, currently using default EXAMPLE identifiers. Auto-generating a proper 'config.json' in your specifications folder | Open the _config.json_ file and customize it for your project. |
+| 01002 | Config file missing key: `$KEY`, using default key: `$DEFAULT VALUE` instead.   | Open the _config.json_ file and add your project specific details for that key.
 | 02001 | Potentially mismatched targets: `$CLASS` maps to `$ITEM`, but based on class (`$CLASS`) maps to `$ITEM`, and `$ITEM` is not based on `$ELEMENT` in `$CLASS`.' | You are overriding an inherited mapping. |
 | 03001 | Trying to map `$PROFILE` to `$CODE`, but `$PROFILE` was previously mapped to it | |
 | 03002 | Choice has equivalent types, so choice options may overwrite or override each other when mapped to FHIR. | |
-| 03003 | Overriding extensible value set constraint from `$VS1` to `$VS2`.  Only allowed when new codes do not overlap meaning of old codes. | The "extensible" binding means that a code from outside the given value set should be used only if the value set does not contain a suitable code. |
-| 03004 | Element profiled on Basic. Consider a more specific mapping. | The Basic profile should not be used in most cases. Consider a more specific profile mapping that categorizes the Element being mapped. |
+| 03003 | Overriding extensible value set constraint from `$VS1` to `$VS2`.  Only allowed when new codes do not overlap meaning of old codes. | The **extensible** binding means that a code from outside the given value set should be used only if the value set does not contain a suitable code. |
+| 03004 | Element profiled on Basic. Consider a more specific mapping. | The **Basic** **resource** should not be used in most cases. Consider a more specific **profile** mapping that categorizes the `Element` being mapped. |
 | 03005 | No mapping to '`$ELEMENT PATH`'. | This property is core to the target resource and usually should be mapped. |  |
 | 03006 | The `$PROPERTY` property is not bound to a value set, fixed to a code, or fixed to a quantity unit. This property is core to the target resource and usually should be constrained |Usually a result of not setting the Code attribute of an Observation. |
 | 04001 | Unsupported code system: '`$CODESYSTEM`' | |
@@ -619,22 +620,22 @@ When a parsing error occurs, the associated error code number and subsequent err
 
 | Error Code    | Error Message | Solution |
 | ------------  | ------------- | -------- |
-| 11001          | Element name '`$NAME`' should begin with a capital letter | Rename the specified Element |
-| 11002          | Entry name '`$NAME`' should begin with a capital letter    | Rename the specified Entry |
+| 11001          | Element name '`$NAME`' should begin with a capital letter | Rename the specified `Element` |
+| 11002          | Entry name '`$NAME`' should begin with a capital letter    | Rename the specified `Entry` |
 | 11003          | Unable to resolve value set reference: `$VALUESET`                 | Invalid value set reference, double check the name and the path
-| 11004          | Unsupported binding strength: `$BINDING_STRENGTH`.  Defaulting to REQUIRED     | Binding strength has to be one of the following: example, preferred, extensible, or required (default). |
+| 11004          | Unsupported binding strength: `$BINDING_STRENGTH`.  Defaulting to REQUIRED     | Binding strength has to be one of the following: **example, preferred, extensible**, or **required** (default). |
 | 11005          | Error parsing source path: `$PATH`                                 | Invalid path to definitions. Double check path. |
-| 11006          | Invalid config file. Should be valid JSON dictionary               | Make sure your 'config.json' file is using a valid format for JSON. |
+| 11006          | Invalid config file. Should be valid JSON dictionary               | Make sure your _config.json_ file is using a valid format for JSON. |
 | 11007          | Unsupported grammar version: `$VERSION`                            | Grammar Version for file must be 5.0 (or above) |
 | 11008          | Defining value sets by URL has been deprecated in ValueSet files.  ValueSet `$VALUESET` ignored.           | Define the value set with a name using proper syntax. |
 | 11009          | Defining value sets by URN has been deprecated in ValueSet files.  ValueSet `$VALUESET` ignored.           | Define the value set with a name using proper syntax. |
 | 11010          | Couldn’t resolve code system for alias: `$ALIAS`                   | Invalid Codesystem, double check spelling |
-| 11011          | Uses statements have been deprecated in ValueSet files.  Uses statement ignored.                  | Uses statement is unnecessary. Refer to documentation for proper syntax |
+| 11011          | Uses statements have been deprecated in ValueSet files.  Uses statement ignored.                  | `Uses` statement is unnecessary. Refer to documentation for proper syntax |
 | 11012          | Only default path definitions are allowed in ValueSet files.  Path definition ignored.            | Use one of the preset path definitions defined in the documentation. |
-| 11013          | Failed to resolve definition for `$ELEMENT_NAME`                   | The referenced Element doesn't exist in the current namespace, or in any of its inherited parents. Check spelling errors as well as imports. |
-| 11013          | Failed to resolve definition for `primitive`                       | Only certain primitives are supported. Please refer to the documentation to see the full list.
-| 11015          | token recognition error at: `$CHARACTER` | This is usually a typo issue. Investigate keywords and missing colons around the specificed text input.
-| 11016          | mismatched input `$INPUT` expecting `$LIST_OF_KEYWORDS` | This is usually a typo issue. Investigate spelling and keywords used around the specificied text input.
+| 11013          | Failed to resolve definition for `$ELEMENT_NAME`                   | The referenced `Element` doesn't exist in the current namespace, or in any of its inherited parents. Check spelling errors as well as imports. |
+| 11013          | Failed to resolve definition for `primitive`                       | Only certain primitives (data types) are supported. Please refer to the documentation to see the full list.
+| 11015          | token recognition error at: `$CHARACTER` | This is usually a typo issue. Investigate keywords and missing colons around the specified text input.
+| 11016          | mismatched input `$INPUT` expecting `$LIST_OF_KEYWORDS` | This is usually a typo issue. Investigate spelling and keywords used around the specified text input.
 | 11017          | Cannot resolve path without namespaces | There was a failure to parse the namespace. Ensure the namespace is correctly defined.
 | 11018          | Failed to resolve path for `$NAME`. |
 | 11019          | Found conflicting path for `$NAME` in multiple namespaces: `$NAMESPACES` | 
@@ -645,25 +646,25 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 11024          | Elements cannot use "Value:" modifier and specify "Value" field at same time. |
 | 11025          | Fields cannot be constrained to type "Value" |
 | 11026          | ref(Value) is an unsupported construct; treating as Value without the reference. |
-| 11027          | Unable to import property `$FQN`, unknown value type: `$VALUE_TYPE` | The type either does not exist, or the import tool needs to be updated.
-| 11028          | Unable to import unknown constraint type: `$CONSTRAINT_TYPE`| The type either does not exist, or the import tool needs to be updated.
+| 11027          | Unable to import property `$FQN`, unknown value type: `$VALUE_TYPE` | The value type either does not exist, or the import tool needs to be updated.
+| 11028          | Unable to import unknown constraint type: `$CONSTRAINT_TYPE`| The constraint type either does not exist, or the import tool needs to be updated.
 | 11029          | Unable to import mapping, unknown rule type: `$RULE_TYPE` | The type either does not exist, or the import tool needs to be updated.
 | 11030          | Unable to import VS rule, unknown rule type: `$RULE_TYPE` | The type either does not exist, or the import tool needs to be updated.
-| 11031          | Unable to import FixedValueConstraint, unknown fixed value type: `$RULE_TYPE` | The value type either does not exist, or the import tool needs to be updated.
-| 11032          | Project configuration not found! Exiting the program. | There was an error finding or loading the configuration file. Please double check that it exists and is valid.
-| 11033          | Name $ELEMENT_ENTRY_NAME already exists. | The entity or element name already exists within the namespace and the most recently defined element or entry name will be used.
-| 11034          | ValueSet name $VS_NAME already exists. | The value set name already exists within the namespace.
+| 11031          | Unable to import FixedValueConstraint, unknown fixed value type: `$RULE_TYPE` | The fixed value type either does not exist, or the import tool needs to be updated.
+| 11032          | Project configuration not found! Exiting the program. | There was an error finding or loading the Configuration file. Please double check that it exists and is valid.
+| 11033          | Name `$ELEMENT_ENTRY_NAME` already exists. | The entity or element name already exists within the namespace and the most recently defined element or entry name will be used.
+| 11034          | ValueSet name `$VS_NAME` already exists. | The value set name already exists within the namespace.
 | 11035          | Definition not found for data element in content profile path: `$ELEMENT_FQN`. | Could indicate a missing definition, misspelling, or missing `Uses` declaration. |
 | 11036          | Path not found for `$ELEMENT_FQN`: `$PATH`. | Usually when sub-elements in a dotted path (foo.bar.baz) can't be traced. See [CIMPL path](#cimpl6LanguageReference.md#cimpl-paths) for more information. |
-| 11037          | Could not find content profile file: `$FILE_NAME`. | Check the name or path to the content profile file specified in your configuration file. |
+| 11037          | Could not find content profile file: `$FILE_NAME`. | Check the name or path to the Content Profile file specified in your Configuration file. |
 | 11038          | Namespace declaration not found. | File needs a namespace declaration at the top of the file under the Grammar declaration. |
 | 11039          | Grammar declaration not found. | File needs a Grammar declaration at the top of the file. |
-| 11040          | Property `$PROPERTY` already exists. | Extra declaration of Property needs to be removed. |
+| 11040          | Property `$PROPERTY` already exists. | Extra declaration of `Property` needs to be removed. |
 | 11041          | Choice value constrained without specifying the specific choice. |
 | 11042          | Constraint refers to previous identifier. |
 | 11043          | Value should not be declaring cardinality. | Remove cardinality declared for the value. |
 | 11044          | Missing a value element. |
-| 12001          | Cannot resolve element definition.                                 | Element doesn't exist. Double check spelling and inheritance |
+| 12001          | Cannot resolve element definition.                                 | `Element` doesn't exist. Double check spelling and inheritance |
 | 12002          | Reference to non-existing base: `$ELEMENT_NAME`                    | Base doesn't exist. Double check spelling and inheritance. |
 | 12003          | No cardinality found for value: `$VALUE`                           | Explicitly define cardinality for that value. |
 | 12004          | No cardinality found for field: `$FIELD`                           | Explicity define cardinality for that field. |
@@ -677,27 +678,27 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 12012 | Cannot constrain type of `$NAME` to `$TYPE`  | Make sure base types match |
 | 12013 | Cannot constrain type of `$NAME` since it has no identifier        | Invalid Element |
 | 12014  Cannot constrain type of `$NAME` to `$TYPE` | Make sure base types match |
-| 12015  | Cannot further constrain type of `$NAME` from `$TYPE` to `$TYPE`   | The two elements aren't based on the same parent. You cannot constrain an element to one that is completely distinct. |
+| 12015  | Cannot further constrain type of `$NAME` from `$TYPE` to `$TYPE`   | The two `Element`s aren't based on the same parent. You cannot constrain an `Element` to one that is completely distinct. |
 | 12017 | Cannot constrain type of `$NAME` since it has no identifier| |
-| 12018 | Cannot constrain element `$NAME` to `$TARGET` since it is an invalid sub-type | Element has to be based on `$s` or otherwise is a child of `$s`. |
+| 12018 | Cannot constrain element `$NAME` to `$TARGET` since it is an invalid sub-type | `Element` has to be based on `$s` or otherwise is a child of `$s`. | 
 | 12020 | Cardinality of `$NAME` not found | Please explicitly define the cardinality. |
-| 12021 | Cannot include cardinality on `$NAME`, cardinality of `$CARD` doesnt fit within `$CARD` | The cardinality of included parameters must be as narrow or narrower than the  property it contains. |
+| 12021 | Cannot include cardinality on `$NAME`, cardinality of `$CARD` doesn't fit within `$CARD` | The cardinality of included parameters must be as narrow or narrower than the  property it contains. |
 | 12022 | Cannot constrain valueset of `$NAME` since it has no identifier    | |
-| 12023 | Cannot constrain valueset of `$NAME` since neither it nor its value is a concept | Only elements whose datatype is `concept` can be bound to a value set. |
+| 12023 | Cannot constrain valueset of `$NAME` since neither it nor its value is a concept | Only `Element`s with data type of `concept` can be bound to a value set. |
 | 12024 | Cannot constrain valueset of `$NAME` since it is already constrained to a single code |  |
-| 12025 | Cannot constrain code of `$NAME` since neither it nor its value is a concept |  |
-| 12026          | Cannot constrain included code of `$NAME` since neither it nor its value is a concept |  |
-| 12027  | Cannot constrain boolean value of `$NAME` since neither it nor its value is a boolean  | You may be trying to set an element that is not a boolean to true or false. |
+| 12025 | Cannot constrain code of `$NAME` since neither it nor its value is a `concept` |  |
+| 12026          | Cannot constrain included code of `$NAME` since neither it nor its value is a `concept` |  |
+| 12027  | Cannot constrain boolean value of `$NAME` since neither it nor its value is a boolean  | You may be trying to set an `Element` that is not a boolean to true or false. |
 | 12028 | Cannot constrain boolean value of `$NAME` to `$VALUE` since a previous constraint constrains it to `$VALUE` | Once a fixed constraint is applied, it cannot be changed in a child class. In this case, you might be switching a true to a false or vice versa. |
-| 12029          | Cannot resolve element definition for `$NAME`                      | This is due to a incomplete definition for an element. Please refer to the document for proper definition syntax. |
+| 12029          | Cannot resolve element definition for `$NAME`                      | This is due to an incomplete definition for an `Element`. Please refer to the [CIMPL Language Reference Manual](cimpl6LanguageReference.md) for proper definition syntax. |
 | 12030          | Cannot determine target item | System error. |
 | 12031 | Cannot resolve data element definition from path: `$PATH` | Check spelling for field or value. |
 | 12032 | Cannot resolve data element definition from path: `$PATH`          | Check spelling for field or value. |
 | 12033  | Cannot map Value since element does not define a value| Define a value for your element |
 | 12034 | Cannot map Value since it is unsupported type: `$VALUE_TYPE` |  |
-| 12035  | Found multiple matches for field `$FIELD` | Please use fully qualified identifier. |
+| 12035  | Found multiple matches for field `$FIELD` | Please use fully qualified name. |
 | 12036  | Could not find expanded definition of `$ELEMENT`. Inheritance calculations will be incomplete. | Double check `shr.base.Entry` is defined within the specifications. |
-| 12037  | Could not find based on element `$ELEMENT` for child element `$ELEMENT`. | Double check the `basedOn` element is defined within the specifications and correctly referenced. |
+| 12037  | Could not find based on element `$ELEMENT` for child element `$ELEMENT`. | Double check that the `basedOn` `Element` is defined within the specifications and correctly referenced. |
 | 14001  | Unsupported value set rule type: `$s` |
 | 14002          | Unknown type for value `$VALUE` |
 | 14003          | Unknown type for constraint `$CONSTRAINT` |
@@ -706,7 +707,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 
 | Error Code    | Error Message | Solution |
 | ------------  | ------------- | -------- |
-| 13001          | Invalid FHIR target: `$TARGET` | Could not find the FHIR resource or profile you're trying to map to. Check spelling and FHIR version. |
+| 13001          | Invalid FHIR target: `$TARGET` | Could not find the FHIR **resource** or **profile** you're trying to map to. Check spelling and FHIR version. |
 | 13002          | Cannot flag path as mapped |
 | 13003          | Slicing on include type constraints with paths is not supported |
 | 13004          | Slicing required to disambiguate multiple mappings to `$TARGET` |
@@ -721,13 +722,13 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13013          | Invalid target path. Cannot apply cardinality constraint. |
 | 13014          | Cannot constrain cardinality from `$CARD` to `$CARD` |
 | 13015          | Invalid target path. Cannot apply fixed value. |
-| 13016          | Currently, only fixing codes is supported (value must contain "#").  Unable to fix to `$VALUE`. | This error message applies to SHR-CLI 6.4 and earlier. In SHR-CLI 6.5 and higher, fixed value constraints can be applied to integer and decimal values. |
+| 13016          | Currently, only fixing codes is supported (value must contain "#").  Unable to fix to `$VALUE`. | This error message applies to SHR-CLI 6.4 and earlier. In SHR-CLI 6.5 and higher, fixed value constraints can be applied to integer and decimal values. | <!-- CC check - string also? -->
 | 13017          | Incompatible cardinality (using aggregation). Source cardinality `$CARD` does not fit in target cardinality       | |
 | 13018          | Cannot constrain cardinality to `$CARD` because cardinality placement is ambiguous. Explicitly constrain parent elements in target path. | See Error 13020 |
 | 13019          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality min that can get us there | See Error 13020 |
 | 13020          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality max that can get us there | When the target path is deeper than one level, cardinalities combine to get to the final (target) cardinality. The correct way to constrain the cardinality is ambiguous. For example, if B maps to a.b, and B is constrained to [0,4], there are multiple ways to get there: a[0..1].b[0..4] or a[0..1].b[1..4] or a[1..1].b[0..4] or a[0..4].b[0..1] etc. To resolve this error, ambiguous cardinalities in intermediate paths must be explicitly declared in the mapping file using the `constrain` keyword. |
 | 13021          | Cannot constrain cardinality to `$CARD` because there is no tail cardinality that can get us there | See Error 13020 |
-| 13022          | Mismatched types. Cannot map `$SOURCE_VALUE` to `$MAPPING`. | Find the Entry referenced in the error details and change it to match the data type of the target field.
+| 13022          | Mismatched types. Cannot map `$SOURCE_VALUE` to `$MAPPING`. | Find the `Entry` referenced in the error details and change it to match the data type of the target field.
 | 13023          | Cannot resolve element definition for `$ELEMENT` |
 | 13024          | Failed to resolve element path from `$ELEMENT` to `$PATH` |
 | 13025          | Applying constraints to profiled children not yet supported. |
@@ -763,9 +764,21 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13057          | Could not fix `$TARGET` to `$VALUE`; failed to detect compatible type for value `$VALUE`. |
 | 13058          | Cannot fix `$TARGET` to `$VALUE` since it is not a `$TYPE` type. |
 | 13059          | Cannot fix `$TARGET` to `$VALUE` since it is already fixed to `$OTHER_VALUE`. |
-| 13060          | Could not determine how to map nested value (`$ELEMENT_PATH`) to FHIR profile. | Occurs on the FHIR profile export when there are multiple levels of reference specified. e.g.: LaboratoryObservationTopic.Specimen.CollectionSite within LaboratoryObservationTopic.  Resolved by creating a reference in the cimi entity to FHIR map in cimi_entity_map.txt. |
+| 13060          | Could not determine how to map nested value (`$ELEMENT_PATH`) to FHIR profile. | Occurs on the FHIR **profile** export when there are multiple levels of **reference** specified. e.g.: **LaboratoryObservationTopic.Specimen.CollectionSite** within **LaboratoryObservationTopic**.  Resolved by creating a reference in the _CIMI_ entity to FHIR map in _cimi_entity_map.txt_. | <!-- CC obscure reference -->
 | 13061          | Mapping `$ELEMENT` sub-fields is currently not supported. |
 | 13062          | Cannot make choice element explicit at `$ELEMENT`. Could not find compatible type match for: `$TYPE`. |
 | 13063          | Could not find FHIR element with path `$ELEMENT_PATH` for content profile rule with path `$RULE_PATH`. |
 | 13064          | Could not find FHIR element for content profile rule with path `$RULE_PATH`. |
 | 13065          | Could not find FHIR element subextension for content profile rule with path `$RULE_PATH`. |
+
+# Appendix: Document Conventions
+
+| Style | Explanation | Example |
+|:----------|:---------|:---------|
+| **Bold**  | A FHIR term or resource | **Profile** |
+| `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
+| <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
+| _Italics_ | A file name, or general emphasis in text | _obf-action.txt_ |
+| _Italics with **bold** highlight_ | Indicates a substring in the file name that should be substituted | _ig-**myigname**-config.json_ |
+| Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of FHIR artifacts | The `Grammar` keyword |
+| **Note:** | Something to keep in mind about the current topic | **Note:** Value Set names must begin with an uppercase letter. |
