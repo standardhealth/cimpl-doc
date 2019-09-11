@@ -106,7 +106,7 @@ CIMPL classes are conventionally defined in [PascalCase](http://wiki.c2.com/?Pas
 
 ### Fully Qualified Names
 
-CIMPL does not support duplicate class names within a single namespace. However, the same name may occur in different namespaces. In the case of naming collisions due to an namespace included by a [`Uses`](#Uses) statement, you have to refer to the class by its fully qualified name (FQN). The FQN is a concatenation of the namespace name and the class name (delimited by a period). For example, the class `CancerCondition` in the namespace `onco.core` has the FQN `onco.core.CancerCondition`. 
+CIMPL does not support duplicate class names within a single namespace. However, the same name may occur in different namespaces. In the case of naming collisions due to an namespace included by a [`Uses`](#Uses) statement, you have to refer to the class by its fully qualified name (FQN). The FQN is a concatenation of the namespace name and the class name (delimited by a period). For example, the class `CancerCondition` in the namespace `onco.core` has the FQN `onco.core.CancerCondition`.
 
 FQNs are only required in case of naming collisions between namespaces.
 
@@ -160,7 +160,7 @@ CIMPL has a number of reserved words and phrases that are part of CIMPL's gramma
 
 ### Primitives
 
-Primitives are data types, distinguished by starting with a lower case letter. CIMPL defines the following primitive data types. With the exception of `concept` (a simplified representation of **Code, Coding, and CodeableConcept**), the primitive types in CIMPL align with FHIR:
+Primitives are data types, distinguished by starting with a lower case letter. CIMPL defines the following primitive data types. With the exception of `concept` (a simplified representation of **code**, **Coding**, and **CodeableConcept**), the primitive types in CIMPL align with FHIR:
 
 * [`concept`](#concept-codes)
 * [`boolean`](https://www.hl7.org/fhir/datatypes.html#boolean)
@@ -196,7 +196,7 @@ Examples:
 
 _SYSTEM_ (`SCT` and `ICD10CM` in the examples) is an alias for a canonical URI that represents a code system. Aliases must be declared in the file header using the keyword [`CodeSystem`](#codesystem). You cannot use the canonical URI directly in the concept grammar.
 
-Unlike FHIR, CIMPL does not differentiate between **Code**, **Coding**, and **CodeableConcept**. See [Mapping Concept Codes](#mapping-concept-codes) for information on how CIMPL maps `concept` to these FHIR data types.
+Unlike FHIR, CIMPL does not differentiate between **code**, **Coding**, and **CodeableConcept**. See [Mapping Concept Codes](#mapping-concept-codes) for information on how CIMPL maps `concept` to these FHIR data types.
 
 ***
 
@@ -271,7 +271,7 @@ Example:
 
 ### Entry
 
-The `Entry` keyword is used to declare a new class, analogous to a **Resource** or **Profile** in FHIR. For details, see [Class File](#class-file).
+The `Entry` keyword is used to declare a new class, analogous to a resource or profile in FHIR. For details, see [Class File](#class-file).
 
 Example:
 
@@ -514,7 +514,7 @@ A reliable method to create a CIMPL path is to first view it as a _dot path_, th
 ***
 ## Constraints
 
-Constraints are a way to shape a general model for a particular purpose. `Property`, `Value`, and `Value Choice` can be constrained. Constraint targets can be be top-level or deeply nested (the latter referred to using [CIMPL paths](#cimpl-paths)), inherited or locally-defined.
+Constraints are a way to shape a general model for a particular purpose. `Property`, `Value` can be constrained. Constraint targets can be be top-level or deeply nested (the latter referred to using [CIMPL paths](#cimpl-paths)), inherited or locally-defined.
 
 Unlike keyword declarations, constraint statements do not begin with a keyword. Most constraint statements have three parts:
 
@@ -536,28 +536,28 @@ Here is a summary of supported constraints:
 | To do this.. | Use this Keyword or Symbol | Applies to |
 |----------|---------|---------|
 | [Narrow cardinality](#cardinality-constraint) | `{min}..{max}` | `Property` |
-| [Assign a fixed value](#fixed-value-constraint) | `=`| `Property`` or Value[Choice]` |
+| [Assign a fixed value](#fixed-value-constraint) | `=`| `Property` or <code>Value[<i>choice</i>]</code> |
 | [Append a fixed value to an array](#append-constraint) | `+=` | Array `Property` |
-| [Narrow a data type](#substitute-constraint) | `substitute` | `Property` or `Value[Choice]` |
-| [Bind a value set](#value-set-binding-constraint) | `from` | `Property` or `Value[Choice]` |
+| [Narrow a data type](#substitute-constraint) | `substitute` | `Property` or <code>Value[<i>choice</i>]</code> |
+| [Bind a value set](#value-set-binding-constraint) | `from` | `Property` or <code>Value[<i>choice</i>]</code> |
 | [Slice an array](#includes-constraint) | `includes` | Array `Property` |
 | [Narrow choices for a value](#only-constraint) | `only` | `Value` |
 
 ### Cardinality Constraint
 
-Cardinality defines the number of repeats that can exist for a `Property`. Cardinality is specified using FHIR syntax, **{min}..{max}**, where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound on the number of repeats. To express no upper bound, an asterisk _*_ is used. When constraining cardinality, you can only narrow the previously declared cardinality. The cardinality constraint only applies to `Property`.
+Cardinality defines the number of repeats that can exist for a `Property`. Cardinality is specified using FHIR syntax, {min}..{max}, where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound on the number of repeats. To express no upper bound, an asterisk _*_ is used. When constraining cardinality, you can only narrow the previously declared cardinality. The cardinality constraint only applies to `Property`.
 
 | Declaration | Constraint | Subsequent Constraint |
 |----------|----------|----------|
 | `Property: LanguageUsed 0..*` | `LanguageUsed  0..1` | `LanguageUsed  0..0` |
 | `Property: GovernmentIssuedID  0..*` | `GovernmentIssuedID 1..*` | `GovernmentIssuedID 1..1` |
-| `Property: Status 1..1`| <del>`Status 0..1`</del> **invalid**|
+| `Property: Status 1..1`| <del>`Status 0..1`</del> | _invalid_|
 
 >**Note:** By constraining a `Property` to 0..0, you effectively remove the `Property`. Use 0..0 with caution, because if an instance _does_ include that `Property`, the instance will fail validation and may be rejected.
 
 ### Fixed Value Constraint
 
-The `=` operator fixes an `Element`'s value to a specific concept, boolean, string, integer, decimal, or URL. The fixed value must be consistent with the defined data type, and is always a Primitive.
+The `=` operator fixes an `Element`'s value to a specific concept, boolean, string, integer, decimal, or URL. The fixed value must be consistent with the defined data type, and is always a primitive.
 
 | To do this... | Example |
 |----------|---------|
@@ -824,21 +824,21 @@ The first line of all class definitions is a keyword representing the type of cl
 
 | Class | Description | Has... | Analogous FHIR Type |
 |----------|---------|---------|---------|
-| `Element` | The lowest-level class, representing a property-value pair. | `Value` | **Element** or **simple extension** |
-| `Group` | A class comprised of other classes, specifically, other `Group`, `Element`, and `Entry`. | `Property` | **Backbone element** or **complex extension** |
-| `Entry`  | A class representing a group of related information, complete enough to support stand-alone interpretation. | `Property` | **Resource** or **Profile** |
-| `Abstract` | A special type of `Entry` that cannot be instantiated, and will not be present in the target mapping. | `Property` | none |
+| `Element` | The lowest-level class, representing a property-value pair. | `Value` | element or simple (not nested) **Extension** |
+| `Group` | A class comprised of other classes, specifically, other `Group`, `Element`, and `Entry`. | `Property` | **BackboneElement**, non-primitive data type (such as **Address**), or complex (nested) **Extension** |
+| `Entry`  | A class representing a group of related information, complete enough to support stand-alone interpretation. | `Property` | **Resource** or profiled **Resource** |
+| `Abstract` | A special type of `Entry` that cannot be instantiated, and will not be present in the target mapping. | `Property` | **Resource** or profiled **Resource**, if **StructureDefinition.abstract** = true |
 
 ### Properties, Elements and Values
 
-When defining classes, bear in mind that `Property` defines a model data item and its cardinality. A `Property` is mapped to a FHIR **element**. 
+When defining classes, bear in mind that `Property` defines a model data item and its cardinality. A `Property` can be mapped to a FHIR element or extension. 
 
 <!-- MK - the only "connection" between a property and an element is the name - true? I think that needs to be incorporated somewhere in this guide. Thoughts? -->
 
-* A `Property` cannot have `Value` or `Choice`.
-* An `Element` _must_ have one `Value`
-* `Value` may have more than one `Choice` (using `or`).
-* `Group`, `Entry`, or `Abstract` may have more than one `Property`, but no `Value`.
+* A `Property` can be an `Element`, `Group` or `Entry`.
+* An `Element` _must_ have one `Value` and cannot have a `Property`
+* `Value` may have more than one choice (using `or`).
+* `Group`, `Entry`, or `Abstract` may have more than one `Property`, but cannot have a `Value`.
 
 These differences are illustrated in this example:
 
@@ -860,7 +860,7 @@ Summary:
 
 | Keyword | Appears with | How Many? | Has Cardinality? | Has Choices? | Can be a... |
 |----------|---------|---------|---------|---------|---------|
-| `Value` | `Element` | exactly 1 | no | yes (optional) | `primitive`, `Element`, `Group`, or `Entry` |
+| `Value` | `Element` | exactly 1 | no | yes (optional) | primitive, `Element`, `Group`, or `Entry` |
 | `Property` | `Group`, `Entry`, or `Abstract` | 0 or more | yes (required) | no | `Element`, `Group`, or `Entry` |
 
 ### Naming Recommendations
@@ -944,7 +944,7 @@ Explicit code declarations are used to add specific codes to a value set. This m
 
 ## Map File
 
-Map files control how classes defined in CIMPL are expressed as FHIR **profiles**. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the [Objective FHIR base classes](cimpl6ObjectiveFHIR.md), you many not need to create a map file.
+Map files control how classes defined in CIMPL are expressed as FHIR profile. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the [Objective FHIR base classes](cimpl6ObjectiveFHIR.md), you many not need to create a map file.
 
 ### Map File Example
 
@@ -996,11 +996,11 @@ MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-c
 
 Maps are defined in a series of mapping rules. A powerful feature of CIMPL is that mapping rules are inherited. If your class inherits from a parent class that is already mapped, you do not need to create a new map for your class. However, if you want to specify mappings for a new `Property`, or override the inherited map, you may do so.
 
-The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a map. The first mapping rule found will be applied. If no mapping rule is found for a `Property` defined in CIMPL, a FHIR **extension** will be created. If a map is not found for an `Entry`, that `Entry` will be mapped to the [**Basic**](https://www.hl7.org/fhir/basic.html) resource. In general, mapping to **Basic** is not recommended because it has no inherent semantic meaning for implementers.
+The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a map. The first mapping rule found will be applied. If no mapping rule is found for a `Property` defined in CIMPL, a FHIR extension will be created. If a map is not found for an `Entry`, that `Entry` will be mapped to the [**Basic**](https://www.hl7.org/fhir/basic.html) resource. In general, mapping to **Basic** is not recommended because it has no inherent semantic meaning for implementers.
 
 ### Mapping CIMPL Primitives to FHIR
 
-CIMPL follows somewhat flexible rules on how CIMPL `primitive` data types map to FHIR. For example, an `unsignedInt` in CIMPL can map to an **integer** data type in FHIR (since every `unsignedInt` is an **integer**, there is no loss of information). However, maps that lose information, such as `integer` in CIMPL mapped to **unsignedInt** in FHIR, generally will trigger mapping errors. An exception is that CIMPL `concept` is allowed to map to FHIR **code**. The following table shows the acceptable mappings between CIMPL and FHIR:
+CIMPL follows somewhat flexible rules on how CIMPL primitive data types map to FHIR. For example, an `unsignedInt` in CIMPL can map to an **integer** data type in FHIR (since every `unsignedInt` is an **integer**, there is no loss of information). However, maps that lose information, such as `integer` in CIMPL mapped to **unsignedInt** in FHIR, generally will trigger mapping errors. An exception is that CIMPL `concept` is allowed to map to FHIR **code**. The following table shows the acceptable mappings between CIMPL and FHIR:
 
 | CIMPL Primitive | Can map to FHIR... |
 |----------|---------|
@@ -1030,53 +1030,55 @@ For more information about the header keywords, see [Keywords](#keywords).
 
 ### Setting the Mapping Target
 
-Each section in a Map file begins with a statement that establishes a **resource, profile**, or **complex data type** that is the target for the map. In CIMPL Map files, the item to the left of `maps to` comes from your CIMPL data model and the item to the right is an **element** in the target output. The mapping target can be a FHIR **resource, profile**, or **complex data type** that is part of the target FHIR release version. The initial statement in each mapping block must end with a colon (:).
+Each section in a Map file begins with a statement that establishes a **resource, profile**, or **complex data type** that is the target for the map. In CIMPL Map files, the item to the left of `maps to` comes from your CIMPL data model and the item to the right is an element in the target output. The mapping target can be a FHIR **resource, profile**, or **complex data type** that is part of the target FHIR release version. The initial statement in each mapping block must end with a colon (:).
 
 | CIMPL Class | FHIR Target | Example |
 |----------|---------|---------|
-| `Entry` | **resource** | `SocialHistoryObservation maps to Observation:` |
-| `Entry` | **profile** | `LaboratoryObservation maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-observationresults:` |
-| `Group` | **complex data type** | `Timing maps to Timing:` |
+| `Entry` | resource | `SocialHistoryObservation maps to Observation:` |
+| `Entry` | profile | `LaboratoryObservation maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-observationresults:` |
+| `Group` | complex data type | `Timing maps to Timing:` |
 
 ### Mapping Properties
 <!-- plural property -- thinking -->
-After the first line, which establishes the class to be mapped, the remainder of the section consists of statements that map CIMPL `Property` to FHIR **elements**. Each statement begins with a [CIMPL path](#cimpl-paths), followed by the phrase `maps to`, and ending with the target FHIR path.
+After the first line, which establishes the class to be mapped, the remainder of the section consists of statements that map CIMPL `Property` to FHIR elements. Each statement begins with a [CIMPL path](#cimpl-paths), followed by the phrase `maps to`, and ending with the target FHIR path.
 
 With FHIR as the target output, the right-hand side of the map statement can point to any element of a FHIR resource, including:
 
-* FHIR **elements** that are at the root of the resource (e.g., **maritalStatus**)
-* FHIR **elements** that are child elements of root elements on the resource (e.g., **reaction.substance**)
-* FHIR **elements** that have a [choice of data types](https://www.hl7.org/fhir/formats.html#choice) (e.g., **multipleBirth[x].boolean**)
-* FHIR **elements** that have been defined in existing **Profiles** or other **StructureDefinition** resources (e.g., `http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity`)
-* FHIR **elements** that support FHIR **Reference()** data types.
+* FHIR elements that are at the root of the resource (e.g., **maritalStatus**)
+* FHIR elements that are child elements of root elements on the resource (e.g., **reaction.substance**)
+* FHIR elements that have a [choice of data types](https://www.hl7.org/fhir/formats.html#choice) (e.g., **multipleBirth[x].boolean**)
+* FHIR elements that have been defined in existing profile or other **StructureDefinition** resources (e.g., `http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity`)
+* FHIR elements that support FHIR **Reference()** data types.
 
-| CIMPL type | FHIR type | Example |
+| CIMPL source | FHIR target | Example |
 |----------|---------|---------|
-| `Property` reference without path | **simple element** | `MaritalStatus maps to maritalStatus` |
-| `Property` reference without path | **extension** | `Ethnicity maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity` |
-| dotted path | **simple element** |`Value.ActiveFlag maps to active` |
-| dotted path | **dotted path** | `AdverseReaction.AllergenIrritant maps to reaction.substance`|
-| `Value Choice` path | **simple element** | `BodySiteOrCode.concept maps to bodySite` |
+| `Property` | element | `MaritalStatus maps to maritalStatus` |
+| nested `Property` | element |`Value.ActiveFlag maps to active` |
+| nested `Property` | nested element| `AdverseReaction.AllergenIrritant maps to reaction.substance`|
+| `Value` choice | element | `BodySiteOrCode.concept maps to bodySite` _(see note)_ |
+| `Property` | **Extension** | `Ethnicity maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity` |
+| any | nested **Extension** | _not supported_|
+
 
 >**Note:** The mapping grammar version is 5.1; the bracketed value syntax cannot be used in paths.  This is why the above example uses `BodySiteOrCode.concept` rather than `BodySiteOrCode[concept]`.
 
 ### Mapping to References
 
-FHIR **resources** and **profiles** require an explicit [**Reference()** indicator](https://www.hl7.org/fhir/references.html) when referring to another **Resource** or **Profile**. In CIMPL, whenever a `Property` is an `Entry`, that `Property` is mapped as a **Reference** in FHIR. There is no need to create an explicit **Reference()**.
+FHIR resources and profile require an explicit [**Reference()** indicator](https://www.hl7.org/fhir/references.html) when referring to another resource or profile. In CIMPL, whenever a `Property` is an `Entry`, that `Property` is mapped as a reference in FHIR. There is no need to create an explicit **Reference()**.
 
 ### Placement of Extensions
 
-As mentioned above, if no mapping rule is found for a `Property`, an **extension** to the FHIR **resource** or **profile** will be automatically created. By default, the **extension** will be a top-level **element** in the FHIR **profile**. Sometimes you may want the **extension** to appear in a different place, perhaps inside a nested **element**. To put the **extension** precisely where you want it, you can map to FHIR paths that include `extension`.
+As mentioned above, if no mapping rule is found for a `Property`, an extension to the FHIR resource or profile will be automatically created. By default, the extension will be a top-level element in the FHIR profile. Sometimes you may want the extension to appear in a different place, perhaps inside a nested element. To put the extension precisely where you want it, you can map to FHIR paths that include `extension`.
 
 Here's an example involving the FHIR resource [AdverseEvent](https://www.hl7.org/fhir/adverseevent.html):
 
 `PotentialCause.CauseCategory maps to suspectEntity.extension`
 
-This mapping rule will create an **extension** named _**CauseCategory**_ for **AdverseEvent.suspectEntity**. Rules such as:
+This mapping rule will create an extension named **CauseCategory** for **AdverseEvent.suspectEntity**. Rules such as:
 
 `DetectionTime maps to extension`
 
-leave the default behavior unchanged, and are not required. However, they can be used to document the _intent_ to create an **extension**.
+leave the default behavior unchanged, and are not required. However, they can be used to document the _intent_ to create an extension.
 
 ### Special Mapping Statements
 
@@ -1084,7 +1086,7 @@ There are a limited number of mapping statements that allow actions to be taken 
 
 #### fix
 
-`fix` allows FHIR **elements** to be assigned a value. This constrains the FHIR **resource**, not the CIMPL class. This enables you to fix a **value** to an **element** in a FHIR **resource** without having to change the class definition, which would affect all potential maps. This also allows you to fix values to FHIR **resource elements** that have no corresponding `Property` in the CIMPL definition.
+`fix` allows FHIR elements to be assigned a value. This constrains the FHIR resource, not the CIMPL class. This enables you to fix a value to an element in a FHIR resource without having to change the class definition, which would affect all potential maps. This also allows you to fix values to FHIR elements that have no corresponding `Property` in the CIMPL definition.
 
 Example:
 
@@ -1092,7 +1094,7 @@ Example:
 
 #### constrain
 
-`constrain` allows users to constrain the cardinality of FHIR **elements**. This constrains the FHIR **resource**, not the CIMPL class. The cardinality is expressed in {min}..{max} form.
+`constrain` allows users to constrain the cardinality of FHIR elements. This constrains the FHIR resource, not the CIMPL class. The cardinality is expressed in {min}..{max} form.
 
 Example:
 
@@ -1102,7 +1104,7 @@ Example:
 
 > **Note:** Mapping statements for slicing arrays is an advanced topic.
 
-_Slicing_ involves specifying the items that can be contained in an array. An array is an **element** whose upper cardinality is greater than one. An example of this is the [**FHIR Blood Pressure profile**](https://www.hl7.org/fhir/profiling.html#slicing), which slices **Observation.components** into diastolic and systolic pressure, identical in structure other than their code. Another example is **DiagnosticReport.result**, an array of Observations. Slicing can be used to specify the particular type of Observations in a given type of DiagnosticReport.
+_Slicing_ involves specifying the items that can be contained in an array. An array is an element whose upper cardinality is greater than one. An example of this is the [**FHIR Blood Pressure profile**](https://www.hl7.org/fhir/profiling.html#slicing), which slices **Observation.components** into diastolic and systolic pressure, identical in structure other than their code. Another example is **DiagnosticReport.result**, an array of Observations. Slicing can be used to specify the particular type of Observations in a given type of DiagnosticReport.
 
 See the FHIR documentation for more detail about [slicing](https://www.hl7.org/fhir/profiling.html#slicing).
 
@@ -1122,28 +1124,28 @@ The values for these parameters refer to the FHIR structure that is being sliced
 
 #### Set the Discriminator Path with `slice on`
 
-FHIR requires [**discriminators**](https://www.hl7.org/fhir/profiling.html#discriminator) to uniquely identify the slice to which an element or resource belongs. The path to the **discriminator** is specified by the CIMPL `slice on` parameter. The value is a [FHIRPath expression](https://www.hl7.org/fhir/fhirpath.html) that indicates what distinguishes the slices.
+FHIR requires [discriminators](https://www.hl7.org/fhir/profiling.html#discriminator) to uniquely identify the slice to which an element or resource belongs. The path to the discriminator is specified by the CIMPL `slice on` parameter. The value is a [FHIRPath expression](https://www.hl7.org/fhir/fhirpath.html) that indicates what distinguishes the slices.
 
-The **discriminator** path is not necessarily the array where the slicing takes place. For example, in slicing **Observation.component**, if `slice on = code.coding.code`, then **component.code.coding.code** will be examined to determine which slice the component belongs to. Each defined slice must have unique, fixed value at **component.code.coding.code**.
+The discriminator path is not necessarily the array where the slicing takes place. For example, in slicing **Observation.component**, if `slice on = code.coding.code`, then **component.code.coding.code** will be examined to determine which slice the component belongs to. Each defined slice must have unique, fixed value at **component.code.coding.code**.
 
-When the sliced array contains references to other FHIR resources (e.g., **DiagnosticReport.result**), the **discriminator** must involve referenced resource. In this case, the `slice on` will include `reference.resolve()`, a FHIRPath notation that refers to a referenced resource. There are two options:
+When the sliced array contains references to other FHIR resources (e.g., **DiagnosticReport.result**), the discriminator must involve referenced resource. In this case, the `slice on` will include `reference.resolve()`, a FHIRPath notation that refers to a referenced resource. There are two options:
 
-1. The **discriminator** is referenced resource itself, and the mapping to a slice will be determined by conformance to a profile.
-1. The **discriminator** is a property in the referenced resource, e.g., **reference.resolve().code.coding.code**
+1. The discriminator is referenced resource itself, and the mapping to a slice will be determined by conformance to a profile.
+1. The discriminator is a property in the referenced resource, e.g., **reference.resolve().code.coding.code**
 
 >**Note:** The `slice on` parameter is required except when the `slice #` parameter is present.
 
 #### Set the Discriminator Type with `slice on type`
 
-The **discriminator** type defines how the **discriminator** is used to differentiate instances from one another. By default, CIMPL uses the FHIR **value** **discriminator** type. However, a different **discriminator** type can be declared using `slice on type` followed by one of the following FHIR-defined **discriminator** types:
+The discriminator type defines how the discriminator is used to differentiate instances from one another. By default, CIMPL uses the FHIR value discriminator type. However, a different discriminator type can be declared using `slice on type` followed by one of the following FHIR-defined discriminator types:
 
 | `slice on type` | Interpretation |
 | ------------- | ---------- |
-| `value`| The slices have different values in the **discriminator** (default) |
-| `exists` | The slices are differentiated by the presence or absence of the **discriminator** |
-| `pattern` |The slices have different values in the **discriminator**, as determined by testing them against the applicable **ElementDefinition.pattern[x]** |
-| `type` |The slices are differentiated by the data type of the **discriminator** |
-| `profile` | The slices are differentiated by conformance of the **discriminator** to a specified **profile**. This can only be used when the **discriminator** is a reference to a resource. |
+| `value`| The slices have different values in the discriminator (default) |
+| `exists` | The slices are differentiated by the presence or absence of the discriminator |
+| `pattern` |The slices have different values in the discriminator, as determined by testing them against the applicable **ElementDefinition.pattern[x]** |
+| `type` |The slices are differentiated by the data type of the discriminator |
+| `profile` | The slices are differentiated by conformance of the discriminator to a specified profile. This can only be used when the discriminator is a reference to a resource. |
 
 #### Slice Strategy
 <!-- Carmela - confirm underscore with slice strategy check the code -->
@@ -1154,7 +1156,7 @@ If `slice strategy` is omitted, CIMPL adds a single slice, corresponding to the 
 
 #### Set the Slice Location using `slice at`
 
-If the CIMPL element in the mapping statement is mapped to a sub-element of the array being sliced,`slice at` explicitly defines the location of the slice. The location must be an array element, such as a **backbone element** that contains the mapping target.
+If the CIMPL element in the mapping statement is mapped to a sub-element of the array being sliced,`slice at` explicitly defines the location of the slice. The location must be an array element, such as a **BackboneElement** that contains the mapping target.
 
 #### Set the Slice Number using `slice #`
 
@@ -1176,7 +1178,7 @@ In the above example, each `ObservationComponent` mentioned in the CIMPL `includ
 
 > **Note:** This example is based on the FHIR STU 3 Observation resource.
 
-Each `Entry` included in the `PanelMembers.Observation` CIMPL model will create a slice in the **Observation.related** array because of the `slice at` parameter, and appear in the **related.target** element because of the `maps to` statement. The `slice on` parameter indicates the **discriminator** is the resource in the **related.target** array. The `target.reference.resolve()` is the FHIRPath that points to the referenced resource. The `slice on type = profile` indicates the slices are differentiated through the conformance of the referenced resource to the profile that define the slices.
+Each `Entry` included in the `PanelMembers.Observation` CIMPL model will create a slice in the **Observation.related** array because of the `slice at` parameter, and appear in the **related.target** element because of the `maps to` statement. The `slice on` parameter indicates the discriminator is the resource in the **related.target** array. The `target.reference.resolve()` is the FHIRPath that points to the referenced resource. The `slice on type = profile` indicates the slices are differentiated through the conformance of the referenced resource to the profile that define the slices.
 
 #### Example 3
 
@@ -1186,7 +1188,7 @@ BloodPressure maps to http://hl7.org/fhir/StructureDefinition/bp:
   Components.DiastolicPressure maps to component (slice # = 2)
 ```
 
-This example shows how to map to existing slices in the mapping target. The numbers refer to the order of the slices as they are defined in http://hl7.org/fhir/StructureDefinition/bp. This type of mapping allows new constraints and extensions in the CIMPL model to be added to an existing profile. When mapping to an existing profile, the **discriminator** and other slicing properties cannot be changed.
+This example shows how to map to existing slices in the mapping target. The numbers refer to the order of the slices as they are defined in http://hl7.org/fhir/StructureDefinition/bp. This type of mapping allows new constraints and extensions in the CIMPL model to be added to an existing profile. When mapping to an existing profile, the discriminator and other slicing properties cannot be changed.
 
 <!--
 #### Example 4
@@ -1205,7 +1207,7 @@ Multiple elements in CIMPL map to a single target (which has to be an array)
 
 | Style | Explanation | Example |
 |:----------|:---------|:---------|
-| **Bold**  | A FHIR term or resource | **Profile** |
+| **Bold**  | A FHIR name | **Observation** |
 | `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
 | <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
 | _Italics_ | A file name (also used for general emphasis in text) | _obf-action.txt_ |

@@ -12,7 +12,7 @@
 
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) **profiles**, **extensions** and **implementation guides** (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and [implementation guides](https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides) (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 ### Purpose
 
@@ -20,7 +20,7 @@ This document provides a step-by-step guide to generate an HL7 FHIR IG starting 
 
 ### Intended Audience
 
-The CIMPL User Guide is targeted to any person comfortable with using programming languages. Familiarity with FHIR is helpful as the guide references FHIR artifacts (e.g. **resources** and **profiles**).
+The CIMPL User Guide is targeted to any person comfortable with using programming languages. Familiarity with FHIR is helpful as the guide references FHIR artifacts (e.g. resources and profile).
 
 ### Prerequisite
 
@@ -34,25 +34,25 @@ CIMPL is designed to be modular and extensible, allowing for the reuse of other 
 ![Data model IG relationship](img_cimpl/Data-model-use-case-model.png)
 <!-- ![CIMPL Modularity](img_cimpl/CIMPLBuildingBlocks.png) -->
 
-CIMPL allows the modeling author to represent  FHIR **profile**s in one of two ways:
+CIMPL allows the modeling author to represent  FHIR profiles in one of two ways:
 
-* Define the model specific classes you need using FHIR **resource**s or **profile**s as a base (_clean slate_). In this approach, the modeling author already knows the FHIR **resource**s or **profile**s to customize, and defines the **element** constraints or **extension**s in the FHIR **profile** to be created by the new model.
-* Leverage CIMPL's _OBF_ FHIR models. In this approach, the modeling author defines their FHIR **profile** and specifies a `Parent` class from [OBF User Guide](cimpl6ObjectiveFHIR.md).
+* Define the model specific classes you need using FHIR resources or profiles as a base (_clean slate_). In this approach, the modeling author already knows the FHIR resources or profiles to customize, and defines the element constraints or extensions in the FHIR profile to be created by the new model.
+* Leverage CIMPL's _OBF_ FHIR models. In this approach, the modeling author defines their FHIR profile and specifies a `Parent` class from [OBF User Guide](cimpl6ObjectiveFHIR.md).
 
 Each modeling approach has advantages and disadvantages.
 
-The _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new **profile**s with minimal changes from base FHIR. However, as the number of customizations increases, maintenance may become more cumbersome and difficult.
+The _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new profiles with minimal changes from base FHIR. However, as the number of customizations increases, maintenance may become more cumbersome and difficult.
 
 On the other hand, using OBF FHIR models has significant benefits which include but are not limited to:
 
-* saving the modeling author time in mapping common `Element`s to the equivalent FHIR **element**,
-* ensuring consistency in the representation of commonly used **element**s in different FHIR **resource**s.
+* saving the modeling author time in mapping common `Element`s to the equivalent FHIR element,
+* ensuring consistency in the representation of commonly used elements in different FHIR resources.
 
-The user must however invest time to understand the OBF logical model. Also, OBF does not comprehensively support all FHIR **resource**s, especially the ones introduced in FHIR R4 with a low maturity level.
+The user must however invest time to understand the OBF logical model. Also, OBF does not comprehensively support all FHIR resources, especially the ones introduced in FHIR R4 with a low maturity level.
 
 ## Logical Model
 
-Start by understanding the model you want to document in CIMPL, and its relationship to either base FHIR **resource**s and **profile**s, to OBF, or to a combination.
+Start by understanding the model you want to document in CIMPL, and its relationship to either base FHIR resources and profiles, to OBF, or to a combination.
 
 Keeping in mind that CIMPL is primarily a way to create logical models with the capability to _model-once, translate-to-many_, the modeling author should consider requirements gathering and high level modeling steps.  While one approach is proposed below, the modeling author is not limited to following these steps and might find better approaches to creating detailed clinical models.
 
@@ -95,9 +95,7 @@ Create your Class file with namespaces to import, and `Entry`, `Property`, `Abst
 
 ## Map File
 
-Create a Map file if your model includes `Property` declarations beyond any inherited models, and you want to map the `Property` to a FHIR **element**.
-
-Map the model specific `Property` to either FHIR **resource/profile element**s, or OBF.
+Create a Map file if your model includes `Property` declarations beyond any inherited models, and you want to map the `Property` to a FHIR element.
 
 > Note: A Map file is necessary if OBF is _not_ used. If OBF _is_ used, a Map file may not be necessary.
 
@@ -149,7 +147,7 @@ Errors may be issued from this step.
 
 The final step in the IG creation process is to run the **[FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7 FHIR.
 
-By default, the FHIR IG Publisher performs validation checks on the **StructureDefinition** of specified FHIR **profiles**, **value sets**, and **examples** which reference any FHIR **resources** or **profiles**.  Output of these checks are found in the CIMPL output, _qa.html_.
+By default, the FHIR IG Publisher performs validation checks on the **StructureDefinition** of specified FHIR profile, **value sets**, and **examples** which reference any FHIR resources or profile.  Output of these checks are found in the CIMPL output, _qa.html_.
 
 [Run the FHIR publisher and create an IG](cimpl6ToolingReference.md#creating-the-implementation-guide)
 
@@ -168,7 +166,7 @@ If you find an issue you can't resolve, or have a question, report it on one of 
 
 | Style | Explanation | Example |
 |:----------|:---------|:---------|
-| **Bold**  | A FHIR term or resource | **Profile** |
+| **Bold**  | A FHIR name | **Observation** |
 | `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
 | <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
 | _Italics_ | A file name, or general emphasis in text | _obf-action.txt_ |

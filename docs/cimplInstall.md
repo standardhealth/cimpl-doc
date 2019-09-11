@@ -32,8 +32,8 @@ Unlike most applications that include a standalone installation file that you ca
 
 For a successful installation, it is critical that you:
 
-* Read the instructions **thoroughly**.
-* Follow instructions **in order**, without skipping around.
+* Read the instructions _thoroughly_.
+* Follow instructions _in order_, without skipping around.
 * Understand your organization's proxy server configuration, if running from inside a firewall
 * Pay attention to placeholders in the instructions (such proxy server addresses) that you may need to replace.
 * Allow enough time (30-60 minutes)
