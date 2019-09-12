@@ -8,7 +8,7 @@
 
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) **profile**s, **extension**s and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 ### Purpose
 
@@ -16,7 +16,7 @@ This reference manual is a comprehensive guide to the command line interface, au
 
 ### Intended Audience
 
-The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)
+The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as resources, elements, etc.)
 
 ### Prerequisite
 
@@ -38,7 +38,7 @@ The inputs to SHR-CLI include:
 
 * [CIMPL Language files](cimpl6LanguageReference.md), including Class, Value Set, and Map files that define your clinical information model,
 * A [Configuration file](#configuration-file) that contains directives to the tooling, and points to other resources,
-* An optional [Content Profile](#content-profile-file) file, which specifies [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) **element**s and profiling options specific to an IG,
+* An optional [Content Profile](#content-profile-file) file, which specifies [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements and profiling options specific to an IG,
 * One or more [Front Matter](#front-matter-files) files, which are the narratives and graphics that introduce the IG,
 * [FHIR Examples](#fhir-examples) that are to be included in the IG, and
 * A [Package List](#package-list-file) that has information required for building the IG.
@@ -48,15 +48,15 @@ The inputs are processed in the following sequence:
 * The user [issues a build command](#executing-shr-cli) through the command-line interface (CLI) to launch SHR-CLI.
 * The CIMPL tooling imports definitions from CIMPL files (Class, Value Set, and Map files). SHR-CLI [reports any errors](#addressing-error-messages) in the CIMPL definitions.
 * SHR-CLI selects a subset of the data models to include in the IG, according to the [filter strategy](#filter-strategy-configuration-parameters).
-* SHR-CLI exports the selected CIMPL definitions into desired formats, such as FHIR **profile**s, data dictionaries, etc. The exports can be selected through [command line options](#executing-shr-cli).
+* SHR-CLI exports the selected CIMPL definitions into desired formats, such as FHIR profiles, data dictionaries, etc. The exports can be selected through [command line options](#executing-shr-cli).
 * The user [issues a separate command](#creating-the-implementation-guide) to produce the IG.
 
 SHR-CLI produces one or all of the following outputs, depending on configuration parameters:
 
-* [FHIR **profile**s, **extension**s, **value set**s](#fhir-export) that form the core content of the IG,
-* A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR **StructureDefinition**s,
-* [JSON Schema](#json-schema-export) for the **profile**s defined by the IG,
-* A [Data Dictionary](#data-dictionary-export) that lists the [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) **element**s in the IG, as well as value sets and value set members,
+* [FHIR profiles, extensions, value sets](#fhir-export) that form the core content of the IG,
+* A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR **StructureDefinition**,
+* [JSON Schema](#json-schema-export) for the profiles defined by the IG,
+* A [Data Dictionary](#data-dictionary-export) that lists the [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements in the IG, as well as value sets and value set members,
 * [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the class relationships in the logical model.
 
 ### Relationship of CIMPL Models and Implementation Guides
@@ -121,26 +121,26 @@ The SHR-CLI tooling does not require a particular directory structure. However, 
 ```
 In this reference manual, we refer to several directories:
 
-* **Tooling Directory** - this the directory where the SHR-CLI tooling has been installed. Any convenient directory can be used. For easy identification, we recommend the tooling version number be included in the directory name.
-* **Specification Directory** - this is the top level directory where the input files are located, usually arranged in sub-folders. Any convenient directory can be used. If you are using a source code control system such as Github to manage your development, this could be where the repository is checked out to your local machine.
-* **Namespace Directories** - each directory, located under the _specification directory,_ contains CIMPL language files for a single namespace. The name of the directory should be prefixed with _ns-_ followed by the short name or acronym of the namespace.
-* **IG Directories** - each directory, under the _specification directory_ contains files specific to an IG. There are subdirectories containing the front matter and examples, and individual Configuration, Content Profile, and Package List files. These files can be specific to a FHIR release, since the same IG could be created using different versions of FHIR.
+* _Tooling Directory_ - this the directory where the SHR-CLI tooling has been installed. Any convenient directory can be used. For easy identification, we recommend the tooling version number be included in the directory name.
+* _Specification Directory_ - this is the top level directory where the input files are located, usually arranged in sub-folders. Any convenient directory can be used. If you are using a source code control system such as Github to manage your development, this could be where the repository is checked out to your local machine.
+* _Namespace Directories_ - each directory, located under the _specification directory,_ contains CIMPL language files for a single namespace. The name of the directory should be prefixed with _ns-_ followed by the short name or acronym of the namespace.
+* _IG Directories_ - each directory, under the _specification directory_ contains files specific to an IG. There are subdirectories containing the front matter and examples, and individual Configuration, Content Profile, and Package List files. These files can be specific to a FHIR release, since the same IG could be created using different versions of FHIR.
 
->Note: There is currently no way to combine **profile**s for multiple FHIR versions in single IG.
+>**Note**: There is currently no way to combine profiles for multiple FHIR versions in single IG.
 
 ### Suggested File Naming
 
 The naming of Configuration, Content Profiles, and Package List files is arbitrary, but it is useful for teams to follow similar conventions. The suggested approach to naming uses variations on the same shortened IG name, as follows:
 
-* Configuration file: <code>ig-<i>guide-name</i>-config.json</code>
-* Content Profile file: <code>ig-<i>guide-name</i>-cp.txt</code>
-* Package List file: <code>ig-<i>guide-name</i>-plist.json</code>
+* Configuration file: <code>ig-<i>**guide-name**</i>-config.json</code>
+* Content Profile file: <code>ig-<i>**guide-name**</i>-cp.txt</code>
+* Package List file: <code>ig-<i>**guide-name**</i>-plist.json</code>
 
 If your project will support more than one FHIR version, the FHIR version should be included:
 
-* Configuration file: <code>ig-<i>guide-name-FHIR Version</i>-config.json</code>
-* Content Profile file: <code>ig-<i>guide-name-FHIR Version</i>-cp.txt</code>
-* Package List file: <code>ig-<i>guide-name-FHIR Version</i>-plist.json</code>
+* Configuration file: <code>ig-<i>**guide-name-FHIR Version**</i>-config.json</code>
+* Content Profile file: <code>ig-<i>**guide-name-FHIR Version**</i>-cp.txt</code>
+* Package List file: <code>ig-<i>**guide-name-FHIR Version**</i>-plist.json</code>
 
 where FHIR version is _dstu2, stu3_, or _r4_.
 <!-- MK: why not use the same values as listed in the configuration file section?  consistency?-->
@@ -153,7 +153,7 @@ Any text editor can be used to write CIMPL grammar. However, [VSCode editor](htt
 
 #### Setting up the VSCode Authoring
 
->*Note: VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.
+>**Note**: VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.
 
 * Download the [VSCode editor](https://code.visualstudio.com/).
 * Open VSCode, open the extensions panel, and search for the extension _vscode-lang-cimpl_. The figure below shows where to find VSCode extensions on MacOS (on Windows, navigate _View -> Extensions_). Alternatively, select the extension icon (the squarish icon on the far left).
@@ -180,7 +180,6 @@ Use _Go to Definition_:
 
 ![Using Go to Definition](img_cimpl/VSCode_GotoDef.png)
 
-
 ### Configuration File
 
 SHR-CLI requires a Configuration file to run. The name of this file is typically specified on the command line [using the `-c` command line option](#executing-shr-cli). If the name is not specified, the tooling looks for a file named _config.json_ in the working directory. If that cannot be found, or the contents of the Configuration file are invalid, an error message is returned.
@@ -205,9 +204,9 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 
 #### Filter Strategy Configuration Parameters
 
-***
-**NOTE:** The `filterStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `filterStrategy`.
-***
+
+>**NOTE:** The `filterStrategy` Configuration file parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the Configuration file `filterStrategy` Migrate any `filterStrategy` settings to the [Content Profile](#content-profile-file).
+
 
 Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when the [_specification directory_](#suggested-directory-structure) contains namespaces or `Entries` that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and `Entries` to limit the scope of the exports, and subsequently, the IG.
 
@@ -219,7 +218,7 @@ The contents of the `filterStrategy` object are as follows:
 |`strategy`|<code><i>string</i></code> | The strategy for specification filtering, either "namespace", "element", or "hybrid".|
 |`target`  |`[]`     |An array of strings containing the names of `Entries`, namespaces, or both. |
 
-* The `element` strategy filters the imported classes to include each `Entry` listed in the `target` array, and their recursive dependencies.
+* The `Element` strategy filters the imported classes to include each `Entry` listed in the `target` array, and their recursive dependencies.
 * The `namespace` strategy filters the imported classes to include only `Entries` in the namespaces listed in the `target` array, and their recursive dependencies.
 * The `hybrid` strategy filters the imported classes to include each `Entry` listed in the `target` array,and all `Entries` in every namespace listed in the `target` array with their recursive dependencies.
 
@@ -244,15 +243,12 @@ These configurations are used to control the production of the IG. The contents 
 |`changesLink`             |<code><i>string</i></code> |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     |The strategy for selection of what is primary in the IG ([see below])(#primary-selection-strategy). |
 
-CARMELA - START HERE & resolve issue with filter strategy section same with primary selection
-
 #### Primary Selection Strategy Configuration Parameters
 
+> **NOTE**: The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
 
-> NOTE: The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
 
-
-The primary selection strategy causes certain **profile**s to be displayed in a _Primary_ section at the top list of **profile**s. All other exported **profile**s are listed in a _Supporting_ section below the _Primary_ section. The contents of the `primarySelectionStrategy` object are as follows:
+The primary selection strategy causes certain profiles to be displayed in a _Primary_ section at the top list of profiles. All other exported profiles are listed in a _Supporting_ section below the _Primary_ section. The contents of the `primarySelectionStrategy` object are as follows:
 
 |Parameter |Type    |Description |
 |--------|------|-----------|
@@ -261,8 +257,8 @@ The primary selection strategy causes certain **profile**s to be displayed in a 
 
 The `strategy` options are as follows:
 
-* `entry` selects every exported **profile** as primary.
-* `namespace` selects every **profile** found in the namespaces of the `primary` array as primary.
+* `entry` selects every exported profile as primary.
+* `namespace` selects every profile found in the namespaces of the `primary` array as primary.
 * `hybrid` selects every entry listed in the `primary` array or found in the namespaces in the `primary` array as primary.
 
 When specifying an `Entry` in the target array, use the fully qualified name (FQN).
@@ -340,24 +336,24 @@ Here is an example of a package list file:
 
 ### Content Profile File
 
-The Content Profile (CP) specifies the **profile**s to be included in the IG. As explained [earlier](#data-model-ig-relationship), IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models from more than one one namespace:
+The Content Profile (CP) specifies the profiles to be included in the IG. As explained [earlier](#data-model-ig-relationship), IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models from more than one one namespace:
 
 ![Content profile scope](img_cimpl/Content-profile-scope.png)
 
 The CP provides several different types of information about the IG:
 
-* The list of **profile**s to be included in the IG,
-* The **element**s in these classes to be marked as [**MustSupport**](#Specifying-must-support-elements), designated with the `MS` tag, and
+* The list of profiles to be included in the IG,
+* The FHIR resource elements in the profiles to be marked as [**MustSupport**](#Specifying-must-support-elements), designated with the `MS` tag, and
 * A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
 
 The CP file is interpreted as follows:
 <!-- MK re: use of the more generic word classes - only an `Entry` may become a **profile** - true? if so, why not call these Entry? -->
 
 * The classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (`NP`).
-* A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is _not_ tagged as a No-Profile class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
+* A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is _not_ tagged as a No-Profile (`NP`) class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
 
 The syntax of a Content Profile file is:
-<!-- suggest documenting filter strategy and primary selection here - waiting for input on previous comment -->
+<!-- suggest providing an example of filter strategy and primary selection here - waiting for input on previous comment -->
 ```
 Grammar:  ContentProfile 1.0
 
@@ -405,21 +401,21 @@ For example:
 
 In FHIR, [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag that allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists.
 
-A **MustSupport** **Element** is designated with the `MS` tag after the `Property` name.
+A **MustSupport** element is designated with the `MS` tag after the `Property` name.
 
-**MustSupport** **Elements** are not part of the data model, because different **Elements** are important for different use cases. For example, one use case may require a _patient's date of death_ to be recognized, and another might not. The data model for _date of death_ should be the same wherever it is used.
+**MustSupport** elements are not part of the data model, because different elements are important for different use cases. For example, one use case may require a _patient's date of death_ to be recognized, and another might not. The data model for _date of death_ should be the same wherever it is used.
 
 #### Specifying No-Profile Elements
 <!-- MK - similar question about specific vs: general reference to class - first para only -->
 The _no profile_ (`NP`) tag instructs SHR-CLI to _not_ profile a class, and therefore, exclude it from the list of profiles.
 
-> Note: In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen may reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of directly and indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have differentials with respect to the resources they are mapped to, then by default, SHR-CLI will create **profile**s for them, and bring those **profile**s into the IG. The `NP` flag is a way to put boundaries around your IG.
+> **Note**: In clinical models, classes frequently reference other classes. A laboratory result may reference a patient, a specimen, a device, etc. In turn, the specimen may reference a procedure, the procedure its location, the device its manufacturer, etc. There could be large network of directly and indirectly-required classes that extend well beyond the intended scope of the IG. If any of these classes have differentials with respect to the resources they are mapped to, then by default, SHR-CLI will create profiles for them, and bring those profiles into the IG. The `NP` flag is a way to put boundaries around your IG.
 
-Because dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the _out/fhir/profiles_ directory to see the complete list of **profile**s generated. If any **profile**s in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class.
+Because dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the _out/fhir/profiles_ directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class.
 
 The `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
 
-> NOTE: The _no profile_ feature is available in SHR-CLI 6.6.0 and higher
+> **NOTE**: The _no profile_ feature is available in SHR-CLI 6.6.0 and higher
 
 ## Executing SHR-CLI
 
@@ -457,7 +453,7 @@ $ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 
 In the process of building a model, it is inevitable that you will encounter error messages from SHR-CLI. Debugging the model is an iterative process, and it could take some perseverance to arrive at a _clean_ run of SHR-CLI with no errors. This is an expected part of the process.
 
-A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in **[Appendix: Error Messages](#appendix-error-messages)**.
+A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in [Appendix: Error Messages](#appendix-error-messages).
 
 Here are some general tips on approaching debugging your model:
 
@@ -491,15 +487,15 @@ The content of the _/out_ directory depends on which exporters were selected to 
 
 ### FHIR Export
 
-The FHIR export consists of **profiles**, **extensions**, **value sets**, **code systems**, **examples**, and other artifacts needed to create a FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [IG publisher](#creating-the-implementation-guide) to create the IG.
+The FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create a FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [IG publisher](#creating-the-implementation-guide) to create the IG.
 
-The FHIR export appears in the _/fhir_ subdirectory under the designated _out_ directory. The directory contains further subdirectories for **code systems**,**extensions**, the IG (_guide_), the logical model (_logical_), **profiles**, and **value sets**.
+The FHIR export appears in the _/fhir_ subdirectory under the designated _out_ directory. The directory contains further subdirectories for code systems,extensions, the IG (_guide_), the logical model (_logical_), profiles, and value sets.
 
 #### Logical Model Export
 
 An optional part of the FHIR export, the logical model can be turned on or off using the `includeLogicalModels` flag in the Configuration file.
 
-The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model _prior to_ mapping to FHIR **resources**. Each `Entry` is presented as if it were a new FHIR **resource**, rather than a **profile**. The logical model is formally expressed as a set of FHIR **StructureDefinitions**. These definitions are distinguished from **profiles** because the names generated by the tooling end in `-model`.
+The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model _prior to_ mapping to FHIR resources. Each `Entry` is presented as if it were a new FHIR resource, rather than a profile. The logical model is formally expressed as a set of FHIR **StructureDefinitions**. These definitions are distinguished from profiles because the names generated by the tooling end in `-model`.
 
 Because the logical model does not include maps, it is useful for review purposes. The logical model can be checked for clinical relevance and sufficiency before making mapping decisions.
 
@@ -515,15 +511,15 @@ For many users, especially those with experience in object-oriented modeling, th
 
 ### Data Dictionary Export
 
-The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR **profile**s. The spreadsheet has five tabs:
+The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
 
 * The _Key_ tab contains a key to the columns in the other tabs,
 * The _Profiles_ tab contains a list of the primary profiles and their descriptions,
-* The _Data Elements_ tab contains a list of [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required **elements** associated with those **profiles**,
+* The _Data Elements_ tab contains a list of [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required elements associated with those profiles,
 * The _Value Sets_ tab contains a list of value sets used in the IG, and their descriptions,
 * The _Value Set Details_ tab contains a list of the codes and/or implicit definitions in those value sets.
 
-The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR **profiles**, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
+The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR profiles, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
 
 ### JSON Schema Export
 
@@ -543,7 +539,7 @@ Open a command prompt, change directories to the _tooling directory_, and use on
 
   $  `java -Xms4g -Xmx8g -jar mypath/out/fhir/guide/org.hl7.fhir.publisher.jar -ig mypath/out/fhir/guide/ig.json`
 
-> Note: The IG publisher can take 15-30 minutes or longer to run, depending on the size of the IG, and it takes _lots_ of memory. The yarn script above will allocate up to 8GB of RAM. A minimum of 4GB of RAM is recommended to run the IG Publisher tool.
+> **Note**: The IG publisher can take 15-30 minutes or longer to run, depending on the size of the IG, and it takes _lots_ of memory. The yarn script above will allocate up to 8GB of RAM. A minimum of 4GB of RAM is recommended to run the IG Publisher tool.
 
 When the publisher finishes, the IG can be opened by running the following commands.
 
@@ -589,7 +585,7 @@ CIMPL Compilation Errors are structured in the following format:
 ### Parsing Errors
 
 Parsing errors are generated when the importer cannot make sense of the contents of a CIMPL statement.
-> Note: Parsing error messages include the file, line, and column number, and can be linked directly to a location in a CIMPL file where parsing failed.
+> **Note**: Parsing error messages include the file, line, and column number, and can be linked directly to a location in a CIMPL file where parsing failed.
 
 Most other types of errors (with the exception of mapping errors) cannot be linked to a specific file location because they represent some type of  logical inconsistency.
 
@@ -611,7 +607,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 03001 | Trying to map `$PROFILE` to `$CODE`, but `$PROFILE` was previously mapped to it | |
 | 03002 | Choice has equivalent types, so choice options may overwrite or override each other when mapped to FHIR. | |
 | 03003 | Overriding extensible value set constraint from `$VS1` to `$VS2`.  Only allowed when new codes do not overlap meaning of old codes. | The **extensible** binding means that a code from outside the given value set should be used only if the value set does not contain a suitable code. |
-| 03004 | Element profiled on Basic. Consider a more specific mapping. | The **Basic** **resource** should not be used in most cases. Consider a more specific **profile** mapping that categorizes the `Element` being mapped. |
+| 03004 | Element profiled on Basic. Consider a more specific mapping. | The **Basic** resource should not be used in most cases. Consider a more specific profile mapping that categorizes the `Element` being mapped. |
 | 03005 | No mapping to '`$ELEMENT PATH`'. | This property is core to the target resource and usually should be mapped. |  |
 | 03006 | The `$PROPERTY` property is not bound to a value set, fixed to a code, or fixed to a quantity unit. This property is core to the target resource and usually should be constrained |Usually a result of not setting the Code attribute of an Observation. |
 | 04001 | Unsupported code system: '`$CODESYSTEM`' | |
@@ -707,7 +703,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 
 | Error Code    | Error Message | Solution |
 | ------------  | ------------- | -------- |
-| 13001          | Invalid FHIR target: `$TARGET` | Could not find the FHIR **resource** or **profile** you're trying to map to. Check spelling and FHIR version. |
+| 13001          | Invalid FHIR target: `$TARGET` | Could not find the FHIR resource or profile you're trying to map to. Check spelling and FHIR version. |
 | 13002          | Cannot flag path as mapped |
 | 13003          | Slicing on include type constraints with paths is not supported |
 | 13004          | Slicing required to disambiguate multiple mappings to `$TARGET` |
@@ -764,7 +760,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13057          | Could not fix `$TARGET` to `$VALUE`; failed to detect compatible type for value `$VALUE`. |
 | 13058          | Cannot fix `$TARGET` to `$VALUE` since it is not a `$TYPE` type. |
 | 13059          | Cannot fix `$TARGET` to `$VALUE` since it is already fixed to `$OTHER_VALUE`. |
-| 13060          | Could not determine how to map nested value (`$ELEMENT_PATH`) to FHIR profile. | Occurs on the FHIR **profile** export when there are multiple levels of **reference** specified. e.g.: **LaboratoryObservationTopic.Specimen.CollectionSite** within **LaboratoryObservationTopic**.  Resolved by creating a reference in the _CIMI_ entity to FHIR map in _cimi_entity_map.txt_. | <!-- CC obscure reference -->
+| 13060          | Could not determine how to map nested value (`$ELEMENT_PATH`) to FHIR profile. | Occurs on the FHIR profile export when there are multiple levels of reference specified. e.g.: **LaboratoryObservationTopic.Specimen.CollectionSite** within **LaboratoryObservationTopic**.  Resolved by creating a reference in the _CIMI_ entity to FHIR map in _cimi_entity_map.txt_. | <!-- MK  obscure reference to cimi entity map.txt, any thoughts on providing more context?  -->
 | 13061          | Mapping `$ELEMENT` sub-fields is currently not supported. |
 | 13062          | Cannot make choice element explicit at `$ELEMENT`. Could not find compatible type match for: `$TYPE`. |
 | 13063          | Could not find FHIR element with path `$ELEMENT_PATH` for content profile rule with path `$RULE_PATH`. |
@@ -775,7 +771,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 
 | Style | Explanation | Example |
 |:----------|:---------|:---------|
-| **Bold**  | A FHIR term or resource | **Profile** |
+| **Bold**  | A FHIR reserved word or resource name | **Condition** |
 | `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
 | <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
 | _Italics_ | A file name, or general emphasis in text | _obf-action.txt_ |
