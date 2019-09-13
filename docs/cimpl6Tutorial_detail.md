@@ -273,9 +273,9 @@ Together with specified cardinality, the `MS` declaration can be [interpreted as
 
 | Cardinality |  **MustSupport**  | Interpretation |
 |------------|------------|-------------|
-| 1..1 |  **any** | required |
-| 0..1 | **yes** | required if known |
-| 0..1 | **no**  | optional |
+| 1..1 |  any | required |
+| 0..1 | yes | required if known |
+| 0..1 | no  | optional |
 
 Create a file called _ig-myExample-cp.txt_ under the _myExampleC6_ sub-directory. Paste the following code snippet into your file:
 
