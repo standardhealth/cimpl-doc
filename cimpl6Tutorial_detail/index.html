@@ -39,6 +39,8 @@
               {title: "Modeling Process", url: "#modeling-process" },
               {title: "Generate the FHIR IG", url: "#generate-the-fhir-ig" },
           ]},
+          {title: "Appendix - Document Conventions", url: "#appendix-document-conventions", children: [
+          ]},
         ];
 
     </script>
@@ -69,7 +71,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../cimpl6Authoring/" class="btn btn-xs btn-link">
-        CIMPL Authoring Guide
+        CIMPL User Guide
       </a>
     </div>
     
@@ -77,7 +79,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
       <a href="../cimpl6Tutorial_helloWorld/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         Previous</a><a href="../cimpl6Tutorial_helloWorld/" class="btn btn-xs btn-link">
-        CIMPL 'Hello World' Tutorial
+        CIMPL Hello World Tutorial
       </a>
     </div>
     
@@ -108,17 +110,18 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </li>
 <li><a href="#generate-the-fhir-ig">Generate the FHIR IG</a><ul>
-<li><a href="#specify-fhir-mustsupport-elements">Specify FHIR "MustSupport" Elements</a></li>
+<li><a href="#specify-fhir-mustsupport-elements">Specify FHIR MustSupport Elements</a></li>
 <li><a href="#create-a-homepage-for-the-ig">Create a Homepage for the IG</a></li>
 <li><a href="#configure-the-output">Configure the Output</a></li>
 <li><a href="#compile-cimpl">Compile CIMPL</a></li>
 <li><a href="#run-the-fhir-ig-publisher">Run the FHIR IG Publisher</a></li>
 <li><a href="#add-fhir-examples">Add FHIR Examples</a></li>
-<li><a href="#compile-cimpl-and-run-the-fhir-ig-publisher">Compile CIMPL and Run the FHIR IG publisher</a></li>
+<li><a href="#compile-cimpl-and-run-the-fhir-ig-publisher">Compile CIMPL and Run the FHIR IG Publisher</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#appendix-document-conventions">Appendix - Document Conventions</a></li>
 </ul>
 </div>
 <hr />
@@ -127,11 +130,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h3 id="purpose">Purpose</h3>
 <p>This is an extensive tutorial, meant to expose the reader to many aspects of CIMPL and its tooling (SHR-CLI).  </p>
 <h3 id="intended-audience">Intended Audience</h3>
-<p>The CIMPL In-Depth Tutorial is targeted to any person who wants to create a FHIR IG, wants to learn how to leverage CIMPL to accomplish that goal, and is comfortable with programming languages. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.).</p>
+<p>The CIMPL In-Depth Tutorial is targeted to any person who wants to create a FHIR IG, wants to learn how to leverage CIMPL to accomplish that goal, and is comfortable with programming languages. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as resources, profiles, etc.).</p>
 <h3 id="prerequisite">Prerequisite</h3>
 <p>This guide assumes you have:</p>
 <ul>
-<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a> (preferably installed in the <code>~/cimpl/shr-cli</code> directory)</li>
+<li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a> (preferably installed in the <em>~/cimpl/shr-cli</em> directory)</li>
 <li>A text editor to edit you CIMPL files (preferably VSCode with the <em>vs-code-language-cimpl</em> extension, but not required)</li>
 <li>Reviewed the <a href="../cimpl6Tutorial_helloWorld/">Hello World Tutorial</a>.</li>
 </ul>
@@ -143,16 +146,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <blockquote>
-<p><strong>Note:</strong> <em>Your top level directory where SHR-CLI was installed might differ. If so, then you'll be instead referencing the relative directory where you have installed shr-cli.</em></p>
-</blockquote>
-<p>Create a sub-directory under <code>cimpl</code> called <strong><code>myExampleC6</code></strong>
+<p><strong>Note</strong>: The top level directory where SHR-CLI was installed might differ. If so, you must reference the relative directory where you have installed shr-cli.
+<!-- mk - directory names, although represented in code blocks throughout, are not code blocks. I decided to italicize - treat like a file name -->
+Create a sub-directory under <em>cimpl</em> called <em>myExampleC6</em>.
 Now your directory structure should look like this:</p>
+</blockquote>
 <pre><code>Directory:  cimpl
             |_ shr-cli
             |_ myExampleC6
 </code></pre>
 
-<p>Copy the following files to the <code>myExampleC6</code> sub-directory.  The files contain global definitions for Code Systems, Value Sets, maps to FHIR R4 elements and examples. These file names are hyperlinked for retrieval:</p>
+<p>Copy the following files to the <em>myExampleC6</em> sub-directory.  The files contain global definitions for code systems, value sets, maps to FHIR R4 elements and examples. These file names are hyperlinked for retrieval:</p>
 <table>
 <thead>
 <tr>
@@ -162,25 +166,25 @@ Now your directory structure should look like this:</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../cimplTutorial/obf-datatype.txt">obf-datatype.txt</a></td>
+<td><a href="../cimplTutorial/obf-datatype.txt"><em>obf-datatype.txt</em></a></td>
 <td>Complex data type definitions</td>
 </tr>
 <tr>
-<td><a href="../cimplTutorial/obf-datatype-vs.txt">obf-datatype-vs.txt</a></td>
+<td><a href="../cimplTutorial/obf-datatype-vs.txt"><em>obf-datatype-vs.txt</em></a></td>
 <td>Value sets supporting the data types</td>
 </tr>
 <tr>
-<td><a href="../cimplTutorial/obf-datatype-map-r4.txt">obf-datatype-map-r4.txt</a></td>
-<td>Mapping between <a href="#Primitives">CIMPL data types</a>, complex data types and <a href="https://www.hl7.org/fhir/datatypes.html">FHIR 4.0 data types</a></td>
+<td><a href="../cimplTutorial/obf-datatype-map-r4.txt"><em>obf-datatype-map-r4.txt</em></a></td>
+<td>Maps between <a href="#Primitives">CIMPL data types</a>, complex data types and <a href="https://www.hl7.org/fhir/datatypes.html">FHIR 4.0 data types</a></td>
 </tr>
 <tr>
-<td><a href="../cimplTutorial/ig-myExampleR4-config.json">ig-myExampleR4-config.json</a></td>
+<td><a href="../cimplTutorial/ig-myExampleR4-config.json"><em>ig-myExampleR4-config.json</em></a></td>
 <td>Configuration settings supporting IG creation</td>
 </tr>
 </tbody>
 </table>
 <h2 id="modeling-process">Modeling Process</h2>
-<p>This tutorial guides you in a step by step process to build a basic clinical data model that directly references FHIR resources. It also illustrates the modeling practice briefly described in the <a href="../cimpl6Authoring/">CIMPL Authoring Guide</a>.</p>
+<p>This tutorial guides you in a step by step process to build a basic clinical data model that directly references FHIR resources. It also illustrates the modeling practice briefly described in the <a href="../cimpl6Authoring/#using-cimpl-to-create-fhir-based-models">CIMPL Authoring Guide</a>.</p>
 <p>The steps are briefly summarized here:</p>
 <ul>
 <li>Define use case(s)</li>
@@ -203,8 +207,8 @@ Now your directory structure should look like this:</p>
 <table>
 <thead>
 <tr>
-<th>Entity</th>
-<th>Data Element Name</th>
+<th><code>Entity</code></th>
+<th>Data <code>Element</code> Name</th>
 <th>Cardinality</th>
 <th>Data type</th>
 <th>Value Set (if applicable)</th>
@@ -212,45 +216,45 @@ Now your directory structure should look like this:</p>
 </thead>
 <tbody>
 <tr>
-<td>Patient</td>
-<td>BirthDate</td>
-<td>1..1</td>
-<td>date</td>
+<td><code>Patient</code></td>
+<td><code>BirthDate</code></td>
+<td><code>1..1</code></td>
+<td><code>date</code></td>
 <td></td>
 </tr>
 <tr>
-<td>Patient</td>
-<td>Gender</td>
-<td>0..1</td>
-<td>concept</td>
-<td>HL7 Administrative Gender</td>
+<td><code>Patient</code></td>
+<td><code>Gender</code></td>
+<td><code>0..1</code></td>
+<td><code>concept</code></td>
+<td><em><strong>HL7 Administrative Gender</strong></em></td>
 </tr>
 <tr>
-<td>OSADisorder</td>
-<td>OSADisorderCode</td>
-<td>1..1</td>
-<td>concept</td>
-<td>SNOMED codes for OSA</td>
+<td><code>OSADisorder</code></td>
+<td><code>OSADisorderCode</code></td>
+<td><code>1..1</code></td>
+<td><code>concept</code></td>
+<td><em>SNOMED codes for OSA</em></td>
 </tr>
 <tr>
-<td>OSADisorder</td>
-<td>OSADisorderStatus</td>
-<td>0..1</td>
-<td>concept</td>
-<td>HL7 status codes</td>
+<td><code>OSADisorder</code></td>
+<td><code>OSADisorderStatus</code></td>
+<td><code>0..1</code></td>
+<td><code>concept</code></td>
+<td><em>HL7 status codes</em></td>
 </tr>
 </tbody>
 </table>
-<p><a href="../cimpl6LanguageReference/#concept-codes">CIMPL's <code>concept</code> data type</a> encompasses any enumerated or terminology-coded data types. FHIR's CodeableConcept, Coding, and code are all <code>concept</code> in CIMPL.</p>
+<p><a href="../cimpl6LanguageReference/#concept-codes">CIMPL's <code>concept</code> data type</a> encompasses any enumerated or terminology-coded data types. FHIR <strong>CodeableConcept</strong>, <strong>Coding</strong>, and <strong>code</strong> data types are all <code>concept</code> data type in CIMPL.</p>
 <h3 id="create-the-logical-model-in-cimpl">Create the Logical Model in CIMPL</h3>
-<p>In this example, the only part of the <a href="../cimpl6ObjectiveFHIR/">CIMPL Class Library</a> we are using is the datatypes.</p>
-<p>CIMPL has three main files involved in the creation of a logical model - one of each for every CIMPL project. We list them here for brevity, but reference the <a href="../cimpl6LanguageReference/">CIMPL 6 Language Reference Guide</a> for further details on each:</p>
+<p>In this example, the only part of the <a href="../cimpl6ObjectiveFHIR/#overview">CIMPL Class Library</a> we are using is the datatypes.</p>
+<p>CIMPL has three main files involved in the creation of a logical model. </p>
 <ul>
-<li>Class file</li>
-<li>Value Set file</li>
-<li>Map file</li>
+<li><a href="../cimpl6LanguageReference/#class-file">Class file</a></li>
+<li><a href="../cimpl6LanguageReference/#value-set-file">Value Set file</a></li>
+<li><a href="../cimpl6LanguageReference/#map-file">Map file</a></li>
 </ul>
-<p>The class file is the place to start. Create a new file under the <code>myExampleC6</code> subdirectory called <strong><code>myExample.txt</code></strong>.</p>
+<p>The Class file is the place to start. Create a new file under the <em>MyExampleC6</em> subdirectory called <em>myExample.txt</em>.</p>
 <p>Type in the CIMPL header information designating the namespace and version of the DataElement parser:</p>
 <pre><code>Grammar:        DataElement 6.0
 Namespace:      myExample
@@ -260,16 +264,16 @@ Uses:           obf.datatype
 
 <p>Where:</p>
 <ul>
-<li><code>Grammar</code> is a required keyword indicating the parser to be used, in this case <em>DataElement 6.0</em></li>
+<li><code>Grammar</code> is a required keyword indicating the parser to be used, in this case <code>DataElement 6.0</code></li>
 <li><code>Namespace</code>, also required, is a short name for your project, IG, or module you are defining. This should be a meaningful and easily recognizable name.</li>
-<li><code>Uses</code> is the list of all namespaces which your model elements will reference.  For our example, we set this to <em>obf.datatype</em>.</li>
+<li><code>Uses</code> is the list of all namespaces your model elements will reference.  For our example, we set this to <code>obf.datatype</code>.</li>
 </ul>
-<p>Next, we will create our first class, called <strong><code>MyPatient</code></strong>, which we determined will also have the following properties:</p>
+<p>Next, we will create our first class, called <code>MyPatient</code>, that we determined will have the following properties:</p>
 <ul>
-<li><code>MyBirthDate</code> (a required field which only accepts one value)</li>
+<li><code>MyBirthDate</code> (a required field that only accepts one value)</li>
 <li><code>MyGender</code> (an optional field that we want to have the receiver accept, if the value is known.)</li>
 </ul>
-<p>Let's build our Patient logical model. Add the following lines below your CIMPL header:</p>
+<p>Let's build our logical model. Add the following lines below your CIMPL header:</p>
 <pre><code>Entry:         MyPatient
 Description:   &quot;An individual awaiting or under medical care and treatment. (source: Webster's Dictionary)&quot;
 Property:      MyBirthDate 1..1
@@ -284,10 +288,10 @@ Description:   &quot;Either of the two sexes (male and female), especially when 
 Value:         concept from http://hl7.org/fhir/ValueSet/administrative-gender
 </code></pre>
 
-<p>We now have a <code>Patient</code> entity called <code>MyPatient</code> which has 2 properties: <code>MyBirthdate</code> and <code>MyGender</code>. The FHIR Patient base resource has these attributes; for purposes of this tutorial we will not consider that information -- this won't always be the case.</p>
-<p>We determined from our clinical requirements that <code>MyBirthDate</code> has a data type of <em>date</em>, which is one of the primitive data types supported in CIMPL. This data type is  expressed with the <em>Value</em> keyword.</p>
-<p>We also determined that <code>MyGender</code> has a data type of <em>concept</em> which allows us to constrain the allowable values to a value set containing: <em>male</em>, <em>female</em>, and <em>unknown</em>.  We find that HL7 has a matching value set identical to our requirements so we'll use that one for its value.</p>
-<p>Now let's work on the OSA Disorder entity. Add the following text into the file:</p>
+<p>We now have a <code>Patient</code> entity called <code>MyPatient</code> which has 2 properties: <code>MyBirthdate</code> and <code>MyGender</code>. The FHIR <strong>Patient</strong> base resource has these attributes; for purposes of this tutorial we will not consider that information -- this won't always be the case.</p>
+<p>We determined from our clinical requirements that <code>MyBirthDate</code> has a data type of <code>date</code>, that is one of the primitive data types supported in CIMPL. This data type is expressed with the <code>Value</code> keyword.</p>
+<p>We also determined that <code>MyGender</code> has a data type of <code>concept</code> that allows us to constrain the allowable values to a value set containing: <em>male</em>, <em>female</em>, and <em>unknown</em>.  We find that HL7 has a matching value set identical to our requirements so we'll use that one for the <code>Value</code>. </p>
+<p>Now let's work on the <code>ObstructiveSleepApnea Disorder</code> entity. Add the following text into the file:</p>
 <pre><code>Entry:        ObstructiveSleepApneaDisorder
 Description:  &quot;Obstructive sleep apnea (OSA) is a sleep-related breathing disorder that involves a decrease or complete halt in airflow despite an ongoing effort to breathe. It occurs when the muscles relax during sleep, causing soft tissue in the back of the throat to collapse and block the upper airway. (source: American Academy of Sleep Medicine)&quot;
 Property:     OSADisorderCode 1..1
@@ -302,17 +306,17 @@ Description:  &quot;State of the diagnosis or problem list item.&quot;
 Value:        concept from OSACurrentStatusVS
 </code></pre>
 
-<p>The entity named <code>ObstructiveSleepApneaDisorder</code> contains two properties to define the disorder code and current status. Both properties have been defined as elements with a data type of <em>concept</em> and reference value sets that need to be defined. If you are familiar with the FHIR Condition resource you will notice that the elements in your model replicate two Condition elements. At a later point in this tutorial, the elements will be mapped to FHIR resource elements.</p>
+<p>The entity named <code>ObstructiveSleepApneaDisorder</code> contains two <code>Properties</code> to define the <code>OSADisorderCode</code> and <code>OSACurrentStatus</code>. Both <code>Properties</code> have been defined as <code>Elements</code> with a <code>Value</code> (data type) of <code>concept</code> and reference value sets that need to be defined. If you are familiar with the FHIR <strong>Condition</strong> resource you will notice that the <code>Elements</code> in your model replicate two <strong>Condition</strong> elements. At a later point in this tutorial, the <code>Elements</code> will be mapped to FHIR resource elements.</p>
 <h3 id="create-custom-value-sets">Create Custom Value Sets</h3>
-<p>We need to define the value sets, OSADisorderVS and OSACurrentStatusVS.</p>
-<p>Create a new file called <strong><code>myExample-vs.txt</code></strong> underneath the <code>myExampleC6</code> directory, and add the CIMPL value set header information below:</p>
+<p>We need to define the value sets, <code>OSADisorderVS</code> and <code>OSACurrentStatusVS</code>.</p>
+<p>Create a new file called <em>myExample-vs.txt</em> underneath the <em>myExampleC6</em> directory, and add the CIMPL value set header information below:</p>
 <pre><code>Grammar:    ValueSet 5.1
 Namespace:  myExample
 </code></pre>
 
 <p>Where:</p>
 <ul>
-<li><code>Grammar</code> is the keyword which specifies that the file created is a value set file conforming to CIMPL value set parser version 5.1.</li>
+<li><code>Grammar</code> is the keyword that specifies the file is a Value Set file conforming to CIMPL value set parser version 5.1.</li>
 <li><code>Namespace</code> is the keyword whose value contains the namespace defined for your model.  In this case, it's <code>myExample</code>.</li>
 </ul>
 <p>Next we specify the concepts in the value sets, as defined in our clinical data requirements. Add the following text below the CIMPL value set header information:</p>
@@ -331,19 +335,22 @@ STAT#inactive   &quot;Inactive&quot;
 STAT#resolved   &quot;Resolved&quot;
 </code></pre>
 
-<p>The <code>CodeSystem</code> keyword defines the code systems (e.g. SNOMED-CT, ICD-10, etc.) the concepts in value sets are drawn from. The code systems are referred to by URLs. To learn more about code systems and the relationship to value sets, see https://www.hl7.org/fhir/codesystem.html.</p>
-<p>The format for specifying each concept in the value set is as follows:
-<code>&lt;CodeSystem Alias&gt;#&lt;Code&gt; "&lt;Display&gt;"</code>, for example: <code>STAT#active "Active"</code> where:</p>
+<p>The <code>CodeSystem</code> keyword defines the code systems (e.g. <code>SNOMED-CT</code>, HL7 <code><strong>condition-clinical</strong></code>, <code>ICD-10</code>, etc.) the concepts in value sets are drawn from. The code systems are referred to by URLs. To learn more about code systems and the relationship to value sets, see https://www.hl7.org/fhir/codesystem.html.</p>
+<p>The format for specifying each concept in the value set is as follows:</p>
+<p>Format:   <code><i>CodeSystem Alias&gt;</i>#<i>Code</i> <i>"Display"</i></code></p>
+<p>Example: <code>STAT#active "Active"</code> where:</p>
 <ul>
-<li><code>STAT</code> is an alias that represents the http://terminology.hl7.org/CodeSystem/condition-clinical code system, assigned in the <code>CodeSystem</code> statement</li>
+<li><code>STAT</code> is an alias that represents the <a href="http://terminology.hl7.org/CodeSystem/condition-clinical">HL7 Condition Clinical code system</a> assigned in the <code>CodeSystem</code> statement</li>
 <li><code>#</code> is a delimiter separating the code system and the code</li>
-<li><code>active</code> is the code for the concept</li>
+<li><code>active</code> is the concept code</li>
 <li><code>"Active"</code> is the display name associated with the concept.</li>
 </ul>
 <p>The display name <em>must</em> follow rules as defined by the code system steward. For example, as documented in <a href="https://www.hl7.org/fhir/snomedct.html">Using SNOMED-CT with FHIR</a>, the best display is the preferred term in the relevant language or dialect, as specified in the associated language reference set.</p>
-<p><em><strong>Note:</strong> Code system aliases are required. Direct use of a URL or urn (e.g., <code>http://terminology.hl7.org/CodeSystem/condition-clinical#active</code>) is NOT supported in CIMPL.</em></p>
+<blockquote>
+<p><strong>Note</strong>: Code system aliases are required. Direct use of a URL or urn (e.g., <code>http://terminology.hl7.org/CodeSystem/condition-clinical#active</code>) is <em>not</em> supported in CIMPL.</p>
+</blockquote>
 <h3 id="create-logical-model-to-fhir-mappings">Create Logical Model to FHIR mappings</h3>
-<p>Create a file called <code>myExample-map-r4.txt</code> under the <code>myExampleC6</code> sub-directory, and copy the following header information to the top of the file:</p>
+<p>Create a file called <em>myExample-map-r4.txt</em> under the <em>myExampleC6</em> sub-directory, and copy the following header information to the top of the file:</p>
 <pre><code>Grammar:    Map 5.1
 Namespace:  myExample
 Target:     FHIR_R4
@@ -353,16 +360,16 @@ Target:     FHIR_R4
 <ul>
 <li><code>Grammar</code> is the version supported for the mapping grammar</li>
 <li><code>Namespace</code> is the name of the namespace for your logical model (same as used before)</li>
-<li><code>Target</code> is the FHIR release version targeted for mapping elements in your logical model, one of the following values: FHIR_DSTU2, FHIR_STU_3, or FHIR_R4. Our mapping will be to FHIR_R4. Specifying the target also configures the CIMPL tool chain to generate R4 structure definitions.</li>
+<li><code>Target</code> is the FHIR release version targeted for mapping <strong>element</strong>s in your logical model, one of the following values: <code>FHIR_DSTU2</code>, <code>FHIR_STU_3</code>, or <code>FHIR_R4</code>. Our maps will be to FHIR_R4. Specifying the target also configures the CIMPL tool chain to generate R4 <strong>StructureDefinition</strong>s.</li>
 </ul>
 <p>While mapping, we ask the following questions:</p>
 <ul>
 <li>Is there a FHIR resource that is a good fit for our logical model entities?</li>
-<li>If yes, is there an equivalent FHIR attribute or extension for each of the properties in our logical model?</li>
-<li>If there is an equivalent FHIR attribute then do the data types, cardinality constraints, and terminology bindings align?</li>
+<li>If yes, is there an equivalent FHIR attribute or extension for each of the <code>Properties</code> in our logical model?</li>
+<li>If there is an equivalent FHIR attribute, do the data types, cardinality constraints, and terminology bindings align?</li>
 </ul>
-<p>For simplicity, we made the example such that the answer is yes to all questions. <code>MyPatient</code> entity can map to the <a href="https://www.hl7.org/fhir/patient.html">Patient</a> resource, and <code>ObstructiveSleepApneaDisorder</code> can map to the <a href="https://www.hl7.org/fhir/condition.html">Condition</a> resource. Because we have specified our target map to be <em><code>FHIR_R4</code></em>, our mappings target the R4 version.</p>
-<p>Add the following statements to your map file:</p>
+<p>For simplicity, we created the example such that the answer is yes to all questions. The <code>MyPatient</code> entity maps to the <a href="https://www.hl7.org/fhir/patient.html"><strong>Patient</strong></a> resource, and <code>ObstructiveSleepApneaDisorder</code> maps to the <a href="https://www.hl7.org/fhir/condition.html"><strong>Condition</strong></a> resource. Because we have specified our target map to be <code>FHIR_R4</code>, our maps target the R4 version.</p>
+<p>Add the following statements to your Map file:</p>
 <pre><code>MyPatient maps to Patient:
     MyBirthDate maps to birthDate
     MyGender maps to gender
@@ -372,17 +379,17 @@ ObstructiveSleepApneaDisorder maps to Condition:
     OSACurrentStatus maps to clinicalStatus
 </code></pre>
 
-<p>The logical model properties (defined in the Class file) also match to equivalent FHIR attributes for each resource we've chosen to build our profiles. Because FHIR profiling allows further constraining and not loosening cardinality constraints and binding strengths, we can confirm that our elements also satisfy those requirements.</p>
+<p>The logical model <code>Properties</code>(defined in the Class file) map to equivalent FHIR attributes for each resource or profile we've chosen to reference in our model. Because FHIR profile rules allows further constraining and not loosening cardinality constraints and binding strengths, we can confirm that our <code>Element</code>s also satisfy those requirements.</p>
 <h2 id="generate-the-fhir-ig">Generate the FHIR IG</h2>
 <p>In this section, we cover some of the extra CIMPL configuration steps that might be needed to customize the output of your FHIR IG.</p>
-<h3 id="specify-fhir-mustsupport-elements">Specify FHIR "MustSupport" Elements</h3>
-<p>The CIMPL toolchain provides a separate configuration file called a <em>Content Profile</em> that allows you to define IG-specific parameters. This tutorial uses the feature that specifies elements in your logical model to be <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> in FHIR.</p>
-<p>Together with specified cardinality, the <em>MS</em> declaration can be <a href="http://wiki.hl7.org/index.php?title=Conformance_Implementation_Manual">interpreted as follows</a>:</p>
+<h3 id="specify-fhir-mustsupport-elements">Specify FHIR <strong>MustSupport</strong> Elements</h3>
+<p>The CIMPL toolchain supports a custom configuration file called a Content Profile that allows you to define IG-specific parameters. This tutorial uses the feature that specifies <code>Element</code>s in your logical model to be <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport"><strong>MustSupport</strong></a> in FHIR.</p>
+<p>Together with specified cardinality, the <code>MS</code> declaration can be <a href="http://wiki.hl7.org/index.php?title=Conformance_Implementation_Manual">interpreted as follows</a>:</p>
 <table>
 <thead>
 <tr>
 <th>Cardinality</th>
-<th>MustSupport</th>
+<th><strong>MustSupport</strong></th>
 <th>Interpretation</th>
 </tr>
 </thead>
@@ -404,7 +411,7 @@ ObstructiveSleepApneaDisorder maps to Condition:
 </tr>
 </tbody>
 </table>
-<p>Create a file called <strong><code>ig-myExample-cp.txt</code></strong> under the <code>myExampleC6</code> sub-directory. Paste the following code snippet into your file:</p>
+<p>Create a file called <em>ig-myExample-cp.txt</em> under the <em>myExampleC6</em> sub-directory. Paste the following code snippet into your file:</p>
 <pre><code>Grammar:   ContentProfile 1.0
 Namespace: myExample
 
@@ -415,18 +422,21 @@ ObstructiveSleepApneaDisorder:
     OSADisorderCode MS
 </code></pre>
 
-<p>For our example, we have designated the <code>MyGender</code> and <code>OSADisorderCode</code> elements as MustSupport.  </p>
-<p>More information about Content Profile settings is provided in the <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Guide</a>.</p>
-<p><em><strong>Note:</strong> MustSupport renders as an <code>S</code> in a red box in FHIR IGs.</em></p>
+<p>For our example, we have designated the <code>MyGender</code> and <code>OSADisorderCode</code> elements as <strong>MustSupport</strong>.  </p>
+<p>More information about Content Profile settings are found in the <a href="../cimpl6ToolingReference/#content-profile-file">CIMPL Tooling Reference Guide</a>.</p>
+<blockquote>
+<p><strong>Note</strong>: MustSupport renders as an <strong>S</strong> in a red box in FHIR IGs.
+_</p>
+</blockquote>
 <h3 id="create-a-homepage-for-the-ig">Create a Homepage for the IG</h3>
-<p>Create a new file called <code>index.html</code> under the <code>myExampleC6</code> directory. Copy the following contents in this page:</p>
+<p>Create a new file called <em>index.html</em> under the <em>myExampleC6</em> directory. Copy the following contents in this page:</p>
 <pre><code>&lt;h1&gt;myExample Implementation Guide&lt;/h1&gt;
 &lt;p&gt;CIMPL Tutorial demonstrating how to create FHIR profiles and an IG.&lt;/p&gt;
 </code></pre>
 
 <h3 id="configure-the-output">Configure the Output</h3>
-<p>For purpose of the tutorial's focus on modeling, we have already created a configuration file called <code>ig-myExampleR4-config.json</code> and you copied this file to the <code>myExampleC6</code> directory at the start of this tutorial.</p>
-<p>Let's review some highlights of <a href="../cimplTutorial/ig-myExampleR4-config.json">the configuration file</a> (click link to open). The table below shows a partial listing of fields in the config file. More advanced configuration options are available in the <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Guide</a>.</p>
+<p>For purpose of the tutorial's focus on modeling, we have already created a configuration file called <em>ig-myExampleR4-config.json</em>. You copied this file to the <em>myExampleC6</em> directory at the start of this tutorial.</p>
+<p>Let's review some highlights of <a href="../cimplTutorial/ig-myExampleR4-config.json">the configuration file</a> (click link to open). The table below shows a partial listing of fields in the supplied configuration file. More advanced configuration options are documented in the <a href="../cimpl6ToolingReference/#configuration-file">CIMPL Tooling Reference Guide</a>.</p>
 <table>
 <thead>
 <tr>
@@ -438,32 +448,32 @@ ObstructiveSleepApneaDisorder:
 <tbody>
 <tr>
 <td><code>ProjectName</code></td>
-<td>"My Example Project"</td>
+<td><code>My Example Project</code></td>
 <td>This will appear on the home page title of your generated IG.</td>
 </tr>
 <tr>
 <td><code>fhirURL</code></td>
 <td>"http://example.com/fhir"</td>
-<td>The URL  pre-pended to your StructureDefinition canonical URLs.</td>
+<td>The URL  pre-pended to your <strong>StructureDefinition</strong> canonical URLs.</td>
 </tr>
 <tr>
 <td><code>contentProfile</code></td>
-<td>"ig-myExample-cp.txt"</td>
-<td>The name of the file which sets FHIR MustSupport flags.</td>
+<td><code>ig-myExample-cp.txt</code></td>
+<td>The name of the file that sets FHIR <strong>MustSupport</strong> flags.</td>
 </tr>
 <tr>
 <td><code>filterStrategy</code></td>
-<td>"true"</td>
-<td>Indicates that not all <em>Entries</em> in the logical model should be included in the IG.</td>
+<td><code>true</code></td>
+<td>Indicates that not all <code>Entries</code> in the logical model should be included in the IG.</td>
 </tr>
 <tr>
 <td><code>target</code></td>
-<td>["myExample"]</td>
+<td>[<code>myExample</code>]</td>
 <td>JSON array containing the namespace(s) targeted by the filtering strategy.</td>
 </tr>
 <tr>
 <td><code>indexContent</code></td>
-<td>"index.html"</td>
+<td><code>index.html</code></td>
 <td>The file containing the IG homepage.</td>
 </tr>
 </tbody>
@@ -471,7 +481,7 @@ ObstructiveSleepApneaDisorder:
 <h3 id="compile-cimpl">Compile CIMPL</h3>
 <p>To create profiles, extensions, and other FHIR assets used in the IG, run the SHR-CLI tool.</p>
 <ul>
-<li>Open a command line terminal and navigate to the ~/cimpl/shr-cli directory (where you installed SHR-CLI)</li>
+<li>Open a command line terminal and navigate to the <em>~/cimpl/shr-cli</em> directory (where you installed SHR-CLI)</li>
 <li>
 <p>Run the following command:</p>
 <p><code>node . ../myExampleC6 -l error -o myExampleC6r4 -c ig-myExampleR4-config.json</code></p>
@@ -481,12 +491,12 @@ ObstructiveSleepApneaDisorder:
 <ul>
 <li><code>node</code> is the command that starts the SHR-CLI application.</li>
 <li>The first dot <code>.</code> represents the path to the SHR-CLI tool, in this case, the current working directory. The dot represents the current directory.</li>
-<li><code>../myExampleC6</code> is the path where your CIMPL modeling and configuration files are located. The double dot <code>..</code> represents the directory above the current working directory.</li>
+<li><code><i>../myExampleC6</i></code> is the path where your CIMPL modeling and configuration files are located. The double dot <code>..</code> represents the directory above the current working directory.</li>
 <li>the <code>-l</code> parameter and <code>error</code> value specifies logging to only show errors.</li>
-<li>the <code>-o</code> parameter and <code>myExampleC6r4</code> value specify the name of the directory where you want to generate the IG output.</li>
-<li>the <code>-c</code> parameter and <code>ig-myExampleR4-config.json</code> value specify the name of the CIMPL configuration file to reference for the output.</li>
+<li>the <code>-o</code> parameter and <code><i>myExampleC6r4</i></code> value specify the name of the directory where you want to generate the IG output.</li>
+<li>the <code>-c</code> parameter and <code><i>ig-myExampleR4-config.json</i></code> value specify the name of the CIMPL configuration file to reference for the output.</li>
 </ul>
-<p>After you run this first command, as an interim check, navigate to the <code>~/cimpl/shr-cli</code> folder.  You should see a new subdirectory created called <code>myExampleC6r4</code> which will eventually contain the StructureDefinition and html output of the generated IG. This is the value that was specified in the <code>-o</code> parameter in the above command.</p>
+<p>After you run this first command, as an interim check, navigate to the <em>~/cimpl/shr-cli</em> folder.  You should see a new subdirectory created called <em>myExampleC6r4</em> that will eventually contain the <strong>StructureDefinition</strong> and html output of the generated IG. This is the value that was specified in the <code>-o</code> parameter in the above command.</p>
 <h3 id="run-the-fhir-ig-publisher">Run the FHIR IG Publisher</h3>
 <ul>
 <li>
@@ -498,41 +508,86 @@ ObstructiveSleepApneaDisorder:
 <p><code>java -jar myExampleC6r4/fhir/guide/org.hl7.fhir.publisher.jar -ig myExampleC6r4/fhir/guide/ig.json</code></p>
 </li>
 </ul>
-<p>Navigate to the <code>~/cimpl/shr-cli/myExampleC6r4/fhir/guide/output</code> directory and open the <code>index.html</code> file in a browser.  This displays the home page of the generated FHIR IG for your example project.</p>
+<p>Navigate to the <em>~/cimpl/shr-cli/myExampleC6r4/fhir/guide/output</em> directory and open the <em>index.html</em> file in a browser.  This displays the home page of the generated FHIR IG for your example project.</p>
 <p><img alt="Tutorial 1 IG Homepage" src="../img_cimpl/cimplTutorial1_IGHomepage.png" /></p>
 <h3 id="add-fhir-examples">Add FHIR Examples</h3>
 <p>We're now going to add a FHIR example that conforms to our model. This step adds an example file to the directory you created in the first step. Since the details creating FHIR examples are out of scope for this tutorial, an example has been provided.</p>
-<p>Create a subdirectory called <strong><code>examples-myFhirExamplesFolder</code></strong> under the <code>myExampleC6</code> folder.</p>
+<p>Create a subdirectory called <em>examples-myFhirExamplesFolder</em> under the <em>myExampleC6</em> folder.</p>
 <pre><code>Directory:  cimpl
             |_ shr-cli
             |_ myExampleC6
                |_ examples-myFhirExamplesFolder
 </code></pre>
 
-<p>Copy the file <a href="../cimplTutorial/myPatientExample1.json">myPatientExample1.json</a> and its contents into the <code>examples-myFhirExamplesFolder</code> you created in the <a href="#compile-cimpl">Compile CIMPL</a> step.</p>
+<p>Copy the file <a href="../cimplTutorial/myPatientExample1.json"><em>myPatientExample1.json</em></a> and its contents into the <em>examples-myFhirExamplesFolder</em> you created in the <a href="#compile-cimpl">Compile CIMPL</a> step.</p>
 <blockquote>
-<p><strong>Note:</strong> <em>The FHIR example can contain content beyond the model, and still pass validation. What matters is that the requirements of the model are met.</em></p>
+<p><strong>Note</strong>: The FHIR example can contain content beyond the model, and still pass validation. What matters is, the requirements of the model are met.</p>
 </blockquote>
 <p>Add the following line to your CIMPL configuration file within the <code>implementationGuide</code> JSON object:</p>
 <p><code>"examples": "examples-myFhirExamplesFolder"</code></p>
-<p>The following screenshot shows where to put this parameter within the CIMPL configuration file <code>ig-myExampleR4-config.json</code>:</p>
+<p>The following screenshot shows where to put this parameter within the CIMPL configuration file <em>ig-myExampleR4-config.json</em>:</p>
 <p><img alt="Tutorial1 FHIR Example Configuration Location" src="../img_cimpl/cimplTutorial1_FHIRExampleConfigLocation.png" /></p>
-<h3 id="compile-cimpl-and-run-the-fhir-ig-publisher">Compile CIMPL and Run the FHIR IG publisher</h3>
-<p>Because you changed the contents of your model to add an example, you need to recompile, and regenerate the IG.</p>
-<ul>
-<li>CIMPL Compile (using SHR-CLI)</li>
-</ul>
+<h3 id="compile-cimpl-and-run-the-fhir-ig-publisher">Compile CIMPL and Run the FHIR IG Publisher</h3>
+<p>Because you changed the contents of your model to add an example, you need to recompile and regenerate the IG.</p>
 <pre><code>node . ../myExampleC6 -l error -o myExampleC6r4 -c ig-myExampleR4-config.json
+
 yarn run ig:publish
 </code></pre>
 
-<p>Open the index.html file from the generated IG output in your browser and navigate to the <strong>Profiles</strong> tab and select the MyPatient profile.</p>
-<p>You'll now find a tab called <code>Examples</code> which contains a URL to the example within the <code>examples-myFhirExamplesFolder</code>.</p>
+<p>Open the <em>index.html</em> file from the generated IG output in your browser and navigate to the <em>Profiles</em> tab and select the <em>MyPatient</em> profile.</p>
+<p>You'll find a tab called <em>Examples</em> that contains a URL to the example within the <em>examples-myFhirExamplesFolder</em>.</p>
 <p><img alt="Tutorial1 FHIR Example IG Location" src="../img_cimpl/fhirexample1Display.png" /></p>
-<p>So you might be thinking, "How does the IG know which profile to add your example to?"</p>
-<p>The answer is that the name of the related FHIR StructureDefinition for the profile is specified within the FHIR example itself:</p>
+<p>So you might be thinking, How does the IG identify the <em>profile</em> for your example?</p>
+<p>The answer is that the name of the related FHIR <strong>StructureDefinition</strong> for the profile is specified within the FHIR example.</p>
 <p><img alt="Tutorial1 FHIR Example Configuration Location" src="../img_cimpl/cimplTutorial1_FHIRExampleProfileReference.png" /></p>
-<p>The IG Publisher will match the canonical URL specified in the example, with what is specified in the IG. Note that the value of the profile parameter must match the canonical URL of the profile where the StructureDefinition is located in order for the example to appear.</p>
+<p>The IG Publisher will match the canonical URL specified in the example, with what is specified in the IG. Note that the value of the <code>profile</code> parameter must match the canonical URL of the profile where the <strong>StructureDefinition</strong> is located in order for the example to appear.</p>
+<h1 id="appendix-document-conventions">Appendix - Document Conventions</h1>
+<table>
+<thead>
+<tr>
+<th align="left">Style</th>
+<th align="left">Explanation</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Bold</strong></td>
+<td align="left">A FHIR reserved word or specific resource</td>
+<td align="left"><strong>Condition</strong></td>
+</tr>
+<tr>
+<td align="left"><code>Code</code></td>
+<td align="left">A CIMPL term, phrase, example, or command</td>
+<td align="left"><code>CodeSystem: LNC = http://loinc.org</code></td>
+</tr>
+<tr>
+<td align="left"><code><i>Italics</i> appearing in a code block</td>
+<td align="left">Indicates an item that should be substituted</td>
+<td align="left"><code>Value only <i>datatype</i></code></td>
+</tr>
+<tr>
+<td align="left"><em>Italics</em></td>
+<td align="left">A file name, or general emphasis in text</td>
+<td align="left"><em>obf-action.txt</em></td>
+</tr>
+<tr>
+<td align="left"><em>Italics with <strong>bold</strong> highlight</em></td>
+<td align="left">Indicates a substring in the file name that should be substituted</td>
+<td align="left"><em>ig-<strong>myigname</strong>-config.json</em></td>
+</tr>
+<tr>
+<td align="left">Leading Capitalization</td>
+<td align="left">CIMPL keywords or references that are capitalized; specific instances of FHIR artifacts</td>
+<td align="left">The <code>Grammar</code> keyword</td>
+</tr>
+<tr>
+<td align="left"><strong>Note:</strong></td>
+<td align="left">Something to keep in mind about the current topic</td>
+<td align="left"><strong>Note:</strong> Value Set names must begin with an uppercase letter.</td>
+</tr>
+</tbody>
+</table>
 
   <br>
     
@@ -550,7 +605,7 @@ yarn run ig:publish
         <i class="fa fa-chevron-right" aria-hidden="true"></i>
       </a>
       <a href="../cimpl6Authoring/" class="btn btn-xs btn-link">
-        CIMPL Authoring Guide
+        CIMPL User Guide
       </a>
     </div>
     
@@ -558,7 +613,7 @@ yarn run ig:publish
       <a href="../cimpl6Tutorial_helloWorld/" class="btn btn-xs btn-default pull-left">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
         Previous</a><a href="../cimpl6Tutorial_helloWorld/" class="btn btn-xs btn-link">
-        CIMPL 'Hello World' Tutorial
+        CIMPL Hello World Tutorial
       </a>
     </div>
     

@@ -315,7 +315,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><strong>Note:</strong> Letters, numbers, and hyphens are allowed. However, class names must begin with an uppercase letter.</p>
 </blockquote>
 <h3 id="fully-qualified-names">Fully Qualified Names</h3>
-<p>CIMPL does not support duplicate class names within a single namespace. However, the same name may occur in different namespaces. In the case of naming collisions due to an namespace included by a <a href="#Uses"><code>Uses</code></a> statement, you have to refer to the class by its fully qualified name (FQN). The FQN is a concatenation of the namespace name and the class name (delimited by a period). For example, the class <code>CancerCondition</code> in the namespace <code>onco.core</code> has the FQN <code>onco.core.CancerCondition</code>. </p>
+<p>CIMPL does not support duplicate class names within a single namespace. However, the same name may occur in different namespaces. In the case of naming collisions due to an namespace included by a <a href="#Uses"><code>Uses</code></a> statement, you have to refer to the class by its fully qualified name (FQN). The FQN is a concatenation of the namespace name and the class name (delimited by a period). For example, the class <code>CancerCondition</code> in the namespace <code>onco.core</code> has the FQN <code>onco.core.CancerCondition</code>.</p>
 <p>FQNs are only required in case of naming collisions between namespaces.</p>
 <h3 id="value-set-names">Value Set Names</h3>
 <p>Value Set names are by convention written in <a href="http://wiki.c2.com/?PascalCase">PascalCase</a>, with a suffix of "VS", for example, <code>HomeEnvironmentRiskVS</code> and <code>LandmarkTypeVS</code>.</p>
@@ -351,7 +351,7 @@ These comments can take up multiple lines.
 <h3 id="reserved-words">Reserved Words</h3>
 <p>CIMPL has a number of reserved words and phrases that are part of CIMPL's grammar (e.g., <code>boolean</code>, <code>or</code>, <code>from</code>, <code>maps to</code>). For a complete list of reserved words, refer to the <a href="https://github.com/standardhealth/shr-grammar/tree/master/src/main/antlr">ANTLR4 grammar</a>.</p>
 <h3 id="primitives">Primitives</h3>
-<p>Primitives are data types, distinguished by starting with a lower case letter. CIMPL defines the following primitive data types. With the exception of <code>concept</code> (a simplified representation of <strong>Code, Coding, and CodeableConcept</strong>), the primitive types in CIMPL align with FHIR:</p>
+<p>Primitives are data types, distinguished by starting with a lower case letter. CIMPL defines the following primitive data types. With the exception of <code>concept</code> (a simplified representation of <strong>code</strong>, <strong>Coding</strong>, and <strong>CodeableConcept</strong>), the primitive types in CIMPL align with FHIR:</p>
 <ul>
 <li><a href="#concept-codes"><code>concept</code></a></li>
 <li><a href="https://www.hl7.org/fhir/datatypes.html#boolean"><code>boolean</code></a></li>
@@ -381,7 +381,7 @@ These comments can take up multiple lines.
 <p><code>SCT#363346000 "Malignant neoplastic disease (disorder)"</code></p>
 <p><code>ICD10CM#C004  "Malignant neoplasm of lower lip, inner aspect"</code></p>
 <p><em>SYSTEM</em> (<code>SCT</code> and <code>ICD10CM</code> in the examples) is an alias for a canonical URI that represents a code system. Aliases must be declared in the file header using the keyword <a href="#codesystem"><code>CodeSystem</code></a>. You cannot use the canonical URI directly in the concept grammar.</p>
-<p>Unlike FHIR, CIMPL does not differentiate between <strong>Code</strong>, <strong>Coding</strong>, and <strong>CodeableConcept</strong>. See <a href="#mapping-concept-codes">Mapping Concept Codes</a> for information on how CIMPL maps <code>concept</code> to these FHIR data types.</p>
+<p>Unlike FHIR, CIMPL does not differentiate between <strong>code</strong>, <strong>Coding</strong>, and <strong>CodeableConcept</strong>. See <a href="#mapping-concept-codes">Mapping Concept Codes</a> for information on how CIMPL maps <code>concept</code> to these FHIR data types.</p>
 <hr />
 <h2 id="keywords">Keywords</h2>
 <p>Keywords are used to make various declarations. Keywords always appear at the beginning of a line and are followed by a colon.</p>
@@ -500,7 +500,7 @@ Example:</p>
 <p>Example:</p>
 <p><code>Element: EvidenceType</code></p>
 <h3 id="entry">Entry</h3>
-<p>The <code>Entry</code> keyword is used to declare a new class, analogous to a <strong>Resource</strong> or <strong>Profile</strong> in FHIR. For details, see <a href="#class-file">Class File</a>.</p>
+<p>The <code>Entry</code> keyword is used to declare a new class, analogous to a resource or profile in FHIR. For details, see <a href="#class-file">Class File</a>.</p>
 <p>Example:</p>
 <p><code>Entry: GenomicsReport</code></p>
 <h3 id="grammar">Grammar</h3>
@@ -756,7 +756,7 @@ Property:          Units 0..1
 </ol>
 <hr />
 <h2 id="constraints">Constraints</h2>
-<p>Constraints are a way to shape a general model for a particular purpose. <code>Property</code>, <code>Value</code>, and <code>Value Choice</code> can be constrained. Constraint targets can be be top-level or deeply nested (the latter referred to using <a href="#cimpl-paths">CIMPL paths</a>), inherited or locally-defined.</p>
+<p>Constraints are a way to shape a general model for a particular purpose. <code>Property</code>, <code>Value</code> can be constrained. Constraint targets can be be top-level or deeply nested (the latter referred to using <a href="#cimpl-paths">CIMPL paths</a>), inherited or locally-defined.</p>
 <p>Unlike keyword declarations, constraint statements do not begin with a keyword. Most constraint statements have three parts:</p>
 <ul>
 <li>The subject of the constraint</li>
@@ -818,7 +818,7 @@ Property:          Units 0..1
 <tr>
 <td><a href="#fixed-value-constraint">Assign a fixed value</a></td>
 <td><code>=</code></td>
-<td><code>Property`` or Value[Choice]</code></td>
+<td><code>Property</code> or <code>Value[<i>choice</i>]</code></td>
 </tr>
 <tr>
 <td><a href="#append-constraint">Append a fixed value to an array</a></td>
@@ -828,12 +828,12 @@ Property:          Units 0..1
 <tr>
 <td><a href="#substitute-constraint">Narrow a data type</a></td>
 <td><code>substitute</code></td>
-<td><code>Property</code> or <code>Value[Choice]</code></td>
+<td><code>Property</code> or <code>Value[<i>choice</i>]</code></td>
 </tr>
 <tr>
 <td><a href="#value-set-binding-constraint">Bind a value set</a></td>
 <td><code>from</code></td>
-<td><code>Property</code> or <code>Value[Choice]</code></td>
+<td><code>Property</code> or <code>Value[<i>choice</i>]</code></td>
 </tr>
 <tr>
 <td><a href="#includes-constraint">Slice an array</a></td>
@@ -848,7 +848,7 @@ Property:          Units 0..1
 </tbody>
 </table>
 <h3 id="cardinality-constraint">Cardinality Constraint</h3>
-<p>Cardinality defines the number of repeats that can exist for a <code>Property</code>. Cardinality is specified using FHIR syntax, <strong>{min}..{max}</strong>, where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound on the number of repeats. To express no upper bound, an asterisk <em>*</em> is used. When constraining cardinality, you can only narrow the previously declared cardinality. The cardinality constraint only applies to <code>Property</code>.</p>
+<p>Cardinality defines the number of repeats that can exist for a <code>Property</code>. Cardinality is specified using FHIR syntax, {min}..{max}, where the first integer indicates the minimum repeats (0 implying optional), and the second digit expresses the upper bound on the number of repeats. To express no upper bound, an asterisk <em>*</em> is used. When constraining cardinality, you can only narrow the previously declared cardinality. The cardinality constraint only applies to <code>Property</code>.</p>
 <table>
 <thead>
 <tr>
@@ -870,8 +870,8 @@ Property:          Units 0..1
 </tr>
 <tr>
 <td><code>Property: Status 1..1</code></td>
-<td><del><code>Status 0..1</code></del> <strong>invalid</strong></td>
-<td></td>
+<td><del><code>Status 0..1</code></del></td>
+<td><em>invalid</em></td>
 </tr>
 </tbody>
 </table>
@@ -879,7 +879,7 @@ Property:          Units 0..1
 <p><strong>Note:</strong> By constraining a <code>Property</code> to 0..0, you effectively remove the <code>Property</code>. Use 0..0 with caution, because if an instance <em>does</em> include that <code>Property</code>, the instance will fail validation and may be rejected.</p>
 </blockquote>
 <h3 id="fixed-value-constraint">Fixed Value Constraint</h3>
-<p>The <code>=</code> operator fixes an <code>Element</code>'s value to a specific concept, boolean, string, integer, decimal, or URL. The fixed value must be consistent with the defined data type, and is always a Primitive.</p>
+<p>The <code>=</code> operator fixes an <code>Element</code>'s value to a specific concept, boolean, string, integer, decimal, or URL. The fixed value must be consistent with the defined data type, and is always a primitive.</p>
 <table>
 <thead>
 <tr>
@@ -1158,37 +1158,37 @@ Description:       &quot;Globulin [Mass/​volume] in Serum by calculation&quot;
 <td><code>Element</code></td>
 <td>The lowest-level class, representing a property-value pair.</td>
 <td><code>Value</code></td>
-<td><strong>Element</strong> or <strong>simple extension</strong></td>
+<td>element or simple (not nested) <strong>Extension</strong></td>
 </tr>
 <tr>
 <td><code>Group</code></td>
 <td>A class comprised of other classes, specifically, other <code>Group</code>, <code>Element</code>, and <code>Entry</code>.</td>
 <td><code>Property</code></td>
-<td><strong>Backbone element</strong> or <strong>complex extension</strong></td>
+<td><strong>BackboneElement</strong>, non-primitive data type (such as <strong>Address</strong>), or complex (nested) <strong>Extension</strong></td>
 </tr>
 <tr>
 <td><code>Entry</code></td>
 <td>A class representing a group of related information, complete enough to support stand-alone interpretation.</td>
 <td><code>Property</code></td>
-<td><strong>Resource</strong> or <strong>Profile</strong></td>
+<td><strong>Resource</strong> or profiled <strong>Resource</strong></td>
 </tr>
 <tr>
 <td><code>Abstract</code></td>
 <td>A special type of <code>Entry</code> that cannot be instantiated, and will not be present in the target mapping.</td>
 <td><code>Property</code></td>
-<td>none</td>
+<td><strong>Resource</strong> or profiled <strong>Resource</strong>, if <strong>StructureDefinition.abstract</strong> = true</td>
 </tr>
 </tbody>
 </table>
 <h3 id="properties-elements-and-values">Properties, Elements and Values</h3>
-<p>When defining classes, bear in mind that <code>Property</code> defines a model data item and its cardinality. A <code>Property</code> is mapped to a FHIR <strong>element</strong>. </p>
+<p>When defining classes, bear in mind that <code>Property</code> defines a model data item and its cardinality. A <code>Property</code> can be mapped to a FHIR element or extension. </p>
 <!-- MK - the only "connection" between a property and an element is the name - true? I think that needs to be incorporated somewhere in this guide. Thoughts? -->
 
 <ul>
-<li>A <code>Property</code> cannot have <code>Value</code> or <code>Choice</code>.</li>
-<li>An <code>Element</code> <em>must</em> have one <code>Value</code></li>
-<li><code>Value</code> may have more than one <code>Choice</code> (using <code>or</code>).</li>
-<li><code>Group</code>, <code>Entry</code>, or <code>Abstract</code> may have more than one <code>Property</code>, but no <code>Value</code>.</li>
+<li>A <code>Property</code> can be an <code>Element</code>, <code>Group</code> or <code>Entry</code>.</li>
+<li>An <code>Element</code> <em>must</em> have one <code>Value</code> and cannot have a <code>Property</code></li>
+<li><code>Value</code> may have more than one choice (using <code>or</code>).</li>
+<li><code>Group</code>, <code>Entry</code>, or <code>Abstract</code> may have more than one <code>Property</code>, but cannot have a <code>Value</code>.</li>
 </ul>
 <p>These differences are illustrated in this example:</p>
 <pre><code>Group:             Landmark
@@ -1222,7 +1222,7 @@ Value:             concept from AnatomicalDirectionVS (preferred)
 <td>exactly 1</td>
 <td>no</td>
 <td>yes (optional)</td>
-<td><code>primitive</code>, <code>Element</code>, <code>Group</code>, or <code>Entry</code></td>
+<td>primitive, <code>Element</code>, <code>Group</code>, or <code>Entry</code></td>
 </tr>
 <tr>
 <td><code>Property</code></td>
@@ -1331,7 +1331,7 @@ Description         &quot;Risks present in the home environment&quot;
 </table>
 <hr />
 <h2 id="map-file">Map File</h2>
-<p>Map files control how classes defined in CIMPL are expressed as FHIR <strong>profiles</strong>. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the <a href="../cimpl6ObjectiveFHIR/">Objective FHIR base classes</a>, you many not need to create a map file.</p>
+<p>Map files control how classes defined in CIMPL are expressed as FHIR profile. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the <a href="../cimpl6ObjectiveFHIR/">Objective FHIR base classes</a>, you many not need to create a map file.</p>
 <h3 id="map-file-example">Map File Example</h3>
 <p>The following example demonstrates how the class <em>Dosage</em>, defined in the OBF namespace, maps to the FHIR 4.0 data type with the same name. The second example demonstrates mapping between the OBF <em>MedicationStatement</em> class and the FHIR 4.0 <strong>US Core MedicationStatement</strong> profile.</p>
 <pre><code>Grammar:    Map 5.1
@@ -1377,9 +1377,9 @@ MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-c
 
 <h3 id="inheritance-of-mapping-rules">Inheritance of Mapping Rules</h3>
 <p>Maps are defined in a series of mapping rules. A powerful feature of CIMPL is that mapping rules are inherited. If your class inherits from a parent class that is already mapped, you do not need to create a new map for your class. However, if you want to specify mappings for a new <code>Property</code>, or override the inherited map, you may do so.</p>
-<p>The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a map. The first mapping rule found will be applied. If no mapping rule is found for a <code>Property</code> defined in CIMPL, a FHIR <strong>extension</strong> will be created. If a map is not found for an <code>Entry</code>, that <code>Entry</code> will be mapped to the <a href="https://www.hl7.org/fhir/basic.html"><strong>Basic</strong></a> resource. In general, mapping to <strong>Basic</strong> is not recommended because it has no inherent semantic meaning for implementers.</p>
+<p>The inheritance of mapping rules follows the class hierarchy. If there is no map for a class or attribute, CIMPL tooling automatically looks to the parent class to try and find a map. The first mapping rule found will be applied. If no mapping rule is found for a <code>Property</code> defined in CIMPL, a FHIR extension will be created. If a map is not found for an <code>Entry</code>, that <code>Entry</code> will be mapped to the <a href="https://www.hl7.org/fhir/basic.html"><strong>Basic</strong></a> resource. In general, mapping to <strong>Basic</strong> is not recommended because it has no inherent semantic meaning for implementers.</p>
 <h3 id="mapping-cimpl-primitives-to-fhir">Mapping CIMPL Primitives to FHIR</h3>
-<p>CIMPL follows somewhat flexible rules on how CIMPL <code>primitive</code> data types map to FHIR. For example, an <code>unsignedInt</code> in CIMPL can map to an <strong>integer</strong> data type in FHIR (since every <code>unsignedInt</code> is an <strong>integer</strong>, there is no loss of information). However, maps that lose information, such as <code>integer</code> in CIMPL mapped to <strong>unsignedInt</strong> in FHIR, generally will trigger mapping errors. An exception is that CIMPL <code>concept</code> is allowed to map to FHIR <strong>code</strong>. The following table shows the acceptable mappings between CIMPL and FHIR:</p>
+<p>CIMPL follows somewhat flexible rules on how CIMPL primitive data types map to FHIR. For example, an <code>unsignedInt</code> in CIMPL can map to an <strong>integer</strong> data type in FHIR (since every <code>unsignedInt</code> is an <strong>integer</strong>, there is no loss of information). However, maps that lose information, such as <code>integer</code> in CIMPL mapped to <strong>unsignedInt</strong> in FHIR, generally will trigger mapping errors. An exception is that CIMPL <code>concept</code> is allowed to map to FHIR <strong>code</strong>. The following table shows the acceptable mappings between CIMPL and FHIR:</p>
 <table>
 <thead>
 <tr>
@@ -1462,7 +1462,7 @@ MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-c
 <p>The header of a map file <em>must</em> include the <code>Grammar</code>, <code>Namespace</code>, and <code>Target</code> keywords. The <code>Grammar</code> keyword declares the CIMPL mapping grammar version. The version is currently 5.1. The <code>Namespace</code> keyword relates the maps defined in this file to the Class file in the same namespace. The <code>Target</code> keyword provides the version of FHIR that the CIMPL model is mapped to, either <code>FHIR_DSTU_2</code>, <code>FHIR_STU_3</code>, or <code>FHIR_R4</code>.</p>
 <p>For more information about the header keywords, see <a href="#keywords">Keywords</a>.</p>
 <h3 id="setting-the-mapping-target">Setting the Mapping Target</h3>
-<p>Each section in a Map file begins with a statement that establishes a <strong>resource, profile</strong>, or <strong>complex data type</strong> that is the target for the map. In CIMPL Map files, the item to the left of <code>maps to</code> comes from your CIMPL data model and the item to the right is an <strong>element</strong> in the target output. The mapping target can be a FHIR <strong>resource, profile</strong>, or <strong>complex data type</strong> that is part of the target FHIR release version. The initial statement in each mapping block must end with a colon (:).</p>
+<p>Each section in a Map file begins with a statement that establishes a <strong>resource, profile</strong>, or <strong>complex data type</strong> that is the target for the map. In CIMPL Map files, the item to the left of <code>maps to</code> comes from your CIMPL data model and the item to the right is an element in the target output. The mapping target can be a FHIR <strong>resource, profile</strong>, or <strong>complex data type</strong> that is part of the target FHIR release version. The initial statement in each mapping block must end with a colon (:).</p>
 <table>
 <thead>
 <tr>
@@ -1474,65 +1474,70 @@ MedicationStatement maps to http://hl7.org/fhir/us/core/StructureDefinition/us-c
 <tbody>
 <tr>
 <td><code>Entry</code></td>
-<td><strong>resource</strong></td>
+<td>resource</td>
 <td><code>SocialHistoryObservation maps to Observation:</code></td>
 </tr>
 <tr>
 <td><code>Entry</code></td>
-<td><strong>profile</strong></td>
+<td>profile</td>
 <td><code>LaboratoryObservation maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-observationresults:</code></td>
 </tr>
 <tr>
 <td><code>Group</code></td>
-<td><strong>complex data type</strong></td>
+<td>complex data type</td>
 <td><code>Timing maps to Timing:</code></td>
 </tr>
 </tbody>
 </table>
 <h3 id="mapping-properties">Mapping Properties</h3>
 <p><!-- plural property -- thinking -->
-After the first line, which establishes the class to be mapped, the remainder of the section consists of statements that map CIMPL <code>Property</code> to FHIR <strong>elements</strong>. Each statement begins with a <a href="#cimpl-paths">CIMPL path</a>, followed by the phrase <code>maps to</code>, and ending with the target FHIR path.</p>
+After the first line, which establishes the class to be mapped, the remainder of the section consists of statements that map CIMPL <code>Property</code> to FHIR elements. Each statement begins with a <a href="#cimpl-paths">CIMPL path</a>, followed by the phrase <code>maps to</code>, and ending with the target FHIR path.</p>
 <p>With FHIR as the target output, the right-hand side of the map statement can point to any element of a FHIR resource, including:</p>
 <ul>
-<li>FHIR <strong>elements</strong> that are at the root of the resource (e.g., <strong>maritalStatus</strong>)</li>
-<li>FHIR <strong>elements</strong> that are child elements of root elements on the resource (e.g., <strong>reaction.substance</strong>)</li>
-<li>FHIR <strong>elements</strong> that have a <a href="https://www.hl7.org/fhir/formats.html#choice">choice of data types</a> (e.g., <strong>multipleBirth[x].boolean</strong>)</li>
-<li>FHIR <strong>elements</strong> that have been defined in existing <strong>Profiles</strong> or other <strong>StructureDefinition</strong> resources (e.g., <code>http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity</code>)</li>
-<li>FHIR <strong>elements</strong> that support FHIR <strong>Reference()</strong> data types.</li>
+<li>FHIR elements that are at the root of the resource (e.g., <strong>maritalStatus</strong>)</li>
+<li>FHIR elements that are child elements of root elements on the resource (e.g., <strong>reaction.substance</strong>)</li>
+<li>FHIR elements that have a <a href="https://www.hl7.org/fhir/formats.html#choice">choice of data types</a> (e.g., <strong>multipleBirth[x].boolean</strong>)</li>
+<li>FHIR elements that have been defined in existing profile or other <strong>StructureDefinition</strong> resources (e.g., <code>http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity</code>)</li>
+<li>FHIR elements that support FHIR <strong>Reference()</strong> data types.</li>
 </ul>
 <table>
 <thead>
 <tr>
-<th>CIMPL type</th>
-<th>FHIR type</th>
+<th>CIMPL source</th>
+<th>FHIR target</th>
 <th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>Property</code> reference without path</td>
-<td><strong>simple element</strong></td>
+<td><code>Property</code></td>
+<td>element</td>
 <td><code>MaritalStatus maps to maritalStatus</code></td>
 </tr>
 <tr>
-<td><code>Property</code> reference without path</td>
-<td><strong>extension</strong></td>
-<td><code>Ethnicity maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity</code></td>
-</tr>
-<tr>
-<td>dotted path</td>
-<td><strong>simple element</strong></td>
+<td>nested <code>Property</code></td>
+<td>element</td>
 <td><code>Value.ActiveFlag maps to active</code></td>
 </tr>
 <tr>
-<td>dotted path</td>
-<td><strong>dotted path</strong></td>
+<td>nested <code>Property</code></td>
+<td>nested element</td>
 <td><code>AdverseReaction.AllergenIrritant maps to reaction.substance</code></td>
 </tr>
 <tr>
-<td><code>Value Choice</code> path</td>
-<td><strong>simple element</strong></td>
-<td><code>BodySiteOrCode.concept maps to bodySite</code></td>
+<td><code>Value</code> choice</td>
+<td>element</td>
+<td><code>BodySiteOrCode.concept maps to bodySite</code> <em>(see note)</em></td>
+</tr>
+<tr>
+<td><code>Property</code></td>
+<td><strong>Extension</strong></td>
+<td><code>Ethnicity maps to http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity</code></td>
+</tr>
+<tr>
+<td>any</td>
+<td>nested <strong>Extension</strong></td>
+<td><em>not supported</em></td>
 </tr>
 </tbody>
 </table>
@@ -1540,29 +1545,29 @@ After the first line, which establishes the class to be mapped, the remainder of
 <p><strong>Note:</strong> The mapping grammar version is 5.1; the bracketed value syntax cannot be used in paths.  This is why the above example uses <code>BodySiteOrCode.concept</code> rather than <code>BodySiteOrCode[concept]</code>.</p>
 </blockquote>
 <h3 id="mapping-to-references">Mapping to References</h3>
-<p>FHIR <strong>resources</strong> and <strong>profiles</strong> require an explicit <a href="https://www.hl7.org/fhir/references.html"><strong>Reference()</strong> indicator</a> when referring to another <strong>Resource</strong> or <strong>Profile</strong>. In CIMPL, whenever a <code>Property</code> is an <code>Entry</code>, that <code>Property</code> is mapped as a <strong>Reference</strong> in FHIR. There is no need to create an explicit <strong>Reference()</strong>.</p>
+<p>FHIR resources and profile require an explicit <a href="https://www.hl7.org/fhir/references.html"><strong>Reference()</strong> indicator</a> when referring to another resource or profile. In CIMPL, whenever a <code>Property</code> is an <code>Entry</code>, that <code>Property</code> is mapped as a reference in FHIR. There is no need to create an explicit <strong>Reference()</strong>.</p>
 <h3 id="placement-of-extensions">Placement of Extensions</h3>
-<p>As mentioned above, if no mapping rule is found for a <code>Property</code>, an <strong>extension</strong> to the FHIR <strong>resource</strong> or <strong>profile</strong> will be automatically created. By default, the <strong>extension</strong> will be a top-level <strong>element</strong> in the FHIR <strong>profile</strong>. Sometimes you may want the <strong>extension</strong> to appear in a different place, perhaps inside a nested <strong>element</strong>. To put the <strong>extension</strong> precisely where you want it, you can map to FHIR paths that include <code>extension</code>.</p>
+<p>As mentioned above, if no mapping rule is found for a <code>Property</code>, an extension to the FHIR resource or profile will be automatically created. By default, the extension will be a top-level element in the FHIR profile. Sometimes you may want the extension to appear in a different place, perhaps inside a nested element. To put the extension precisely where you want it, you can map to FHIR paths that include <code>extension</code>.</p>
 <p>Here's an example involving the FHIR resource <a href="https://www.hl7.org/fhir/adverseevent.html">AdverseEvent</a>:</p>
 <p><code>PotentialCause.CauseCategory maps to suspectEntity.extension</code></p>
-<p>This mapping rule will create an <strong>extension</strong> named <em><strong>CauseCategory</strong></em> for <strong>AdverseEvent.suspectEntity</strong>. Rules such as:</p>
+<p>This mapping rule will create an extension named <strong>CauseCategory</strong> for <strong>AdverseEvent.suspectEntity</strong>. Rules such as:</p>
 <p><code>DetectionTime maps to extension</code></p>
-<p>leave the default behavior unchanged, and are not required. However, they can be used to document the <em>intent</em> to create an <strong>extension</strong>.</p>
+<p>leave the default behavior unchanged, and are not required. However, they can be used to document the <em>intent</em> to create an extension.</p>
 <h3 id="special-mapping-statements">Special Mapping Statements</h3>
 <p>There are a limited number of mapping statements that allow actions to be taken directly on FHIR profiles, without a corresponding property defined in CIMPL.</p>
 <h4 id="fix">fix</h4>
-<p><code>fix</code> allows FHIR <strong>elements</strong> to be assigned a value. This constrains the FHIR <strong>resource</strong>, not the CIMPL class. This enables you to fix a <strong>value</strong> to an <strong>element</strong> in a FHIR <strong>resource</strong> without having to change the class definition, which would affect all potential maps. This also allows you to fix values to FHIR <strong>resource elements</strong> that have no corresponding <code>Property</code> in the CIMPL definition.</p>
+<p><code>fix</code> allows FHIR elements to be assigned a value. This constrains the FHIR resource, not the CIMPL class. This enables you to fix a value to an element in a FHIR resource without having to change the class definition, which would affect all potential maps. This also allows you to fix values to FHIR elements that have no corresponding <code>Property</code> in the CIMPL definition.</p>
 <p>Example:</p>
 <p><code>fix status to #completed</code></p>
 <h4 id="constrain">constrain</h4>
-<p><code>constrain</code> allows users to constrain the cardinality of FHIR <strong>elements</strong>. This constrains the FHIR <strong>resource</strong>, not the CIMPL class. The cardinality is expressed in {min}..{max} form.</p>
+<p><code>constrain</code> allows users to constrain the cardinality of FHIR elements. This constrains the FHIR resource, not the CIMPL class. The cardinality is expressed in {min}..{max} form.</p>
 <p>Example:</p>
 <p><code>constrain explanation to 0..1</code></p>
 <h3 id="slicing">Slicing</h3>
 <blockquote>
 <p><strong>Note:</strong> Mapping statements for slicing arrays is an advanced topic.</p>
 </blockquote>
-<p><em>Slicing</em> involves specifying the items that can be contained in an array. An array is an <strong>element</strong> whose upper cardinality is greater than one. An example of this is the <a href="https://www.hl7.org/fhir/profiling.html#slicing"><strong>FHIR Blood Pressure profile</strong></a>, which slices <strong>Observation.components</strong> into diastolic and systolic pressure, identical in structure other than their code. Another example is <strong>DiagnosticReport.result</strong>, an array of Observations. Slicing can be used to specify the particular type of Observations in a given type of DiagnosticReport.</p>
+<p><em>Slicing</em> involves specifying the items that can be contained in an array. An array is an element whose upper cardinality is greater than one. An example of this is the <a href="https://www.hl7.org/fhir/profiling.html#slicing"><strong>FHIR Blood Pressure profile</strong></a>, which slices <strong>Observation.components</strong> into diastolic and systolic pressure, identical in structure other than their code. Another example is <strong>DiagnosticReport.result</strong>, an array of Observations. Slicing can be used to specify the particular type of Observations in a given type of DiagnosticReport.</p>
 <p>See the FHIR documentation for more detail about <a href="https://www.hl7.org/fhir/profiling.html#slicing">slicing</a>.</p>
 <p>In CIMPL, the <a href="#includes-constraint"><code>includes</code></a> constraint creates slices. This section discusses how slices defined in the Class file are mapped to FHIR.</p>
 <p>The following parameters are used to specify the mapping CIMPL classes to FHIR slices:</p>
@@ -1577,18 +1582,18 @@ After the first line, which establishes the class to be mapped, the remainder of
 <!-- Carmela - add text to relate to the class file slicing definition - they are related -->
 
 <h4 id="set-the-discriminator-path-with-slice-on">Set the Discriminator Path with <code>slice on</code></h4>
-<p>FHIR requires <a href="https://www.hl7.org/fhir/profiling.html#discriminator"><strong>discriminators</strong></a> to uniquely identify the slice to which an element or resource belongs. The path to the <strong>discriminator</strong> is specified by the CIMPL <code>slice on</code> parameter. The value is a <a href="https://www.hl7.org/fhir/fhirpath.html">FHIRPath expression</a> that indicates what distinguishes the slices.</p>
-<p>The <strong>discriminator</strong> path is not necessarily the array where the slicing takes place. For example, in slicing <strong>Observation.component</strong>, if <code>slice on = code.coding.code</code>, then <strong>component.code.coding.code</strong> will be examined to determine which slice the component belongs to. Each defined slice must have unique, fixed value at <strong>component.code.coding.code</strong>.</p>
-<p>When the sliced array contains references to other FHIR resources (e.g., <strong>DiagnosticReport.result</strong>), the <strong>discriminator</strong> must involve referenced resource. In this case, the <code>slice on</code> will include <code>reference.resolve()</code>, a FHIRPath notation that refers to a referenced resource. There are two options:</p>
+<p>FHIR requires <a href="https://www.hl7.org/fhir/profiling.html#discriminator">discriminators</a> to uniquely identify the slice to which an element or resource belongs. The path to the discriminator is specified by the CIMPL <code>slice on</code> parameter. The value is a <a href="https://www.hl7.org/fhir/fhirpath.html">FHIRPath expression</a> that indicates what distinguishes the slices.</p>
+<p>The discriminator path is not necessarily the array where the slicing takes place. For example, in slicing <strong>Observation.component</strong>, if <code>slice on = code.coding.code</code>, then <strong>component.code.coding.code</strong> will be examined to determine which slice the component belongs to. Each defined slice must have unique, fixed value at <strong>component.code.coding.code</strong>.</p>
+<p>When the sliced array contains references to other FHIR resources (e.g., <strong>DiagnosticReport.result</strong>), the discriminator must involve referenced resource. In this case, the <code>slice on</code> will include <code>reference.resolve()</code>, a FHIRPath notation that refers to a referenced resource. There are two options:</p>
 <ol>
-<li>The <strong>discriminator</strong> is referenced resource itself, and the mapping to a slice will be determined by conformance to a profile.</li>
-<li>The <strong>discriminator</strong> is a property in the referenced resource, e.g., <strong>reference.resolve().code.coding.code</strong></li>
+<li>The discriminator is referenced resource itself, and the mapping to a slice will be determined by conformance to a profile.</li>
+<li>The discriminator is a property in the referenced resource, e.g., <strong>reference.resolve().code.coding.code</strong></li>
 </ol>
 <blockquote>
 <p><strong>Note:</strong> The <code>slice on</code> parameter is required except when the <code>slice #</code> parameter is present.</p>
 </blockquote>
 <h4 id="set-the-discriminator-type-with-slice-on-type">Set the Discriminator Type with <code>slice on type</code></h4>
-<p>The <strong>discriminator</strong> type defines how the <strong>discriminator</strong> is used to differentiate instances from one another. By default, CIMPL uses the FHIR <strong>value</strong> <strong>discriminator</strong> type. However, a different <strong>discriminator</strong> type can be declared using <code>slice on type</code> followed by one of the following FHIR-defined <strong>discriminator</strong> types:</p>
+<p>The discriminator type defines how the discriminator is used to differentiate instances from one another. By default, CIMPL uses the FHIR value discriminator type. However, a different discriminator type can be declared using <code>slice on type</code> followed by one of the following FHIR-defined discriminator types:</p>
 <table>
 <thead>
 <tr>
@@ -1599,23 +1604,23 @@ After the first line, which establishes the class to be mapped, the remainder of
 <tbody>
 <tr>
 <td><code>value</code></td>
-<td>The slices have different values in the <strong>discriminator</strong> (default)</td>
+<td>The slices have different values in the discriminator (default)</td>
 </tr>
 <tr>
 <td><code>exists</code></td>
-<td>The slices are differentiated by the presence or absence of the <strong>discriminator</strong></td>
+<td>The slices are differentiated by the presence or absence of the discriminator</td>
 </tr>
 <tr>
 <td><code>pattern</code></td>
-<td>The slices have different values in the <strong>discriminator</strong>, as determined by testing them against the applicable <strong>ElementDefinition.pattern[x]</strong></td>
+<td>The slices have different values in the discriminator, as determined by testing them against the applicable <strong>ElementDefinition.pattern[x]</strong></td>
 </tr>
 <tr>
 <td><code>type</code></td>
-<td>The slices are differentiated by the data type of the <strong>discriminator</strong></td>
+<td>The slices are differentiated by the data type of the discriminator</td>
 </tr>
 <tr>
 <td><code>profile</code></td>
-<td>The slices are differentiated by conformance of the <strong>discriminator</strong> to a specified <strong>profile</strong>. This can only be used when the <strong>discriminator</strong> is a reference to a resource.</td>
+<td>The slices are differentiated by conformance of the discriminator to a specified profile. This can only be used when the discriminator is a reference to a resource.</td>
 </tr>
 </tbody>
 </table>
@@ -1625,7 +1630,7 @@ After the first line, which establishes the class to be mapped, the remainder of
 <p>The <code>slice strategy</code> indicates how the CIMPL to create slices. To map a CIMPL <code>includes</code> constraint, always specify <code>slice strategy = includes</code>. Each included CIMPL data type becomes a separate slice in the target FHIR array.</p>
 <p>If <code>slice strategy</code> is omitted, CIMPL adds a single slice, corresponding to the CIMPL data type, in the target FHIR array.</p>
 <h4 id="set-the-slice-location-using-slice-at">Set the Slice Location using <code>slice at</code></h4>
-<p>If the CIMPL element in the mapping statement is mapped to a sub-element of the array being sliced,<code>slice at</code> explicitly defines the location of the slice. The location must be an array element, such as a <strong>backbone element</strong> that contains the mapping target.</p>
+<p>If the CIMPL element in the mapping statement is mapped to a sub-element of the array being sliced,<code>slice at</code> explicitly defines the location of the slice. The location must be an array element, such as a <strong>BackboneElement</strong> that contains the mapping target.</p>
 <h4 id="set-the-slice-number-using-slice">Set the Slice Number using <code>slice #</code></h4>
 <p>When mapping to an array that is part of an existing profile that has already been sliced, you can indicate which existing slice is the target of the mapping.</p>
 <blockquote>
@@ -1640,14 +1645,14 @@ After the first line, which establishes the class to be mapped, the remainder of
 <blockquote>
 <p><strong>Note:</strong> This example is based on the FHIR STU 3 Observation resource.</p>
 </blockquote>
-<p>Each <code>Entry</code> included in the <code>PanelMembers.Observation</code> CIMPL model will create a slice in the <strong>Observation.related</strong> array because of the <code>slice at</code> parameter, and appear in the <strong>related.target</strong> element because of the <code>maps to</code> statement. The <code>slice on</code> parameter indicates the <strong>discriminator</strong> is the resource in the <strong>related.target</strong> array. The <code>target.reference.resolve()</code> is the FHIRPath that points to the referenced resource. The <code>slice on type = profile</code> indicates the slices are differentiated through the conformance of the referenced resource to the profile that define the slices.</p>
+<p>Each <code>Entry</code> included in the <code>PanelMembers.Observation</code> CIMPL model will create a slice in the <strong>Observation.related</strong> array because of the <code>slice at</code> parameter, and appear in the <strong>related.target</strong> element because of the <code>maps to</code> statement. The <code>slice on</code> parameter indicates the discriminator is the resource in the <strong>related.target</strong> array. The <code>target.reference.resolve()</code> is the FHIRPath that points to the referenced resource. The <code>slice on type = profile</code> indicates the slices are differentiated through the conformance of the referenced resource to the profile that define the slices.</p>
 <h4 id="example-3">Example 3</h4>
 <pre><code>BloodPressure maps to http://hl7.org/fhir/StructureDefinition/bp:
   Components.SystolicPressure maps to component (slice # = 1)
   Components.DiastolicPressure maps to component (slice # = 2)
 </code></pre>
 
-<p>This example shows how to map to existing slices in the mapping target. The numbers refer to the order of the slices as they are defined in http://hl7.org/fhir/StructureDefinition/bp. This type of mapping allows new constraints and extensions in the CIMPL model to be added to an existing profile. When mapping to an existing profile, the <strong>discriminator</strong> and other slicing properties cannot be changed.</p>
+<p>This example shows how to map to existing slices in the mapping target. The numbers refer to the order of the slices as they are defined in http://hl7.org/fhir/StructureDefinition/bp. This type of mapping allows new constraints and extensions in the CIMPL model to be added to an existing profile. When mapping to an existing profile, the discriminator and other slicing properties cannot be changed.</p>
 <!--
 #### Example 4
 
@@ -1673,8 +1678,8 @@ Multiple elements in CIMPL map to a single target (which has to be an array)
 <tbody>
 <tr>
 <td align="left"><strong>Bold</strong></td>
-<td align="left">A FHIR term or resource</td>
-<td align="left"><strong>Profile</strong></td>
+<td align="left">A FHIR name</td>
+<td align="left"><strong>Observation</strong></td>
 </tr>
 <tr>
 <td align="left"><code>Code</code></td>
