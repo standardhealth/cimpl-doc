@@ -8,7 +8,7 @@
 
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) **profiles**, **extensions** and **implementation guides** (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and [implementation guides](https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides) (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 ### Purpose
 
@@ -16,7 +16,7 @@ In [the tradition of _Hello, World_ examples](https://en.wikipedia.org/wiki/"Hel
 
 ### Intended Audience
 
-The CIMPL Hello World Tutorial is targeted to people with some programming experience. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (e.g. **resources** and **profiles**.)
+The CIMPL _Hello World Tutorial_ is targeted to people with some programming experience. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (e.g. resources and profile.)
 
 ### Prerequisite
 
@@ -79,7 +79,7 @@ Target:      FHIR_STU_3
 HelloWorld maps to Basic:
 ```
 
-[**Basic**](https://www.hl7.org/fhir/basic.html) is a _blank slate_ FHIR **resource**. It has no **elements**, so the unmapped `SayHello` `Property` will automatically appear as an **extension** in the **profile** on **Basic**.
+[**Basic**](https://www.hl7.org/fhir/basic.html) is a _blank slate_ FHIR resource. It has no elements, so the unmapped `SayHello` `Property` will automatically appear as an extension in the profile on **Basic**.
 
 ### 3) Create the Home Page of your IG
 
@@ -134,13 +134,13 @@ cd ~/cimpl/shr-cli
 node . ../hello-world -c ig-hello-world-config.json
 ```
 
-When the program runs, it will output a warning message alerting you that mapping to **Basic** usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated **profile** (a FHIR **StructureDefinition**) will be found in _~/cimpl/shr-cli/out/fhir/profiles/_.  A **StructureDefinition** can be verbose, and this one clocks in at several hundred lines.
+When the program runs, it will output a warning message alerting you that mapping to **Basic** usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (a FHIR **StructureDefinition**) will be found in _~/cimpl/shr-cli/out/fhir/profiles/_.  A **StructureDefinition** can be verbose, and this one clocks in at several hundred lines.
 
 ### 6) Generate the _Hello, World_ Implementation Guide
 
 >Note: If your organization uses a proxy server, you may have to run the IG publishing process from outside your organization's firewall.
 
-A friendlier view of the **profile** is created when we create an IG. To do this, we use the [existing FHIR implementation guide (IG) publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation).
+A friendlier view of the profile is created when we create an IG. To do this, we use the [existing FHIR implementation guide (IG) publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation).
 
 To generate the IG, run:
 
@@ -149,9 +149,9 @@ cd ~/cimpl/shr-cli
 yarn run ig:publish
 ```
 
-The generated **profile** page will be located at _~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html_.  Open this page in your favorite web browser.
+The generated profile page will be located at _~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html_.  Open this page in your favorite web browser.
 
-You should see a FHIR **profile** for _HelloWorld_ in a (mostly empty) [FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html). 
+You should see a FHIR profile for _HelloWorld_ in a (mostly empty) [FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html). 
 
 _You did it!_
 

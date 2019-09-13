@@ -16,7 +16,7 @@ Please refer to the Github repository for [complete log of all releases of SHR-C
 
 ## SHR-CLI 6.0
 
-**Release Date**: June 5, 2019
+Release Date: June 5, 2019
 
 CIMPL 6.0 contains a number of significant changes to both syntax and its base classes which support translation to FHIR. The table below summarizes these changes:
 
