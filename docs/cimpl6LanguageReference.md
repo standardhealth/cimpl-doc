@@ -563,6 +563,7 @@ The `=` operator fixes an `Element`'s value to a specific concept, boolean, stri
 |----------|---------|
 | Fix a code to an `Element` | `ObservationCode = LNC#82810-3` |
 | Fix a boolean value to an `Element` | `IsPrimaryTumor = true` |
+| Fix a string to an `Element`'s `Value` | `Value: string = "hello world"` |
 | Fix a code to an `Element`'s `Value` where `concept` is one of the available data types | `Value[concept] = SCT#233613009 "Pneumonia"` |
 | Fix the units associated with a `Quantity` data type choice within an Element | `Value[Quantity].Units = UCUM#cm` |
 | Fix the units associated with a `Quantity` data type choice within an Entry or Group | `MyPropertyName[Quantity].Units = UCUM#cm` |
