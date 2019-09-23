@@ -204,8 +204,7 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 
 #### Filter Strategy Configuration Parameters
 
-
->**NOTE:** The `filterStrategy` Configuration file parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the Configuration file `filterStrategy` Migrate any `filterStrategy` settings to the [Content Profile](#content-profile-file).
+>**NOTE**: The `filterStrategy` Configuration file parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the Configuration file `filterStrategy` Migrate any `filterStrategy` settings to the [Content Profile](#content-profile-file).
 
 
 Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when the [_specification directory_](#suggested-directory-structure) contains namespaces or `Entries` that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and `Entries` to limit the scope of the exports, and subsequently, the IG.
@@ -237,8 +236,8 @@ These configurations are used to control the production of the IG. The contents 
 |`includeLogicalModels`    |`boolean`|A `true` or `false` value indicating whether to include logical models in the IG.     |
 |`includeModelDoc`         |`boolean`|A `true` or `false` value indicating whether to include the model documentation in the IG. |
 |`indexContent` |<code><i>string</i></code> |The name of the file or folder containing the [front matter](#front-matter-files), relative to the _specification directory_, for example, _ig-mcode/IndexFolder-Oncocore_. If the `indexContent` is a folder, then it _must_ contain an _index.html_ file whose contents will be used as the body of the IG home page.  |
-|`extraResources`          |<code><i>string</i></code> |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: **SearchParameter**, **OperationDefinition**, **CapabilityStatement** (STU3+), **Conformance** (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
-|`examples` |<code><i>string</i></code> |The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` _must_ match the canonical URL for the **profile** it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no _examples_ folder is specified, and a folder named **fhir-examples** exists in the specification directory, it will be used as the examples folder. | 
+|`extraResources`          |<code><i>string</i></code> |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: SearchParameter, OperationDefinition, CapabilityStatement (STU3+), Conformance (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
+|`examples` |<code><i>string</i></code> |The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` _must_ match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no _examples_ folder is specified, and a folder named **fhir-examples** exists in the specification directory, it will be used as the examples folder. |
 |`historyLink`             |<code><i>string</i></code> |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
 |`changesLink`             |<code><i>string</i></code> |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     |The strategy for selection of what is primary in the IG ([see below])(#primary-selection-strategy). |
@@ -347,7 +346,7 @@ The CP provides several different types of information about the IG:
 * A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
 
 The CP file is interpreted as follows:
-<!-- MK re: use of the more generic word classes - only an `Entry` may become a **profile** - true? if so, why not call these Entry? -->
+<!-- MK re: use of the more generic word classes - only an `Entry` may become a profile - true? if so, why not call these Entry? -->
 
 * The classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (`NP`).
 * A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is _not_ tagged as a No-Profile (`NP`) class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
