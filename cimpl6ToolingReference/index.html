@@ -43,6 +43,8 @@
               {title: "Creating the Implementation Guide", url: "#creating-the-implementation-guide" },
               {title: "Appendix: Error Messages", url: "#appendix-error-messages" },
           ]},
+          {title: "Appendix: Document Conventions", url: "#appendix-document-conventions", children: [
+          ]},
         ];
 
     </script>
@@ -86,7 +88,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li><a href="#cimpl-60-tooling-reference">CIMPL 6.0 Tooling Reference</a><ul>
 <li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#introduction">Introduction</a><ul>
-<li><a href="#purpose-of-this-document">Purpose of this Document</a></li>
+<li><a href="#purpose">Purpose</a></li>
 <li><a href="#intended-audience">Intended Audience</a></li>
 <li><a href="#prerequisite">Prerequisite</a></li>
 </ul>
@@ -154,31 +156,32 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </li>
 </ul>
 </li>
+<li><a href="#appendix-document-conventions">Appendix: Document Conventions</a></li>
 </ul>
 </div>
 <hr />
 <h2 id="introduction">Introduction</h2>
 <p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
-<h3 id="purpose-of-this-document">Purpose of this Document</h3>
-<p>This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR Implementation Guide (IG) from CIMPL.</p>
+<h3 id="purpose">Purpose</h3>
+<p>This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR IG using CIMPL.</p>
 <h3 id="intended-audience">Intended Audience</h3>
-<p>The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as Resources, Elements, etc.)</p>
+<p>The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as resources, elements, etc.)</p>
 <h3 id="prerequisite">Prerequisite</h3>
 <p>This guide assumes you have:</p>
 <ul>
 <li>Installed the latest version of the SHR-CLI software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a>.</li>
-<li>Created set of CIMPL Language files (classes, value sets, and maps) representing your clinical model (see <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for details). </li>
+<li>Created set of CIMPL Language files (Class, Value Set, and Map) representing your clinical model (see <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for details). </li>
 <li>Reviewed the <a href="../cimpl6Tutorial_detail/">In-Depth Tutorial</a>.</li>
 </ul>
 <h2 id="overview">Overview</h2>
 <h3 id="inputs-and-outputs">Inputs and Outputs</h3>
-<p>The CIMPL Tooling, also called SHR-CLI (Standard Health Record Command Line Interface), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:</p>
+<p>The CIMPL Tooling, also called Standard Health Record Command Line Interface (SHR-CLI), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:</p>
 <p><img alt="CIMPL Tooling Overview" src="../img_cimpl/cli-overview.png" /></p>
 <p>The inputs to SHR-CLI include:</p>
 <ul>
-<li><a href="../cimpl6LanguageReference/">CIMPL Language files</a>, including class files, value set files, and mapping files that define your clinical information model,</li>
+<li><a href="../cimpl6LanguageReference/">CIMPL Language files</a>, including Class, Value Set, and Map files that define your clinical information model,</li>
 <li>A <a href="#configuration-file">Configuration file</a> that contains directives to the tooling, and points to other resources,</li>
-<li>An optional <a href="#content-profile-file">Content Profile</a> file, which specifies <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> elements and profiling options specific to an IG,</li>
+<li>An optional <a href="#content-profile-file">Content Profile</a> file, which specifies <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport"><strong>MustSupport</strong></a> elements and profiling options specific to an IG,</li>
 <li>One or more <a href="#front-matter-files">Front Matter</a> files, which are the narratives and graphics that introduce the IG,</li>
 <li><a href="#fhir-examples">FHIR Examples</a> that are to be included in the IG, and</li>
 <li>A <a href="#package-list-file">Package List</a> that has information required for building the IG.</li>
@@ -186,25 +189,25 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>The inputs are processed in the following sequence:</p>
 <ul>
 <li>The user <a href="#executing-shr-cli">issues a build command</a> through the command-line interface (CLI) to launch SHR-CLI.</li>
-<li>The CIMPL tooling imports definitions from CIMPL files (class, value set, and map files). SHR-CLI <a href="#addressing-error-messages">reports any errors</a> in the CIMPL definitions.</li>
-<li>Continuing the build process, SHR-CLI selects a subset of the data models to include in the IG, according to the <a href="#filter-strategy-configuration-parameters">filter strategy</a>.</li>
-<li>To complete the build process, SHR-CLI exports the selected CIMPL definitions into desired formats, such as FHIR profiles, data dictionaries, etc. The exports can be selected through <a href="#executing-shr-cli">command line options</a>. </li>
+<li>The CIMPL tooling imports definitions from CIMPL files (Class, Value Set, and Map files). SHR-CLI <a href="#addressing-error-messages">reports any errors</a> in the CIMPL definitions.</li>
+<li>SHR-CLI selects a subset of the data models to include in the IG, according to the <a href="#filter-strategy-configuration-parameters">filter strategy</a>.</li>
+<li>SHR-CLI exports the selected CIMPL definitions into desired formats, such as FHIR profiles, data dictionaries, etc. The exports can be selected through <a href="#executing-shr-cli">command line options</a>.</li>
 <li>The user <a href="#creating-the-implementation-guide">issues a separate command</a> to produce the IG.</li>
 </ul>
 <p>SHR-CLI produces one or all of the following outputs, depending on configuration parameters:</p>
 <ul>
-<li><a href="#fhir-export">FHIR Profiles, Extensions, Value Sets</a> that form the core content of the IG,</li>
-<li>A <a href="#logical-model-export">Logical Model</a> corresponding to the CIMPL class definitions, expressed as FHIR StructureDefinitions,</li>
+<li><a href="#fhir-export">FHIR profiles, extensions, value sets</a> that form the core content of the IG,</li>
+<li>A <a href="#logical-model-export">Logical Model</a> corresponding to the CIMPL class definitions, expressed as FHIR <strong>StructureDefinition</strong>,</li>
 <li><a href="#json-schema-export">JSON Schema</a> for the profiles defined by the IG,</li>
-<li>A <a href="#data-dictionary-export">Data Dictionary</a> that lists the <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> data elements in the IG, as well as value sets and value set members,</li>
-<li><a href="#model-documentation-export">Model Documentation</a> in the form of a <a href="https://docs.oracle.com/javase/7/docs/api/">Javadoc-like</a> browser that allows one to see the hierarchical class relationships in the logical model.</li>
+<li>A <a href="#data-dictionary-export">Data Dictionary</a> that lists the <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport"><strong>MustSupport</strong></a> elements in the IG, as well as value sets and value set members,</li>
+<li><a href="#model-documentation-export">Model Documentation</a> in the form of a <a href="https://docs.oracle.com/javase/7/docs/api/">Javadoc-like</a> browser that allows one to see the class relationships in the logical model.</li>
 </ul>
 <h3 id="relationship-of-cimpl-models-and-implementation-guides">Relationship of CIMPL Models and Implementation Guides</h3>
-<p>It is important to understand the relationship between models defined in CIMPL and implementation guide(s) created from those models.</p>
-<p>The state-of-practice for FHIR IGs is still evolving, but currently, most IGs are developed by separate groups and define their own data models, as follows:</p>
+<p>It is important to understand the relationship between models defined in CIMPL and IGs created from those models.</p>
+<p>The state-of-practice for FHIR IGs is still evolving,but currently, most IGs are developed by separate groups and define their own data models, as follows:</p>
 <p><img alt="Typical data model IG relationship" src="../img_cimpl/typical-data-model-ig-relationship.png" /></p>
-<p>The drawback of this approach is that different IGs can require very similar data models. If different data models are developed by different teams, interoperability will suffer.</p>
-<p>In CIMPL, data models are independent of IGs. IGs are <em>consumers</em> of models, rather than <em>owners</em> of models (although new models can certainly be created in the context of IG development). Each IG uses a different subset of models, reflecting the different use cases they address, but the commonality of data models assures interoperability between the use cases. This idea is illustrated below:</p>
+<p>The drawback of this approach is that different IGs may require very similar data models. If different data models for similar use cases are developed by different teams, interoperability will suffer.</p>
+<p>In CIMPL, data models are independent of IGs. IGs are <em>consumers</em> of models, rather than <em>owners</em> of models (although new models can certainly be created in the context of IG development). Each IG uses a different subset of models, reflecting the different use cases they address. The commonality of data models assures interoperability between the use cases. This idea is illustrated below:</p>
 <p><a id="data-model-ig-relationship"></a>
 <img alt="Data model IG relationship" src="../img_cimpl/Data-model-use-case-model.png" /></p>
 <p>Much of what follows deals with configuring the relationship between CIMPL models and IGs, and defining the parameters that affect the IG presentation. In particular, the <a href="#content-profile-file">Content Profile file</a> is key to defining how the IG relates to the models available in various namespaces.</p>
@@ -248,56 +251,59 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 |   |  ...
 </code></pre>
 
-<p>In this reference guide, we will refer to several directories:</p>
+<p>In this reference manual, we refer to several directories:</p>
 <ul>
-<li><strong>Tooling Directory</strong> - this the directory where the SHR-CLI tooling has been installed. Any convenient directory can be used. For easy identification, we recommend the tooling version number be included in the directory name.</li>
+<li>_Tooling Directory** - this the directory where the SHR-CLI tooling has been installed. Any convenient directory can be used. For easy identification, we recommend the tooling version number be included in the directory name.</li>
 <li><strong>Specification Directory</strong> - this is the top level directory where the input files and are located, usually arranged in sub-folders. Any convenient directory can be used. If you are using a source code control system such as Github to manage your development, this could be where the repository is checked out to your local machine.</li>
 <li><strong>Namespace Directories</strong> - these directories, located under the Specification Directory, contains CIMPL language files for a single namespace. The name of the directory should be prefixed with <code>ns-</code> followed by the shortname or acronym of the namespace followed .</li>
 <li><strong>IG Directories</strong> - these directories, under the specification directory contain files specific to a given implementation guide. There are subdirectories containing the front matter and examples, and individual configuration, content profile, and package list files. These files can be specific to a FHIR release, since the same IG could be created using different versions of FHIR.</li>
 </ul>
-<p><strong>Note:</strong> There is currently no way to combine profiles for multiple FHIR versions in single IG.</p>
+<blockquote>
+<p><strong>Note</strong>: There is currently no way to combine profiles for multiple FHIR versions in single IG.</p>
+</blockquote>
 <h3 id="suggested-file-naming">Suggested File Naming</h3>
-<p>The naming of configuration, content profiles, and package list files is arbitrary, but it is useful for different teams to follow similar conventions. The suggested approach to naming uses variations on the same shortened IG name, as follows:</p>
+<p>The naming of Configuration, Content Profiles, and Package List files is arbitrary, but it is useful for teams to follow similar conventions. The suggested approach to naming uses variations on the same shortened IG name, as follows:</p>
 <ul>
-<li>Configuration file: <code>ig-<i>guidename</i>-config.json</code></li>
-<li>Content Profile file: <code>ig-<i>guidename</i>-cp.txt</code></li>
-<li>Package List file: <code>ig-<i>guidename</i>-plist.json</code></li>
+<li>Configuration file: <code>ig-<i><strong>guide-name</strong></i>-config.json</code></li>
+<li>Content Profile file: <code>ig-<i><strong>guide-name</strong></i>-cp.txt</code></li>
+<li>Package List file: <code>ig-<i><strong>guide-name</strong></i>-plist.json</code></li>
 </ul>
 <p>If your project will support more than one FHIR version, the FHIR version should be included:</p>
 <ul>
-<li>Configuration file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-config.json</code></li>
-<li>Content Profile file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-cp.txt</code></li>
-<li>Package List file: <code>ig-<i>guidename</i>-<i>FHIRVersion</i>-plist.json</code></li>
+<li>Configuration file: <code>ig-<i><strong>guide-name-FHIR Version</strong></i>-config.json</code></li>
+<li>Content Profile file: <code>ig-<i><strong>guide-name-FHIR Version</strong></i>-cp.txt</code></li>
+<li>Package List file: <code>ig-<i><strong>guide-name-FHIR Version</strong></i>-plist.json</code></li>
 </ul>
-<p>where FHIR version is dstu2, stu3, or r4.</p>
+<p>where FHIR version is <em>dstu2, stu3</em>, or <em>r4</em>.
+<!-- MK: why not use the same values as listed in the configuration file section?  consistency?--></p>
 <h2 id="inputs-to-shr-cli">Inputs to SHR-CLI</h2>
 <h3 id="cimpl-files">CIMPL Files</h3>
 <p>Any text editor can be used to write CIMPL grammar. However, <a href="https://code.visualstudio.com/">VSCode editor</a> is recommended to take advantage of a CIMPL plug-in.</p>
 <h4 id="setting-up-the-vscode-authoring">Setting up the VSCode Authoring</h4>
 <blockquote>
-<p><strong>Note:</strong> VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.</p>
+<p><strong>Note</strong>: VSCode UI screenshots in this section were taken from a MacOS environment. While the overall functionality is the same across supported OS platforms, installation and configuration specifics might differ. Reference the VSCode documentation pertinent to your OS platform.</p>
 </blockquote>
 <ul>
-<li>Download the <a href="https://code.visualstudio.com/">VSCode editor</a>. </li>
-<li>Open VSCode, open the extensions panel, and search for the extension <strong>vscode-lang-cimpl</strong>. The figure below shows where to find VSCode extensions on MacOS (on Windows, navigate <em>View -&gt; Extensions</em>). Alternatively, select the extension icon (the squarish icon on the far left).</li>
+<li>Download the <a href="https://code.visualstudio.com/">VSCode editor</a>.</li>
+<li>Open VSCode, open the extensions panel, and search for the extension <em>vscode-lang-cimpl</em>. The figure below shows where to find VSCode extensions on MacOS (on Windows, navigate <em>View -&gt; Extensions</em>). Alternatively, select the extension icon (the squarish icon on the far left).</li>
 </ul>
 <p><img alt="CIMPL VSCode Extension" src="../img_cimpl/VSCodeLangCimplExtension.png" /></p>
 <h4 id="navigating-a-cimpl-model-within-vscode">Navigating a CIMPL Model within VSCode</h4>
-<p>The inherited properties of Groups and Entries can be previewed in the following ways:</p>
+<p>Any inherited <code>Property</code> of <code>Group</code> and <code>Entry</code> can be previewed in the following ways:</p>
 <ol>
-<li><strong>Hovering over the element</strong>: This provides a drop-down list of all properties and cardinality of a Group or Entry (including inherited properties).</li>
-<li><strong>Placing the cursor on the class declaration, right-click and select <em>Peek Definition</em></strong>: This will display a drop-down window with a preview of the definition. The name and location of the file will be displayed although the entire file will not be opened.</li>
-<li><strong>Placing the cursor on a property declaration and right-clicking option <em>Go to Definition</em></strong>: This will redirect the editor to location of the definition, opening the file if necessary.</li>
+<li><em>Hover over the element</em>: This provides a drop-down list of all <code>Properties</code> and cardinality of a <code>Group</code> or <code>Entry</code> (including inherited <code>Properties</code>).</li>
+<li><em>Place the cursor on the class declaration, right-click and select Peek Definition</em>: This displays a drop-down window with a preview of the definition. The name and location of the file displays although the entire file is not opened.</li>
+<li><em>Place the cursor on a property declaration and right-click and select Go to Definition</em>: This redirects the editor to the location of the definition, opening the file if necessary.</li>
 </ol>
-<p>Hovering over the element:</p>
+<p>Hover over the element:</p>
 <p><img alt="Hovering over the element" src="../img_cimpl/VSCode_Peek01.png" /></p>
-<p>Using <em>Peek Definition</em>:</p>
+<p>Use <em>Peek Definition</em>:</p>
 <p><img alt="Using Peek" src="../img_cimpl/VSCode_Peek02.png" /></p>
-<p>Using <em>Go to Definition</em>:</p>
+<p>Use <em>Go to Definition</em>:</p>
 <p><img alt="Using Go to Definition" src="../img_cimpl/VSCode_GotoDef.png" /></p>
 <h3 id="configuration-file">Configuration File</h3>
-<p>SHR-CLI requires a configuration file to run. The name of this file is typically specified on the command line <a href="#executing-shr-cli">using the -c command line option</a>. If the name is not specified, the tooling looks for a file named <code>config.json</code> in the working directory. If that cannot be found, or the contents of the configuration file are invalid, an error message is returned.</p>
-<p>The configuration file is a <a href="https://www.json.org/">JSON file</a> with the following parameters:</p>
+<p>SHR-CLI requires a Configuration file to run. The name of this file is typically specified on the command line <a href="#executing-shr-cli">using the <code>-c</code> command line option</a>. If the name is not specified, the tooling looks for a file named <em>config.json</em> in the working directory. If that cannot be found, or the contents of the Configuration file are invalid, an error message is returned.</p>
+<p>The Configuration file is a <a href="https://www.json.org/">JSON file</a> with the following parameters:</p>
 <table>
 <thead>
 <tr>
@@ -309,32 +315,32 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tbody>
 <tr>
 <td><code>projectName</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"</td>
 </tr>
 <tr>
 <td><code>projectShorthand</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>A shorthand name for the project, such as "mcode".</td>
 </tr>
 <tr>
 <td><code>projectURL</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"</td>
 </tr>
 <tr>
 <td><code>fhirURL</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>The FHIR IG URL for the project, often the same as the projectURL. <strong>(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)</strong></td>
 </tr>
 <tr>
 <td><code>fhirTarget</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>The FHIR version this IG will be based on, currently a choice of <code>"FHIR_R4"</code>, <code>"FHIR_STU_3"</code>, or <code>"FHIR_DSTU_2"</code></td>
 </tr>
 <tr>
 <td><code>entryTypeURL</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>The root URL for the JSON schema <code>EntryType</code> field. <strong>(TO DO: clarify where and how this is used)</strong></td>
 </tr>
 <tr>
@@ -344,7 +350,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </tr>
 <tr>
 <td><code>contentProfile</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>The file name of the content profile for the project.</td>
 </tr>
 <tr>
@@ -354,13 +360,13 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </tr>
 <tr>
 <td><code>copyrightYear</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>The copyright year to include in the documentation.</td>
 </tr>
 <tr>
 <td><code>publisher</code></td>
-<td><code>string</code></td>
-<td>The name of the publisher for the project, which for HL7 projects, should be the sponsoring workgroup, for example, "HL7 International Clinical Interoperability Council".</td>
+<td><code><i>string</i></code></td>
+<td>The name of the publisher for the project, which for HL7 projects, should be the sponsoring work group, for example, <em>HL7 International Clinical Interoperability Council</em>.</td>
 </tr>
 <tr>
 <td><code>contact</code></td>
@@ -375,10 +381,10 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </tbody>
 </table>
 <h4 id="filter-strategy-configuration-parameters">Filter Strategy Configuration Parameters</h4>
-<hr />
-<p><strong>Note:</strong> The <code>filterStrategy</code> parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the <code>filterStrategy</code>.</p>
-<hr />
-<p>Between the import stage and the export stage, there is a filtering stage (see  <a href="#cimpl-tooling-overview">CIMPL Tooling Overview</a>). Filtering is useful when <a href="#suggested-directory-structure">specification directory</a> contains namespaces that or entries that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and entries to limit the scope of the exports, and subsequently, the IG.</p>
+<blockquote>
+<p><strong>NOTE</strong>: The <code>filterStrategy</code> Configuration file parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the Configuration file <code>filterStrategy</code> Migrate any <code>filterStrategy</code> settings to the <a href="#content-profile-file">Content Profile</a>.</p>
+</blockquote>
+<p>Between the import stage and the export stage, there is a filtering stage (see  <a href="#cimpl-tooling-overview">CIMPL Tooling Overview</a>). Filtering is useful when the <a href="#suggested-directory-structure"><em>specification directory</em></a> contains namespaces or <code>Entries</code> that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and <code>Entries</code> to limit the scope of the exports, and subsequently, the IG.</p>
 <p>The contents of the <code>filterStrategy</code> object are as follows:</p>
 <table>
 <thead>
@@ -392,26 +398,26 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tr>
 <td><code>filter</code></td>
 <td><code>boolean</code></td>
-<td>A value indicating whether to enable filtering. If <code>filter</code> is <code>true</code>, then the filtering operation will occur. Otherwise, no filtering will occur. (Also, if the <code>filterStrategy</code> parameter is entirely omitted, no filtering will occur.)</td>
+<td>A value indicating whether to enable filtering. If <code>filter</code> is <code>true</code>, then the filtering operation occurs. Otherwise, no filtering occurs. (Also, if the <code>filterStrategy</code> parameter is entirely omitted, no filtering occurs.)</td>
 </tr>
 <tr>
 <td><code>strategy</code></td>
-<td><code>string</code></td>
+<td><code><i>string</i></code></td>
 <td>The strategy for specification filtering, either "namespace", "element", or "hybrid".</td>
 </tr>
 <tr>
 <td><code>target</code></td>
 <td><code>[]</code></td>
-<td>An array of strings containing the names of Entries, Namespaces, or both.</td>
+<td>An array of strings containing the names of <code>Entries</code>, namespaces, or both.</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>The "element" strategy filters the imported classes to include each Entry listed in the <code>target</code> array, and their recursive dependencies.</li>
-<li>The "namespace" strategy filters the imported classes to include only Entries in the namespaces listed in the <code>target</code> array, and their recursive dependencies.</li>
-<li>The "hybrid" strategy filters the imported classes to include each Entry listed in the <code>target</code> array and all Entries in every namespace listed in the <code>target</code> array, and their recursive dependencies.</li>
+<li>The <code>Element</code> strategy filters the imported classes to include each <code>Entry</code> listed in the <code>target</code> array, and their recursive dependencies.</li>
+<li>The <code>namespace</code> strategy filters the imported classes to include only <code>Entries</code> in the namespaces listed in the <code>target</code> array, and their recursive dependencies.</li>
+<li>The <code>hybrid</code> strategy filters the imported classes to include each <code>Entry</code> listed in the <code>target</code> array,and all <code>Entries</code> in every namespace listed in the <code>target</code> array with their recursive dependencies.</li>
 </ul>
-<p>When specifying an Entry in the <code>target</code> array, use the <a href="../cimpl6LanguageReference/#fully-qualified-names">fully qualified name (FQN)</a> format.</p>
+<p>When specifying an <code>Entry</code> in the <code>target</code> array, use the <a href="../cimpl6LanguageReference/#fully-qualified-names">fully qualified name (FQN)</a> format.</p>
 <h4 id="implementation-guide-configuration-parameters">Implementation Guide Configuration Parameters</h4>
 <p>These configurations are used to control the production of the IG. The contents of the <code>implementationGuide</code> object are as follows:</p>
 <table>
@@ -426,7 +432,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tr>
 <td><code>npmName</code></td>
 <td><code>string</code></td>
-<td>The assigned node package manager name for this IG, for example "hl7.fhir.us.mcode". The npm name is usually assigned by HL7.</td>
+<td>The assigned node package manager name (NPM) for this IG, for example "hl7.fhir.us.mcode". The NPM name is usually assigned by HL7.</td>
 </tr>
 <tr>
 <td><code>version</code></td>
@@ -441,22 +447,22 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tr>
 <td><code>packageList</code></td>
 <td><code>string</code></td>
-<td>The name of the file to use as the <a href="#package-list-file">IG's package list</a>, relative to the Specification Directory.</td>
+<td>The name of the file to use as the <a href="#package-list-file">IG's Package List file</a>, relative to the <em>specification directory</em>.</td>
 </tr>
 <tr>
 <td><code>includeLogicalModels</code></td>
 <td><code>boolean</code></td>
-<td>A <em>true</em> or <em>false</em> value indicating whether to include logical models in the IG.</td>
+<td>A <code>true</code> or <code>false</code> value indicating whether to include logical models in the IG.</td>
 </tr>
 <tr>
 <td><code>includeModelDoc</code></td>
 <td><code>boolean</code></td>
-<td>A <em>true</em> or <em>false</em> value indicating whether to include the model documentation in the IG.</td>
+<td>A <code>true</code> or <code>false</code> value indicating whether to include the model documentation in the IG.</td>
 </tr>
 <tr>
 <td><code>indexContent</code></td>
 <td><code>string</code></td>
-<td>The name of the file or folder containing the <a href="#front-matter-files">front matter</a>, relative to the Specification Directory, for example, "ig-mcode/IndexFolder-Oncocore". If the <code>indexContent</code> is a folder, then it must contain an <code>index.html</code> file whose contents will be used as the body of the IG home page.</td>
+<td>The name of the file or folder containing the <a href="#front-matter-files">front matter</a>, relative to the <em>specification directory</em>, for example, <em>ig-mcode/IndexFolder-Oncocore</em>. If the <code>indexContent</code> is a folder, then it <em>must</em> contain an <em>index.html</em> file whose contents will be used as the body of the IG home page.</td>
 </tr>
 <tr>
 <td><code>extraResources</code></td>
@@ -466,7 +472,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tr>
 <td><code>examples</code></td>
 <td><code>string</code></td>
-<td>The name of the folder containing examples (one example per file) to include in the IG, for example, "ig-mcode/Examples-mCODE-r4". We recommend the individual example file name match the <code>id</code> in the example file (with <code>.json</code> extension added). The example's <code>meta.profile</code> must match the canonical URL for the profile it exemplifies (e.g. <code>"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }</code>). If no <code>examples</code> folder is specified, and a folder named "fhir-examples" exists in the specification directory, it will be used as the examples folder.</td>
+<td>The name of the folder containing examples (one example per file) to include in the IG, for example, <em>ig-mcode/Examples-mCODE-r4</em>. We recommend the individual example file name match the <code>id</code> in the example file (with <code>.json</code> extension added). The example's <code>meta.profile</code> must match the canonical URL for the profile it exemplifies (e.g. <code>"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }</code>). If no <code>examples</code> folder is specified, and a folder named <em>fhir-examples</em> exists in the specification directory, it will be used as the examples folder.</td>
 </tr>
 <tr>
 <td><code>historyLink</code></td>
@@ -494,7 +500,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <hr />
 <p><strong>Note:</strong> The <code>primarySelectionStrategy</code> parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the <a href="#content-profile-file">Content Profile</a>. Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the <code>primarySelectionStrategy</code>.</p>
 <hr />
-<p>The primary selection strategy causes certain profiles to be displayed in a "Primary" section at the top list of profiles. All other exported profiles are listed in a "Supporting" section below the "Primary" section. The contents of the <code>primarySelectionStrategy</code> object are as follows:</p>
+<p>The primary selection strategy causes certain profiles to be displayed in a <em>Primary</em> section at the top list of profiles. All other exported profiles are listed in a <em>Supporting</em> section below the <em>Primary</em> section. The contents of the <code>primarySelectionStrategy</code> object are as follows:</p>
 <table>
 <thead>
 <tr>
@@ -506,23 +512,23 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tbody>
 <tr>
 <td><code>strategy</code></td>
-<td><code>string</code></td>
-<td>The strategy to follow for primary selection, either "namespace", "hybrid", or "entry" (default).</td>
+<td><code><i>string</i></code></td>
+<td>The strategy to follow for primary selection, either <code>namespace</code>, <code>hybrid</code>, or <code>entry</code> (default).</td>
 </tr>
 <tr>
 <td><code>primary</code></td>
 <td><code>[]</code></td>
-<td>An array of strings containing the namespaces and entries (only used for "namespace" and "hybrid" strategy).</td>
+<td>An array of strings containing the namespaces and entries (only used for <code>namespace</code> and <code>hybrid</code> strategies).</td>
 </tr>
 </tbody>
 </table>
 <p>The <code>strategy</code> options are as follows:</p>
 <ul>
-<li>"entry" selects every exported profile as primary.</li>
-<li>"namespace" selects every profile found in the namespaces of the <code>primary</code> array as primary.</li>
-<li>"hybrid" selects every entry listed in the <code>primary</code> array or found in the namespaces in the <code>primary</code> array as primary.</li>
+<li><code>entry</code> selects every exported profile as primary.</li>
+<li><code>namespace</code> selects every profile found in the namespaces of the <code>primary</code> array as primary.</li>
+<li><code>hybrid</code> selects every entry listed in the <code>primary</code> array or found in the namespaces in the <code>primary</code> array as primary.</li>
 </ul>
-<p>When specifying an Entry in the target array, use the fully qualified name (FQN) format.</p>
+<p>When specifying an <code>Entry</code> in the target array, use the fully qualified name (FQN).</p>
 <h4 id="provenance-information-configuration-parameters">Provenance Information Configuration Parameters</h4>
 <p><strong>(TO DO: document what this structure can contain)</strong></p>
 <p>Here is an example of provenanceInformation:</p>
@@ -538,20 +544,20 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <h3 id="front-matter-files">Front Matter Files</h3>
-<p>Every IG contains some amount of narrative content, which we refer to as the "<a href="https://www.scribendi.com/advice/front_matter.en.html">front matter</a>". The front matter is typically a set of hyperlinked HTML files, graphics, and sometimes, downloads. These files are manually authored using any convenient tool; there are no special facilities in CIMPL to author the front matter.</p>
-<p>If multiple files are involved, they must be placed into a single folder, named in the <code>indexContent</code> parameter of the <a href="#configuration-file">configuration file</a>. This folder must contain a file named <code>index.html</code> whose contents will be used as the body of the IG home page (the header and footer of the pages are automatically generated).</p>
-<p>If a single file is used, the file should be named in the <code>indexContent</code> parameter of the configuration file, and a folder is not required.</p>
+<p>Every IG contains some amount of narrative content, which we refer to as <a href="https://www.scribendi.com/advice/front_matter.en.html">front matter</a>. The front matter is typically a set of hyperlinked HTML files, graphics, and sometimes, downloads. These files are manually authored using any convenient tool; there are no special facilities in CIMPL to author the front matter.</p>
+<p>If multiple files are involved, they must be placed into a single folder, named in the <code>indexContent</code> parameter of the <a href="#configuration-file">Configuration file</a>. This folder must contain a file named <em>index.html</em> whose contents will be used as the body of the IG home page (the header and footer of the pages are automatically generated).</p>
+<p>If a single file is used, the file should be named in the <code>indexContent</code> parameter of the Configuration file, and a folder is not required.</p>
 <h3 id="fhir-examples">FHIR Examples</h3>
 <p>Configuring FHIR examples to appear in the generated IG involves the following steps:</p>
 <ul>
-<li>Create a folder which will contain your FHIR examples</li>
-<li>Modify the CIMPL configuration file to specify the folder containing your examples</li>
+<li>Create a folder to contain your FHIR examples.</li>
+<li>Modify the CIMPL Configuration file to specify the folder containing your examples.</li>
 </ul>
 <p>The name of the folder is arbitrary, however, following <a href="#suggested-directory-structure">directory structure</a> and <a href="#suggested-file-naming">naming conventions</a> is recommended.</p>
 <p>The folder location is specified using the <code>"examples:"</code> parameter in the CIMPL configuration file.  This is illustrated below:</p>
 <p><img alt="CIMPL Examples Configuration" src="../img_cimpl/fhirexampleconfig01.png" /></p>
 <h3 id="package-list-file">Package List File</h3>
-<p>The format and content of this file follows the <a href="http://wiki.hl7.org/index.php?title=FHIR_IG_PackageList_doco">FHIR specification for package lists</a>. The package list is required for IGs published by HL7. The file containing the package list is named by the <code>packageList</code> parameter of the <a href="#configuration-file">configuration file</a>. If the <code>packageList</code> parameter is not supplied and no file is found at the default location (packageList.json), and <code>fhirURL</code> is an hl7.org or fhir.org URL (indicating it is an HL7 publication), then a basic package list file will be created. In this case, the IG author should review and modify the file as needed.</p>
+<p>The format and content of this file follows the <a href="http://wiki.hl7.org/index.php?title=FHIR_IG_PackageList_doco">FHIR specification for package lists</a>. The package list is required for IGs published by HL7. The file containing the package list is named by the <code>"packageList"</code> parameter of the <a href="#configuration-file">Configuration file</a>. If the <code>"packageList"</code> parameter is not supplied and no file is found at the default location (<em>packageList.json</em>), and the <code>"path"</code> parameter is an hl7.org or fhir.org URL (indicating it is an HL7 publication), then a basic package list file will be created. In this case, the IG author should review and modify the file as needed.</p>
 <p>Here is an example of a package list file:</p>
 <pre><code>{
   &quot;package-id&quot;: &quot;hl7.fhir.us.mcode&quot;,
@@ -579,12 +585,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </code></pre>
 
 <h3 id="content-profile-file">Content Profile File</h3>
-<p>The Content Profile (CP) specifies the profiles to be included in the IG. As explained <a href="#data-model-ig-relationship">earlier</a>, IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models across more than one one namespace:</p>
+<p>The Content Profile (CP) specifies the profiles to be included in the IG. As explained <a href="#data-model-ig-relationship">earlier</a>, IGs are created by selecting a subset of models from those defined in CIMPL models. IGs can include models from more than one one namespace:</p>
 <p><img alt="Content profile scope" src="../img_cimpl/Content-profile-scope.png" /></p>
 <p>The CP provides several types of information about the IG:</p>
 <ul>
-<li>The list of <code>Entries</code> (or entire namespaces) whose <strong>profiles</strong> are to be included in the IG,</li>
-<li>A list of classes (or entire namespaces) <em>not</em> to be profiled, and</li>
+<li>The list of <code>Entries</code> or namespaces whose <strong>profiles</strong> are to be included in the IG,</li>
+<li>A list of <code>Entries</code>, <code>Groups</code> or namespaces <em>not</em> to be profiled, and</li>
 <li>Elements in the profiled classes to be marked as <a href="#Specifying-must-support-elements">MustSupport</a>.</li>
 </ul>
 <h4 id="specifying-profiles-to-include-in-the-ig">Specifying Profiles to Include in the IG</h4>
@@ -594,15 +600,15 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><strong>Note</strong>: Only <code>Entries</code> result in FHIR profiles. <code>Groups</code> and <code>Elements</code> result in <strong>extensions</strong>. Inclusion of <strong>extensions</strong> in the IG is automatic, and cannot be specified in the CP.</p>
 </blockquote>
 <h4 id="specifying-no-profile-classes">Specifying No-Profile Classes</h4>
-<p>When you specify an <code>Entry</code> to be included in an IG, it may indirectly pull in other <code>Entries</code>. For example, an <strong>Observation</strong> references other classes including <strong>Patient</strong>, <strong>Specimen</strong>, <strong>Device</strong>, and <strong>Practitioner</strong>. In turn, <strong>Specimen</strong> could reference a <strong>Procedure</strong>, <strong>Device</strong> and <strong>Organization</strong>, etc, until a large number of classes are involved. By default, if there is a CIMPL model for a referenced class, SHR-CLI will create a profile for that class, and include it in the IG. We refer to these dependent profiles as <em>supporting</em> profiles.</p>
-<p>The No-Profile (<code>NP</code>) flag is a way to put boundaries around your IG, and eliminate some or all supporting profiles. The No-Profile (<code>NP</code>) flag after a class instructs SHR-CLI to <em>not</em> profile a class, and therefore, exclude it from the list of profiles in the IG. To exclude all classes in a namespace, put the <code>NP</code> flag after the namespace name.</p>
+<p>The No-Profile (<code>NP</code>) flag after a class instructs SHR-CLI to <em>not</em> profile a class, and therefore, exclude it from the list of profiles in the IG. To exclude all classes in a namespace, put the <code>NP</code> flag after the namespace name.</p>
+<p>When you specify an <code>Entry</code> to be included in an IG, it may indirectly pull in other <code>Entries</code>. For example, an <strong>Observation</strong> references other classes including <strong>Patient</strong>, <strong>Specimen</strong>, <strong>Device</strong>, and <strong>Practitioner</strong>. In turn, <strong>Specimen</strong> could reference a <strong>Procedure</strong>, <strong>Device</strong> and <strong>Organization</strong>, etc, until a large number of classes are involved. By default, if there is a CIMPL model for a referenced class, SHR-CLI will create a profile for that class, and include it in the IG. We refer to these dependent profiles as <em>supporting</em> profiles. The No-Profile (<code>NP</code>) flag is a way to put boundaries around your IG, and eliminate some or all supporting profiles.</p>
 <p>The <code>NP</code> flag can be applied to both <code>Entries</code> and <code>Groups</code>. As an example of applying <code>NP</code> to a <code>Group</code>, if there is a model of Address that is different than FHIR's <strong>Address</strong> data type, then specifying <code>Address: NP</code> will use FHIR's <strong>Address</strong> rather than a profiled version of Address.</p>
-<p>Because the web of dependencies can be hard to predict, a good way to determine which classes should be designated with an <code>NP</code> flag is to generate the IG, then go to the <code>out/fhir/profiles</code> directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the <code>NP</code> flag to the corresponding class. However,the <code>NP</code> flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.</p>
+<p>Because the newtork of dependencies can be hard to predict, a good way to determine which classes should be designated with an <code>NP</code> flag is to generate the IG, then go to the <code>out/fhir/profiles</code> directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the <code>NP</code> flag to the corresponding class. However,the <code>NP</code> flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.</p>
 <hr />
 <p><strong>Note:</strong> The <em>No Profile</em> feature is available in SHR-CLI 6.6.0 and higher</p>
 <hr />
 <h4 id="specifying-mustsupport-elements">Specifying MustSupport Elements</h4>
-<p>In FHIR, <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport"><strong>MustSupport</strong></a> is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. In the CP file, <strong>MustSupport</strong> elements are designated with the <code>MS</code> flag after the property name.</p>
+<p><a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport"><strong>MustSupport</strong></a> is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. In the CP file, <strong>MustSupport</strong> elements are designated with the <code>MS</code> flag after the property name.</p>
 <p><strong>MustSupport</strong>s  are specified in the CP file rather than in the data model because different use cases may require different <strong>MustSupport</strong>s. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.</p>
 <h4 id="content-profile-example">Content Profile Example</h4>
 <p>Here is an example of a CP file:</p>
@@ -634,12 +640,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <h2 id="executing-shr-cli">Executing SHR-CLI</h2>
 <h3 id="command-line">Command Line</h3>
 <p>The general form of the SHR-CLI execution command is as follows (where $ stands for the command prompt, which could be different on your system):</p>
-<p>$ <code>node &lt;tooling-directory&gt; &lt;specification-directory&gt; [options]</code></p>
+<p>$ <code>node <i>tooling-directory  <specification-directory [options]</i></code></p>
 <p>where options include:</p>
-<pre><code>-c, --config &lt;config&gt;    the name of the config file (default: config.json)
+<pre><code>-c, --config &lt;config&gt;    the name of the Configuration file (default: _config.json_)
 -l, --log-level &lt;level&gt;  the console log level &lt;fatal, error, warn, info, debug, trace&gt; (default: info)
 -s, --skip &lt;feature&gt;     skip an export feature &lt;fhir, json-schema, model-doc, data-dict, all&gt; (default: &lt;none&gt;)
--o, --out &lt;out&gt;          the path to the output folder (default: out)
+-o, --out &lt;out&gt;          the path to the output folder (default: _out_)
 -m, --log-mode &lt;mode&gt;    the console log mode &lt;short,long,json,off&gt; (default: short)
 -d, --duplicate          show duplicate error messages (default: false)
 -j, --export-es6         export ES6 JavaScript classes (experimental, default: false)
@@ -652,68 +658,68 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <ul>
 <li><code>node</code> is the command that starts the SHR-CLI application.</li>
 <li>The dot <code>.</code> represents the current directory in Windows and macOS. In this example, the tooling directory is the current working directory.</li>
-<li><code>../shr-spec/spec</code> represents the location of the specification directory. The double dot <code>..</code> represents the directory above the current working directory, in Windows and macOS. In this case, <code>/shr-spec</code> is parallel to the tooling directory, and <code>/spec</code> is one level below that.</li>
-<li><code>-c ig-mcode/ig-mcode-r4-config.json</code> directs the execution engine to the configuration file. Note that the configuration file location is relative to the specification directory, implying the full path to the configuration is <code>../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json</code></li>
+<li><code>../shr-spec/spec</code> represents the location of the <em>specification</em> directory. The double dot <code>..</code> represents the directory above the current <em>working directory</em> in Windows and macOS. In this case, <code>/shr-spec</code> is parallel to the <em>tooling directory</em>, and <code>/spec</code> is one level below that.</li>
+<li><code>-c ig-mcode/ig-mcode-r4-config.json</code> directs the execution engine to the Configuration file. Note that the Configuration file location is relative to the <em>specification</em> directory, implying the full path to the configuration is <code>../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json</code></li>
 <li><code>-l error</code> is an option that sets tells the system to suppress any messages that don't rise to the level of an <code>error</code>. This reduces the amount of output to the console window.</li>
 </ul>
 <blockquote>
 <p><strong>Note:</strong> SHR-CLI will abort if the <code>--clean</code>(<code>-n</code>) option is selected and the output folder is locked by another application (e.g., the folder is open in File Explorer).</p>
 </blockquote>
 <h3 id="addressing-error-messages">Addressing Error Messages</h3>
-<p>In the process of building a model, it is inevitable that you will encounter error messages from SHR-CLI. Debugging the model is an iterative process, and it could take some perseverance to arrive at a "clean" run of SHR-CLI with no errors. This is an expected part of the process.</p>
-<p>A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in <strong><a href="#appendix-error-messages">Appendix</a></strong>.</p>
+<p>In the process of building a model, it is inevitable that you will encounter error messages from SHR-CLI. Debugging the model is an iterative process, and it could take some perseverance to arrive at a <em>clean</em> run of SHR-CLI with no errors. This is an expected part of the process.</p>
+<p>A detailed list of CIMPL compilation errors and troubleshooting suggestions are available in <a href="#appendix-error-messages">Appendix: Error Messages</a>.</p>
 <p>Here are some general tips on approaching debugging your model:</p>
 <ul>
-<li>Always eliminate <a href="#parsing-errors">parsing errors</a> first. <strong>Parsing errors can be identified because they include a file, line number, and column number.</strong> It is essential to elminate parsing errors first, because parsing errors usually trigger large cascades of other errors, so you can't truly start debugging your model until parsing errors have been eliminated.</li>
+<li>Always eliminate <a href="#parsing-errors">parsing errors</a> first. Parsing errors can be identified because they include a file, line number, and column number. It is essential to eliminate parsing errors first, because parsing errors usually trigger large cascades of other errors. You can't start debugging your model until parsing errors have been eliminated.</li>
 <li>Once all parsing errors have been eliminated, start working top down on the first (or first few) errors. Often, subsequent errors are a consequence of the first error.</li>
 <li>Don't be discouraged by the number of errors, since a single correction can silence multiple logged errors.</li>
 <li>Read the error messages carefully. Although the messages might be cryptic, especially at first, the names of classes and paths are often excellent clues.</li>
 <li>SHR-CLI <em>should</em> run to completion, but sometimes the SHR-CLI process can crash if there is an unanticipated error. Usually this is not a cause for concern, and fixing any reported errors will eliminate the crash.</li>
 </ul>
 <h3 id="advanced-logging">Advanced Logging</h3>
-<p>SHR-CLI uses the <a href="https://www.npmjs.com/package/bunyan">Bunyan</a> structured logging framework, and stores a full log file in the output folder (note: it will be appended to on subsequent runs).  You can use the Bunyan CLI tool to perform advanced filtering of the log file.  For example:</p>
+<p>SHR-CLI uses the <a href="https://www.npmjs.com/package/bunyan">Bunyan</a> structured logging framework, and stores a full log file in the output folder. Each subsequent execution appends messages to the log file. You can use the Bunyan CLI tool to perform advanced filtering of the log file.  For example:</p>
 <pre><code>node_modules/.bin/bunyan -c 'this.shrId==&quot;shr.vital.BloodPressure&quot;'  -o short out/out.log
 </code></pre>
 
-<p>For more information on Bunyan and Bunyan CLI, see the Bunyan documentation.</p>
+<p>For more information on Bunyan and Bunyan CLI, see the <a href="https://www.npmjs.com/package/bunyan">Bunyan documentation</a>.</p>
 <h2 id="outputs-from-shr-cli">Outputs from SHR-CLI</h2>
-<p>The output of running SHR-CLI appear in a directory named "out". By default, the /out directory is created in the tooling directory. A different location can be designated using the <code>-o</code> <a href="#executing-shr-cli">command line option</a>.</p>
-<p>The content of the /out directory depends on which exporters were selected to run, which is controlled using the <code>-s</code> command line option. By default, the /out will contain five exports, as shown below, each corresponding to a separate export process:</p>
+<p>The output of running SHR-CLI appears in a directory named <em>out</em>. By default, the <em>/out</em> directory is created in the <em>tooling directory</em>. A different location can be designated using the <code>-o</code> <a href="#executing-shr-cli">command line option</a>.</p>
+<p>The content of the <em>/out</em> directory depends on which exporters were selected to run, which is controlled using the <code>-s</code> command line option. By default, the /<em>out</em> will contain five exports, as shown below, each corresponding to a separate export process:</p>
 <p><img alt="Typical Contents of the /out Directory" src="../img_cimpl/typical-out-directory.png" /></p>
 <ul>
-<li>cimcore - this directory is only used in the process of building the <code>modeldoc</code> export, and may not appear in the future releases.</li>
-<li><a href="#data-dictionary-export">data-dictionary</a> - this directory contains an MS-Excel spreadsheet containing a list of model elements and value sets</li>
-<li><a href="#fhir-export">fhir</a> - this directory contains all the definitions and assets necessary to produce the IG</li>
-<li><a href="#json-schema-export">json-schema</a> - this directory contains schemas for the (<strong>TO DO -- need to define the JSON schema export</strong>)</li>
-<li><a href="#model-documentation-export">modeldoc</a> - this directory contains files that present the model with a look and feel similar to <a href="https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html">Javadoc</a></li>
+<li><em>cimcore</em> - this directory is only used in the process of building the <code>modeldoc</code> export, and may not appear in future releases.</li>
+<li><a href="#data-dictionary-export"><em>data-dictionary</em></a> - this directory contains an MS-Excel spreadsheet containing a list of model <code>Element</code>s and value sets</li>
+<li><a href="#fhir-export"><em>fhir</em></a> - this directory contains all the definitions and assets necessary to produce the IG</li>
+<li><a href="#json-schema-export"><em>json-schema</em></a> - this directory contains schemas for the (<strong>TO DO -- need to define the JSON schema export</strong>)</li>
+<li><a href="#model-documentation-export"><em>modeldoc</em></a> - this directory contains files that present the model with a look and feel similar to <a href="https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html">Javadoc</a></li>
 </ul>
 <h3 id="fhir-export">FHIR Export</h3>
-<p>The FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create a FHIR IG. These are not the <em>pages</em> of the IG, but rather various definitions that underlie the IG presentation. You must run the <a href="#creating-the-implementation-guide">IG publisher</a> to create the IG itself.</p>
-<p>The FHIR export appears in the /fhir subdirectory under the designated "out" directory. The directory contains further subdirectories for code systems, extensions, the IG (guide), the logical model (logical), profiles, and value sets.</p>
+<p>The FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create a FHIR IG. These are not the <em>pages</em> of the IG, but rather various definitions that underlie the IG presentation. You must run the <a href="#creating-the-implementation-guide">IG publisher</a> to create the IG.</p>
+<p>The FHIR export appears in the <em>/fhir</em> subdirectory under the designated <em>out</em> directory. The directory contains further subdirectories for code systems,extensions, the IG (<em>guide</em>), the logical model (<em>logical</em>), profiles, and value sets.</p>
 <h4 id="logical-model-export">Logical Model Export</h4>
-<p>The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model <em>prior to</em> mapping to FHIR resources. Each entry is presented as if it were a new FHIR resource, rather than a profile. The logical model is formally expressed as a set of FHIR <code>StructureDefinitions</code>. These definitions are distinguished from profiles because the names generated by the tooling end in <code>-model</code>.</p>
-<p>Because the logical model does not entail the additional complication of mapping, it is useful for review purposes. The logical model can be checked for clinical relevance and sufficiency before making mapping decisions.</p>
-<p>An optional part of the FHIR export, the logical model can be turned on or off using the <code>includeLogicalModels</code> flag in the configuration file.</p>
+<p>An optional part of the FHIR export, the logical model can be turned on or off using the <code>includeLogicalModels</code> flag in the Configuration file.</p>
+<p>The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model <em>prior to</em> mapping to FHIR resources. Each <code>Entry</code> is presented as if it were a new FHIR resource, rather than a profile. The logical model is formally expressed as a set of FHIR <strong>StructureDefinitions</strong>. These definitions are distinguished from profiles because the names generated by the tooling end in <code>-model</code>.</p>
+<p>Because the logical model does not include maps, it is useful for review purposes. The logical model can be checked for clinical relevance and sufficiency before making mapping decisions.</p>
 <p><img alt="Logical Model Example" src="../img_cimpl/logical-model-sw-example.png" /></p>
 <h3 id="model-documentation-export">Model Documentation Export</h3>
-<p>The model documentation provides another way to view the logical model. This view emphasizes the class hierarchy defined in CIMPL, the datatypes, associated constraints, and relationships between the classes (references). The panel in the upper left allows the user to filter on the namespace and (in SHR-CLI 6.6 and higher) the class type (Entry, Group, or Element). The right-hand panel shows details for the selected class, include the full set of properties and constraints. </p>
+<p>The model documentation provides another way to view the logical model. This view emphasizes the class hierarchy defined in CIMPL, the data types, associated constraints, and relationships between the classes (references). The panel in the upper left allows the user to filter on the namespace and (in SHR-CLI 6.6 and higher) the class type (<code>Entry</code>, <code>Group</code>, or <code>Element</code>). The right-hand panel shows details for the selected class, include the full set of properties and constraints.</p>
 <p>For many users, especially those with experience in object-oriented modeling, the model documentation is the quickest way to navigate around the model.</p>
 <p><img alt="Model Documentation Example" src="../img_cimpl/model-documentation-example.png" /></p>
 <h3 id="data-dictionary-export">Data Dictionary Export</h3>
-<p>The Data Dictionary is an Microsoft Excel file containing a simplified, flattened list of model elements and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:</p>
+<p>The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model <code>Elements</code> and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:</p>
 <ul>
-<li>The "Key" tab contains a key to the columns in the other tabs;</li>
-<li>The "Profiles" tab contains a list of the primary profiles and their descriptions;</li>
-<li>The "Data Elements" tab contains a list of <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport">MustSupport</a> and required elements associated with those profiles;</li>
-<li>The "Value Sets" tab contains a list of value sets used in the IG, and their descriptions;</li>
-<li>The "Value Set Details" tab contains a list of the codes and/or implicit definitions in those value sets.</li>
+<li>The <em>Key</em> tab contains a key to the columns in the other tabs,</li>
+<li>The <em>Profiles</em> tab contains a list of the primary profiles and their descriptions,</li>
+<li>The <em>Data Elements</em> tab contains a list of <a href="https://www.hl7.org/fhir/conformance-rules.html#mustSupport"><strong>MustSupport</strong></a> and required elements associated with those profiles,</li>
+<li>The <em>Value Sets</em> tab contains a list of value sets used in the IG, and their descriptions,</li>
+<li>The <em>Value Set Details</em> tab contains a list of the codes and/or implicit definitions in those value sets.</li>
 </ul>
 <p>The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR profiles, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.</p>
 <h3 id="json-schema-export">JSON Schema Export</h3>
 <p>(<strong>TO DO: determine what to say here</strong>)</p>
 <h2 id="creating-the-implementation-guide">Creating the Implementation Guide</h2>
 <p>The final step in the IG creation process is to run the <a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR IG Publisher</a>. This tool is maintained and owned by HL7 FHIR.</p>
-<p>Open a command prompt, change directories to the tooling directory, and use one of these two options:</p>
+<p>Open a command prompt, change directories to the <em>tooling directory</em>, and use one of these two options:</p>
 <ul>
 <li>If you used the default "out" directory when running SHR-CLI:</li>
 </ul>
@@ -722,17 +728,19 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>If you used a different "out" directory (e.g., mypath/out):</li>
 </ul>
 <p>$  <code>java -Xms4g -Xmx8g -jar mypath/out/fhir/guide/org.hl7.fhir.publisher.jar -ig mypath/out/fhir/guide/ig.json</code></p>
-<p><strong>Note:</strong> The IG publisher can take 15-30 minutes or even longer to run, depending on the size of the IG, and it takes <em>lots</em> of memory. The yarn script above will allocate up to 8GB of RAM. A minimum of 4GB of RAM is recommended to run the IG Publisher tool.</p>
+<blockquote>
+<p><strong>Note</strong>: The IG publisher can take 15-30 minutes or longer to run, depending on the size of the IG, and it takes <em>lots</em> of memory. The yarn script above will allocate up to 8GB of RAM. A minimum of 4GB of RAM is recommended to run the IG Publisher tool.</p>
+</blockquote>
 <p>When the publisher finishes, the IG can be opened by running the following commands.</p>
 <ul>
-<li>If you used default "out" directory:</li>
+<li>If you used default <em>out</em> directory:</li>
 </ul>
 <p>$  <code>yarn run ig:open</code></p>
 <ul>
-<li>If you used a different "out" directory, by manually opening the file  <code>mypath/out/fhir/guide/output/index.html</code></li>
+<li>If you used a different <em>out</em> directory, by manually opening the file  <code>mypath/out/fhir/guide/output/index.html</code></li>
 </ul>
 <p>You now have your completed IG.</p>
-<p>The FHIR IG Publisher performs numerous validation checks on the content of the IG. The output of these checks can be accessed through the "QA Report" link in the footer of the home page, or by opening the file <code>/out/fhir/guide/output/qa.html</code>.</p>
+<p>The FHIR IG Publisher performs numerous validation checks on the content of the IG. The output of these checks can be accessed through the <em>QA Report</em> link in the footer of the home page, or by opening the file <em>/out/fhir/guide/output/qa.html</em>.</p>
 <p>An example QA output is shown below:</p>
 <p><img alt="qa.html example output" src="../img_cimpl/igpublisher_output.png" /></p>
 <h2 id="appendix-error-messages">Appendix: Error Messages</h2>
@@ -754,7 +762,11 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>1 2 <strong><em>3 4 5</em></strong> <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳&nbsp;The last three digits are for unique identification and have no particular meaning.</p>
 <h3 id="parsing-errors">Parsing Errors</h3>
-<p>Parsing errors are generated when the importer cannot make sense of the contents of a CIMPL statement. <strong>Parsing error messages include the file, line, and column number, and can be linked directly to a location in a CIMPL file where parsing failed.</strong> Most other types of errors (with the exception of mapping errors) cannot be linked to a specific file location because they represent some type of a logical inconsistency.</p>
+<p>Parsing errors are generated when the importer cannot make sense of the contents of a CIMPL statement.</p>
+<blockquote>
+<p><strong>Note</strong>: Parsing error messages include the file, line, and column number, and can be linked directly to a location in a CIMPL file where parsing failed.</p>
+</blockquote>
+<p>Most other types of errors (with the exception of mapping errors) cannot be linked to a specific file location because they represent some type of  logical inconsistency.</p>
 <p>A typical parsing error looks like this:</p>
 <pre><code>extraneous input 'Entry' expecting {&lt;EOF&gt;, 'CodeSystem:', 'Abstract:', 'Element:', 'Entry:', 'Group:'}.
 ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\oncocore.txt, line=9, column=0)
@@ -774,12 +786,12 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>01001</td>
 <td>No project configuration file found, currently using default EXAMPLE identifiers. Auto-generating a proper 'config.json' in your specifications folder</td>
-<td>Open the 'config.json' file and customize it for your project.</td>
+<td>Open the <em>config.json</em> file and customize it for your project.</td>
 </tr>
 <tr>
 <td>01002</td>
 <td>Config file missing key: <code>$KEY</code>, using default key: <code>$DEFAULT VALUE</code> instead.</td>
-<td>Open the 'config.json' file and add your project specific details for that key.</td>
+<td>Open the <em>config.json</em> file and add your project specific details for that key.</td>
 </tr>
 <tr>
 <td>02001</td>
@@ -799,12 +811,12 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>03003</td>
 <td>Overriding extensible value set constraint from <code>$VS1</code> to <code>$VS2</code>.  Only allowed when new codes do not overlap meaning of old codes.</td>
-<td>The "extensible" binding means that a code from outside the given value set should be used only if the value set does not contain a suitable code.</td>
+<td>The <strong>extensible</strong> binding means that a code from outside the given value set should be used only if the value set does not contain a suitable code.</td>
 </tr>
 <tr>
 <td>03004</td>
 <td>Element profiled on Basic. Consider a more specific mapping.</td>
-<td>The Basic profile should not be used in most cases. Consider a more specific profile mapping that categorizes the Element being mapped.</td>
+<td>The <strong>Basic</strong> resource should not be used in most cases. Consider a more specific profile mapping that categorizes the <code>Element</code> being mapped.</td>
 </tr>
 <tr>
 <td>03005</td>
@@ -836,12 +848,12 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11001</td>
 <td>Element name '<code>$NAME</code>' should begin with a capital letter</td>
-<td>Rename the specified Element</td>
+<td>Rename the specified <code>Element</code></td>
 </tr>
 <tr>
 <td>11002</td>
 <td>Entry name '<code>$NAME</code>' should begin with a capital letter</td>
-<td>Rename the specified Entry</td>
+<td>Rename the specified <code>Entry</code></td>
 </tr>
 <tr>
 <td>11003</td>
@@ -851,7 +863,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11004</td>
 <td>Unsupported binding strength: <code>$BINDING_STRENGTH</code>.  Defaulting to REQUIRED</td>
-<td>Binding strength has to be one of the following: example, preferred, extensible, or required (default).</td>
+<td>Binding strength has to be one of the following: <strong>example, preferred, extensible</strong>, or <strong>required</strong> (default).</td>
 </tr>
 <tr>
 <td>11005</td>
@@ -861,7 +873,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11006</td>
 <td>Invalid config file. Should be valid JSON dictionary</td>
-<td>Make sure your 'config.json' file is using a valid format for JSON.</td>
+<td>Make sure your <em>config.json</em> file is using a valid format for JSON.</td>
 </tr>
 <tr>
 <td>11007</td>
@@ -886,7 +898,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11011</td>
 <td>Uses statements have been deprecated in ValueSet files.  Uses statement ignored.</td>
-<td>Uses statement is unnecessary. Refer to documentation for proper syntax</td>
+<td><code>Uses</code> statement is unnecessary. Refer to documentation for proper syntax</td>
 </tr>
 <tr>
 <td>11012</td>
@@ -896,22 +908,22 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11013</td>
 <td>Failed to resolve definition for <code>$ELEMENT_NAME</code></td>
-<td>The referenced Element doesn't exist in the current namespace, or in any of its inherited parents. Check spelling errors as well as imports.</td>
+<td>The referenced <code>Element</code> doesn't exist in the current namespace, or in any of its inherited parents. Check spelling errors as well as imports.</td>
 </tr>
 <tr>
 <td>11013</td>
 <td>Failed to resolve definition for <code>primitive</code></td>
-<td>Only certain primitives are supported. Please refer to the documentation to see the full list.</td>
+<td>Only certain primitives (data types) are supported. Please refer to the documentation to see the full list.</td>
 </tr>
 <tr>
 <td>11015</td>
 <td>token recognition error at: <code>$CHARACTER</code></td>
-<td>This is usually a typo issue. Investigate keywords and missing colons around the specificed text input.</td>
+<td>This is usually a typo issue. Investigate keywords and missing colons around the specified text input.</td>
 </tr>
 <tr>
 <td>11016</td>
 <td>mismatched input <code>$INPUT</code> expecting <code>$LIST_OF_KEYWORDS</code></td>
-<td>This is usually a typo issue. Investigate spelling and keywords used around the specificied text input.</td>
+<td>This is usually a typo issue. Investigate spelling and keywords used around the specified text input.</td>
 </tr>
 <tr>
 <td>11017</td>
@@ -966,12 +978,12 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11027</td>
 <td>Unable to import property <code>$FQN</code>, unknown value type: <code>$VALUE_TYPE</code></td>
-<td>The type either does not exist, or the import tool needs to be updated.</td>
+<td>The value type either does not exist, or the import tool needs to be updated.</td>
 </tr>
 <tr>
 <td>11028</td>
 <td>Unable to import unknown constraint type: <code>$CONSTRAINT_TYPE</code></td>
-<td>The type either does not exist, or the import tool needs to be updated.</td>
+<td>The constraint type either does not exist, or the import tool needs to be updated.</td>
 </tr>
 <tr>
 <td>11029</td>
@@ -986,21 +998,21 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11031</td>
 <td>Unable to import FixedValueConstraint, unknown fixed value type: <code>$RULE_TYPE</code></td>
-<td>The value type either does not exist, or the import tool needs to be updated.</td>
+<td>The fixed value type either does not exist, or the import tool needs to be updated.</td>
 </tr>
 <tr>
 <td>11032</td>
 <td>Project configuration not found! Exiting the program.</td>
-<td>There was an error finding or loading the configuration file. Please double check that it exists and is valid.</td>
+<td>There was an error finding or loading the Configuration file. Please double check that it exists and is valid.</td>
 </tr>
 <tr>
 <td>11033</td>
-<td>Name $ELEMENT_ENTRY_NAME already exists.</td>
+<td>Name <code>$ELEMENT_ENTRY_NAME</code> already exists.</td>
 <td>The entity or element name already exists within the namespace and the most recently defined element or entry name will be used.</td>
 </tr>
 <tr>
 <td>11034</td>
-<td>ValueSet name $VS_NAME already exists.</td>
+<td>ValueSet name <code>$VS_NAME</code> already exists.</td>
 <td>The value set name already exists within the namespace.</td>
 </tr>
 <tr>
@@ -1016,7 +1028,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11037</td>
 <td>Could not find content profile file: <code>$FILE_NAME</code>.</td>
-<td>Check the name or path to the content profile file specified in your configuration file.</td>
+<td>Check the name or path to the Content Profile file specified in your Configuration file.</td>
 </tr>
 <tr>
 <td>11038</td>
@@ -1031,7 +1043,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>11040</td>
 <td>Property <code>$PROPERTY</code> already exists.</td>
-<td>Extra declaration of Property needs to be removed.</td>
+<td>Extra declaration of <code>Property</code> needs to be removed.</td>
 </tr>
 <tr>
 <td>11041</td>
@@ -1056,7 +1068,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>12001</td>
 <td>Cannot resolve element definition.</td>
-<td>Element doesn't exist. Double check spelling and inheritance</td>
+<td><code>Element</code> doesn't exist. Double check spelling and inheritance</td>
 </tr>
 <tr>
 <td>12002</td>
@@ -1126,7 +1138,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>12015</td>
 <td>Cannot further constrain type of <code>$NAME</code> from <code>$TYPE</code> to <code>$TYPE</code></td>
-<td>The two elements aren't based on the same parent. You cannot constrain an element to one that is completely distinct.</td>
+<td>The two <code>Element</code>s aren't based on the same parent. You cannot constrain an <code>Element</code> to one that is completely distinct.</td>
 </tr>
 <tr>
 <td>12017</td>
@@ -1136,7 +1148,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>12018</td>
 <td>Cannot constrain element <code>$NAME</code> to <code>$TARGET</code> since it is an invalid sub-type</td>
-<td>Element has to be based on <code>$s</code> or otherwise is a child of <code>$s</code>.</td>
+<td><code>Element</code> has to be based on <code>$s</code> or otherwise is a child of <code>$s</code>.</td>
 </tr>
 <tr>
 <td>12020</td>
@@ -1145,7 +1157,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 </tr>
 <tr>
 <td>12021</td>
-<td>Cannot include cardinality on <code>$NAME</code>, cardinality of <code>$CARD</code> doesnt fit within <code>$CARD</code></td>
+<td>Cannot include cardinality on <code>$NAME</code>, cardinality of <code>$CARD</code> doesn't fit within <code>$CARD</code></td>
 <td>The cardinality of included parameters must be as narrow or narrower than the  property it contains.</td>
 </tr>
 <tr>
@@ -1156,7 +1168,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>12023</td>
 <td>Cannot constrain valueset of <code>$NAME</code> since neither it nor its value is a concept</td>
-<td>Only elements whose datatype is <code>concept</code> can be bound to a value set.</td>
+<td>Only <code>Element</code>s with data type of <code>concept</code> can be bound to a value set.</td>
 </tr>
 <tr>
 <td>12024</td>
@@ -1165,18 +1177,18 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 </tr>
 <tr>
 <td>12025</td>
-<td>Cannot constrain code of <code>$NAME</code> since neither it nor its value is a concept</td>
+<td>Cannot constrain code of <code>$NAME</code> since neither it nor its value is a <code>concept</code></td>
 <td></td>
 </tr>
 <tr>
 <td>12026</td>
-<td>Cannot constrain included code of <code>$NAME</code> since neither it nor its value is a concept</td>
+<td>Cannot constrain included code of <code>$NAME</code> since neither it nor its value is a <code>concept</code></td>
 <td></td>
 </tr>
 <tr>
 <td>12027</td>
 <td>Cannot constrain boolean value of <code>$NAME</code> since neither it nor its value is a boolean</td>
-<td>You may be trying to set an element that is not a boolean to true or false.</td>
+<td>You may be trying to set an <code>Element</code> that is not a boolean to true or false.</td>
 </tr>
 <tr>
 <td>12028</td>
@@ -1186,7 +1198,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>12029</td>
 <td>Cannot resolve element definition for <code>$NAME</code></td>
-<td>This is due to a incomplete definition for an element. Please refer to the document for proper definition syntax.</td>
+<td>This is due to an incomplete definition for an <code>Element</code>. Please refer to the <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> for proper definition syntax.</td>
 </tr>
 <tr>
 <td>12030</td>
@@ -1216,7 +1228,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>12035</td>
 <td>Found multiple matches for field <code>$FIELD</code></td>
-<td>Please use fully qualified identifier.</td>
+<td>Please use fully qualified name.</td>
 </tr>
 <tr>
 <td>12036</td>
@@ -1226,7 +1238,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>12037</td>
 <td>Could not find based on element <code>$ELEMENT</code> for child element <code>$ELEMENT</code>.</td>
-<td>Double check the <code>basedOn</code> element is defined within the specifications and correctly referenced.</td>
+<td>Double check that the <code>basedOn</code> <code>Element</code> is defined within the specifications and correctly referenced.</td>
 </tr>
 <tr>
 <td>14001</td>
@@ -1363,7 +1375,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>13022</td>
 <td>Mismatched types. Cannot map <code>$SOURCE_VALUE</code> to <code>$MAPPING</code>.</td>
-<td>Find the Entry referenced in the error details and change it to match the data type of the target field.</td>
+<td>Find the <code>Entry</code> referenced in the error details and change it to match the data type of the target field.</td>
 </tr>
 <tr>
 <td>13023</td>
@@ -1543,7 +1555,7 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <tr>
 <td>13060</td>
 <td>Could not determine how to map nested value (<code>$ELEMENT_PATH</code>) to FHIR profile.</td>
-<td>Occurs on the FHIR profile export when there are multiple levels of reference specified. e.g.: LaboratoryObservationTopic.Specimen.CollectionSite within LaboratoryObservationTopic.  Resolved by creating a reference in the cimi entity to FHIR map in cimi_entity_map.txt.</td>
+<td>Occurs on the FHIR profile export when there are multiple levels of reference specified. e.g.: <strong>LaboratoryObservationTopic.Specimen.CollectionSite</strong> within <strong>LaboratoryObservationTopic</strong>.  Resolved by creating a reference in the <em>CIMI</em> entity to FHIR map in <em>cimi_entity_map.txt</em>.</td>
 </tr>
 <tr>
 <td>13061</td>
@@ -1569,6 +1581,53 @@ ERROR_CODE:11023 (module=shr-text-input, file=..\shr-spec\spec\ns-onco-core\onco
 <td>13065</td>
 <td>Could not find FHIR element subextension for content profile rule with path <code>$RULE_PATH</code>.</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="appendix-document-conventions">Appendix: Document Conventions</h1>
+<table>
+<thead>
+<tr>
+<th align="left">Style</th>
+<th align="left">Explanation</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><strong>Bold</strong></td>
+<td align="left">A FHIR reserved word or resource name</td>
+<td align="left"><strong>Condition</strong></td>
+</tr>
+<tr>
+<td align="left"><code>Code</code></td>
+<td align="left">A CIMPL term, phrase, example, or command</td>
+<td align="left"><code>CodeSystem: LNC = http://loinc.org</code></td>
+</tr>
+<tr>
+<td align="left"><code><i>Italics</i> appearing in a code block</td>
+<td align="left">Indicates an item that should be substituted</td>
+<td align="left"><code>Value only <i>datatype</i></code></td>
+</tr>
+<tr>
+<td align="left"><em>Italics</em></td>
+<td align="left">A file name, or general emphasis in text</td>
+<td align="left"><em>obf-action.txt</em></td>
+</tr>
+<tr>
+<td align="left"><em>Italics with <strong>bold</strong> highlight</em></td>
+<td align="left">Indicates a substring in the file name that should be substituted</td>
+<td align="left"><em>ig-<strong>myigname</strong>-config.json</em></td>
+</tr>
+<tr>
+<td align="left">Leading Capitalization</td>
+<td align="left">CIMPL keywords or references that are capitalized; specific instances of FHIR artifacts</td>
+<td align="left">The <code>Grammar</code> keyword</td>
+</tr>
+<tr>
+<td align="left"><strong>Note:</strong></td>
+<td align="left">Something to keep in mind about the current topic</td>
+<td align="left"><strong>Note:</strong> Value Set names must begin with an uppercase letter.</td>
 </tr>
 </tbody>
 </table>
