@@ -237,7 +237,7 @@ Where:
 
 * `Grammar` is the version supported for the mapping grammar
 * `Namespace` is the name of the namespace for your logical model (same as used before)
-* `Target` is the FHIR release version targeted for mapping **element**s in your logical model, one of the following values: `FHIR_DSTU2`, `FHIR_STU_3`, or `FHIR_R4`. Our maps will be to FHIR_R4. Specifying the target also configures the CIMPL tool chain to generate R4 **StructureDefinition**s.
+* `Target` is the FHIR release version targeted for mapping element*s in your logical model, one of the following values: `FHIR_DSTU2`, `FHIR_STU_3`, or `FHIR_R4`. Our maps will be to FHIR_R4. Specifying the target also configures the CIMPL tool chain to generate R4 **StructureDefinition**s.
 
 While mapping, we ask the following questions:
 
