@@ -80,7 +80,7 @@ Much of what follows deals with configuring the relationship between CIMPL model
 
 ### Suggested Directory Structure
 
-The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under FHIR `STU3` and `R4`:
+The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under FHIR STU3 and R4:
 
 ```
 ├── shr-cli-6.5.0                   // Tooling location
