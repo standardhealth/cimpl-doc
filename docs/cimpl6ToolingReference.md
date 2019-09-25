@@ -346,9 +346,8 @@ The CP provides several different types of information about the IG:
 * A list of classes _not_ to be profiled, designated with the [No-Profile](#specifying-no-profile-elements) `NP` tag.
 
 The CP file is interpreted as follows:
-<!-- MK re: use of the more generic word classes - only an `Entry` may become a profile - true? if so, why not call these Entry? -->
 
-* The classes listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (`NP`).
+* The Entries listed in the CP are included as profiles in the IG, with the exception of those classes marked as  (`NP`).
 * A class _not_ explicitly listed in the CP _may be included_ in the IG, if the class (1) is referenced directly or indirectly by a class included in the IG, (2) is _not_ tagged as a No-Profile (`NP`) class, and (3) has a [differential](https://www.hl7.org/fhir/structuredefinition-definitions.html), relative to the resource it is mapped to.
 
 The syntax of a Content Profile file is:
