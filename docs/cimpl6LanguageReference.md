@@ -180,7 +180,7 @@ Primitives are data types, distinguished by starting with a lower case letter. C
 * [`positiveInt`](https://www.hl7.org/fhir/datatypes.html#positiveInt)
 * [`xhtml`](https://www.hl7.org/fhir/narrative.html#xhtml)
 
->**Note:** Unlike FHIR, CIMPL does not have an explicit [**Reference**](https://www.hl7.org/fhir/references.html) data type. References are determined during the [mapping process](#mapping-to-references).
+>**Note:** Unlike HL7® FHIR®, CIMPL does not have an explicit [**Reference**](https://www.hl7.org/fhir/references.html) data type. References are determined during the [mapping process](#mapping-to-references).
 
 ### Concept Codes
 
@@ -575,7 +575,7 @@ The `=` operator fixes an `Element`'s value to a specific concept, boolean, stri
 >1. [Bracket notation](#bracket-notation-for-value-choices) must always be used when applying a constraint to a `Value`, if that `Value` has a choice of data types. This makes it clear which of the choices is being constrained.
 >1. CIMPL allows fixed concept values to be overridden in child classes. Although this seems to violate the notion that constraints should get progressively tighter in subclasses, it is necessary when narrowing the meaning of a class characterized by a concept code. For example, the class `Pneumonia`, with fixed code, `SCT#233604007`, may have a child, `Fungal Pneumonia`, with fixed code `SCT#233613009`, the latter overriding the former. CIMPL will assume, without checking, that the code describing the child class has more constrained semantics than the code it replaces.
 >1. If you only need to fix a code in one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the Map file and not as a constraint in the Class file.
->1. The format of date, dateTime, instant and time must follow the formats defined by [HL7 FHIR](http://hl7.org/fhir/R4/datatypes.html#instant).
+>1. The format of date, dateTime, instant and time must follow the formats defined by [HL7® FHIR®](http://hl7.org/fhir/R4/datatypes.html#instant).
 
 ### Append Constraint
 
@@ -875,7 +875,7 @@ All classes in CIMPL, from `Element` to `Entry`, are reusable outside of their o
 
 ## Value Set File
 
-Value Set files are used to define custom value sets and codes when existing value set sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient, and a new value set must be defined.
+Value Set files are used to define custom value sets and codes when existing value set sources like [HL7® v3](https://www.hl7.org/fhir/terminologies-v3.html), [HL7® FHIR®](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient, and a new value set must be defined.
 
 ### Value Set File Example
 
@@ -1108,7 +1108,7 @@ Example:
 
 > **Note:** Mapping statements for slicing arrays is an advanced topic.
 
-_Slicing_ involves specifying the items that can be contained in an array. An array is an element whose upper cardinality is greater than one. An example of this is the [**FHIR Blood Pressure profile**](https://www.hl7.org/fhir/profiling.html#slicing), which slices **Observation.components** into diastolic and systolic pressure, identical in structure other than their code. Another example is **DiagnosticReport.result**, an array of Observations. Slicing can be used to specify the particular type of Observations in a given type of DiagnosticReport.
+_Slicing_ involves specifying the items that can be contained in an array. An array is an element whose upper cardinality is greater than one. An example of this is the [**HL7® FHIR® Blood Pressure profile**](https://www.hl7.org/fhir/profiling.html#slicing), which slices **Observation.components** into diastolic and systolic pressure, identical in structure other than their code. Another example is **DiagnosticReport.result**, an array of Observations. Slicing can be used to specify the particular type of Observations in a given type of DiagnosticReport.
 
 See the FHIR documentation for more detail about [slicing](https://www.hl7.org/fhir/profiling.html#slicing).
 
