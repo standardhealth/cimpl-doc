@@ -557,22 +557,25 @@ Cardinality defines the number of repeats that can exist for a `Property`. Cardi
 
 ### Fixed Value Constraint
 
-The `=` operator fixes an `Element`'s value to a specific concept, boolean, string, integer, decimal, or URL. The fixed value must be consistent with the defined data type, and is always a primitive.
+The `=` operator fixes an `Element`'s value to a specific concept, boolean, string, integer, decimal,date, dateTime, instant, time, or URL. The fixed value must be consistent with the defined data type, and is always a primitive.
 
 | To do this... | Example |
 |----------|---------|
 | Fix a code to an `Element` | `ObservationCode = LNC#82810-3` |
 | Fix a boolean value to an `Element` | `IsPrimaryTumor = true` |
-| Fix a string to an `Element`'s `Value` | `Value: string = "hello world"` |
+| Fix a string value to an `Element`'s `Value` | `Value: string = "hello world"` |
 | Fix a code to an `Element`'s `Value` where `concept` is one of the available data types | `Value[concept] = SCT#233613009 "Pneumonia"` |
-| Fix the units associated with a `Quantity` data type choice within an Element | `Value[Quantity].Units = UCUM#cm` |
-| Fix the units associated with a `Quantity` data type choice within an Entry or Group | `MyPropertyName[Quantity].Units = UCUM#cm` |
-
->**Notes:**
+| Fix the units associated with a `Quantity` data type choice within an `Element` | `Value[Quantity].Units = UCUM#cm` |
+| Fix the units associated with a `Quantity` data type choice within an `Entry` or `Group` | `MyPropertyName[Quantity].Units = UCUM#cm` |
+| Fix a date to an `Element`'s `Value` | `Value: date = "2019-11-11"`  |
+| Fix a dateTime to an `Element`'s `Value` | `Value: dateTime = "2019-01-01T13:28:17-05:00"`|
+| Fix an integer to an `Element`'s `Value` | `Value: integer = 58`  |
+>**Note:**
 >
 >1. [Bracket notation](#bracket-notation-for-value-choices) must always be used when applying a constraint to a `Value`, if that `Value` has a choice of data types. This makes it clear which of the choices is being constrained.
 >1. CIMPL allows fixed concept values to be overridden in child classes. Although this seems to violate the notion that constraints should get progressively tighter in subclasses, it is necessary when narrowing the meaning of a class characterized by a concept code. For example, the class `Pneumonia`, with fixed code, `SCT#233604007`, may have a child, `Fungal Pneumonia`, with fixed code `SCT#233613009`, the latter overriding the former. CIMPL will assume, without checking, that the code describing the child class has more constrained semantics than the code it replaces.
 >1. If you only need to fix a code in one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the Map file and not as a constraint in the Class file.
+>1. The format of date, dateTime, instant and time must follow the formats defined by [HL7 FHIR](http://hl7.org/fhir/R4/datatypes.html#instant).
 
 ### Append Constraint
 
