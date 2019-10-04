@@ -294,8 +294,8 @@ For our example, we have designated the `MyGender` and `OSADisorderCode` element
 
 More information about Content Profile settings are found in the [CIMPL Tooling Reference Guide](cimpl6ToolingReference.md#content-profile-file).
 
->**Note**: MustSupport renders as an **S** in a red box in FHIR IGs.
-_
+>**Note**: The `MS` tag in the content profile identifies that element as **MustSupport** in FHIR.  Reference the [FHIR _ MustSupport_ conformance rules](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) for further information.
+
 
 ### Create a Homepage for the IG
 
