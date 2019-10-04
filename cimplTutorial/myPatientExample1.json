@@ -6,10 +6,6 @@
           "http://example.com/fhir/StructureDefinition/myExample-MyPatient"
         ]
     },
-    "text": {
-      "status": "generated",
-      "div": "\u003cdiv xmlns\u003d\"http://www.w3.org/1999/xhtml\"\u003e\n      \n      \u003cp\u003ePatient Donald DUCK @ Acme Healthcare, Inc. MR \u003d 654321\u003c/p\u003e\n    \n    \u003c/div\u003e"
-    },
     "identifier": [
       {
         "use": "usual",
