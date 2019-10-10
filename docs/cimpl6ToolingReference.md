@@ -8,15 +8,17 @@
 
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Health Level Seven (HL7®) Fast Healthcare Interoperability Resources (FHIR®)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of HL7 FHIR.
+
+> **NOTE**: HL7® and FHIR® are registered trademarks owned by Health Level Seven International, and are registered with the United States Patent and Trademark Office.
 
 ### Purpose
 
-This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create a FHIR IG using CIMPL.
+This reference manual is a comprehensive guide to the command line interface, auxiliary files, and configurations needed to create an HL7 FHIR IG using CIMPL.
 
 ### Intended Audience
 
-The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing FHIR Implementation Guides. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (such as resources, elements, etc.)
+The CIMPL Tooling Reference is targeted to people doing model development using CIMPL and producing HL7 FHIR Implementation Guides. Familiarity with HL7 FHIR is helpful as the tutorial references HL7 FHIR artifacts (such as resources, elements, etc.)
 
 ### Prerequisite
 
@@ -30,7 +32,7 @@ This guide assumes you have:
 
 ### Inputs and Outputs
 
-The CIMPL Tooling, also called Standard Health Record Command Line Interface (SHR-CLI), is the engine that imports a set of inputs, including CIMPL language files, and exports FHIR and other outputs, as shown below:
+The CIMPL Tooling, also called Standard Health Record Command Line Interface (SHR-CLI), is the engine that imports a set of inputs, including CIMPL language files, and exports HL7 FHIR and other outputs, as shown below:
 
 ![CIMPL Tooling Overview](img_cimpl/cli-overview.png)
 
@@ -40,7 +42,7 @@ The inputs to SHR-CLI include:
 * A [Configuration file](#configuration-file) that contains directives to the tooling, and points to other resources,
 * An optional [Content Profile](#content-profile-file) file, which specifies [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements and profiling options specific to an IG,
 * One or more [Front Matter](#front-matter-files) files, which are the narratives and graphics that introduce the IG,
-* [FHIR Examples](#fhir-examples) that are to be included in the IG, and
+* [HL7 FHIR Examples](#fhir-examples) that are to be included in the IG, and
 * A [Package List](#package-list-file) that has information required for building the IG.
 
 The inputs are processed in the following sequence:
@@ -48,13 +50,13 @@ The inputs are processed in the following sequence:
 * The user [issues a build command](#executing-shr-cli) through the command-line interface (CLI) to launch SHR-CLI.
 * The CIMPL tooling imports definitions from CIMPL files (Class, Value Set, and Map files). SHR-CLI [reports any errors](#addressing-error-messages) in the CIMPL definitions.
 * SHR-CLI selects a subset of the data models to include in the IG, according to the [filter strategy](#filter-strategy-configuration-parameters).
-* SHR-CLI exports the selected CIMPL definitions into desired formats, such as FHIR profiles, data dictionaries, etc. The exports can be selected through [command line options](#executing-shr-cli).
+* SHR-CLI exports the selected CIMPL definitions into desired formats, such as HL7 FHIR profiles, data dictionaries, etc. The exports can be selected through [command line options](#executing-shr-cli).
 * The user [issues a separate command](#creating-the-implementation-guide) to produce the IG.
 
 SHR-CLI produces one or all of the following outputs, depending on configuration parameters:
 
-* [FHIR profiles, extensions, value sets](#fhir-export) that form the core content of the IG,
-* A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR **StructureDefinition**,
+* [HL7 FHIR profiles, extensions, value sets](#fhir-export) that form the core content of the IG,
+* A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as HL7 FHIR **StructureDefinition**,
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
 * A [Data Dictionary](#data-dictionary-export) that lists the [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements in the IG, as well as value sets and value set members,
 * [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the class relationships in the logical model.
@@ -63,7 +65,7 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 
 It is important to understand the relationship between models defined in CIMPL and IGs created from those models.
 
-The state-of-practice for FHIR IGs is still evolving,but currently, most IGs are developed by separate groups and define their own data models, as follows:
+The state-of-practice for HL7 FHIR IGs is still evolving,but currently, most IGs are developed by separate groups and define their own data models, as follows:
 
 ![Typical data model IG relationship](img_cimpl/typical-data-model-ig-relationship.png)
 
@@ -80,7 +82,7 @@ Much of what follows deals with configuring the relationship between CIMPL model
 
 ### Suggested Directory Structure
 
-The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under FHIR STU3 and R4:
+The SHR-CLI tooling does not require a particular directory structure. However, following conventions makes the process of managing the requisite files much easier. Here is an example of the suggested arrangement that assumes the same IG will be produced under HL7 FHIR STU3 and R4:
 
 ```
 ├── shr-cli-6.5.0                   // Tooling location
@@ -93,9 +95,9 @@ The SHR-CLI tooling does not require a particular directory structure. However, 
 |   |   ├── namespace1-bar.txt
 |   |   ├── namespace1-foo-vs.txt            // value set file(s)
 |   |   ├── namespace1-bar-vs.txt
-|   |   ├── namespace1-foo-map-stu3.txt      // map(s) for FHIR STU3
+|   |   ├── namespace1-foo-map-stu3.txt      // map(s) for HL7 FHIR STU3
 |   |   ├── namespace1-bar-map-stu3.txt
-|   |   ├── namespace1-foo-map-r4.txt        // map(s) for FHIR r4
+|   |   ├── namespace1-foo-map-r4.txt        // map(s) for HL7 FHIR r4
 |   |   └── namespace1-bar-map-r4.txt
 |   ├── ns-namespace2
 |   | ...
@@ -111,11 +113,11 @@ The SHR-CLI tooling does not require a particular directory structure. However, 
 |   |   |   ├── picture.png
 |   |   |   └── another-page.html
 |   |   ├── myguide1-stu3-cp.txt        // content profile file for FHIR STU3 IG
-|   |   ├── myguide1-r4-cp.txt          // content profile file for FHIR R4 IG
-|   |   ├── myguide1-stu3-plist.json    // package list for FHIR STU3 IG
-|   |   ├── myguide1-r4-plist.json      // package list for FHIR R4 IG
-|   |   ├── myguide1-stu3-config.json   // config file for FHIR STU3 IG
-|   |   └── myguide1-r4-config.json     // config file for FHIR R4 IG
+|   |   ├── myguide1-r4-cp.txt          // content profile file for HL7 FHIR R4 IG
+|   |   ├── myguide1-stu3-plist.json    // package list for HL7 FHIR STU3 IG
+|   |   ├── myguide1-r4-plist.json      // package list for HL7 FHIR R4 IG
+|   |   ├── myguide1-stu3-config.json   // config file for HL7 FHIR STU3 IG
+|   |   └── myguide1-r4-config.json     // config file for HL7 FHIR R4 IG
 |   ├── ig-myguide2
 |   |  ...
 ```
@@ -124,9 +126,9 @@ In this reference manual, we refer to several directories:
 * _Tooling Directory** - this the directory where the SHR-CLI tooling has been installed. Any convenient directory can be used. For easy identification, we recommend the tooling version number be included in the directory name.
 * **Specification Directory** - this is the top level directory where the input files and are located, usually arranged in sub-folders. Any convenient directory can be used. If you are using a source code control system such as Github to manage your development, this could be where the repository is checked out to your local machine.
 * **Namespace Directories** - these directories, located under the Specification Directory, contains CIMPL language files for a single namespace. The name of the directory should be prefixed with `ns-` followed by the shortname or acronym of the namespace followed .
-* **IG Directories** - these directories, under the specification directory contain files specific to a given implementation guide. There are subdirectories containing the front matter and examples, and individual configuration, content profile, and package list files. These files can be specific to a FHIR release, since the same IG could be created using different versions of FHIR.
+* **IG Directories** - these directories, under the specification directory contain files specific to a given implementation guide. There are subdirectories containing the front matter and examples, and individual configuration, content profile, and package list files. These files can be specific to an HL7 FHIR release, since the same IG could be created using different versions of HL7 FHIR.
 
->**Note**: There is currently no way to combine profiles for multiple FHIR versions in single IG.
+>**Note**: There is currently no way to combine profiles for multiple HL7 FHIR versions in single IG.
 
 ### Suggested File Naming
 
@@ -136,13 +138,13 @@ The naming of Configuration, Content Profiles, and Package List files is arbitra
 * Content Profile file: <code>ig-<i>**guide-name**</i>-cp.txt</code>
 * Package List file: <code>ig-<i>**guide-name**</i>-plist.json</code>
 
-If your project will support more than one FHIR version, the FHIR version should be included:
+If your project will support more than one FHIR version, the HL7 FHIR version should be included:
 
-* Configuration file: <code>ig-<i>**guide-name-FHIR Version**</i>-config.json</code>
-* Content Profile file: <code>ig-<i>**guide-name-FHIR Version**</i>-cp.txt</code>
-* Package List file: <code>ig-<i>**guide-name-FHIR Version**</i>-plist.json</code>
+* Configuration file: <code>ig-<i>**guide-name-HL7 FHIR Version**</i>-config.json</code>
+* Content Profile file: <code>ig-<i>**guide-name-HL7 FHIR Version**</i>-cp.txt</code>
+* Package List file: <code>ig-<i>**guide-name-HL7 FHIR Version**</i>-plist.json</code>
 
-where FHIR version is _dstu2, stu3_, or _r4_.
+where HL7 FHIR version is _dstu2, stu3_, or _r4_.
 <!-- MK: why not use the same values as listed in the configuration file section?  consistency?-->
 
 ## Inputs to SHR-CLI
@@ -191,7 +193,7 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 |`projectName`        |<code><i>string</i></code>|The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"  |
 |`projectShorthand`   |<code><i>string</i></code>|A shorthand name for the project, such as "mcode".                              |
 |`projectURL`         |<code><i>string</i></code>|The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"                             |
-|`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |
+|`fhirURL`            |<code><i>string</i></code>|The HL7 FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |
 |`fhirTarget`         |<code><i>string</i></code>|The FHIR version this IG will be based on, currently a choice of `"FHIR_R4"`, `"FHIR_STU_3"`, or `"FHIR_DSTU_2"`|
 |`entryTypeURL`       |<code><i>string</i></code>|The root URL for the JSON schema `EntryType` field. **(TO DO: clarify where and how this is used)**   |
 |`filterStrategy`     |`{}` |A JSON object containing configuration for filtering ([see below](#filter-strategy-configuration-parameters)).              |
@@ -230,7 +232,7 @@ These configurations are used to control the production of the IG. The contents 
 |Parameter                 |Type     |Description     |
 |--------------------|--------|-----------------|
 |`npmName`|`string` |The assigned node package manager name (NPM) for this IG, for example "hl7.fhir.us.mcode". The NPM name is usually assigned by HL7.   |
-|`version` |`string` |The version of this IG (not necessarily the version of FHIR), usually in the form _major.minor.revision_, for example, "3.0.1"  |
+|`version` |`string` |The version of this IG (not necessarily the version of HL7 FHIR), usually in the form _major.minor.revision_, for example, "3.0.1"  |
 |`ballotStatus`  |`string` |The HL7 ballot status of the IG (e.g., STU1 Ballot, Continuous Integration Build, etc.)      |
 |`packageList` |`string` |The name of the file to use as the [IG's Package List file](#package-list-file), relative to the _specification directory_. |
 |`includeLogicalModels`   |`boolean`|A `true` or `false` value indicating whether to include logical models in the IG.     |
@@ -242,6 +244,7 @@ These configurations are used to control the production of the IG. The contents 
 | `showPrimaryOnly`  | `boolean` | If `showPrimaryOnly` is true, then only those profiles listed in the Content Profile (i.e., the primary profiles) will be shown on the Profiles page of the IG, and supporting profiles (i.e., the profiles _referenced by_ the primary profiles) will not be shown. Otherwise, all profiles (primary and supporting) will be listed. |
 |`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     | _Deprecated after SHR-CLI 6.7.0_. The strategy for selection of what is primary in the IG ([see below](#primary-selection-strategy-configuration-paramters)). |
+|`"dependencies"`|`{}`     | Valid as of SHR-CLI 6.9.0. A list of other IGs that this guide depends on. ([see below](#Dependencies)). |
 
 #### Primary Selection Strategy Configuration Parameters
 
@@ -266,7 +269,7 @@ When specifying an `Entry` in the target array, use the fully qualified name (FQ
 
 #### Provenance Information Configuration Parameters
 
-**(TO DO: document what this structure can contain)**
+-- > **(TO DO: document what this structure can contain)** -->
 
 Here is an example of provenanceInformation:
 
@@ -281,6 +284,23 @@ Here is an example of provenanceInformation:
         "copyright": "Copyright (c) The Example Organization <http://example.org>"
     }
 ```
+#### Dependencies
+
+The [HL7 FHIR U.S. Core](https://www.hl7.org/fhir/us/core/) IG is included by default as a dependency for all IGs created using CIMPL.
+
+To add other dependency IGs, they must be created using CIMPL, and the configuration file `"dependencies"` parameter valued. This information is copied into the [HL7 FHIR IG Publisher control file dependencyList](https://wiki.hl7.org/index.php?title=IG_Publisher_Documentation#DependencyList). Here is an example:
+
+````
+"dependencies": [
+        {
+        "package": "hl7.fhir.us.mcode",
+        "version": "current",
+        "name": "mcode",
+        "location": "http://hl7.org/fhir/us/mcode/2019Sep//",
+        "fileLocation": "../../Desktop/mcode"
+        }
+]
+````
 
 ### Front Matter Files
 
@@ -290,11 +310,11 @@ If multiple files are involved, they must be placed into a single folder, named 
 
 If a single file is used, the file should be named in the `indexContent` parameter of the Configuration file, and a folder is not required.
 
-### FHIR Examples
+### HL7 FHIR Examples
 
-Configuring FHIR examples to appear in the generated IG involves the following steps:
+Configuring HL7 FHIR examples to appear in the generated IG involves the following steps:
 
-* Create a folder to contain your FHIR examples.
+* Create a folder to contain your HL7 FHIR examples.
 * Modify the CIMPL Configuration file to specify the folder containing your examples.
 
 The name of the folder is arbitrary, however, following [directory structure](#suggested-directory-structure) and [naming conventions](#suggested-file-naming) is recommended.
@@ -305,7 +325,7 @@ The folder location is specified using the `"examples:"` parameter in the CIMPL 
 
 ### Package List File
 
-The format and content of this file follows the [FHIR specification for package lists](http://wiki.hl7.org/index.php?title=FHIR_IG_PackageList_doco). The package list is required for IGs published by HL7. The file containing the package list is named by the `"packageList"` parameter of the [Configuration file](#configuration-file). If the `"packageList"` parameter is not supplied and no file is found at the default location (_packageList.json_), and the `"path"` parameter is an hl7.org or fhir.org URL (indicating it is an HL7 publication), then a basic package list file will be created. In this case, the IG author should review and modify the file as needed.
+The format and content of this file follows the [HL7 FHIR specification for package lists](http://wiki.hl7.org/index.php?title=FHIR_IG_PackageList_doco). The package list is required for IGs published by HL7. The file containing the package list is named by the `"packageList"` parameter of the [Configuration file](#configuration-file). If the `"packageList"` parameter is not supplied and no file is found at the default location (_packageList.json_), and the `"path"` parameter is an hl7.org or fhir.org URL (indicating it is an HL7 publication), then a basic package list file will be created. In this case, the IG author should review and modify the file as needed.
 
 Here is an example of a package list file:
 
@@ -349,11 +369,11 @@ The CP provides several types of information about the IG:
 
 #### Specifying Profiles to Include in the IG
 
-As illustrated above, the FHIR IG may include models from multiple namespaces. The first job of the CP is to specify the profiles that should be presented in the IG, out of the available `Entry` models in class files in the _spec_ directory.
+As illustrated above, the HL7 FHIR IG may include models from multiple namespaces. The first job of the CP is to specify the profiles that should be presented in the IG, out of the available `Entry` models in class files in the _spec_ directory.
 
 To include the profile of an `Entry` in the IG, list the class name in the CP. The list must be arranged by namespace, as shown in [the example below](#content-profile-example). To include all `Entries` in a namespace, mark the namespace with a wildcard `*`. We refer to any `Entry` explicitly listed for inclusion as "primary" profiles.
 
-> **Note**: Only `Entries` result in FHIR profiles. `Groups` and `Elements` result in **extensions**. Inclusion of **extensions** in the IG is automatic, and cannot be specified in the CP.
+> **Note**: Only `Entries` result in HL7 FHIR profiles. `Groups` and `Elements` result in **extensions**. Inclusion of **extensions** in the IG is automatic, and cannot be specified in the CP.
 
 #### Specifying No-Profile Classes
 
@@ -361,17 +381,17 @@ The No-Profile (`NP`) flag after a class instructs SHR-CLI to _not_ profile a cl
 
 When you specify an `Entry` to be included in an IG, it may indirectly pull in other `Entries`. For example, an **Observation** references other classes including **Patient**, **Specimen**, **Device**, and **Practitioner**. In turn, **Specimen** could reference a **Procedure**, **Device** and **Organization**, etc, until a large number of classes are involved. By default, if there is a CIMPL model for a referenced class, SHR-CLI will create a profile for that class, and include it in the IG. We refer to these dependent profiles as _supporting_ profiles. The No-Profile (`NP`) flag is a way to put boundaries around your IG, and eliminate some or all supporting profiles.
 
-The `NP` flag can be applied to both `Entries` and `Groups`. As an example of applying `NP` to a `Group`, if there is a model of Address that is different than FHIR's **Address** data type, then specifying `Address: NP` will use FHIR's **Address** rather than a profiled version of Address.
+The `NP` flag can be applied to both `Entries` and `Groups`. As an example of applying `NP` to a `Group`, if there is a model of Address that is different than HL7 FHIR's **Address** data type, then specifying `Address: NP` will use HL7 FHIR's **Address** rather than a profiled version of Address.
 
-Because the newtork of dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class. However,the `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
+Because the network of dependencies can be hard to predict, a good way to determine which classes should be designated with an `NP` flag is to generate the IG, then go to the `out/fhir/profiles` directory to see the complete list of profiles generated. If any profiles in that directory are extraneous to the purpose of the IG, go back to the CP and apply the `NP` flag to the corresponding class. However,the `NP` flag should not be applied to any class that is a parent class of one of the classes you want in your IG. This may interfere with mapping rules inherited from that parent class.
 
 ***
-**Note:** The _No Profile_ feature is available in SHR-CLI 6.6.0 and higher
+> **Note**: The _No Profile_ feature is available in SHR-CLI 6.6.0 and higher
 ***
 
 #### Specifying MustSupport Elements
 
-[**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in a FHIR instance if it exists. In the CP file, **MustSupport** elements are designated with the `MS` flag after the property name.
+[**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) is a boolean flag which allows a profile to indicate that an implementation must be able to process that element in an HL7 FHIR instance if it exists. In the CP file, **MustSupport** elements are designated with the `MS` flag after the property name.
 
 **MustSupport**s  are specified in the CP file rather than in the data model because different use cases may require different **MustSupport**s. For example, one use case may require a patient's date of death and another might not, but the data model for date of death should be the same wherever it is used.
 
@@ -476,17 +496,17 @@ The content of the _/out_ directory depends on which exporters were selected to 
 * [_json-schema_](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
 * [_modeldoc_](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
 
-### FHIR Export
+### HL7 FHIR Export
 
-The FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create a FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [IG publisher](#creating-the-implementation-guide) to create the IG.
+The HL7 FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create an HL7 FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [IG publisher](#creating-the-implementation-guide) to create the IG.
 
 The FHIR export appears in the _/fhir_ subdirectory under the designated _out_ directory. The directory contains further subdirectories for code systems,extensions, the IG (_guide_), the logical model (_logical_), profiles, and value sets.
 
 #### Logical Model Export
 
-An optional part of the FHIR export, the logical model can be turned on or off using the `includeLogicalModels` flag in the Configuration file.
+An optional part of the HL7 FHIR export, the logical model can be turned on or off using the `includeLogicalModels` flag in the Configuration file.
 
-The logical model is an alternative representation of the CIMPL model, expressed in a familiar FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model _prior to_ mapping to FHIR resources. Each `Entry` is presented as if it were a new FHIR resource, rather than a profile. The logical model is formally expressed as a set of FHIR **StructureDefinitions**. These definitions are distinguished from profiles because the names generated by the tooling end in `-model`.
+The logical model is an alternative representation of the CIMPL model, expressed in a familiar HL7 FHIR-like format. The logical model closely follows the CIMPL definitions because it reflects the model _prior to_ mapping to HL7 FHIR resources. Each `Entry` is presented as if it were a new HL7 FHIR resource, rather than a profile. The logical model is formally expressed as a set of HL7 FHIR **StructureDefinitions**. These definitions are distinguished from profiles because the names generated by the tooling end in `-model`.
 
 Because the logical model does not include maps, it is useful for review purposes. The logical model can be checked for clinical relevance and sufficiency before making mapping decisions.
 
@@ -502,7 +522,7 @@ For many users, especially those with experience in object-oriented modeling, th
 
 ### Data Dictionary Export
 
-The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
+The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model `Elements` and value sets, extracted from the HL7 FHIR profiles. The spreadsheet has five tabs:
 
 * The _Key_ tab contains a key to the columns in the other tabs,
 * The _Profiles_ tab contains a list of the primary profiles and their descriptions,
@@ -518,7 +538,7 @@ The Data Dictionary can be useful both to clinicians and implementers who don't 
 
 ## Creating the Implementation Guide
 
-The final step in the IG creation process is to run the [FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation). This tool is maintained and owned by HL7 FHIR.
+The final step in the IG creation process is to run the [HL7 FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation). This tool is maintained and owned by HL7 FHIR.
 
 Open a command prompt, change directories to the _tooling directory_, and use one of these two options:
 
@@ -568,7 +588,7 @@ CIMPL Compilation Errors are structured in the following format:
 &nbsp;↳&nbsp;First digit tells whether it is an warning or error. 0 = warning, 1 = error
 
 1 ***2*** 3 4 5 <br>
-&nbsp;&nbsp;&nbsp;↳&nbsp; Second digit indicates the phase of processing where the error appeared: 1 = grammar and importing of the text files, 2 = logical verification of the model, 3 = exporting of FHIR profiles, 4 = exporting of the JSON profiles
+&nbsp;&nbsp;&nbsp;↳&nbsp; Second digit indicates the phase of processing where the error appeared: 1 = grammar and importing of the text files, 2 = logical verification of the model, 3 = exporting of HL7 FHIR profiles, 4 = exporting of the JSON profiles
 
 1 2 ***3 4 5*** <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↳&nbsp;The last three digits are for unique identification and have no particular meaning.
@@ -596,7 +616,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 01002 | Config file missing key: `$KEY`, using default key: `$DEFAULT VALUE` instead.   | Open the _config.json_ file and add your project specific details for that key.
 | 02001 | Potentially mismatched targets: `$CLASS` maps to `$ITEM`, but based on class (`$CLASS`) maps to `$ITEM`, and `$ITEM` is not based on `$ELEMENT` in `$CLASS`.' | You are overriding an inherited mapping. |
 | 03001 | Trying to map `$PROFILE` to `$CODE`, but `$PROFILE` was previously mapped to it | |
-| 03002 | Choice has equivalent types, so choice options may overwrite or override each other when mapped to FHIR. | |
+| 03002 | Choice has equivalent types, so choice options may overwrite or override each other when mapped to HL7 FHIR. | |
 | 03003 | Overriding extensible value set constraint from `$VS1` to `$VS2`.  Only allowed when new codes do not overlap meaning of old codes. | The **extensible** binding means that a code from outside the given value set should be used only if the value set does not contain a suitable code. |
 | 03004 | Element profiled on Basic. Consider a more specific mapping. | The **Basic** resource should not be used in most cases. Consider a more specific profile mapping that categorizes the `Element` being mapped. |
 | 03005 | No mapping to '`$ELEMENT PATH`'. | This property is core to the target resource and usually should be mapped. |  |
@@ -694,7 +714,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 
 | Error Code    | Error Message | Solution |
 | ------------  | ------------- | -------- |
-| 13001          | Invalid FHIR target: `$TARGET` | Could not find the FHIR resource or profile you're trying to map to. Check spelling and FHIR version. |
+| 13001          | Invalid HL7 FHIR target: `$TARGET` | Could not find the HL7 FHIR resource or profile you're trying to map to. Check spelling and HL7 FHIR version. |
 | 13002          | Cannot flag path as mapped |
 | 13003          | Slicing on include type constraints with paths is not supported |
 | 13004          | Slicing required to disambiguate multiple mappings to `$TARGET` |
@@ -721,8 +741,8 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13025          | Applying constraints to profiled children not yet supported. |
 | 13026          | Failed to resolve path from `$ELEMENT` to `$PATH` |
 | 13027          | Unsupported binding strength: `$BINDING_STRENGTH` |
-| 13028          | Cannot change binding strength from `$FHIR_BINDING_STRENGTH` to `$CIMPL_BINDING_STRENGTH` | The value set binding strength specified in CIMPL is weaker than the binding already specified in FHIR. You must increase the binding strength in the CIMPL model to at least the same level as in FHIR. Note that this error message gives the FHIR binding strength first. |
-| 13029          | Cannot override value set constraint from `$URI` to `$URI` | This message is given when you try to replace a FHIR value set, which is either extensible or required, with a different value set. |
+| 13028          | Cannot change binding strength from `$FHIR_BINDING_STRENGTH` to `$CIMPL_BINDING_STRENGTH` | The value set binding strength specified in CIMPL is weaker than the binding already specified in HL7 FHIR. You must increase the binding strength in the CIMPL model to at least the same level as in HL7 FHIR. Note that this error message gives the HL7 FHIR binding strength first. |
+| 13029          | Cannot override value set constraint from `$URI` to `$URI` | This message is given when you try to replace an HL7 FHIR value set, which is either extensible or required, with a different value set. |
 | 13030          | Found more than one value set to apply to `$ELEMENT`. This should never happen and is probably a bug in the tool. |
 | 13031          | Found more than one code to fix on `$ELEMENT`. This should never happen and is probably a bug in the tool. |
 | 13032          | Can’t fix code on `$ELEMENT` because source value isn’t code-like. | This should never happen and is probably a bug in the tool. |
@@ -742,7 +762,7 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13046          | Mapping to `MAP_TARGET`'s `RULE_TARGET`: slice could not be found. |
 | 13047          | Couldn't find sd to unroll |
 | 13048          | Cannot override code constraint from `$SYSTEM`\|`$CODE` to `$SYSTEM`\|`$CODE`' |
-| 13049          | Unexpected error processing mapping to FHIR. |
+| 13049          | Unexpected error processing mapping to HL7 FHIR. |
 | 13050          | Unexpected error processing mapping rule. |
 | 13051          | Unexpected error adding extension. |
 | 13054          | Using profile that is currently in the middle of processing: `$PROFILE_ID`. |
@@ -751,21 +771,21 @@ When a parsing error occurs, the associated error code number and subsequent err
 | 13057          | Could not fix `$TARGET` to `$VALUE`; failed to detect compatible type for value `$VALUE`. |
 | 13058          | Cannot fix `$TARGET` to `$VALUE` since it is not a `$TYPE` type. |
 | 13059          | Cannot fix `$TARGET` to `$VALUE` since it is already fixed to `$OTHER_VALUE`. |
-| 13060          | Could not determine how to map nested value (`$ELEMENT_PATH`) to FHIR profile. | Occurs on the FHIR profile export when there are multiple levels of reference specified. e.g.: **LaboratoryObservationTopic.Specimen.CollectionSite** within **LaboratoryObservationTopic**.  Resolved by creating a reference in the _CIMI_ entity to FHIR map in _cimi_entity_map.txt_. | <!-- MK  obscure reference to cimi entity map.txt, any thoughts on providing more context?  -->
+| 13060          | Could not determine how to map nested value (`$ELEMENT_PATH`) to HL7 profile. | Occurs on the HL7 FHIR profile export when there are multiple levels of reference specified. e.g.: **LaboratoryObservationTopic.Specimen.CollectionSite** within **LaboratoryObservationTopic**.  Resolved by creating a reference in the _CIMI_ entity to HL7 FHIR map in _cimi_entity_map.txt_. | <!-- MK  obscure reference to cimi entity map.txt, any thoughts on providing more context?  -->
 | 13061          | Mapping `$ELEMENT` sub-fields is currently not supported. |
 | 13062          | Cannot make choice element explicit at `$ELEMENT`. Could not find compatible type match for: `$TYPE`. |
-| 13063          | Could not find FHIR element with path `$ELEMENT_PATH` for content profile rule with path `$RULE_PATH`. |
-| 13064          | Could not find FHIR element for content profile rule with path `$RULE_PATH`. |
-| 13065          | Could not find FHIR element subextension for content profile rule with path `$RULE_PATH`. |
+| 13063          | Could not find HL7 FHIR element with path `$ELEMENT_PATH` for content profile rule with path `$RULE_PATH`. |
+| 13064          | Could not find HL7 FHIR element for content profile rule with path `$RULE_PATH`. |
+| 13065          | Could not find HL7 FHIR element subextension for content profile rule with path `$RULE_PATH`. |
 
 # Appendix: Document Conventions
 
 | Style | Explanation | Example |
 |:----------|:---------|:---------|
-| **Bold**  | A FHIR reserved word or resource name | **Condition** |
+| **Bold**  | An HL7 FHIR reserved word or resource name | **Condition** |
 | `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
 | <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
 | _Italics_ | A file name, or general emphasis in text | _obf-action.txt_ |
 | _Italics with **bold** highlight_ | Indicates a substring in the file name that should be substituted | _ig-**myigname**-config.json_ |
-| Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of FHIR artifacts | The `Grammar` keyword |
+| Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of HL7 FHIR artifacts | The `Grammar` keyword |
 | **Note:** | Something to keep in mind about the current topic | **Note:** Value Set names must begin with an uppercase letter. |
