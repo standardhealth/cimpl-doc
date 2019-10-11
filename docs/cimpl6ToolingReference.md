@@ -244,28 +244,14 @@ These configurations are used to control the production of the IG. The contents 
 | `showPrimaryOnly`  | `boolean` | If `showPrimaryOnly` is true, then only those profiles listed in the Content Profile (i.e., the primary profiles) will be shown on the Profiles page of the IG, and supporting profiles (i.e., the profiles _referenced by_ the primary profiles) will not be shown. Otherwise, all profiles (primary and supporting) will be listed. |
 |`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     | _Deprecated after SHR-CLI 6.7.0_. The strategy for selection of what is primary in the IG ([see below](#primary-selection-strategy-configuration-paramters)). |
-|`"dependencies"`|`{}`     | Valid as of SHR-CLI 6.9.0. A list of other IGs that this guide depends on. ([see below](#Dependencies)). |
+|`"dependencies"`|`{}`     | Valid as of SHR-CLI 6.9.0. A list of other IGs that this guide depends on, allowing maps to dependent IG elements. ([see below](#Dependencies)). |
 
 #### Primary Selection Strategy Configuration Parameters
 
 ***
-**Note:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy`.
+> **Note:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy` - documentation has been moved to [Deprecated Features](#Deprecated-Features)
 ***
 
-The primary selection strategy causes certain profiles to be displayed in a _Primary_ section at the top list of profiles. All other exported profiles are listed in a _Supporting_ section below the _Primary_ section. The contents of the `primarySelectionStrategy` object are as follows:
-
-|Parameter |Type    |Description |
-|--------|------|-----------|
-|`strategy`|<code><i>string</i></code>|The strategy to follow for primary selection, either `namespace`, `hybrid`, or `entry` (default). |
-|`primary` |`[]`|An array of strings containing the namespaces and entries (only used for `namespace` and `hybrid` strategies). |
-
-The `strategy` options are as follows:
-
-* `entry` selects every exported profile as primary.
-* `namespace` selects every profile found in the namespaces of the `primary` array as primary.
-* `hybrid` selects every entry listed in the `primary` array or found in the namespaces in the `primary` array as primary.
-
-When specifying an `Entry` in the target array, use the fully qualified name (FQN).
 
 #### Provenance Information Configuration Parameters
 
@@ -288,7 +274,7 @@ Here is an example of provenanceInformation:
 
 The [HL7 FHIR U.S. Core](https://www.hl7.org/fhir/us/core/) IG is included by default as a dependency for all IGs created using CIMPL.
 
-To add other dependency IGs, they must be created using CIMPL, and the configuration file `"dependencies"` parameter valued. This information is copied into the [HL7 FHIR IG Publisher control file dependencyList](https://wiki.hl7.org/index.php?title=IG_Publisher_Documentation#DependencyList). Here is an example:
+To add other dependency IGs, they must be created using CIMPL, and the Configuration file `"dependencies"` parameter must be valued. This information is copied into the [HL7 FHIR IG Publisher control file dependencyList](https://wiki.hl7.org/index.php?title=IG_Publisher_Documentation#DependencyList). Here is an example:
 
 ````
 "dependencies": [
@@ -301,6 +287,7 @@ To add other dependency IGs, they must be created using CIMPL, and the configura
         }
 ]
 ````
+> **Note**:The dependent IG JSON definitions must be downloaded into the folder referenced by `fileLocation`. 
 
 ### Front Matter Files
 
@@ -789,3 +776,20 @@ When a parsing error occurs, the associated error code number and subsequent err
 | _Italics with **bold** highlight_ | Indicates a substring in the file name that should be substituted | _ig-**myigname**-config.json_ |
 | Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of HL7 FHIR artifacts | The `Grammar` keyword |
 | **Note:** | Something to keep in mind about the current topic | **Note:** Value Set names must begin with an uppercase letter. |
+
+# Deprecated Features
+
+The primary selection strategy causes certain profiles to be displayed in a _Primary_ section at the top list of profiles. All other exported profiles are listed in a _Supporting_ section below the _Primary_ section. The contents of the `primarySelectionStrategy` object are as follows:
+
+|Parameter |Type    |Description |
+|--------|------|-----------|
+|`strategy`|<code><i>string</i></code>|The strategy to follow for primary selection, either `namespace`, `hybrid`, or `entry` (default). |
+|`primary` |`[]`|An array of strings containing the namespaces and entries (only used for `namespace` and `hybrid` strategies). |
+
+The `strategy` options are as follows:
+
+* `entry` selects every exported profile as primary.
+* `namespace` selects every profile found in the namespaces of the `primary` array as primary.
+* `hybrid` selects every `entry` listed in the `primary` array or found in the namespaces in the `primary` array as primary.
+
+When specifying an `Entry` in the target array, use the fully qualified name (FQN).
