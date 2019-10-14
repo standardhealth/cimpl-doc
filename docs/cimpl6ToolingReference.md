@@ -49,7 +49,7 @@ The inputs are processed in the following sequence:
 
 * The user [issues a build command](#executing-shr-cli) through the command-line interface (CLI) to launch SHR-CLI.
 * The CIMPL tooling imports definitions from CIMPL files (Class, Value Set, and Map files). SHR-CLI [reports any errors](#addressing-error-messages) in the CIMPL definitions.
-* SHR-CLI selects a subset of the data models to include in the IG, according to the [filter strategy](#filter-strategy-configuration-parameters).
+* SHR-CLI selects a subset of the data models to include in the IG, according to the [Content Profile No Profile `NP` parameter.](#Specifying-No-Profile-Classes).
 * SHR-CLI exports the selected CIMPL definitions into desired formats, such as HL7 FHIR profiles, data dictionaries, etc. The exports can be selected through [command line options](#executing-shr-cli).
 * The user [issues a separate command](#creating-the-implementation-guide) to produce the IG.
 
@@ -65,7 +65,7 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 
 It is important to understand the relationship between models defined in CIMPL and IGs created from those models.
 
-The state-of-practice for HL7 FHIR IGs is still evolving,but currently, most IGs are developed by separate groups and define their own data models, as follows:
+The state-of-practice for HL7 FHIR IGs is still evolving, but currently, most IGs are developed by separate groups and define their own data models, as follows:
 
 ![Typical data model IG relationship](img_cimpl/typical-data-model-ig-relationship.png)
 
@@ -208,22 +208,8 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 
 >**NOTE**: The `filterStrategy` Configuration file parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the Configuration file `filterStrategy` Migrate any `filterStrategy` settings to the [Content Profile](#content-profile-file).
 
+Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy` - documentation has been moved to [Deprecated Features](#Filter-Strategy)
 
-Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when the [_specification directory_](#suggested-directory-structure) contains namespaces or `Entries` that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and `Entries` to limit the scope of the exports, and subsequently, the IG.
-
-The contents of the `filterStrategy` object are as follows:
-
-|Parameter |Type |Description |
-|---------|------|------------|
-|`filter`  |`boolean`|A value indicating whether to enable filtering. If `filter` is `true`, then the filtering operation occurs. Otherwise, no filtering occurs. (Also, if the `filterStrategy` parameter is entirely omitted, no filtering occurs.) |
-|`strategy`|<code><i>string</i></code> | The strategy for specification filtering, either "namespace", "element", or "hybrid".|
-|`target`  |`[]`     |An array of strings containing the names of `Entries`, namespaces, or both. |
-
-* The `Element` strategy filters the imported classes to include each `Entry` listed in the `target` array, and their recursive dependencies.
-* The `namespace` strategy filters the imported classes to include only `Entries` in the namespaces listed in the `target` array, and their recursive dependencies.
-* The `hybrid` strategy filters the imported classes to include each `Entry` listed in the `target` array,and all `Entries` in every namespace listed in the `target` array with their recursive dependencies.
-
-When specifying an `Entry` in the `target` array, use the [fully qualified name (FQN)](cimpl6LanguageReference.md#fully-qualified-names) format.
 
 #### Implementation Guide Configuration Parameters
 
@@ -241,17 +227,16 @@ These configurations are used to control the production of the IG. The contents 
 |`extraResources`  |`string` |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: `SearchParameter`, `OperationDefinition`, `CapabilityStatement` (STU3+), `Conformance` (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
 |`examples` |`string` |The name of the folder containing examples (one example per file) to include in the IG, for example, _ig-mcode/Examples-mCODE-r4_. We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` must match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no `examples` folder is specified, and a folder named _fhir-examples_ exists in the specification directory, it will be used as the examples folder. |
 |`historyLink` |`string` |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
-| `showPrimaryOnly`  | `boolean` | If `showPrimaryOnly` is true, then only those profiles listed in the Content Profile (i.e., the primary profiles) will be shown on the Profiles page of the IG, and supporting profiles (i.e., the profiles _referenced by_ the primary profiles) will not be shown. Otherwise, all profiles (primary and supporting) will be listed. |
+
 |`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
 |`primarySelectionStrategy`|`{}`     | _Deprecated after SHR-CLI 6.7.0_. The strategy for selection of what is primary in the IG ([see below](#primary-selection-strategy-configuration-paramters)). |
-|`"dependencies"`|`{}`     | Valid as of SHR-CLI 6.9.0. A list of other IGs that this guide depends on, allowing maps to dependent IG elements. ([see below](#Dependencies)). |
+|`dependencies`|`{}`     | Valid as of SHR-CLI 6.9.0. A list of other IGs that this guide depends on, allowing maps to external IG elements. ([see below](#Dependencies)). |
 
 #### Primary Selection Strategy Configuration Parameters
 
 ***
-> **Note:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy` - documentation has been moved to [Deprecated Features](#Deprecated-Features)
-***
-
+> **Note:** The `primarySelectionStrategy` parameter is deprecated as of SHR-CLI 6.7.0. The functionality has been migrated to the [Content Profile](#content-profile-file). Upgrade to SHR-CLI 6.7.0 or higher, and do not implement the `primarySelectionStrategy` - documentation has been moved to [Deprecated Features](#Primary-Selection-Strategy)
+*** 
 
 #### Provenance Information Configuration Parameters
 
@@ -274,7 +259,11 @@ Here is an example of provenanceInformation:
 
 The [HL7 FHIR U.S. Core](https://www.hl7.org/fhir/us/core/) IG is included by default as a dependency for all IGs created using CIMPL.
 
-To add other dependency IGs, they must be created using CIMPL, and the Configuration file `"dependencies"` parameter must be valued. This information is copied into the [HL7 FHIR IG Publisher control file dependencyList](https://wiki.hl7.org/index.php?title=IG_Publisher_Documentation#DependencyList). Here is an example:
+To add other dependency IGs the Configuration file `dependencies` parameter must be valued. This information is copied into the [HL7 FHIR IG Publisher control file dependencyList](https://wiki.hl7.org/index.php?title=IG_Publisher_Documentation#DependencyList). 
+
+Once a dependency is created, the profiles in the IG can be mapped to profiles in the dependent IG.
+
+Here is an example:
 
 ````
 "dependencies": [
@@ -282,12 +271,12 @@ To add other dependency IGs, they must be created using CIMPL, and the Configura
         "package": "hl7.fhir.us.mcode",
         "version": "current",
         "name": "mcode",
-        "location": "http://hl7.org/fhir/us/mcode/2019Sep//",
+        "location": "http://hl7.org/fhir/us/mcode/2019Sep",
         "fileLocation": "../../Desktop/mcode"
         }
 ]
 ````
-> **Note**:The dependent IG JSON definitions must be downloaded into the folder referenced by `fileLocation`. 
+> **Note**:The dependent IG JSON definitions must be downloaded into the folder referenced by `fileLocation`.
 
 ### Front Matter Files
 
@@ -777,7 +766,11 @@ When a parsing error occurs, the associated error code number and subsequent err
 | Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of HL7 FHIR artifacts | The `Grammar` keyword |
 | **Note:** | Something to keep in mind about the current topic | **Note:** Value Set names must begin with an uppercase letter. |
 
-# Deprecated Features
+## Deprecated Features
+
+### Primary Selection Strategy
+
+Deprecated as of 6.7, however supported.
 
 The primary selection strategy causes certain profiles to be displayed in a _Primary_ section at the top list of profiles. All other exported profiles are listed in a _Supporting_ section below the _Primary_ section. The contents of the `primarySelectionStrategy` object are as follows:
 
@@ -792,4 +785,27 @@ The `strategy` options are as follows:
 * `namespace` selects every profile found in the namespaces of the `primary` array as primary.
 * `hybrid` selects every `entry` listed in the `primary` array or found in the namespaces in the `primary` array as primary.
 
+The deprecated Configuration file entry is:
+| `showPrimaryOnly`  | `boolean` | If `showPrimaryOnly` is true, then only those profiles listed in the Content Profile (i.e., the primary profiles) will be shown on the Profiles page of the IG, and supporting profiles (i.e., the profiles _referenced by_ the primary profiles) will not be shown. Otherwise, all profiles (primary and supporting) will be listed. |
+
 When specifying an `Entry` in the target array, use the fully qualified name (FQN).
+
+### Filter Strategy
+
+Deprecated as of 6.7, however supported.
+
+Between the import stage and the export stage, there is a filtering stage (see  [CIMPL Tooling Overview](#cimpl-tooling-overview)). Filtering is useful when the [_specification directory_](#suggested-directory-structure) contains namespaces or `Entries` that are outside the scope of the current IG, and should not be included in the IG. Filtering removes unwanted namespaces and `Entries` to limit the scope of the exports, and subsequently, the IG.
+
+The contents of the `filterStrategy` object are as follows:
+
+|Parameter |Type |Description |
+|---------|------|------------|
+|`filter`  |`boolean`|A value indicating whether to enable filtering. If `filter` is `true`, then the filtering operation occurs. Otherwise, no filtering occurs. (Also, if the `filterStrategy` parameter is entirely omitted, no filtering occurs.) |
+|`strategy`|<code><i>string</i></code> | The strategy for specification filtering, either "namespace", "element", or "hybrid".|
+|`target`  |`[]`     |An array of strings containing the names of `Entries`, namespaces, or both. |
+
+* The `Element` strategy filters the imported classes to include each `Entry` listed in the `target` array, and their recursive dependencies.
+* The `namespace` strategy filters the imported classes to include only `Entries` in the namespaces listed in the `target` array, and their recursive dependencies.
+* The `hybrid` strategy filters the imported classes to include each `Entry` listed in the `target` array,and all `Entries` in every namespace listed in the `target` array with their recursive dependencies.
+
+When specifying an `Entry` in the `target` array, use the [fully qualified name (FQN)](cimpl6LanguageReference.md#fully-qualified-names) format.
