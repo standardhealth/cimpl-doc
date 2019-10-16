@@ -8,15 +8,17 @@
 
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and [implementation guides](https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides) (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Health Level Seven (HL7®) Fast Healthcare Interoperability Resources (FHIR®)](https://www.hl7.org/fhir/overview.html) profiles, extensions and [implementation guides](https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides) (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of HL7 FHIR.
+
+> **NOTE**: HL7® and FHIR® are registered trademarks owned by Health Level Seven International, and are registered with the United States Patent and Trademark Office.
 
 ### Purpose
 
-In [the tradition of _Hello, World_ examples](https://en.wikipedia.org/wiki/"Hello,_World!"_program), this tutorial presents a very simple example to get you started using CIMPL. Upon completion of this tutorial, you will be able to try the [CIMPL In-Depth Tutorial](cimpl6Tutorial_detail.md) and get started creating a FHIR IG.
+In [the tradition of _Hello, World_ examples](https://en.wikipedia.org/wiki/"Hello,_World!"_program), this tutorial presents a very simple example to get you started using CIMPL. Upon completion of this tutorial, you will be able to try the [CIMPL In-Depth Tutorial](cimpl6Tutorial_detail.md) and get started creating an HL7 FHIR IG.
 
 ### Intended Audience
 
-The CIMPL _Hello World Tutorial_ is targeted to people with some programming experience. Familiarity with FHIR is helpful as the tutorial references FHIR artifacts (e.g. resources and profile.)
+The CIMPL _Hello World Tutorial_ is targeted to people with some programming experience. Familiarity with HL7 FHIR is helpful as the tutorial references HL7 FHIR artifacts (e.g. resources and profile.)
 
 ### Prerequisite
 
@@ -27,7 +29,7 @@ This guide assumes you have:
 
 ### Initial Setup
 
-This tutorial is focused on how to create a model that will be used as input to create a FHIR IG. Supporting configuration and core data type files have been defined for you.
+This tutorial is focused on how to create a model that will be used as input to create an IG. Supporting configuration and core data type files have been defined for you.
 
 The following directory structure is assumed for your configuration:
 
@@ -67,7 +69,7 @@ Value:           boolean
 ```
 This is a CIMPL class file that defines a class called `HelloWorld` and gives that class one property, `SayHello`. The `Property` has an `Element` class with a `boolean` data type.
 
-### 2) Define a Map to FHIR
+### 2) Define a Map to HL7 FHIR
 
 Next, create a file in the same directory called _HelloWorld_map.txt_. This file is even simpler:
 
@@ -134,13 +136,13 @@ cd ~/cimpl/shr-cli
 node . ../hello-world -c ig-hello-world-config.json
 ```
 
-When the program runs, it will output a warning message alerting you that mapping to **Basic** usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (a FHIR **StructureDefinition**) will be found in _~/cimpl/shr-cli/out/fhir/profiles/_.  A **StructureDefinition** can be verbose, and this one clocks in at several hundred lines.
+When the program runs, it will output a warning message alerting you that mapping to **Basic** usually isn’t the best choice, but in this case, it is intentional. After the program runs, the generated profile (an HL7 FHIR **StructureDefinition**) will be found in _~/cimpl/shr-cli/out/fhir/profiles/_.  A **StructureDefinition** can be verbose, and this one clocks in at several hundred lines.
 
 ### 6) Generate the _Hello, World_ Implementation Guide
 
->Note: If your organization uses a proxy server, you may have to run the IG publishing process from outside your organization's firewall.
+>**Note:** If your organization uses a proxy server, you may have to run the IG publishing process from outside your organization's firewall.
 
-A friendlier view of the profile is created when we create an IG. To do this, we use the [existing FHIR implementation guide (IG) publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation).
+A friendlier view of the profile is created when we create an IG. To do this, we use the [existing HL7 FHIR implementation guide (IG) publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation).
 
 To generate the IG, run:
 
@@ -151,17 +153,20 @@ yarn run ig:publish
 
 The generated profile page will be located at _~/cimpl/shr-cli/out/fhir/guide/output/StructureDefinition-hello-HelloWorld.html_.  Open this page in your favorite web browser.
 
-You should see a FHIR profile for _HelloWorld_ in a (mostly empty) [FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html). 
+You should see an HL7 FHIR profile for _HelloWorld_ in a (mostly empty) [HL7 FHIR Implementation Guide](https://www.hl7.org/fhir/implementationguide.html). 
 
 _You did it!_
 
 For a more comprehensive understanding of the CIMPL grammar and how to use it for your project, continue to the [detailed tutorial](cimpl6Tutorial_detail.md).
 
-# Appendix A - Document Conventions
+# Appendix - Document Conventions
 
-| What you see | Explanation |
-|:----------|:---------|
-| Bolded Text  | FHIR reference, first letter in what will become an acronym
-| Italics | Code substitution text, emphasis to call attention to a word in a sentence or heading, example file or folder names|
-| `Code Block` | CIMPL reserved word or phrase, CIMPL code block or partial code block example |
-|Capitalization|CIMPL reserved words or references that are capitalized, specific instances of FHIR artifacts|
+| Style | Explanation | Example |
+|:----------|:---------|:---------|
+| **Bold**  | An HL7 FHIR reserved word or specific resource | **Observation**, **MustSupport** |
+| `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
+| <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
+| _Italics_ | A file name (also used for general emphasis in text) | _obf-action.txt_ |
+| _Italics with **bold** highlight_ | Indicates a substring in the file name that should be substituted | _ig-**myigname**-config.json_ |
+| Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of HL7 FHIR artifacts | The `Grammar` keyword |
+| **Note:** | Something to keep in mind about the current topic | **Note:** Value Set names must begin with an uppercase letter. |
