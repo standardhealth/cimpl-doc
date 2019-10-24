@@ -12,15 +12,17 @@
 
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and [implementation guides](https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides) (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Health Level Seven (HL7®) Fast Healthcare Interoperability Resources (FHIR®)](https://www.hl7.org/fhir/overview.html) profiles, extensions and [implementation guides](https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides) (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+
+> **NOTE**: HL7® and FHIR® are registered trademarks owned by Health Level Seven International, and are registered with the United States Patent and Trademark Office.
 
 ### Purpose
 
-This document provides a step-by-step guide to generate an HL7 FHIR IG starting with using CIMPL to document a model. The details about how to accomplish each step are in the [CIMPL Language Reference Manual](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Manual](cimpl6ToolingReference.md). Links to specific sections of these documents are provided in each section.
+This document provides a step-by-step guide to generate an HL7 FHIR IG starting with using CIMPL to document a model. The details about how to accomplish each step are in the [CIMPL Language Reference Manual](cimpl6LanguageReference.md) and [CIMPL Tooling Reference Manuals](cimpl6ToolingReference.md). Links to specific sections of these documents are provided in each section.
 
 ### Intended Audience
 
-The CIMPL User Guide is targeted to any person comfortable with using programming languages. Familiarity with FHIR is helpful as the guide references FHIR artifacts (e.g. resources and profile).
+The CIMPL User Guide is targeted to any person comfortable with using programming languages. Familiarity with FHIR is helpful as the guide references FHIR artifacts (e.g. resources and profiles).
 
 ### Prerequisite
 
@@ -34,7 +36,7 @@ CIMPL is designed to be modular and extensible, allowing for the reuse of other 
 ![Data model IG relationship](img_cimpl/Data-model-use-case-model.png)
 <!-- ![CIMPL Modularity](img_cimpl/CIMPLBuildingBlocks.png) -->
 
-CIMPL allows the modeling author to represent  FHIR profiles in one of two ways:
+CIMPL allows the modeling author to represent FHIR profiles in one of two ways:
 
 * Define the model specific classes you need using FHIR resources or profiles as a base (_clean slate_). In this approach, the modeling author already knows the FHIR resources or profiles to customize, and defines the element constraints or extensions in the FHIR profile to be created by the new model.
 * Leverage CIMPL's _OBF_ FHIR models. In this approach, the modeling author defines their FHIR profile and specifies a `Parent` class from [OBF User Guide](cimpl6ObjectiveFHIR.md).
@@ -145,11 +147,11 @@ Errors may be issued from this step.
 
 ## Publish the FHIR IG
 
-The final step in the IG creation process is to run the **[FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7 FHIR.
+The final step in the IG creation process is to run the **[HL7 FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7.
 
-By default, the FHIR IG Publisher performs validation checks on the **StructureDefinition** of specified FHIR profile, **value sets**, and **examples** which reference any FHIR resources or profile.  Output of these checks are found in the CIMPL output, _qa.html_.
+By default, the HL7 FHIR IG Publisher performs validation checks on the **StructureDefinition** of specified FHIR profile, **value sets**, and **examples** which reference any FHIR resources or profile.  Output of these checks are found in the CIMPL output, _qa.html_.
 
-[Run the FHIR publisher and create an IG](cimpl6ToolingReference.md#creating-the-implementation-guide)
+[Run the HL7 FHIR publisher and create an IG](cimpl6ToolingReference.md#creating-the-implementation-guide)
 
 ## Support
 
@@ -162,11 +164,9 @@ If you find an issue you can't resolve, or have a question, report it on one of 
 
 # Appendix - Document Conventions
 
-# Appendix - Document Conventions
-
 | Style | Explanation | Example |
 |:----------|:---------|:---------|
-| **Bold**  | A FHIR name | **Observation** |
+| **Bold**  | A FHIR resource name or reserved word | **Observation** **MustSupport** |
 | `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
 | <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
 | _Italics_ | A file name, or general emphasis in text | _obf-action.txt_ |

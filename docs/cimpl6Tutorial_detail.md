@@ -343,7 +343,7 @@ Where:
 
 After you run this first command, as an interim check, navigate to the _~/cimpl/shr-cli_ folder.  You should see a new subdirectory created called _myExampleC6r4_ that will eventually contain the **StructureDefinition** and html output of the generated IG. This is the value that was specified in the `-o` parameter in the above command.
 
-### Run the FHIR IG Publisher
+### Run the HL7 FHIR IG Publisher
 
 * From the same command line terminal, run the following command:
 
@@ -382,7 +382,7 @@ The following screenshot shows where to put this parameter within the CIMPL conf
 
 ![Tutorial1 FHIR Example Configuration Location](img_cimpl/cimplTutorial1_FHIRExampleConfigLocation.png)
 
-### Compile CIMPL and Run the FHIR IG Publisher
+### Compile CIMPL and Run the HL7 FHIR IG Publisher
 
 Because you changed the contents of your model to add an example, you need to recompile and regenerate the IG.
 
@@ -404,7 +404,7 @@ The answer is that the name of the related **StructureDefinition** for the profi
 
 ![Tutorial1 FHIR Example Configuration Location](img_cimpl/cimplTutorial1_FHIRExampleProfileReference.png)
 
-The IG Publisher will match the canonical URL specified in the example, with what is specified in the IG. Note that the value of the `profile` parameter must match the canonical URL of the profile where the **StructureDefinition** is located in order for the example to appear.
+The HL7 FHIR IG Publisher will match the canonical URL specified in the example, with what is specified in the IG. Note that the value of the `profile` parameter must match the canonical URL of the profile where the **StructureDefinition** is located in order for the example to appear.
 
 # Appendix - Document Conventions
 
