@@ -8,11 +8,12 @@
 
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Fast Healthcare Interoperability Resources (FHIR)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Health Level Seven (HL7®) Fast Healthcare Interoperability Resources (FHIR®)](https://www.hl7.org/fhir/overview.html) profiles, extensions and implementation guides (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
+> **NOTE**: HL7® and FHIR® are registered trademarks owned by Health Level Seven International, and are registered with the United States Patent and Trademark Office. 
 ### Purpose
 
-This document describes the components and syntax of the CIMPL language, Version 6.0 and above, used to specify clinical models, value sets, and maps to FHIR.
+This document describes the components and syntax of the CIMPL language, Version 6.0 and above, used to specify clinical models, value sets, and maps to HL7 FHIR.
 
 ### Intended Audience
 
@@ -380,7 +381,7 @@ Examples:
 
 ### Value
 
-`Value` represents the data type(s) an `Element` can accept. This keyword can only be used when defining an `Element`. Each `Element` must have exactly one `Value`, although the `Value` itself can be a choice of several data types. A `Value` choice can be a [primitive](#primitives), an [Element](#element), a [Group](#group), or an [Entry](#entry). A `Value` may be inherited and constrained in the child class.
+`Value` represents the data type(s) an `Element` can accept. This keyword can only be used when defining an `Element`. Each `Element` must have exactly one `Value`, although the `Value` itself can be one or more choices from several data types. A `Value` choice can be a [primitive](#primitives), an [Element](#element), a [Group](#group), or an [Entry](#entry). A `Value` may be inherited and constrained in the child class.
 
 Examples:
 ```
@@ -400,6 +401,7 @@ Element:           SubstanceOrCode
 Description:       "A code or substance reference identifying the ingredient."
 Value:             concept or Substance or Medication
 ```
+
 
 Most types of constraints cannot be applied _in line_ in a `Value:` statement, but you are allowed to bind a value set to a `concept` value choice at the same time the `Value` is defined, as follows:
 
@@ -557,22 +559,25 @@ Cardinality defines the number of repeats that can exist for a `Property`. Cardi
 
 ### Fixed Value Constraint
 
-The `=` operator fixes an `Element`'s value to a specific concept, boolean, string, integer, decimal, or URL. The fixed value must be consistent with the defined data type, and is always a primitive.
+The `=` operator fixes an `Element`'s value to a specific concept, boolean, string, integer, decimal,date, dateTime, instant, time, or URL. The fixed value must be consistent with the defined data type, and is always a primitive.
 
 | To do this... | Example |
 |----------|---------|
 | Fix a code to an `Element` | `ObservationCode = LNC#82810-3` |
 | Fix a boolean value to an `Element` | `IsPrimaryTumor = true` |
-| Fix a string to an `Element`'s `Value` | `Value: string = "hello world"` |
+| Fix a string value to an `Element`'s `Value` | `Value: string = "hello world"` |
 | Fix a code to an `Element`'s `Value` where `concept` is one of the available data types | `Value[concept] = SCT#233613009 "Pneumonia"` |
-| Fix the units associated with a `Quantity` data type choice within an Element | `Value[Quantity].Units = UCUM#cm` |
-| Fix the units associated with a `Quantity` data type choice within an Entry or Group | `MyPropertyName[Quantity].Units = UCUM#cm` |
-
->**Notes:**
+| Fix the units associated with a `Quantity` data type choice within an `Element` | `Value[Quantity].Units = UCUM#cm` |
+| Fix the units associated with a `Quantity` data type choice within an `Entry` or `Group` | `MyPropertyName[Quantity].Units = UCUM#cm` |
+| Fix a date to an `Element`'s `Value` | `Value: date = "2019-11-11"`  |
+| Fix a dateTime to an `Element`'s `Value` | `Value: dateTime = "2019-01-01T13:28:17-05:00"`|
+| Fix an integer to an `Element`'s `Value` | `Value: integer = 58`  |
+>**Note:**
 >
 >1. [Bracket notation](#bracket-notation-for-value-choices) must always be used when applying a constraint to a `Value`, if that `Value` has a choice of data types. This makes it clear which of the choices is being constrained.
 >1. CIMPL allows fixed concept values to be overridden in child classes. Although this seems to violate the notion that constraints should get progressively tighter in subclasses, it is necessary when narrowing the meaning of a class characterized by a concept code. For example, the class `Pneumonia`, with fixed code, `SCT#233604007`, may have a child, `Fungal Pneumonia`, with fixed code `SCT#233613009`, the latter overriding the former. CIMPL will assume, without checking, that the code describing the child class has more constrained semantics than the code it replaces.
 >1. If you only need to fix a code in one particular mapping (one version of FHIR, for example), do so using the [`fix`](#fix) keyword in the Map file and not as a constraint in the Class file.
+>1. The format of date, dateTime, instant and time must follow the formats defined by [FHIR](http://hl7.org/fhir/R4/datatypes.html#instant).
 
 ### Append Constraint
 
@@ -832,7 +837,7 @@ The first line of all class definitions is a keyword representing the type of cl
 
 ### Properties, Elements and Values
 
-When defining classes, bear in mind that `Property` defines a model data item and its cardinality. A `Property` can be mapped to a FHIR element or extension. 
+When defining classes, bear in mind that `Property` defines a model data item and its cardinality. A `Property` can be mapped to a FHIR element or extension.
 
 <!-- MK - the only "connection" between a property and an element is the name - true? I think that needs to be incorporated somewhere in this guide. Thoughts? -->
 
@@ -872,7 +877,7 @@ All classes in CIMPL, from `Element` to `Entry`, are reusable outside of their o
 
 ## Value Set File
 
-Value Set files are used to define custom value sets and codes when existing value set sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [VSAC](https://vsac.nlm.nih.gov/), or [PHIN VADS](https://phinvads.cdc.gov/) are insufficient, and a new value set must be defined.
+Value Set files are used to define custom value sets and codes when existing value set sources like [HL7 v3](https://www.hl7.org/fhir/terminologies-v3.html), [FHIR](https://www.hl7.org/fhir/terminologies-systems.html), [Value Set Authority Center (VSAC)](https://vsac.nlm.nih.gov/), or [Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)](https://phinvads.cdc.gov/) are insufficient, and a new value set must be defined.
 
 ### Value Set File Example
 
@@ -945,7 +950,7 @@ Explicit code declarations are used to add specific codes to a value set. This m
 
 ## Map File
 
-Map files control how classes defined in CIMPL are expressed as FHIR profile. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the [Objective FHIR base classes](cimpl6ObjectiveFHIR.md), you many not need to create a map file.
+Map files control how classes defined in CIMPL are expressed as FHIR profiles. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the [Objective FHIR base classes](cimpl6ObjectiveFHIR.md), you many not need to create a map file.
 
 ### Map File Example
 
@@ -1087,7 +1092,7 @@ There are a limited number of mapping statements that allow actions to be taken 
 
 #### fix
 
-`fix` allows FHIR elements to be assigned a value. This constrains the FHIR resource, not the CIMPL class. This enables you to fix a value to an element in a FHIR resource without having to change the class definition, which would affect all potential maps. This also allows you to fix values to FHIR elements that have no corresponding `Property` in the CIMPL definition.
+`fix` allows FHIR elements to be assigned a value. This constrains the FHIR resource, not the CIMPL class. This enables you to fix a value to an element in a HL7® FHIR® resource without having to change the class definition, which would affect all potential maps. This also allows you to fix values to FHIR elements that have no corresponding `Property` in the CIMPL definition.
 
 Example:
 
@@ -1177,7 +1182,7 @@ In the above example, each `ObservationComponent` mentioned in the CIMPL `includ
 
 `PanelMembers.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)`
 
-> **Note:** This example is based on the FHIR STU 3 Observation resource.
+> **Note:** This example is based on the FHIR STU 3 **Observation** resource.
 
 Each `Entry` included in the `PanelMembers.Observation` CIMPL model will create a slice in the **Observation.related** array because of the `slice at` parameter, and appear in the **related.target** element because of the `maps to` statement. The `slice on` parameter indicates the discriminator is the resource in the **related.target** array. The `target.reference.resolve()` is the FHIRPath that points to the referenced resource. The `slice on type = profile` indicates the slices are differentiated through the conformance of the referenced resource to the profile that define the slices.
 
