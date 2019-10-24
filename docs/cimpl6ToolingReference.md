@@ -474,7 +474,7 @@ The content of the _/out_ directory depends on which exporters were selected to 
 
 ### FHIR Export
 
-The FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create a FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [IG publisher](#creating-the-implementation-guide) to create the IG.
+The FHIR export consists of profiles, extensions, value sets, code systems, examples, and other artifacts needed to create a FHIR IG. These are not the _pages_ of the IG, but rather various definitions that underlie the IG presentation. You must run the [HL7 IG publisher](#creating-the-implementation-guide) to create the IG.
 
 The FHIR export appears in the _/fhir_ subdirectory under the designated _out_ directory. The directory contains further subdirectories for code systems,extensions, the IG (_guide_), the logical model (_logical_), profiles, and value sets.
 
@@ -514,7 +514,7 @@ The Data Dictionary can be useful both to clinicians and implementers who don't 
 
 ## Creating the Implementation Guide
 
-The final step in the IG creation process is to run the [FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation). This tool is maintained and owned by FHIR.
+The final step in the IG creation process is to run the [HL7 FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation). This tool is maintained and owned by FHIR.
 
 Open a command prompt, change directories to the _tooling directory_, and use one of these two options:
 
@@ -538,7 +538,7 @@ When the publisher finishes, the IG can be opened by running the following comma
 
 You now have your completed IG.
 
-The FHIR IG Publisher performs numerous validation checks on the content of the IG. The output of these checks can be accessed through the _QA Report_ link in the footer of the home page, or by opening the file _/out/fhir/guide/output/qa.html_.
+The HL7 FHIR IG Publisher performs numerous validation checks on the content of the IG. The output of these checks can be accessed through the _QA Report_ link in the footer of the home page, or by opening the file _/out/fhir/guide/output/qa.html_.
 
 An example QA output is shown below:
 

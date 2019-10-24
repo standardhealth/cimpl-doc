@@ -12,7 +12,7 @@
 
 ## Introduction
 
-CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Health Level Seven (HL7®) Fast Healthcare Interoperability Resources (FHIR®)](https://www.hl7.org/fhir/overview.html) profiles, extensions and [implementation guides](https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides) (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of HL7 FHIR.
+CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce [Health Level Seven (HL7®) Fast Healthcare Interoperability Resources (FHIR®)](https://www.hl7.org/fhir/overview.html) profiles, extensions and [implementation guides](https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides) (IG). Because it is a _language_, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.
 
 > **NOTE**: HL7® and FHIR® are registered trademarks owned by Health Level Seven International, and are registered with the United States Patent and Trademark Office.
 
@@ -22,13 +22,13 @@ This document provides a step-by-step guide to generate an HL7 FHIR IG starting 
 
 ### Intended Audience
 
-The CIMPL User Guide is targeted to any person comfortable with using programming languages. Familiarity with HL7 FHIR is helpful as the guide references HL7 FHIR artifacts (e.g. resources and profiles).
+The CIMPL User Guide is targeted to any person comfortable with using programming languages. Familiarity with FHIR is helpful as the guide references FHIR artifacts (e.g. resources and profiles).
 
 ### Prerequisite
 
 This guide assumes you installed the software as documented in [CIMPL Setup and Installation](cimplInstall.md), and have at least reviewed the [Hello World](cimpl6Tutorial_helloWorld.md), and [CIMPL In-Depth](cimpl6Tutorial_detail.md) tutorials. If you already have installed SHR-CLI, make sure you have the latest version installed.
 
-## Using CIMPL to Create HL7 FHIR-based Models
+## Using CIMPL to Create FHIR-based Models
 
 CIMPL is designed to be modular and extensible, allowing for the reuse of other logical models, and inheritance from those models. The figure below illustrates this notion.
 
@@ -36,25 +36,25 @@ CIMPL is designed to be modular and extensible, allowing for the reuse of other 
 ![Data model IG relationship](img_cimpl/Data-model-use-case-model.png)
 <!-- ![CIMPL Modularity](img_cimpl/CIMPLBuildingBlocks.png) -->
 
-CIMPL allows the modeling author to represent HL7 FHIR profiles in one of two ways:
+CIMPL allows the modeling author to represent FHIR profiles in one of two ways:
 
-* Define the model specific classes you need using HL7 HIR resources or profiles as a base (_clean slate_). In this approach, the modeling author already knows the HL7 FHIR resources or profiles to customize, and defines the element constraints or extensions in the HL7 FHIR profile to be created by the new model.
-* Leverage CIMPL's _OBF_ FHIR models. In this approach, the modeling author defines their HL7 FHIR profile and specifies a `Parent` class from [OBF User Guide](cimpl6ObjectiveFHIR.md).
+* Define the model specific classes you need using HL7 HIR resources or profiles as a base (_clean slate_). In this approach, the modeling author already knows the FHIR resources or profiles to customize, and defines the element constraints or extensions in the FHIR profile to be created by the new model.
+* Leverage CIMPL's _OBF_ FHIR models. In this approach, the modeling author defines their FHIR profile and specifies a `Parent` class from [OBF User Guide](cimpl6ObjectiveFHIR.md).
 
 Each modeling approach has advantages and disadvantages.
 
-The _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new profiles with minimal changes from base HL7 FHIR. However, as the number of customizations increases, maintenance may become more cumbersome and difficult.
+The _clean slate_ authoring approach might be beneficial when prototyping models containing only a small number of new profiles with minimal changes from base FHIR. However, as the number of customizations increases, maintenance may become more cumbersome and difficult.
 
-On the other hand, using OBF HL7 FHIR models has significant benefits which include but are not limited to:
+On the other hand, using OBF FHIR models has significant benefits which include but are not limited to:
 
-* saving the modeling author time in mapping common `Element`s to the equivalent HL7 FHIR element,
-* ensuring consistency in the representation of commonly used elements in different HL7 FHIR resources.
+* saving the modeling author time in mapping common `Element`s to the equivalent FHIR element,
+* ensuring consistency in the representation of commonly used elements in different FHIR resources.
 
-The user must however invest time to understand the OBF logical model. Also, OBF does not comprehensively support all HL7 FHIR resources, especially the ones introduced in HL7 FHIR R4 with a low maturity level.
+The user must however invest time to understand the OBF logical model. Also, OBF does not comprehensively support all FHIR resources, especially the ones introduced in FHIR R4 with a low maturity level.
 
 ## Logical Model
 
-Start by understanding the model you want to document in CIMPL, and its relationship to either base HL7 FHIR resources and profiles, to OBF, or to a combination.
+Start by understanding the model you want to document in CIMPL, and its relationship to either base FHIR resources and profiles, to OBF, or to a combination.
 
 Keeping in mind that CIMPL is primarily a way to create logical models with the capability to _model-once, translate-to-many_, the modeling author should consider requirements gathering and high level modeling steps.  While one approach is proposed below, the modeling author is not limited to following these steps and might find better approaches to creating detailed clinical models.
 
@@ -97,7 +97,7 @@ Create your Class file with namespaces to import, and `Entry`, `Property`, `Abst
 
 ## Map File
 
-Create a Map file if your model includes `Property` declarations beyond any inherited models, and you want to map the `Property` to an HL7 FHIR element.
+Create a Map file if your model includes `Property` declarations beyond any inherited models, and you want to map the `Property` to a FHIR element.
 
 > Note: A Map file is necessary if OBF is _not_ used. If OBF _is_ used, a Map file may not be necessary.
 
@@ -129,13 +129,13 @@ Reviewing a [published IG](http://www.fhir.org/guides/registry/) might help you 
 
 [Front Matter Guidance](cimpl6ToolingReference.md#front-matter-files)
 
-## HL7 FHIR Examples
+## FHIR Examples
 
-An HL7 FHIR IG can be generated without examples, however it is recommended to include examples.
+A FHIR IG can be generated without examples, however it is recommended to include examples.
 
 The location of the examples is declared in the Configuration file.
 
-[Learn how to create HL7 FHIR Examples](cimpl6ToolingReference.md#fhir-examples)
+[Learn how to create FHIR Examples](cimpl6ToolingReference.md#fhir-examples)
 
 ## Compile the CIMPL Model
 
@@ -145,11 +145,11 @@ Errors may be issued from this step.
 
 [Compile your model](cimpl6ToolingReference.md#executing-shr-cli)
 
-## Publish the HL7 FHIR IG
+## Publish the FHIR IG
 
-The final step in the IG creation process is to run the **[HL7 FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7 FHIR.
+The final step in the IG creation process is to run the **[HL7 FHIR IG Publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation)**. This tool is maintained and owned by HL7.
 
-By default, the HL7 FHIR IG Publisher performs validation checks on the **StructureDefinition** of specified HL7 FHIR profile, **value sets**, and **examples** which reference any HL7 FHIR resources or profile.  Output of these checks are found in the CIMPL output, _qa.html_.
+By default, the HL7 FHIR IG Publisher performs validation checks on the **StructureDefinition** of specified FHIR profile, **value sets**, and **examples** which reference any FHIR resources or profile.  Output of these checks are found in the CIMPL output, _qa.html_.
 
 [Run the HL7 FHIR publisher and create an IG](cimpl6ToolingReference.md#creating-the-implementation-guide)
 
@@ -159,17 +159,17 @@ Questions on using CIMPL and its toolchain (SHR-CLI) can be addressed on the HL7
 
 If you find an issue you can't resolve, or have a question, report it on one of two JIRA projects:
 
-* Issues related to running the CIMPL SHR-CLI compiler, configuration files, or generating the HL7 FHIR IG: https://standardhealthrecord.atlassian.net/projects/CIMPL/issues
+* Issues related to running the CIMPL SHR-CLI compiler, configuration files, or generating the FHIR IG: https://standardhealthrecord.atlassian.net/projects/CIMPL/issues
 * Issues related to CIMPL base classes (OBF): https://standardhealthrecord.atlassian.net/projects/SHRM/issues
 
 # Appendix - Document Conventions
 
 | Style | Explanation | Example |
 |:----------|:---------|:---------|
-| **Bold**  | An HL7 FHIR resource name or reserved word | **Observation** **MustSupport** |
+| **Bold**  | An FHIR resource name or reserved word | **Observation** **MustSupport** |
 | `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
 | <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
 | _Italics_ | A file name, or general emphasis in text | _obf-action.txt_ |
 | _Italics with **bold** highlight_ | Indicates a substring in the file name that should be substituted | _ig-**myigname**-config.json_ |
-| Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of HL7 FHIR artifacts | The `Grammar` keyword |
+| Leading Capitalization | CIMPL keywords or references that are capitalized; specific instances of FHIR artifacts | The `Grammar` keyword |
 | **Note:** | Something to keep in mind about the current topic | **Note:** Value Set names must begin with an uppercase letter. |

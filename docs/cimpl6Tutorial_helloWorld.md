@@ -140,7 +140,7 @@ When the program runs, it will output a warning message alerting you that mappin
 
 >Note: If your organization uses a proxy server, you may have to run the IG publishing process from outside your organization's firewall.
 
-A friendlier view of the profile is created when we create an IG. To do this, we use the [existing FHIR implementation guide (IG) publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation).
+A friendlier view of the profile is created when we create an IG. To do this, we use the [HL7 FHIR implementation guide (IG) publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation).
 
 To generate the IG, run:
 
