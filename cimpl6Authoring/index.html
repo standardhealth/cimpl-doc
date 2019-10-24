@@ -52,8 +52,6 @@
           ]},
           {title: "Appendix - Document Conventions", url: "#appendix-document-conventions", children: [
           ]},
-          {title: "Appendix - Document Conventions", url: "#appendix-document-conventions_1", children: [
-          ]},
         ];
 
     </script>
@@ -133,16 +131,18 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </ul>
 </li>
 <li><a href="#appendix-document-conventions">Appendix - Document Conventions</a></li>
-<li><a href="#appendix-document-conventions_1">Appendix - Document Conventions</a></li>
 </ul>
 </div>
 <hr />
 <h2 id="introduction">Introduction</h2>
-<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and <a href="https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides">implementation guides</a> (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Health Level Seven (HL7®) Fast Healthcare Interoperability Resources (FHIR®)</a> profiles, extensions and <a href="https://wiki.hl7.org/index.php?title=FHIR_Implementation_Guides">implementation guides</a> (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source-code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<blockquote>
+<p><strong>NOTE</strong>: HL7® and FHIR® are registered trademarks owned by Health Level Seven International, and are registered with the United States Patent and Trademark Office.</p>
+</blockquote>
 <h3 id="purpose">Purpose</h3>
-<p>This document provides a step-by-step guide to generate an HL7 FHIR IG starting with using CIMPL to document a model. The details about how to accomplish each step are in the <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> and <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Manual</a>. Links to specific sections of these documents are provided in each section.</p>
+<p>This document provides a step-by-step guide to generate an HL7 FHIR IG starting with using CIMPL to document a model. The details about how to accomplish each step are in the <a href="../cimpl6LanguageReference/">CIMPL Language Reference Manual</a> and <a href="../cimpl6ToolingReference/">CIMPL Tooling Reference Manuals</a>. Links to specific sections of these documents are provided in each section.</p>
 <h3 id="intended-audience">Intended Audience</h3>
-<p>The CIMPL User Guide is targeted to any person comfortable with using programming languages. Familiarity with FHIR is helpful as the guide references FHIR artifacts (e.g. resources and profile).</p>
+<p>The CIMPL User Guide is targeted to any person comfortable with using programming languages. Familiarity with FHIR is helpful as the guide references FHIR artifacts (e.g. resources and profiles).</p>
 <h3 id="prerequisite">Prerequisite</h3>
 <p>This guide assumes you installed the software as documented in <a href="../cimplInstall/">CIMPL Setup and Installation</a>, and have at least reviewed the <a href="../cimpl6Tutorial_helloWorld/">Hello World</a>, and <a href="../cimpl6Tutorial_detail/">CIMPL In-Depth</a> tutorials. If you already have installed SHR-CLI, make sure you have the latest version installed.</p>
 <h2 id="using-cimpl-to-create-fhir-based-models">Using CIMPL to Create FHIR-based Models</h2>
@@ -150,7 +150,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p><a id="data-model-ig-relationship"></a>
 <img alt="Data model IG relationship" src="../img_cimpl/Data-model-use-case-model.png" />
 <!-- <img alt="CIMPL Modularity" src="img_cimpl/CIMPLBuildingBlocks.png" /> --></p>
-<p>CIMPL allows the modeling author to represent  FHIR profiles in one of two ways:</p>
+<p>CIMPL allows the modeling author to represent FHIR profiles in one of two ways:</p>
 <ul>
 <li>Define the model specific classes you need using FHIR resources or profiles as a base (<em>clean slate</em>). In this approach, the modeling author already knows the FHIR resources or profiles to customize, and defines the element constraints or extensions in the FHIR profile to be created by the new model.</li>
 <li>Leverage CIMPL's <em>OBF</em> FHIR models. In this approach, the modeling author defines their FHIR profile and specifies a <code>Parent</code> class from <a href="../cimpl6ObjectiveFHIR/">OBF User Guide</a>.</li>
@@ -216,9 +216,9 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <p>Errors may be issued from this step.  </p>
 <p><a href="../cimpl6ToolingReference/#executing-shr-cli">Compile your model</a></p>
 <h2 id="publish-the-fhir-ig">Publish the FHIR IG</h2>
-<p>The final step in the IG creation process is to run the <strong><a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">FHIR IG Publisher</a></strong>. This tool is maintained and owned by HL7 FHIR.</p>
-<p>By default, the FHIR IG Publisher performs validation checks on the <strong>StructureDefinition</strong> of specified FHIR profile, <strong>value sets</strong>, and <strong>examples</strong> which reference any FHIR resources or profile.  Output of these checks are found in the CIMPL output, <em>qa.html</em>.</p>
-<p><a href="../cimpl6ToolingReference/#creating-the-implementation-guide">Run the FHIR publisher and create an IG</a></p>
+<p>The final step in the IG creation process is to run the <strong><a href="http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation">HL7 FHIR IG Publisher</a></strong>. This tool is maintained and owned by HL7.</p>
+<p>By default, the HL7 FHIR IG Publisher performs validation checks on the <strong>StructureDefinition</strong> of specified FHIR profile, <strong>value sets</strong>, and <strong>examples</strong> which reference any FHIR resources or profile.  Output of these checks are found in the CIMPL output, <em>qa.html</em>.</p>
+<p><a href="../cimpl6ToolingReference/#creating-the-implementation-guide">Run the HL7 FHIR publisher and create an IG</a></p>
 <h2 id="support">Support</h2>
 <p>Questions on using CIMPL and its toolchain (SHR-CLI) can be addressed on the HL7 Zulip chat channel <a href="https://chat.fhir.org/#streams/197290/cimpl">#cimpl</a></p>
 <p>If you find an issue you can't resolve, or have a question, report it on one of two JIRA projects:</p>
@@ -227,7 +227,6 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <li>Issues related to CIMPL base classes (OBF): https://standardhealthrecord.atlassian.net/projects/SHRM/issues</li>
 </ul>
 <h1 id="appendix-document-conventions">Appendix - Document Conventions</h1>
-<h1 id="appendix-document-conventions_1">Appendix - Document Conventions</h1>
 <table>
 <thead>
 <tr>
@@ -239,8 +238,8 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <tbody>
 <tr>
 <td align="left"><strong>Bold</strong></td>
-<td align="left">A FHIR name</td>
-<td align="left"><strong>Observation</strong></td>
+<td align="left">A FHIR resource name or reserved word</td>
+<td align="left"><strong>Observation</strong> <strong>MustSupport</strong></td>
 </tr>
 <tr>
 <td align="left"><code>Code</code></td>

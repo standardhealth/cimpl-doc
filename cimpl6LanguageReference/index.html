@@ -222,9 +222,12 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 </div>
 <hr />
 <h2 id="introduction">Introduction</h2>
-<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Fast Healthcare Interoperability Resources (FHIR)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<p>CIMPL (<strong>C</strong>linical <strong>I</strong>nformation <strong>M</strong>odeling <strong>P</strong>rofiling <strong>L</strong>anguage) is a specially-designed language for defining clinical information models. It is simple and compact, with tools to produce <a href="https://www.hl7.org/fhir/overview.html">Health Level Seven (HL7®) Fast Healthcare Interoperability Resources (FHIR®)</a> profiles, extensions and implementation guides (IG). Because it is a <em>language</em>, written in text statements, CIMPL encourages distributed, team-based development using conventional source code control tools such as Github. CIMPL provides tooling that enables you to define a model once, and publish that model to multiple versions of FHIR.</p>
+<blockquote>
+<p><strong>NOTE</strong>: HL7® and FHIR® are registered trademarks owned by Health Level Seven International, and are registered with the United States Patent and Trademark Office. </p>
+</blockquote>
 <h3 id="purpose">Purpose</h3>
-<p>This document describes the components and syntax of the CIMPL language, Version 6.0 and above, used to specify clinical models, value sets, and maps to FHIR.</p>
+<p>This document describes the components and syntax of the CIMPL language, Version 6.0 and above, used to specify clinical models, value sets, and maps to HL7 FHIR.</p>
 <h3 id="intended-audience">Intended Audience</h3>
 <p>The CIMPL Language Reference is targeted to the users of CIMPL, involved with creating or reviewing models expressed in the CIMPL language.</p>
 <h3 id="prerequisite">Prerequisite</h3>
@@ -611,7 +614,7 @@ Property:          ResearchStudy 1..1
 <!-- Carmela: TODO: VERIFY THIS: In CIMPL version 6, it is *required* that you import `shr.core` for the tooling to run.-->
 
 <h3 id="value">Value</h3>
-<p><code>Value</code> represents the data type(s) an <code>Element</code> can accept. This keyword can only be used when defining an <code>Element</code>. Each <code>Element</code> must have exactly one <code>Value</code>, although the <code>Value</code> itself can be a choice of several data types. A <code>Value</code> choice can be a <a href="#primitives">primitive</a>, an <a href="#element">Element</a>, a <a href="#group">Group</a>, or an <a href="#entry">Entry</a>. A <code>Value</code> may be inherited and constrained in the child class.</p>
+<p><code>Value</code> represents the data type(s) an <code>Element</code> can accept. This keyword can only be used when defining an <code>Element</code>. Each <code>Element</code> must have exactly one <code>Value</code>, although the <code>Value</code> itself can be one or more choices from several data types. A <code>Value</code> choice can be a <a href="#primitives">primitive</a>, an <a href="#element">Element</a>, a <a href="#group">Group</a>, or an <a href="#entry">Entry</a>. A <code>Value</code> may be inherited and constrained in the child class.</p>
 <p>Examples:</p>
 <pre><code>Element:           DetectionTime
 Description:       &quot;The date the condition was first observed.&quot;
@@ -879,7 +882,7 @@ Property:          Units 0..1
 <p><strong>Note:</strong> By constraining a <code>Property</code> to 0..0, you effectively remove the <code>Property</code>. Use 0..0 with caution, because if an instance <em>does</em> include that <code>Property</code>, the instance will fail validation and may be rejected.</p>
 </blockquote>
 <h3 id="fixed-value-constraint">Fixed Value Constraint</h3>
-<p>The <code>=</code> operator fixes an <code>Element</code>'s value to a specific concept, boolean, string, integer, decimal, or URL. The fixed value must be consistent with the defined data type, and is always a primitive.</p>
+<p>The <code>=</code> operator fixes an <code>Element</code>'s value to a specific concept, boolean, string, integer, decimal,date, dateTime, instant, time, or URL. The fixed value must be consistent with the defined data type, and is always a primitive.</p>
 <table>
 <thead>
 <tr>
@@ -897,7 +900,7 @@ Property:          Units 0..1
 <td><code>IsPrimaryTumor = true</code></td>
 </tr>
 <tr>
-<td>Fix a string to an <code>Element</code>'s <code>Value</code></td>
+<td>Fix a string value to an <code>Element</code>'s <code>Value</code></td>
 <td><code>Value: string = "hello world"</code></td>
 </tr>
 <tr>
@@ -905,23 +908,51 @@ Property:          Units 0..1
 <td><code>Value[concept] = SCT#233613009 "Pneumonia"</code></td>
 </tr>
 <tr>
-<td>Fix the units associated with a <code>Quantity</code> data type choice within an Element</td>
+<td>Fix the units associated with a <code>Quantity</code> data type choice within an <code>Element</code></td>
 <td><code>Value[Quantity].Units = UCUM#cm</code></td>
 </tr>
 <tr>
-<td>Fix the units associated with a <code>Quantity</code> data type choice within an Entry or Group</td>
+<td>Fix the units associated with a <code>Quantity</code> data type choice within an <code>Entry</code> or <code>Group</code></td>
 <td><code>MyPropertyName[Quantity].Units = UCUM#cm</code></td>
+</tr>
+<tr>
+<td>Fix a date to an <code>Element</code>'s <code>Value</code></td>
+<td><code>Value: date = "2019-11-11"</code></td>
+</tr>
+<tr>
+<td>Fix a dateTime to an <code>Element</code>'s <code>Value</code></td>
+<td><code>Value: dateTime = "2019-01-01T13:28:17-05:00"</code></td>
+</tr>
+<tr>
+<td>Fix an integer to an <code>Element</code>'s <code>Value</code></td>
+<td><code>Value: integer = 58</code></td>
+</tr>
+<tr>
+<td>&gt;<strong>Note:</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td></td>
+</tr>
+<tr>
+<td>&gt;1. <a href="#bracket-notation-for-value-choices">Bracket notation</a> must always be used when applying a constraint to a <code>Value</code>, if that <code>Value</code> has a choice of data types. This makes it clear which of the choices is being constrained.</td>
+<td></td>
+</tr>
+<tr>
+<td>&gt;1. CIMPL allows fixed concept values to be overridden in child classes. Although this seems to violate the notion that constraints should get progressively tighter in subclasses, it is necessary when narrowing the meaning of a class characterized by a concept code. For example, the class <code>Pneumonia</code>, with fixed code, <code>SCT#233604007</code>, may have a child, <code>Fungal Pneumonia</code>, with fixed code <code>SCT#233613009</code>, the latter overriding the former. CIMPL will assume, without checking, that the code describing the child class has more constrained semantics than the code it replaces.</td>
+<td></td>
+</tr>
+<tr>
+<td>&gt;1. If you only need to fix a code in one particular mapping (one version of FHIR, for example), do so using the <a href="#fix"><code>fix</code></a> keyword in the Map file and not as a constraint in the Class file.</td>
+<td></td>
+</tr>
+<tr>
+<td>&gt;1. The format of date, dateTime, instant and time must follow the formats defined by <a href="http://hl7.org/fhir/R4/datatypes.html#instant">FHIR</a>.</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>Notes:</strong></p>
-<ol>
-<li><a href="#bracket-notation-for-value-choices">Bracket notation</a> must always be used when applying a constraint to a <code>Value</code>, if that <code>Value</code> has a choice of data types. This makes it clear which of the choices is being constrained.</li>
-<li>CIMPL allows fixed concept values to be overridden in child classes. Although this seems to violate the notion that constraints should get progressively tighter in subclasses, it is necessary when narrowing the meaning of a class characterized by a concept code. For example, the class <code>Pneumonia</code>, with fixed code, <code>SCT#233604007</code>, may have a child, <code>Fungal Pneumonia</code>, with fixed code <code>SCT#233613009</code>, the latter overriding the former. CIMPL will assume, without checking, that the code describing the child class has more constrained semantics than the code it replaces.</li>
-<li>If you only need to fix a code in one particular mapping (one version of FHIR, for example), do so using the <a href="#fix"><code>fix</code></a> keyword in the Map file and not as a constraint in the Class file.</li>
-</ol>
-</blockquote>
 <h3 id="append-constraint">Append Constraint</h3>
 <p>The append <code>+=</code> operator is similar to the fixed value (<code>=</code>) operator, but it applies to a repeating <code>Property</code> (upper cardinality &gt;1). The <code>Property</code> must be an <code>Element</code> whose data type is <code>concept</code>. The operator appends a fixed <code>concept</code> to the array <code>Property</code>.  You can use the <code>+=</code> operation repeatedly on the same <code>Property</code>, only limited by the upper cardinality.</p>
 <p>Example: Insert two values into an array of categories:</p>
@@ -1185,7 +1216,7 @@ Description:       &quot;Globulin [Mass/​volume] in Serum by calculation&quot;
 </tbody>
 </table>
 <h3 id="properties-elements-and-values">Properties, Elements and Values</h3>
-<p>When defining classes, bear in mind that <code>Property</code> defines a model data item and its cardinality. A <code>Property</code> can be mapped to a FHIR element or extension. </p>
+<p>When defining classes, bear in mind that <code>Property</code> defines a model data item and its cardinality. A <code>Property</code> can be mapped to a FHIR element or extension.</p>
 <!-- MK - the only "connection" between a property and an element is the name - true? I think that needs to be incorporated somewhere in this guide. Thoughts? -->
 
 <ul>
@@ -1242,7 +1273,7 @@ Value:             concept from AnatomicalDirectionVS (preferred)
 <p>All classes in CIMPL, from <code>Element</code> to <code>Entry</code>, are reusable outside of their original context. To promote reuse, choose names that are self-explanatory and context-independent. For example, a <code>Property</code> named <code>Text</code> is vague, whereas <code>DisplayText</code> and <code>InstructionText</code> are more self-explanatory and may be understandable when placed into a specific context. However, an overly-specific name like <code>AddressDisplayText</code> could inhibit reuse because it affixes the <code>context</code> of an address to the <code>concept</code> of a display text.</p>
 <hr />
 <h2 id="value-set-file">Value Set File</h2>
-<p>Value Set files are used to define custom value sets and codes when existing value set sources like <a href="https://www.hl7.org/fhir/terminologies-v3.html">HL7 v3</a>, <a href="https://www.hl7.org/fhir/terminologies-systems.html">FHIR</a>, <a href="https://vsac.nlm.nih.gov/">VSAC</a>, or <a href="https://phinvads.cdc.gov/">PHIN VADS</a> are insufficient, and a new value set must be defined.</p>
+<p>Value Set files are used to define custom value sets and codes when existing value set sources like <a href="https://www.hl7.org/fhir/terminologies-v3.html">HL7 v3</a>, <a href="https://www.hl7.org/fhir/terminologies-systems.html">FHIR</a>, <a href="https://vsac.nlm.nih.gov/">Value Set Authority Center (VSAC)</a>, or <a href="https://phinvads.cdc.gov/">Public Health Information Network Vocabulary Access and Distribution System (PHIN VADS)</a> are insufficient, and a new value set must be defined.</p>
 <h3 id="value-set-file-example">Value Set File Example</h3>
 <p>An example Value Set file is shown below:</p>
 <pre><code>Grammar:           ValueSet 5.1
@@ -1335,7 +1366,7 @@ Description         &quot;Risks present in the home environment&quot;
 </table>
 <hr />
 <h2 id="map-file">Map File</h2>
-<p>Map files control how classes defined in CIMPL are expressed as FHIR profile. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the <a href="../cimpl6ObjectiveFHIR/">Objective FHIR base classes</a>, you many not need to create a map file.</p>
+<p>Map files control how classes defined in CIMPL are expressed as FHIR profiles. Map files are FHIR-version dependent. You can map to FHIR DSTU 2, STU 3, and R4. If you use the <a href="../cimpl6ObjectiveFHIR/">Objective FHIR base classes</a>, you many not need to create a map file.</p>
 <h3 id="map-file-example">Map File Example</h3>
 <p>The following example demonstrates how the class <em>Dosage</em>, defined in the OBF namespace, maps to the FHIR 4.0 data type with the same name. The second example demonstrates mapping between the OBF <em>MedicationStatement</em> class and the FHIR 4.0 <strong>US Core MedicationStatement</strong> profile.</p>
 <pre><code>Grammar:    Map 5.1
@@ -1560,7 +1591,7 @@ After the first line, which establishes the class to be mapped, the remainder of
 <h3 id="special-mapping-statements">Special Mapping Statements</h3>
 <p>There are a limited number of mapping statements that allow actions to be taken directly on FHIR profiles, without a corresponding property defined in CIMPL.</p>
 <h4 id="fix">fix</h4>
-<p><code>fix</code> allows FHIR elements to be assigned a value. This constrains the FHIR resource, not the CIMPL class. This enables you to fix a value to an element in a FHIR resource without having to change the class definition, which would affect all potential maps. This also allows you to fix values to FHIR elements that have no corresponding <code>Property</code> in the CIMPL definition.</p>
+<p><code>fix</code> allows FHIR elements to be assigned a value. This constrains the FHIR resource, not the CIMPL class. This enables you to fix a value to an element in a HL7® FHIR® resource without having to change the class definition, which would affect all potential maps. This also allows you to fix values to FHIR elements that have no corresponding <code>Property</code> in the CIMPL definition.</p>
 <p>Example:</p>
 <p><code>fix status to #completed</code></p>
 <h4 id="constrain">constrain</h4>
@@ -1647,7 +1678,7 @@ After the first line, which establishes the class to be mapped, the remainder of
 <h4 id="example-2">Example 2</h4>
 <p><code>PanelMembers.Observation maps to related.target (slice at = related; slice on = target.reference.resolve(); slice on type = profile; slice strategy = includes)</code></p>
 <blockquote>
-<p><strong>Note:</strong> This example is based on the FHIR STU 3 Observation resource.</p>
+<p><strong>Note:</strong> This example is based on the FHIR STU 3 <strong>Observation</strong> resource.</p>
 </blockquote>
 <p>Each <code>Entry</code> included in the <code>PanelMembers.Observation</code> CIMPL model will create a slice in the <strong>Observation.related</strong> array because of the <code>slice at</code> parameter, and appear in the <strong>related.target</strong> element because of the <code>maps to</code> statement. The <code>slice on</code> parameter indicates the discriminator is the resource in the <strong>related.target</strong> array. The <code>target.reference.resolve()</code> is the FHIRPath that points to the referenced resource. The <code>slice on type = profile</code> indicates the slices are differentiated through the conformance of the referenced resource to the profile that define the slices.</p>
 <h4 id="example-3">Example 3</h4>
