@@ -38,7 +38,7 @@ CIMPL is designed to be modular and extensible, allowing for the reuse of other 
 
 CIMPL allows the modeling author to represent FHIR profiles in one of two ways:
 
-* Define the model specific classes you need using HL7 HIR resources or profiles as a base (_clean slate_). In this approach, the modeling author already knows the FHIR resources or profiles to customize, and defines the element constraints or extensions in the FHIR profile to be created by the new model.
+* Define the model specific classes you need using FHIR resources or profiles as a base (_clean slate_). In this approach, the modeling author already knows the FHIR resources or profiles to customize, and defines the element constraints or extensions in the FHIR profile to be created by the new model.
 * Leverage CIMPL's _OBF_ FHIR models. In this approach, the modeling author defines their FHIR profile and specifies a `Parent` class from [OBF User Guide](cimpl6ObjectiveFHIR.md).
 
 Each modeling approach has advantages and disadvantages.
@@ -166,7 +166,7 @@ If you find an issue you can't resolve, or have a question, report it on one of 
 
 | Style | Explanation | Example |
 |:----------|:---------|:---------|
-| **Bold**  | An FHIR resource name or reserved word | **Observation** **MustSupport** |
+| **Bold**  | A FHIR resource name or reserved word | **Observation** **MustSupport** |
 | `Code` | A CIMPL term, phrase, example, or command | `CodeSystem: LNC = http://loinc.org` |
 | <code><i>Italics</i> appearing in a code block | Indicates an item that should be substituted | <code>Value only <i>datatype</i></code> |
 | _Italics_ | A file name, or general emphasis in text | _obf-action.txt_ |
