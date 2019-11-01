@@ -58,7 +58,7 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 * [FHIR profiles, extensions, value sets](#fhir-export) that form the core content of the IG,
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR **StructureDefinition**,
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
-* A [Data Dictionary](#data-dictionary-export) that lists the [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements in the IG, as well as value sets and value set members,
+* A [Data Dictionary](#data-dictionary-export) that lists the [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements in the IG, any profiles defined as part of the IG, as well as value sets and value set members,
 * [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the class relationships in the logical model.
 
 ### Relationship of CIMPL Models and Implementation Guides
@@ -498,15 +498,34 @@ For many users, especially those with experience in object-oriented modeling, th
 
 ### Data Dictionary Export
 
-The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
+The Data Dictionary is a Microsoft csv file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
 
 * The _Key_ tab contains a key to the columns in the other tabs,
-* The _Profiles_ tab contains a list of the primary profiles and their descriptions,
-* The _Data Elements_ tab contains a list of [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required elements associated with those profiles,
-* The _Value Sets_ tab contains a list of value sets used in the IG, and their descriptions,
+* The _Profiles_ tab contains a list of the profiles, with descriptions, that are defined in the IG,
+* The _Data Elements_ tab contains a list of [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) defined in the IG, and required elements associated with those profiles,
+* The _Value Sets_ tab contains a list of value sets defined as part of the IG, and their descriptions,
 * The _Value Set Details_ tab contains a list of the codes and/or implicit definitions in those value sets.
 
 The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR profiles, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
+
+### Creation Steps
+The data dictionary is created automatically whenever a **MustSupport** element is defined in the Content Profile, or a profile is created as part of the IG.
+
+#### Preparation
+
+The data dictionary is found in the **out** directory and is refreshed every time you execute `shr-cli`. 
+
+It is not automatically included in the IG.
+
+#### Expose Data Dictionary to IG
+
+Since the data dictionary is refreshed with every `shr-cli` execution and requires manual steps to expose in the IG, it is recommended that you perform this step once your model is solid and you don't expect changes to **MustSupport** or profiles.
+
+1. Run `shr-cli`
+2. Move the data dictionary file to the **index** directory.
+3. Update the HTML page that should include a link to the data dictionary (e.g. landing or index page). This should be a relative link to the data dictionary.
+4. Run `shr-cli`.
+5. Run the IG publisher
 
 ### JSON Schema Export
 
