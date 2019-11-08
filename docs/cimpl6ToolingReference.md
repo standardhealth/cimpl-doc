@@ -58,8 +58,8 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 * [FHIR profiles, extensions, value sets](#fhir-export) that form the core content of the IG,
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR **StructureDefinition**,
 * [JSON Schema](#json-schema-export) for the profiles defined by the IG,
-* A [Data Dictionary](#data-dictionary-export) that lists profiles defined as part of the IG, profile elements marked as [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) in the IG [Content Profile](#content-profile-file), and their value sets and value set members,
-* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the class relationships in the logical model.
+* A [Data Dictionary](#data-dictionary-export) that lists [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements in the IG, as well as any value sets bound to the **MustSupport** elements and value set members (where available), 
+* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that renders the class relationships in the logical model.
 
 ### Relationship of CIMPL Models and Implementation Guides
 
@@ -468,7 +468,7 @@ The content of the _/out_ directory depends on which exporters were selected to 
 * _cimcore_ - this directory is only used in the process of building the `modeldoc` export, and may not appear in future releases.
 * [_data-dictionary_](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model `Element`s and value sets
 * [_fhir_](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
-* [_json-schema_](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
+* [_json-schema_](#json-schema-export) - this directory contains schemas for the (**TO DO -- define the JSON schema export**)
 * [_modeldoc_](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
 
 ### FHIR Export
@@ -497,21 +497,23 @@ For many users, especially those with experience in object-oriented modeling, th
 
 ### Data Dictionary Export
 
-The Data Dictionary is a Microsoft csv file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
+The Data Dictionary is a Microsoft® Excel® file containing a list of model `Elements` and value sets extracted from the FHIR profiles. The spreadsheet has four tabs:
 
 * The _Profiles_ tab contains a list of the profiles, with descriptions, that are defined in the IG,
-* The _Data Elements_ tab contains a list of profiles and elements, as defined in the IG [Content Profile](#content-profile-file)
-* The _Value Sets_ tab contains a list of value sets associated with the profiles and data elements , and their descriptions,
-* The _Value Set Details_ tab contains a list of the codes and/or implicit definitions in those value sets.
+* The _Data Elements_ tab contains a list of profiles and elements, as defined in the IG [Content Profile](#content-profile-file). If a **MustSupport** element is bound to an externally defined value set, the value set URL is populated on this tab.
+* The _Value Sets_ tab contains a list of value sets defined in the IG, that are bound to **MustSupport** elements, and their descriptions, <!-- internal note: any externally defined value sets bound to a must support element are added to the list of "value sets to put into the value set tab", however since the exporter will fail to find a value set in the spec associated with the url, no row is written to the value set tab -->
+* The _Value Set Details_ tab contains a list of the codes and/or implicit definitions in those value sets (if available).
 
 The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR profiles, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
+
+<!-- CC to do: Location of planned reference to DD details. Appendix: Data Dictionary Details documents the four tab columns. MT to provide -->
 
 ### Creation Steps
 The data dictionary is created automatically whenever a **MustSupport** element is defined in the Content Profile, or a profile is created as part of the IG.
 
 #### Preparation
 
-The data dictionary is found in the **out** directory and is refreshed every time you execute `shr-cli`. 
+The data dictionary is found in the **out** directory and is refreshed every time you execute `shr-cli`.
 
 It is not automatically included in the IG.
 
@@ -527,7 +529,7 @@ Since the data dictionary is refreshed with every `shr-cli` execution and requir
 
 ### JSON Schema Export
 
-(**TO DO: determine what to say here**)
+(**TO DO: Content TBD**)
 
 ## Creating the Implementation Guide
 
