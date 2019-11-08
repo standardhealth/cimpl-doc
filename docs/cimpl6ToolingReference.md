@@ -145,7 +145,6 @@ If your project will support more than one FHIR version, the FHIR version should
 * Package List file: <code>ig-<i>**guide-name-FHIR Version**</i>-plist.json</code>
 
 where FHIR version is _dstu2, stu3_, or _r4_.
-<!-- MK: why not use the same values as listed in the configuration file section?  consistency?-->
 
 ## Inputs to SHR-CLI
 
@@ -197,7 +196,7 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 |`fhirTarget`         |<code><i>string</i></code>|The FHIR version this IG will be based on, currently a choice of `"FHIR_R4"`, `"FHIR_STU_3"`, or `"FHIR_DSTU_2"`|
 |`entryTypeURL`       |<code><i>string</i></code>|The root URL for the JSON schema `EntryType` field. **(TO DO: clarify where and how this is used)**   |
 |`filterStrategy`     |`{}` |A JSON object containing configuration for filtering ([see below](#filter-strategy-configuration-parameters)).              |
-|`contentProfile`     |<code><i>string</i></code>| The file name of the content profile for the project.    |
+|`contentProfile`     |<code>ig-<i>**guide-name-FHIR Version**</i>-cp.txt</code>| The file name of the content profile for the project.    |
 |`implementationGuide`|`{}`    |A JSON object containing configuration for IG publishing ([see below](#implementation-guide-configuration-parameters)).          |
 |`copyrightYear`      |<code><i>string</i></code>|The copyright year to include in the documentation.            |
 |`publisher`          |<code><i>string</i></code>|The name of the publisher for the project, which for HL7 projects, should be the sponsoring work group, for example, _HL7 International Clinical Interoperability Council_.  |
@@ -226,9 +225,9 @@ These configurations are used to control the production of the IG. The contents 
 |`indexContent` |`string` |The name of the file or folder containing the [front matter](#front-matter-files), relative to the _specification directory_, for example, _ig-mcode/IndexFolder-Oncocore_. If the `indexContent` is a folder, then it _must_ contain an _index.html_ file whose contents will be used as the body of the IG home page.  |
 |`extraResources`  |`string` |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: `SearchParameter`, `OperationDefinition`, `CapabilityStatement` (STU3+), `Conformance` (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
 |`examples` |`string` |The name of the folder containing examples (one example per file) to include in the IG, for example, _ig-mcode/Examples-mCODE-r4_. We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` must match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no `examples` folder is specified, and a folder named _fhir-examples_ exists in the specification directory, it will be used as the examples folder. |
-|`historyLink` |`string` |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
+|`historyLink` |`string` |The URL for the page containing the IG's history information. This shows all versions of the IG (published or in the build)and allows the user to navigate to a specific version. |
 
-|`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
+|`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) using the FHIR issue tracking system.  |
 |`primarySelectionStrategy`|`{}`     | _Deprecated after SHR-CLI 6.7.0_. The strategy for selection of what is primary in the IG ([see below](#primary-selection-strategy-configuration-paramters)). |
 |`dependencies`|`{}`     | Valid as of SHR-CLI 6.9.0. A list of other IGs that this guide depends on, allowing maps to external IG elements. ([see below](#Dependencies)). |
 
