@@ -57,7 +57,6 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 
 * [FHIR profiles, extensions, value sets](#fhir-export) that form the core content of the IG,
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR **StructureDefinition**,
-* [JSON Schema](#json-schema-export) for the profiles defined by the IG,
 * A [Data Dictionary](#data-dictionary-export) that lists [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements in the IG, as well as any value sets bound to the **MustSupport** elements and value set members (where available), 
 * [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that renders the class relationships in the logical model.
 
@@ -192,9 +191,8 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 |`projectName`        |<code><i>string</i></code>|The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"  |
 |`projectShorthand`   |<code><i>string</i></code>|A shorthand name for the project, such as "mcode".                              |
 |`projectURL`         |<code><i>string</i></code>|The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"                             |
-|`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |
+|`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |<!-- note that only other reference to entryTypeURL was removed when json schema export was removed 11/2019 -->
 |`fhirTarget`         |<code><i>string</i></code>|The FHIR version this IG will be based on, currently a choice of `"FHIR_R4"`, `"FHIR_STU_3"`, or `"FHIR_DSTU_2"`|
-|`entryTypeURL`       |<code><i>string</i></code>|The root URL for the JSON schema `EntryType` field. **(TO DO: clarify where and how this is used)**   |
 |`filterStrategy`     |`{}` |A JSON object containing configuration for filtering ([see below](#filter-strategy-configuration-parameters)).              |
 |`contentProfile`     |<code>ig-<i>**guide-name-FHIR Version**</i>-cp.txt</code>| The file name of the content profile for the project.    |
 |`implementationGuide`|`{}`    |A JSON object containing configuration for IG publishing ([see below](#implementation-guide-configuration-parameters)).          |
@@ -465,10 +463,8 @@ The content of the _/out_ directory depends on which exporters were selected to 
 
 ![Typical Contents of the /out Directory](img_cimpl/typical-out-directory.png)
 
-* _cimcore_ - this directory is only used in the process of building the `modeldoc` export, and may not appear in future releases.
 * [_data-dictionary_](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model `Element`s and value sets
 * [_fhir_](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
-* [_json-schema_](#json-schema-export) - this directory contains schemas for the (**TO DO -- define the JSON schema export**)
 * [_modeldoc_](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
 
 ### FHIR Export
@@ -509,7 +505,7 @@ The Data Dictionary can be useful both to clinicians and implementers who don't 
 <!-- CC to do: Location of planned reference to DD details. Appendix: Data Dictionary Details documents the four tab columns. MT to provide -->
 
 ### Creation Steps
-The data dictionary is created automatically whenever a **MustSupport** element is defined in the Content Profile, or a profile is created as part of the IG.
+The data dictionary is created by default whenever a **MustSupport** element is defined in the Content Profile, or a profile is created as part of the IG. You may suppress data dictionary generation by specifying `-s data-dict` when you run SHR-CLI.
 
 #### Preparation
 
