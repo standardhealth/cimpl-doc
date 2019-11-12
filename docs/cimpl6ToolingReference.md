@@ -519,9 +519,8 @@ Since the data dictionary is refreshed with every `shr-cli` execution and requir
 
 1. Run `shr-cli`
 2. Move the data dictionary file to the **IG Directory**.
-3. Update the HTML page that should include a link to the data dictionary (e.g. landing or index page). This should be a relative link to the data dictionary.
-4. Run `shr-cli`.
-5. Run the IG publisher.
+3. Update the HTML page that should include a link to the data dictionary (e.g. landing or index page). This should be a relative link to the data dictionary.4. 
+4. Run the IG publisher.
 
 ### JSON Schema Export
 
