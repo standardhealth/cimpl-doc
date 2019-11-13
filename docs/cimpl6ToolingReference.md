@@ -404,7 +404,7 @@ In this example,classes from `obf.datatype` are _not_ to be profiled. In the `ob
 
 The general form of the SHR-CLI execution command is as follows (where $ stands for the command prompt, which could be different on your system):
 
-$ <code>node <i>tooling-directory  <specification-directory [options]</i></code>
+$ <code>node <i>tooling-directory </i> <specification-directory [options]</code>
 
 where options include:
 
