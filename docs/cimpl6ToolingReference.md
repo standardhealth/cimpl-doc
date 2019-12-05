@@ -412,15 +412,15 @@ $ <code>node <i>tooling-directory</i> <i><specification-directory></i> [options]
 where options include:
 
 ```
--c, --config <config>    the name of the Configuration file (default: _config.json_)
--l, --log-level <level>  the console log level <fatal, error, warn, info, debug, trace> (default: info)
--s, --skip <feature>     skip an export feature <fhir, json-schema, model-doc, data-dict, all> (default: <none>)
--o, --out <out>          the path to the output folder (default: _out_)
--m, --log-mode <mode>    the console log mode <short,long,json,off> (default: short)
--d, --duplicate          show duplicate error messages (default: false)
--j, --export-es6         export ES6 JavaScript classes (experimental, default: false) **not supported as of SHR-CLI 6.10.2**
--n, --clean              Save archive of old output directory and perform clean build (default: false)
--h, --help               output usage information
+  -l, --log-level <level>  the console log level <fatal,error,warn,info,debug,trace> (default: "info")
+  -s, --skip <feature>     skip an export feature <fhir,model-doc,data-dict,graph,all> (default: [])
+  -m, --log-mode <mode>    the console log mode <normal,json,off> (default: "normal")
+  -o, --out <out>          the path to the output folder (default: "out")
+  -c, --config <config>    the name of the config file (default: "config.json")
+  -d, --deduplicate        do not show duplicate error messages (default: false)
+  -i, --import-cimcore     import CIMCORE files instead of CIMPL (default: false)
+  -n, --clean              Save archive of old output directory and perform clean build (default: false)
+  -h, --help               output usage information
 ```
 
 The options are not order-sensitive. Here is an example of a SHR-CLI command and an explanation of its parts:
