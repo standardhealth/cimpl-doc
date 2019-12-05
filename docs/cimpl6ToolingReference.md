@@ -407,7 +407,7 @@ In this example,classes from `obf.datatype` are _not_ to be profiled. In the `ob
 
 The general form of the SHR-CLI execution command is as follows (where $ stands for the command prompt, which could be different on your system):
 
-$ <code>node <i>tooling-directory  <specification-directory [options]</i></code>
+$ <code>node <i>tooling-directory</i> <i><specification-directory></i> [options]</code>
 
 where options include:
 
@@ -418,7 +418,7 @@ where options include:
 -o, --out <out>          the path to the output folder (default: _out_)
 -m, --log-mode <mode>    the console log mode <short,long,json,off> (default: short)
 -d, --duplicate          show duplicate error messages (default: false)
--j, --export-es6         export ES6 JavaScript classes (experimental, default: false)
+-j, --export-es6         export ES6 JavaScript classes (experimental, default: false) **not supported as of SHR-CLI 6.10.2**
 -n, --clean              Save archive of old output directory and perform clean build (default: false)
 -h, --help               output usage information
 ```
@@ -496,6 +496,19 @@ For many users, especially those with experience in object-oriented modeling, th
 
 ![Model Documentation Example](img_cimpl/model-documentation-example.png)
 
+### Graph Viewer Export
+
+**NOTE:** Available in SHR-CLI 10.6.2 and higher.
+
+The new Graph Viewer is an interactive graphical visualization of the primary entries in an Implementation Guide. The Graph Viewer is yet another automatic export included into the CIMPL toolchain.
+
+![Graph Viewer Example](img_cimpl/GraphViewer_Example.png)
+
+To generate an IG with the Graph Viewer included, please ensure that the config file supplied to the CLI has an `implementationGuide.includeGraph` field and set to `true`. Additionally, ensure that there is at least one entry listed as primary for this IG (either through the soon-to-be-deprecated implementationGuide.primarySelectionStrategy field in the config file, or through the contentProfile field in the config file. Otherwise, there will be no Graph Viewer included in the IG.
+
+Once the IG is published, click on the Graph Viewer tab in the top menu. By clicking on one of the primary entries listed on the left of the graph viewer, a user can view the visual representation of this entry's logical model. Hovering over nodes provides a description if available. Clicking on the root node will take the user to the IG page associated with this entry. Branches can be collapsed or expanded by clicking on the small circles connected to them.
+
+
 ### Data Dictionary Export
 
 The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
@@ -510,7 +523,7 @@ The Data Dictionary can be useful both to clinicians and implementers who don't 
 
 ### JSON Schema Export
 
-(**TO DO: determine what to say here**)
+JSON schema export is no longer supported as of SHR-CLI 6.10.2. Reference the [SHR-CLI version 6.10.2 release notes](https://github.com/standardhealth/shr-tools/releases/tag/shr-cli%406.10.2) for further details.
 
 ## Creating the Implementation Guide
 

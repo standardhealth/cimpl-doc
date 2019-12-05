@@ -133,6 +133,28 @@ cd shr-cli
 yarn
 ```
 
+The SHR-CLI 6.10.2 release now supports installation as a global NPM module. This means that users no longer need to clone the GitHub repository or download the release zip file. The new installation procedure is as follows:
+
+Install Node.js LTS edition (version 8, 10, or 12). Once Node.js is installed, run the following command to install SHR-CLI:
+
+```$ npm install -g shr-cli```
+Once it is installed, the shr-cli command should be available on your path.
+
+```$ shr-cli --help
+Usage: shr-cli <path-to-shr-defs> [options]
+
+Options:
+  -l, --log-level <level>  the console log level <fatal,error,warn,info,debug,trace> (default: "info")
+  -s, --skip <feature>     skip an export feature <fhir,model-doc,data-dict,graph,all> (default: [])
+  -m, --log-mode <mode>    the console log mode <normal,json,off> (default: "normal")
+  -o, --out <out>          the path to the output folder (default: "out")
+  -c, --config <config>    the name of the config file (default: "config.json")
+  -d, --deduplicate        do not show duplicate error messages (default: false)
+  -i, --import-cimcore     import CIMCORE files instead of CIMPL (default: false)
+  -n, --clean              Save archive of old output directory and perform clean build (default: false)
+  -h, --help               output usage information
+  ```
+
 ### Install Java Runtime for Windows
 
 The [FHIR implementation guide (IG) publisher](http://wiki.hl7.org/index.php?title=IG_Publisher_Documentation) is owned and operated by the HL7 FHIR team. The IG publisher is primarily written in Java and requires JRE version 8. To install JRE:
@@ -283,6 +305,28 @@ _...and then re-run yarn using:_
 yarn
 ```
 _**Note**: Each time you download a new version of SHR-CLI, you must re-run `yarn` command._
+
+The SHR-CLI 6.10.2 release now supports installation as a global NPM module. This means that users no longer need to clone the GitHub repository or download the release zip file. The new installation procedure is as follows:
+
+Install Node.js LTS edition (version 8, 10, or 12). Once Node.js is installed, run the following command to install SHR-CLI:
+
+```$ npm install -g shr-cli```
+Once it is installed, the shr-cli command should be available on your path.
+
+```$ shr-cli --help
+Usage: shr-cli <path-to-shr-defs> [options]
+
+Options:
+  -l, --log-level <level>  the console log level <fatal,error,warn,info,debug,trace> (default: "info")
+  -s, --skip <feature>     skip an export feature <fhir,model-doc,data-dict,graph,all> (default: [])
+  -m, --log-mode <mode>    the console log mode <normal,json,off> (default: "normal")
+  -o, --out <out>          the path to the output folder (default: "out")
+  -c, --config <config>    the name of the config file (default: "config.json")
+  -d, --deduplicate        do not show duplicate error messages (default: false)
+  -i, --import-cimcore     import CIMCORE files instead of CIMPL (default: false)
+  -n, --clean              Save archive of old output directory and perform clean build (default: false)
+  -h, --help               output usage information
+  ```
 
 ### Install Java Runtime Environment for macOS
 
