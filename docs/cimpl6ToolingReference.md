@@ -194,7 +194,7 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 |`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |<!-- note that only other reference to entryTypeURL was removed when json schema export was removed 11/2019 -->
 |`fhirTarget`         |<code><i>string</i></code>|The FHIR version this IG will be based on, currently a choice of `"FHIR_R4"`, `"FHIR_STU_3"`, or `"FHIR_DSTU_2"`|
 |`filterStrategy`     |`{}` |A JSON object containing configuration for filtering ([see below](#filter-strategy-configuration-parameters)).              |
-|`contentProfile`     |<code>ig-<i>**guide-name-FHIR Version**</i>-cp.txt</code>| The file name of the content profile for the project.    |
+|`contentProfile`     |<code><i>string</i></code>| The file name of the content profile for the project.    |
 |`implementationGuide`|`{}`    |A JSON object containing configuration for IG publishing ([see below](#implementation-guide-configuration-parameters)).          |
 |`copyrightYear`      |<code><i>string</i></code>|The copyright year to include in the documentation.            |
 |`publisher`          |<code><i>string</i></code>|The name of the publisher for the project, which for HL7 projects, should be the sponsoring work group, for example, _HL7 International Clinical Interoperability Council_.  |
