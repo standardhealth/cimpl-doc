@@ -16,7 +16,7 @@ CIMPL (**C**linical **I**nformation **M**odeling **P**rofiling **L**anguage) is 
 
 ### Purpose
 
-This document presents an overview of the CIMPL class library (also known as Objective FHIR (OBF),  a set of pre-mapped data types and classes that can be used as the basis for a clinical model. Use of OBF with CIMPL is optional, but [recommended](#overview).
+This document presents an overview of the CIMPL class library (also known as Objective FHIR (OBF)),  a set of pre-mapped data types and classes that can be used as the basis for a clinical model. Use of OBF with CIMPL is optional, but [recommended](#overview).
 
 ### Intended Audience
 
