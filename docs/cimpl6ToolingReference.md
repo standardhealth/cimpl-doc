@@ -191,7 +191,7 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 |`projectName`        |<code><i>string</i></code>|The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"  |
 |`projectShorthand`   |<code><i>string</i></code>|A shorthand name for the project, such as "mcode".                              |
 |`projectURL`         |<code><i>string</i></code>|The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"                             |
-|`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |<!-- note that only other reference to entryTypeURL was removed when json schema export was removed 11/2019 -->
+|`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL.
 |`fhirTarget`         |<code><i>string</i></code>|The FHIR version this IG will be based on, currently a choice of `"FHIR_R4"`, `"FHIR_STU_3"`, or `"FHIR_DSTU_2"`|
 |`filterStrategy`     |`{}` |A JSON object containing configuration for filtering ([see below](#filter-strategy-configuration-parameters)).              |
 |`contentProfile`     |<code><i>string</i></code>| The file name of the content profile for the project.    |
