@@ -57,9 +57,8 @@ SHR-CLI produces one or all of the following outputs, depending on configuration
 
 * [FHIR profiles, extensions, value sets](#fhir-export) that form the core content of the IG,
 * A [Logical Model](#logical-model-export) corresponding to the CIMPL class definitions, expressed as FHIR **StructureDefinition**,
-* [JSON Schema](#json-schema-export) for the profiles defined by the IG,
-* A [Data Dictionary](#data-dictionary-export) that lists the [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements in the IG, as well as value sets and value set members,
-* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that allows one to see the class relationships in the logical model.
+* A [Data Dictionary](#data-dictionary-export) that lists [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) elements in the IG, as well as any value sets bound to the **MustSupport** elements and value set members (where available), 
+* [Model Documentation](#model-documentation-export) in the form of a [Javadoc-like](https://docs.oracle.com/javase/7/docs/api/) browser that renders the class relationships in the logical model.
 
 ### Relationship of CIMPL Models and Implementation Guides
 
@@ -123,7 +122,7 @@ The SHR-CLI tooling does not require a particular directory structure. However, 
 ```
 In this reference manual, we refer to several directories:
 
-* _Tooling Directory** - this the directory where the SHR-CLI tooling has been installed. Any convenient directory can be used. For easy identification, we recommend the tooling version number be included in the directory name.
+* **Tooling Directory** - this the directory where the SHR-CLI tooling has been installed. Any convenient directory can be used. For easy identification, we recommend the tooling version number be included in the directory name.
 * **Specification Directory** - this is the top level directory where the input files and are located, usually arranged in sub-folders. Any convenient directory can be used. If you are using a source code control system such as Github to manage your development, this could be where the repository is checked out to your local machine.
 * **Namespace Directories** - these directories, located under the Specification Directory, contains CIMPL language files for a single namespace. The name of the directory should be prefixed with `ns-` followed by the shortname or acronym of the namespace followed .
 * **IG Directories** - these directories, under the specification directory contain files specific to a given implementation guide. There are subdirectories containing the front matter and examples, and individual configuration, content profile, and package list files. These files can be specific to a FHIR release, since the same IG could be created using different versions of FHIR.
@@ -145,7 +144,6 @@ If your project will support more than one FHIR version, the FHIR version should
 * Package List file: <code>ig-<i>**guide-name-FHIR Version**</i>-plist.json</code>
 
 where FHIR version is _dstu2, stu3_, or _r4_.
-<!-- MK: why not use the same values as listed in the configuration file section?  consistency?-->
 
 ## Inputs to SHR-CLI
 
@@ -193,9 +191,8 @@ The Configuration file is a [JSON file](https://www.json.org/) with the followin
 |`projectName`        |<code><i>string</i></code>|The full, official name of the project, for example "HL7 FHIR Implementation Guide: minimal Common Oncology Data Elements (mCODE) Release 1 - US Realm, STU Ballot 1"  |
 |`projectShorthand`   |<code><i>string</i></code>|A shorthand name for the project, such as "mcode".                              |
 |`projectURL`         |<code><i>string</i></code>|The primary URL for the project, such as "http://hl7.org/fhir/us/mcode/"                             |
-|`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL. **(TO DO: clarify the difference between projectURL, fhirURL, and entryTypeURL)**  |
+|`fhirURL`            |<code><i>string</i></code>|The FHIR IG URL for the project, often the same as the projectURL.
 |`fhirTarget`         |<code><i>string</i></code>|The FHIR version this IG will be based on, currently a choice of `"FHIR_R4"`, `"FHIR_STU_3"`, or `"FHIR_DSTU_2"`|
-|`entryTypeURL`       |<code><i>string</i></code>|The root URL for the JSON schema `EntryType` field. **(TO DO: clarify where and how this is used)**   |
 |`filterStrategy`     |`{}` |A JSON object containing configuration for filtering ([see below](#filter-strategy-configuration-parameters)).              |
 |`contentProfile`     |<code><i>string</i></code>| The file name of the content profile for the project.    |
 |`implementationGuide`|`{}`    |A JSON object containing configuration for IG publishing ([see below](#implementation-guide-configuration-parameters)).          |
@@ -226,9 +223,9 @@ These configurations are used to control the production of the IG. The contents 
 |`indexContent` |`string` |The name of the file or folder containing the [front matter](#front-matter-files), relative to the _specification directory_, for example, _ig-mcode/IndexFolder-Oncocore_. If the `indexContent` is a folder, then it _must_ contain an _index.html_ file whose contents will be used as the body of the IG home page.  |
 |`extraResources`  |`string` |The name of the folder containing extra JSON resources to include in the IG, one file per resource. Currently, the following resource types are supported: `SearchParameter`, `OperationDefinition`, `CapabilityStatement` (STU3+), `Conformance` (DSTU2).  If files are detected, links are added to the navigation menu as necessary. |
 |`examples` |`string` |The name of the folder containing examples (one example per file) to include in the IG, for example, _ig-mcode/Examples-mCODE-r4_. We recommend the individual example file name match the `id` in the example file (with `.json` extension added). The example's `meta.profile` must match the canonical URL for the profile it exemplifies (e.g. `"meta": { "profile": [ "http://hl7.org/fhir/us/breastcancer/StructureDefinition/oncology-BreastCancerPresenceStatement" ] }`). If no `examples` folder is specified, and a folder named _fhir-examples_ exists in the specification directory, it will be used as the examples folder. |
-|`historyLink` |`string` |The URL for the page containing the IG's history information.  **(TO DO: clarify where and how this is used)**   |
+|`historyLink` |`string` |The URL for the page containing the IG's history information. This shows all versions of the IG (published or in the build)and allows the user to navigate to a specific version. |
 
-|`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) **(TO DO: clarify where and how this is used)** |
+|`changesLink`  |`string` |The URL to a site where users can request changes (shown in page footer) using the FHIR issue tracking system.  |
 |`primarySelectionStrategy`|`{}`     | _Deprecated after SHR-CLI 6.7.0_. The strategy for selection of what is primary in the IG ([see below](#primary-selection-strategy-configuration-paramters)). |
 |`dependencies`|`{}`     | Valid as of SHR-CLI 6.9.0. A list of other IGs that this guide depends on, allowing maps to external IG elements. ([see below](#Dependencies)). |
 
@@ -407,7 +404,7 @@ In this example,classes from `obf.datatype` are _not_ to be profiled. In the `ob
 
 The general form of the SHR-CLI execution command is as follows (where $ stands for the command prompt, which could be different on your system):
 
-$ <code>node <i>tooling-directory  <specification-directory [options]</i></code>
+$ <code>node <i>tooling-directory </i> <specification-directory [options]</code>
 
 where options include:
 
@@ -466,10 +463,8 @@ The content of the _/out_ directory depends on which exporters were selected to 
 
 ![Typical Contents of the /out Directory](img_cimpl/typical-out-directory.png)
 
-* _cimcore_ - this directory is only used in the process of building the `modeldoc` export, and may not appear in future releases.
 * [_data-dictionary_](#data-dictionary-export) - this directory contains an MS-Excel spreadsheet containing a list of model `Element`s and value sets
 * [_fhir_](#fhir-export) - this directory contains all the definitions and assets necessary to produce the IG
-* [_json-schema_](#json-schema-export) - this directory contains schemas for the (**TO DO -- need to define the JSON schema export**)
 * [_modeldoc_](#model-documentation-export) - this directory contains files that present the model with a look and feel similar to [Javadoc](https://www.oreilly.com/library/view/learn-to-program/9781680500523/f_0126.html)
 
 ### FHIR Export
@@ -498,19 +493,38 @@ For many users, especially those with experience in object-oriented modeling, th
 
 ### Data Dictionary Export
 
-The Data Dictionary is a Microsoft Excel file containing a simplified, flattened list of model `Elements` and value sets, extracted from the FHIR profiles. The spreadsheet has five tabs:
+The Data Dictionary is a Microsoft® Excel® file containing a list of model `Elements` and value sets extracted from the FHIR profiles. The spreadsheet has four tabs:
 
-* The _Key_ tab contains a key to the columns in the other tabs,
-* The _Profiles_ tab contains a list of the primary profiles and their descriptions,
-* The _Data Elements_ tab contains a list of [**MustSupport**](https://www.hl7.org/fhir/conformance-rules.html#mustSupport) and required elements associated with those profiles,
-* The _Value Sets_ tab contains a list of value sets used in the IG, and their descriptions,
-* The _Value Set Details_ tab contains a list of the codes and/or implicit definitions in those value sets.
+* The _Profiles_ tab contains a list of the profiles, with descriptions, that are defined in the IG,
+* The _Data Elements_ tab contains a list of profiles and elements, as defined in the IG [Content Profile](#content-profile-file). If a **MustSupport** element is bound to an externally defined value set, the value set URL is populated on this tab.
+* The _Value Sets_ tab contains a list of value sets defined in the IG, that are bound to **MustSupport** elements, and their descriptions, <!-- internal note: any externally defined value sets bound to a must support element are added to the list of "value sets to put into the value set tab", however since the exporter will fail to find a value set in the spec associated with the url, no row is written to the value set tab -->
+* The _Value Set Details_ tab contains a list of the codes and/or implicit definitions in those value sets (if available).
 
 The Data Dictionary can be useful both to clinicians and implementers who don't need the structural details of the FHIR profiles, but want the contents in list form. For many reviewers and contributors, this can be an easy-to-use format to facilitate discussion and feedback.
 
+<!-- CC to do: Location of planned reference to DD details. Appendix: Data Dictionary Details documents the four tab columns. MT to provide -->
+
+### Creation Steps
+The data dictionary is created by default whenever a **MustSupport** element is defined in the Content Profile, or a profile is created as part of the IG. You may suppress data dictionary generation by specifying `-s data-dict` when you run SHR-CLI.
+
+#### Preparation
+
+The data dictionary is found in the **out** directory and is refreshed every time you execute `shr-cli`.
+
+It is not automatically included in the IG.
+
+#### Expose Data Dictionary to IG
+
+Since the data dictionary is refreshed with every `shr-cli` execution and requires manual steps to expose in the IG, it is recommended that you perform this step once your model is solid and you don't expect any changes to **MustSupport** or profiles.
+
+1. Run `shr-cli`
+2. Move the data dictionary file to the **IG Directory**.
+3. Update the HTML page that should include a link to the data dictionary (e.g. landing or index page). This should be a relative link to the data dictionary.4. 
+4. Run the IG publisher.
+
 ### JSON Schema Export
 
-(**TO DO: determine what to say here**)
+(**TO DO: Content TBD**)
 
 ## Creating the Implementation Guide
 
