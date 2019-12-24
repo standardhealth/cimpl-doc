@@ -116,11 +116,11 @@ With the supporting software installed, you can move on to installing the Standa
 
 * Create the directory where you want to install CLI, for example, /Documents/cimpl (we'll refer to this directory as ~/cimpl)
 * Download the [SHR-CLI zip file](https://github.com/standardhealth/shr-cli/archive/master.zip)
-* Unzip the file into the directory you created. This will create a new folder with a name like `shr-cli-X.X.X` where `X.X.X` is the version number of SHR-CLI.
+* Unzip the file into the directory you created. This will create a new folder with the name  `shr-cli-master`.  
 * Open a command window, navigate into the directory where the new files have been unzipped, using the change directory (cd) command.
 * Run the command: `yarn`
 
-_**Note**: Each time you download a new version of SHR-CLI, you must re-run `yarn` command._
+_**Note**: Each time you need to update to a new  version of SHR-CLI, you must download the zip file and re-run the `yarn` command._
 
 For git users, there is an alternate approach. After [installing git](#install-git-for-windows), open **'Git Bash'** (not the windows command prompt) and enter the following commands, which grab the latest version of the SHR-CLI tool and places it in the `~/cimpl/shr-cli` directory, and installs it using Yarn:
 
