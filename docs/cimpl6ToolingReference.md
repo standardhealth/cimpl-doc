@@ -404,7 +404,7 @@ In this example,classes from `obf.datatype` are _not_ to be profiled. In the `ob
 
 The general form of the SHR-CLI execution command is as follows (where $ stands for the command prompt, which could be different on your system):
 
-$ <code>node <i>tooling-directory </i> <specification-directory [options]</code>
+$ <code>node <i>tooling-directory </i> <i> specification-directory </i> [options]</code>
 
 where options include:
 
@@ -425,9 +425,9 @@ The options are not order-sensitive. Here is an example of a SHR-CLI command and
 $ `node . ../shr-spec/spec -c ig-mcode/ig-mcode-r4-config.json -l error`
 
 * `node` is the command that starts the SHR-CLI application.
-* The dot `.` represents the current directory in Windows and macOS. In this example, the tooling directory is the current working directory.
-* `../shr-spec/spec` represents the location of the _specification_ directory. The double dot `..` represents the directory above the current _working directory_ in Windows and macOS. In this case, `/shr-spec` is parallel to the _tooling directory_, and `/spec` is one level below that.
-* `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the Configuration file. Note that the Configuration file location is relative to the _specification_ directory, implying the full path to the configuration is `../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json`
+* The dot `.` represents the current directory in Windows and macOS. In this example, the _tooling directory_ is the current _working directory_.
+* `../shr-spec/spec` represents the location of the _specification directory_. The double dot `..` represents the directory above the current _working directory_ in Windows and macOS. In this case, `/shr-spec` is parallel to the _tooling directory_, and `/spec` is one level below that.
+* `-c ig-mcode/ig-mcode-r4-config.json` directs the execution engine to the Configuration file. Note that the Configuration file location is relative to the _specification directory_, implying the full path to the configuration is `../shr-spec/spec/ig-mcode/ig-mcode-r4-config.json`
 * `-l error` is an option that sets tells the system to suppress any messages that don't rise to the level of an `error`. This reduces the amount of output to the console window.
 
 >**Note:** SHR-CLI will abort if the `--clean`(`-n`) option is selected and the output folder is locked by another application (e.g., the folder is open in File Explorer).
